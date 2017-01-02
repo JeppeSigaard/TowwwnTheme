@@ -1,0 +1,161 @@
+@media screen and (max-width: 710px) {
+    #events{
+        width: 100%;
+    }
+}
+    
+#eventsbar{
+    width: 100%;
+    height: $menu-bar-height;
+    background-color: $color-blue-2;
+    z-index: 10;
+    box-shadow: 0px 1px 5px rgba(1,1,1,.5);
+
+    #eventslayoutbtns{
+        position: relative;
+        width: 128px;
+        height: 100%;
+        border-right: 1px solid #CDCDCD;
+        transition: 300ms;
+
+        &:hover {
+            background-color: lighten($color-blue-2, 4%);
+        }
+
+        img{
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: auto;
+            height: 22px;
+            cursor: pointer;
+        }
+
+        .blocklayoutbtn{
+            left: 30%;
+        }
+
+        .linelayoutbtn{
+            left: 66%;
+        }
+    }
+}
+
+.eventscontainer {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+
+    &.lineLayout{
+        .event{
+            width: 100%;
+            height: 110px;
+            
+            .imgcontainer{
+                float: left;
+                width: 160px;
+                height: 100%;
+                border-bottom: none;
+                border-right: 1px solid $color-blue-1;
+            }
+
+            .eventtext{
+                display: inline-block;
+                width: auto;
+                height: 100%;
+                padding: 16px;
+                margin-bottom: 24px;
+
+                .title{
+                    width: auto;
+                    font-size: 14px;
+                }
+
+                .eventlocation-container {
+                    width: calc( 100% - 192px );
+                    right: 16px;
+                    left: auto;
+                    
+                    .eventblackbar{
+                        height: 2px;
+                    }
+                }
+            }
+        }
+    }
+
+    .event {
+        box-sizing: border-box;
+        position: relative;
+        display: inline-block;
+        width: 150px;
+        height: 220px;
+        border: 1px solid $color-blue-1;
+        margin: 6px;
+        background-color: #FFF;
+        flex-grow: 1;
+        cursor: pointer;
+
+        .imgcontainer{
+            width: 100%;
+            height: 70px;
+            background-size: cover;
+            background-position: center;
+            border-bottom: 1px solid $color-blue-1;
+        }
+
+        .eventtext{
+            padding: 15px;
+            padding-top: 15px;
+            width: 100%;
+            height: 130px;
+            text-transform: uppercase;
+
+            .title{
+                font-size: 13px,
+            }
+
+            .fulltitle{
+                display: none;
+            }
+
+            .description{
+                display: none;
+                font-weight: 100;
+                font-size: 12px;
+                padding-top: 8px;
+                text-transform: none;
+            }
+
+            .start_time{
+                font-size: 13px;
+                color: #999;
+            }
+
+            .eventlocation-container {
+                width: calc(100% - 30px);
+                position: absolute;
+                bottom: 15px;
+                left: 15px;
+
+                .eventblackbar{
+                    height: 3px;
+                    width: 100%;
+                    background-color: $color-blue-1;
+                    margin-top: 6px;
+                    margin-bottom: 5px;
+                }
+
+                .eventlocation{
+                    font-size: 10px;
+                    color: $color-blue-1;
+                    line-height: 11px;
+                }
+            }
+        }
+    }
+}
