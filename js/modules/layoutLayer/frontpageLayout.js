@@ -4,6 +4,7 @@ var FrontPageModule = {
     // Variables
     settings: {  
         ready: false,
+        lc: '',
     },
     
     // Init
@@ -13,8 +14,12 @@ var FrontPageModule = {
         var lc = '<div id="eventsbar">';
         lc += '<div id="eventslayoutbtns">';
         lc += '<img class="blocklayoutbtn" src="'+template_uri+'/style/assets/icons/blockLayout.PNG" />';
-        lc += '<img class="linelayoutbtn" src="'+template_uri+'/style/assets/icons/lineLayout.PNG" /></div></div>';
+        lc += '<img class="linelayoutbtn" src="'+template_uri+'/style/assets/icons/lineLayout.PNG" /></div>';
+        lc += '<div class="monthSelector"></div>';
+        lc += '<div class="picker"></div></div>';
+        
         lc += '<div class="eventscontainer"></div>';
+        this.settings.lc = lc;
         $('.left-container').html(lc);
         
         // Generates front page
@@ -48,12 +53,15 @@ var FrontPageModule = {
     
     // Bind UI Actions
     bindUIActions: function() {
-        $('.logo-container').on( 'click', function() {
-            this.generate_front_page();
-            $(window).scrollTop(0);
-            $('#searchfield').val('');
-            this.bindUIActions();
-        }.bind( this ));
+        
+        if ( !this.settings.ready ) {
+            $('.logo-container').on( 'click', function() {
+                this.generate_front_page();
+                $(window).scrollTop(0);
+                $('#searchfield').val('');
+                this.bindUIActions();
+            }.bind( this ));
+        }
         
         $('.blocklayoutbtn').on( 'click', function() {
             $('.eventscontainer').removeClass('lineLayout'); 
@@ -62,6 +70,13 @@ var FrontPageModule = {
         $('.linelayoutbtn').on( 'click', function() {
             $('.eventscontainer').addClass('lineLayout');
         });
+        
+        $('.monthSelector').initMonthPicker({
+            'appendSelector': '.picker',
+        }, function( elem ) {
+            $('.eventscontainer').html( '' );
+            EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 49, acceptOld: false, from: elem[0].month_from, to: elem[0].month_to });
+        }.bind(this));
     },
     
 }

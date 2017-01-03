@@ -16,11 +16,7 @@
                         <input id="searchfield" name="searchfield">
                     </div>
                     <div id="fb-login">
-                        <?php if ( !isset( $_SESSION['fb_access_token'] ) ) : ?>
-                            <a href="<?php echo apply_filters('fb_handler', '')->loginUrl; ?>" class="fb-login-anchor">Login</a>
-                        <?php else : ?>
-                            <a href="#" class="fb-login-anchor">Logget ind</a>
-                        <?php endif; ?>
+                        <div class="fb-login-btn">Log ind</div>
                     </div>
                 </div>
                 <div class="headerbar-placeholder"></div>

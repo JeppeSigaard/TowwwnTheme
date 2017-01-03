@@ -5,6 +5,7 @@
 }
     
 #eventsbar{
+    position: relative;
     width: 100%;
     height: $menu-bar-height;
     background-color: $color-blue-2;
@@ -17,6 +18,7 @@
         height: 100%;
         border-right: 1px solid #CDCDCD;
         transition: 300ms;
+        display: inline-block;
 
         &:hover {
             background-color: lighten($color-blue-2, 4%);
@@ -39,6 +41,23 @@
             left: 66%;
         }
     }
+    
+    .monthSelector{
+        position: absolute;
+        display: inline-block;
+        top: 50%;
+        right: 32px;
+        transform: translate(0, -50%);
+        color: white;
+        cursor: pointer;
+    }
+}
+
+.events-sync-container{
+    position: absolute;
+    width: 100%;
+    min-height: calc( 100vh - 60px );
+    height: auto;    
 }
 
 .eventscontainer {

@@ -1,6 +1,13 @@
+@media screen and (max-width: $bp-1) {
+    .header-container{
+        max-width: $main-container-width-bp-1!important;
+    }
+}
+
 .header-container{
     width: 100%;
     max-width: $main-container-width;
+    transition: 200ms;
     height: auto;
     z-index: 100000;
     
@@ -90,8 +97,9 @@
         height: 32px;
         font-size: 15px;
         line-height: 32px;
-        text-align: center;
         background-color: darken($color-blue-2, 10%);
+        text-align: center;
+        cursor: pointer;
         
         &::before{
             content: '';
@@ -102,11 +110,11 @@
             width: 0;
             border-top: 16px solid transparent;
             border-bottom: 16px solid darken($color-blue-2, 10%);
-            border-left: 14px solid transparent;
-            border-right: 14px solid darken($color-blue-2, 10%);
+            border-left: 8px solid transparent;
+            border-right: 8px solid darken($color-blue-2, 10%);
         }
         
-        .fb-login-anchor{
+        .fb-login-btn{
             text-decoration: none;
             color: rgba(white, .8);
             transition: 150ms;
