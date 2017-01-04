@@ -1,0 +1,134 @@
+.header-container{
+    width: 100%;
+    max-width: $main-container-width;
+    height: auto;
+    z-index: 100000;
+    
+    &.fixed{
+        position: fixed;
+        top: -$top-area-height;
+        transition: 200ms;
+        
+        &.active{
+            top: 0;
+            // #header{ background-size: calc(cover + 25%); }
+        }
+    }
+}
+
+.header-placeholder{
+    width: 100%;
+    max-width: $main-container-width;
+    height: calc(#{$top-area-height} + #{$menu-bar-height});
+    display: none;
+    
+    &.fixed{
+        display: block;
+    }
+}
+
+#header{
+    position: relative;
+    width: 100%;
+    height: $top-area-height;
+    background-image: url(http://dev.smamo.dk/wp-content/uploads/2016/02/smamo-slide-2.jpg);
+    background-size: cover;
+    background-position: center;
+    transition: 200ms;
+
+    #searchcontainer{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        #searchlabel{
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translate(0, -50%);
+            font-weight: 100;
+            text-transform: uppercase;
+
+            &.not-visible{
+                display: none;
+            }
+        }
+
+        #searchicon{
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translate(0, -50%);
+            width: 24px;
+            height: 24px;
+        }
+
+        #searchfield{
+            box-sizing: border-box;
+            width: 300px;
+            height: 42px;
+            border-radius: 8px;
+            border: 0;
+            padding-left: 20px;
+            padding-right: 40px;
+            outline: none;
+            background-color: rgba(255,255,255,.8);
+            transition: 120ms;
+            
+            &:hover{
+                background-color: white!important;
+            }
+        }
+    }
+    
+    #fb-login{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 112px;
+        height: 32px;
+        font-size: 15px;
+        line-height: 32px;
+        text-align: center;
+        background-color: darken($color-blue-2, 10%);
+        
+        &::before{
+            content: '';
+            position: absolute;
+            right: 112px;
+            bottom: 0px;
+            height: 0;
+            width: 0;
+            border-top: 16px solid transparent;
+            border-bottom: 16px solid darken($color-blue-2, 10%);
+            border-left: 14px solid transparent;
+            border-right: 14px solid darken($color-blue-2, 10%);
+        }
+        
+        .fb-login-anchor{
+            text-decoration: none;
+            color: rgba(white, .8);
+            transition: 150ms;
+            
+            &:hover{
+                color: white;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
