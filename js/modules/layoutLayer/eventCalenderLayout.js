@@ -25,7 +25,7 @@ var EventCalenderModule = {
         for ( var i = 0; i < events.length; i++ ) {
             if ( buffer.length > getNum ) break;
             
-            var eventTime = new Date(events[i].start_time[0]).getTime();
+            var eventTime = new Date(events[i].start_time[0].substr(0,16)).getTime();
             if ( !acceptOld && eventTime < new Date().getTime() ) continue;
             if ( from !== -1 && from > eventTime ) continue;
             if ( to !== -1 && to < eventTime ) continue;
@@ -35,8 +35,8 @@ var EventCalenderModule = {
         
         // Sorts buffer
         buffer.sort( function( a, b ) {
-            var aTime = new Date(a.start_time[0]).getTime();
-            var bTime = new Date(b.start_time[0]).getTime();
+            var aTime = new Date(a.start_time[0].substr(0,16)).getTime();
+            var bTime = new Date(b.start_time[0].substr(0,16)).getTime();
             if ( aTime < bTime ) return -1;
             if ( aTime > bTime ) return 1;
             return 0;
@@ -51,13 +51,16 @@ var EventCalenderModule = {
         $(view).html( this.settings.html );
         this.settings.html = '';
         
-        // Checks for height difference
-        $('.left-container').css({'height': 'auto'});
-        $('.right-container').css({'height': 'auto'});
-        if ( $('.left-container').innerHeight() < $('.sync-container').innerHeight() ) {
-            $('.left-container').css({'height': $('.sync-container').innerHeight()+'px'});
-        } else { $('.right-container').css({'height': $('.left-container').innerHeight()+'px'}); }
-        $(window).trigger('scroll');
+        // Reload view heights
+        if(ViewHandler.settings.poly_view){
+            setTimeout(function(){
+                $('.left-container').css('height', 'auto');
+                $('.right-container').css('height', $('.sync-container').innerHeight());
+                $('.content-container').flickity('reloadCells');
+                $('.left-container, .right-container').css('height', $('.content-container .flickity-viewport').height());
+                $(window).trigger('scroll');
+            },150);
+        }
         
     },
     

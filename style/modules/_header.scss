@@ -4,6 +4,23 @@
     }
 }
 
+@media screen and (max-width: $bp-m) {
+    .header-container{
+        position: fixed;
+        top: -$top-area-height;
+        transition: 200ms;
+
+        &.active{
+            top: 0;
+        }
+    }
+
+    .header-placeholder{
+        height: $menu-bar-height!important;
+        display: block!important;
+    }
+}
+
 .header-container{
     width: 100%;
     max-width: $main-container-width;
@@ -85,42 +102,6 @@
             
             &:hover{
                 background-color: white!important;
-            }
-        }
-    }
-    
-    #fb-login{
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 112px;
-        height: 32px;
-        font-size: 15px;
-        line-height: 32px;
-        background-color: darken($color-blue-2, 10%);
-        text-align: center;
-        cursor: pointer;
-        
-        &::before{
-            content: '';
-            position: absolute;
-            right: 112px;
-            bottom: 0px;
-            height: 0;
-            width: 0;
-            border-top: 16px solid transparent;
-            border-bottom: 16px solid darken($color-blue-2, 10%);
-            border-left: 8px solid transparent;
-            border-right: 8px solid darken($color-blue-2, 10%);
-        }
-        
-        .fb-login-btn{
-            text-decoration: none;
-            color: rgba(white, .8);
-            transition: 150ms;
-            
-            &:hover{
-                color: white;
             }
         }
     }

@@ -15,19 +15,28 @@ var ViewHandler = {
         // Load event single view
         var event_sv, lastScroll = 0, isNew = false;
         $(document).on( 'click', '.event', function() {
+            ViewHandler.settings.right_container.addClass('spoopy');
+
             $('.right-container').html('<div class="load-container"><img src="'+template_uri+'/style/assets/icons/loading.gif" class="loader" /></div>');
             ViewHandler.sync_scroll( $('.load-container'), lastScroll, true );
-            EventSingleModule.render_sv_event( $(this).attr('id'), function() {
-                EventSingleModule.bindUIActions();
-                event_sv = $('.event-singleview-container .sync-container');
-                isNew = true;
-                $('.left-container').css({'height': 'auto'});
-                $('.right-container').css({'height': 'auto'});
-                if ( $('.left-container').innerHeight() < $('.sync-container').innerHeight() ) {
-                    $('.left-container').css({'height': $('.sync-container').innerHeight()+'px'});
-                } else { $('.right-container').css({'height': $('.left-container').innerHeight()+'px'}); }
-                $(window).trigger('scroll');
-            });
+            EventSingleModule.render_sv_event( $(this).attr('id') );
+            EventSingleModule.bindUIActions();
+
+            if(ViewHandler.settings.poly_view){
+                setTimeout(function(){
+                    ViewHandler.settings.right_container.removeClass('spoopy');
+                    $('.left-container').css('height', 'auto');
+                    $('.right-container').css('height', $('.sync-container').innerHeight());
+                    $('.content-container').flickity('reloadCells');
+                    $('.left-container, .right-container').css('height', $('.content-container .flickity-viewport').height());
+                    $(window).trigger('scroll');
+                    ViewHandler.go_to(1);
+                },100);
+            }
+
+            event_sv = $('.event-singleview-container .sync-container');
+            isNew = true;
+
         });
 
         // Sync scroll
@@ -36,6 +45,22 @@ var ViewHandler = {
             isNew = false;
         }.bind(this));
         
+        // Resize update
+        $(window).on('resize', function() {
+
+            // Reload view heights
+            if(ViewHandler.settings.poly_view){
+                setTimeout(function(){
+                    $('.left-container').css('height', 'auto');
+                    $('.right-container').css('height', $('.sync-container').innerHeight());
+                    $('.content-container').flickity('reloadCells');
+                    $('.left-container, .right-container').css('height', $('.content-container .flickity-viewport').height());
+                    $(window).trigger('scroll');
+                },150);
+            }
+
+        });
+
         this.settings.ready = true;
     },
     
@@ -51,8 +76,9 @@ var ViewHandler = {
             draggable: false,
             prevNextButtons: false,
             pageDots: false,
-            adaptiveHeight: true,
+            adaptiveHeight: false,
         });    
+
         this.settings.poly_view = true;
     },
     

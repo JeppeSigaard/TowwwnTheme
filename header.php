@@ -15,9 +15,6 @@
                         <img id="searchicon" src="<?php echo get_template_directory_uri() . '/style/assets/icons/search.svg'; ?>">
                         <input id="searchfield" name="searchfield">
                     </div>
-                    <div id="fb-login">
-                        <div class="fb-login-btn">Log ind</div>
-                    </div>
                 </div>
                 <div class="headerbar-placeholder"></div>
                 <div id="headerbar">

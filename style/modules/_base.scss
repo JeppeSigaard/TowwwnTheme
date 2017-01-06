@@ -30,7 +30,13 @@ body {
 .content-container{
     width: 100%;
     height: auto;
-    display: flex;
+    background-color: white;
+    box-shadow: 0px 0px 6px rgba(0,0,0,.8);
+    z-index: 1;
+
+    .flickity-viewport{
+        width: 100%;
+    }
     
     .load-container{
         position: absolute;
@@ -49,31 +55,41 @@ body {
     }
     
     .left-container{
-        position: relative;
-        overflow: hidden;
         width: 100%;
         height: auto;
         min-height: calc(100vh - #{$top-area-height} - #{$menu-bar-height})!important;
         background-color: #CDCDCD;
-        flex-grow: 1;
         transition: width 100ms;
-    
-        &.active{
-            width: 50%;
-        }
     }
     
     .right-container{
-        position: relative;
-        overflow: hidden;
+        width: 100%;
         height: auto;
         min-height: calc(100vh - #{$top-area-height} - #{$menu-bar-height})!important;
         background-color: white;
-        flex-grow: 1;
-        transition: width 100ms;
+        transition: width 100ms, opacity 100ms;
 
-        &.active{
-            width: 50%;
+        &.spoopy{
+            opacity: 0;
+            transition: opacity 0ms;
         }
     }
+}
+
+
+@media only screen and(min-width:640px){
+    .content-container .left-container.active,
+    .content-container .right-container.active{
+        width: 50%;
+    }
+}
+
+@media only screen and(min-width:1080px){
+    .content-container .left-container.active{
+        width: calc(100% - 700px);
+    }
+    .content-container .right-container.active{
+        width: 700px;
+    }
+
 }

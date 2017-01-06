@@ -1,6 +1,15 @@
 
 // Heya
-jQuery.prototype.initMonthPicker = function( options, callback ) {
+jQuery.prototype.monthPicker = function( options, callback ) {
+
+    if ( options.remove === true ) {
+        // Removes Month picker
+        $('.'+pickerClass).removeClass('active');
+        $(this).removeClass('pickerActive');
+        setTimeout(function() {
+            $('.'+pickerClass).remove();
+        }, 150);
+    }
     
     // Params
     var appendSelector = null;
@@ -11,19 +20,18 @@ jQuery.prototype.initMonthPicker = function( options, callback ) {
     
     // Other vars
     var months = {
-        '-1': 'Alle måneder',
-        '0': 'Januar',
-        '1': 'Februar',
-        '2': 'Marts',
-        '3': 'April',
+        '0': 'Jan',
+        '1': 'Feb',
+        '2': 'Mar',
+        '3': 'Apr',
         '4': 'Maj',
-        '5': 'Juni',
-        '6': 'Juli',
-        '7': 'August',
-        '8': 'September',
-        '9': 'Oktober',
-        '10': 'November',
-        '11': 'December',
+        '5': 'Jun',
+        '6': 'Jul',
+        '7': 'Aug',
+        '8': 'Sep',
+        '9': 'Okt',
+        '10': 'Nov',
+        '11': 'Dec',
     }
     
     var elem = $(this),
@@ -31,19 +39,22 @@ jQuery.prototype.initMonthPicker = function( options, callback ) {
         pickerHtml = '<div class="'+pickerClass+'">';
     
     for ( var key in months ) {
-        pickerHtml += '<div class="month" data-key="'+key+'">'+months[key]+'</div>';
+        pickerHtml += '<div class="month" data-key="'+key+'" id="'+key+'">'+months[key]+'</div>';
     } pickerHtml += '</div>';
     
     // Adds html to elem itself
-    elem.html( 'Alle måneder' );
+    elem.html( 'Alle' );
     
     // Appends on click
     elem.click( function() {
         if ( $(this).hasClass('pickerActive') ) {
             
             // Removes Month picker
-            $('.'+pickerClass).remove();
-            $(this).removeClass('pickerActive'); 
+            $('.'+pickerClass).removeClass('active');
+            $(this).removeClass('pickerActive');
+            setTimeout(function() {
+                $('.'+pickerClass).remove();
+            }, 150);
             
         } else {
             
@@ -51,17 +62,73 @@ jQuery.prototype.initMonthPicker = function( options, callback ) {
             if ( appendSelector !== null ) $(appendSelector).append( pickerHtml );
             else $('body').append( pickerHtml );
             $(this).addClass('pickerActive'); 
+            $('.'+pickerClass).flickity({
+                cellAlign: 'center',
+                prevNextButtons: false,
+                pageDots: false,
+                contain: true,
+            });
+
+            $('.'+pickerClass).addClass('active');
             
             // Picker functionality
+            var clickPoint = null;
             $('.'+pickerClass+' .month').click( function() {
-                
-                elem.html( months[$(this).attr('data-key')] ); 
+                $('.'+pickerClass+' .month').removeClass('active');
+                $('.'+pickerClass+' .month').removeClass('active-left');
+                $('.'+pickerClass+' .month').removeClass('active-middle');
+                $('.'+pickerClass+' .month').removeClass('active-right');
+
                 if ( parseInt($(this).attr('data-key')) === -1 ) {
-                    elem[0].month_from = new Date(1980, 01).getTime();
-                    elem[0].month_to = new Date(2100, 01).getTime();
+
+                    elem[0].month_from = new Date().getTime();
+                    elem[0].month_to = new Date(3000, 01).getTime();
+
                 } else {
-                    elem[0].month_from = new Date(2017, parseInt($(this).attr('data-key'))).getTime();
-                    elem[0].month_to = new Date(2017, parseInt($(this).attr('data-key'))+1).getTime();
+                    var ncpMonth = parseInt($(this).attr('data-key'));
+                    var from = new Date(2017, ncpMonth).getTime();
+                    var to = new Date(2017, ncpMonth+1).getTime();
+
+                    if ( clickPoint !== null ) {
+                        if ($(this).attr('data-key') === clickPoint.attr('data-key')) {
+                            clickPoint.removeClass('active');
+                            elem[0].month_from = new Date().getTime();
+                            elem[0].month_to = new Date(3000, 1).getTime();
+                            clickPoint = null;
+                            elem.html( 'Alle' );
+                            callback( elem ); return;
+                        }
+
+                        var ocpMonth = parseInt(clickPoint.attr('data-key'));
+                        var fromPoint, toPoint;
+                        if ( new Date( 2017, ocpMonth ).getTime() < new Date ( 2017, ncpMonth ) ) {
+                            from = new Date( 2017, ocpMonth ).getTime(); fromPoint = ocpMonth;
+                            to = new Date( 2017, ncpMonth+1 ).getTime(); toPoint = ncpMonth;
+                            clickPoint.addClass('active-left');
+                            $(this).addClass('active-right')
+                        } else {
+                            from = new Date( 2017, ncpMonth ).getTime(); fromPoint = ncpMonth;
+                            to = new Date( 2017, ocpMonth+1 ).getTime(); toPoint = ocpMonth;
+                            $(this).addClass('active-left');
+                            clickPoint.addClass('active-right')
+                        }
+
+                        elem.html( months[fromPoint]+' - '+months[toPoint] );
+
+                        for ( var i = fromPoint+1; i < toPoint; i++ ) {
+                            $('.'+pickerClass+' #'+i).addClass('active-middle');
+                        }
+
+                        clickPoint = null;
+                    } else {
+                        clickPoint = $(this);
+                        $(this).addClass('active');
+                        elem.html( months[$(this).attr('data-key')] );
+                    }
+
+                    elem[0].month_from = from;
+                    elem[0].month_to = to;
+
                 } callback( elem );
                 
             });
