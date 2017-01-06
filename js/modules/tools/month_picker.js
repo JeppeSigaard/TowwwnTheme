@@ -36,14 +36,15 @@ jQuery.prototype.monthPicker = function( options, callback ) {
     
     var elem = $(this),
         pickerClass = 'monthPicker_selector',
-        pickerHtml = '<div class="'+pickerClass+'">';
+        pickerHtml = '<div class="'+pickerClass+'">',
+        previousSelctions = [];
     
     for ( var key in months ) {
         pickerHtml += '<div class="month" data-key="'+key+'" id="'+key+'">'+months[key]+'</div>';
     } pickerHtml += '</div>';
     
     // Adds html to elem itself
-    elem.html( 'Alle' );
+    elem.html( 'Alle <div class="pickerArrow"></div>' );
     
     // Appends on click
     elem.click( function() {
@@ -57,7 +58,7 @@ jQuery.prototype.monthPicker = function( options, callback ) {
             }, 150);
             
         } else {
-            
+
             // Appends picker to defined selector or body
             if ( appendSelector !== null ) $(appendSelector).append( pickerHtml );
             else $('body').append( pickerHtml );
@@ -70,6 +71,15 @@ jQuery.prototype.monthPicker = function( options, callback ) {
             });
 
             $('.'+pickerClass).addClass('active');
+            if ( previousSelctions.length === 1 ) {
+                $('.'+pickerClass+' #'+previousSelctions[0]).addClass('active');
+            } else if ( previousSelctions.length > 1 ) {
+                $('.'+pickerClass+' #'+previousSelctions[0]).addClass('active-left');
+                $('.'+pickerClass+' #'+previousSelctions[previousSelctions.length-1]).addClass('active-right');
+                for ( var i = 1; i < previousSelctions.length-1; i++ ) {
+                    $('.'+pickerClass+' #'+previousSelctions[i]).addClass('active-middle');
+                }
+            }
             
             // Picker functionality
             var clickPoint = null;
@@ -78,58 +88,56 @@ jQuery.prototype.monthPicker = function( options, callback ) {
                 $('.'+pickerClass+' .month').removeClass('active-left');
                 $('.'+pickerClass+' .month').removeClass('active-middle');
                 $('.'+pickerClass+' .month').removeClass('active-right');
+                previousSelctions = [];
 
-                if ( parseInt($(this).attr('data-key')) === -1 ) {
+                var ncpMonth = parseInt($(this).attr('data-key'));
+                var from = new Date(2017, ncpMonth).getTime();
+                var to = new Date(2017, ncpMonth+1).getTime();
 
-                    elem[0].month_from = new Date().getTime();
-                    elem[0].month_to = new Date(3000, 01).getTime();
-
-                } else {
-                    var ncpMonth = parseInt($(this).attr('data-key'));
-                    var from = new Date(2017, ncpMonth).getTime();
-                    var to = new Date(2017, ncpMonth+1).getTime();
-
-                    if ( clickPoint !== null ) {
-                        if ($(this).attr('data-key') === clickPoint.attr('data-key')) {
-                            clickPoint.removeClass('active');
-                            elem[0].month_from = new Date().getTime();
-                            elem[0].month_to = new Date(3000, 1).getTime();
-                            clickPoint = null;
-                            elem.html( 'Alle' );
-                            callback( elem ); return;
-                        }
-
-                        var ocpMonth = parseInt(clickPoint.attr('data-key'));
-                        var fromPoint, toPoint;
-                        if ( new Date( 2017, ocpMonth ).getTime() < new Date ( 2017, ncpMonth ) ) {
-                            from = new Date( 2017, ocpMonth ).getTime(); fromPoint = ocpMonth;
-                            to = new Date( 2017, ncpMonth+1 ).getTime(); toPoint = ncpMonth;
-                            clickPoint.addClass('active-left');
-                            $(this).addClass('active-right')
-                        } else {
-                            from = new Date( 2017, ncpMonth ).getTime(); fromPoint = ncpMonth;
-                            to = new Date( 2017, ocpMonth+1 ).getTime(); toPoint = ocpMonth;
-                            $(this).addClass('active-left');
-                            clickPoint.addClass('active-right')
-                        }
-
-                        elem.html( months[fromPoint]+' - '+months[toPoint] );
-
-                        for ( var i = fromPoint+1; i < toPoint; i++ ) {
-                            $('.'+pickerClass+' #'+i).addClass('active-middle');
-                        }
-
+                if ( clickPoint !== null ) {
+                    if ($(this).attr('data-key') === clickPoint.attr('data-key')) {
+                        clickPoint.removeClass('active');
+                        elem[0].month_from = new Date().getTime();
+                        elem[0].month_to = new Date(3000, 1).getTime();
                         clickPoint = null;
-                    } else {
-                        clickPoint = $(this);
-                        $(this).addClass('active');
-                        elem.html( months[$(this).attr('data-key')] );
+                        elem.html( 'Alle <div class="pickerArrow"></div>' );
+                        callback( elem ); return;
                     }
 
-                    elem[0].month_from = from;
-                    elem[0].month_to = to;
+                    var ocpMonth = parseInt(clickPoint.attr('data-key'));
+                    var fromPoint = 0, toPoint = 0;
+                    if ( new Date( 2017, ocpMonth ).getTime() < new Date ( 2017, ncpMonth ) ) {
+                        from = new Date( 2017, ocpMonth ).getTime(); fromPoint = ocpMonth;
+                        to = new Date( 2017, ncpMonth+1 ).getTime(); toPoint = ncpMonth;
+                        clickPoint.addClass('active-left');
+                        $(this).addClass('active-right')
+                    } else {
+                        from = new Date( 2017, ncpMonth ).getTime(); fromPoint = ncpMonth;
+                        to = new Date( 2017, ocpMonth+1 ).getTime(); toPoint = ocpMonth;
+                        $(this).addClass('active-left');
+                        clickPoint.addClass('active-right')
+                    }
 
-                } callback( elem );
+                    elem.html( months[fromPoint]+' - '+months[toPoint] + '<div class="pickerArrow"></div>' );
+
+                    for ( var i = fromPoint+1; i < toPoint; i++ ) {
+                        $('.'+pickerClass+' #'+i).addClass('active-middle');
+                    }
+
+                    clickPoint = null;
+                } else {
+                    clickPoint = $(this);
+                    $(this).addClass('active');
+                    elem.html( months[$(this).attr('data-key')] + '<div class="pickerArrow"></div>' );
+                }
+
+                for ( var i = fromPoint; i < toPoint+1; i++ ) {
+                    previousSelctions.push( i );
+                }
+
+                elem[0].month_from = from;
+                elem[0].month_to = to;
+                callback( elem );
                 
             });
             

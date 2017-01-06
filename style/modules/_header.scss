@@ -19,6 +19,12 @@
         height: $menu-bar-height!important;
         display: block!important;
     }
+
+    #header{
+        #searchfield{
+            width: 250px!important;
+        }
+    }
 }
 
 .header-container{
