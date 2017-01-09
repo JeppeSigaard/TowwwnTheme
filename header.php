@@ -30,11 +30,16 @@
                         <img src="<?php echo get_template_directory_uri() . '/style/assets/icons/arrow.svg' 
                         ?>" class="menu-hide-img" >
                     </div>
-                    <div class="beta-warning"> 
+
+                    <div class="beta-warning active">
                         <div class="info">Info</div>
                         <div class="version"><?php echo get_theme_mod('version'); ?></div> 
                     </div>
-                    <div class="socialmedia">
+                    <div class="back-button">
+                    <img src="<?php echo get_template_directory_uri() . "/style/assets/icons/left-pointing-arrow.svg"; ?>" class="back-img" />
+                    </div>
+
+                    <div class="socialmedia active">
                         <a href="<?php echo get_theme_mod('facebook_url'); ?>" class="fb_link" >
                             <img src="<?php echo get_template_directory_uri() . '/style/assets/icons/facebook.svg' ?>" class="fb_img" />
                         </a>
