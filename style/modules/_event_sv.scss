@@ -8,7 +8,7 @@
     
     .sync-container{
         position: absolute;
-        width: 100%;
+        width: auto;
         min-height: calc( 100vh - #{$menu-bar-height} );
         height: auto;
         top: 0;

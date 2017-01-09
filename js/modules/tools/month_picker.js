@@ -37,7 +37,8 @@ jQuery.prototype.monthPicker = function( options, callback ) {
     var elem = $(this),
         pickerClass = 'monthPicker_selector',
         pickerHtml = '<div class="'+pickerClass+'">',
-        previousSelctions = [];
+        previousSelctions = [],
+        clickPoint = null;
     
     for ( var key in months ) {
         pickerHtml += '<div class="month" data-key="'+key+'" id="'+key+'">'+months[key]+'</div>';
@@ -82,7 +83,6 @@ jQuery.prototype.monthPicker = function( options, callback ) {
             }
             
             // Picker functionality
-            var clickPoint = null;
             $('.'+pickerClass+' .month').click( function() {
                 $('.'+pickerClass+' .month').removeClass('active');
                 $('.'+pickerClass+' .month').removeClass('active-left');
@@ -109,13 +109,13 @@ jQuery.prototype.monthPicker = function( options, callback ) {
                     if ( new Date( 2017, ocpMonth ).getTime() < new Date ( 2017, ncpMonth ) ) {
                         from = new Date( 2017, ocpMonth ).getTime(); fromPoint = ocpMonth;
                         to = new Date( 2017, ncpMonth+1 ).getTime(); toPoint = ncpMonth;
-                        clickPoint.addClass('active-left');
+                        $('.'+pickerClass+' #'+ocpMonth).addClass('active-left');
                         $(this).addClass('active-right')
                     } else {
                         from = new Date( 2017, ncpMonth ).getTime(); fromPoint = ncpMonth;
                         to = new Date( 2017, ocpMonth+1 ).getTime(); toPoint = ocpMonth;
                         $(this).addClass('active-left');
-                        clickPoint.addClass('active-right')
+                        $('.'+pickerClass+' #'+ocpMonth).addClass('active-right')
                     }
 
                     elem.html( months[fromPoint]+' - '+months[toPoint] + '<div class="pickerArrow"></div>' );
@@ -129,6 +129,7 @@ jQuery.prototype.monthPicker = function( options, callback ) {
                     clickPoint = $(this);
                     $(this).addClass('active');
                     elem.html( months[$(this).attr('data-key')] + '<div class="pickerArrow"></div>' );
+                    previousSelctions.push( $(this).attr('data-key') );
                 }
 
                 for ( var i = fromPoint; i < toPoint+1; i++ ) {

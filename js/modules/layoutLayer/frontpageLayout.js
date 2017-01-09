@@ -28,7 +28,7 @@ var FrontPageModule = {
     },
     
     // Generate front page
-    generate_front_page: function() {
+    generate_front_page: function( ) {
         
         // Adds the base front page html to the container
         $('.left-container').removeClass('active');
@@ -104,6 +104,15 @@ var FrontPageModule = {
 
             $('.eventscontainer').html( '' );
             EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 150, acceptOld: false, from: elem[0].month_from, to: elem[0].month_to });
+            if(ViewHandler.settings.poly_view){
+                setTimeout(function(){
+                    $('.left-container').css('height', 'auto');
+                    $('.right-container').css('height', '0');
+                    $('.content-container').flickity('reloadCells');
+                    $('.left-container, .right-container').css('height', $('.content-container .flickity-viewport').height());
+                    $(window).trigger('scroll');
+                },150);
+            }
 
         }.bind(this));
     },

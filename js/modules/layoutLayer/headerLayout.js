@@ -63,6 +63,16 @@ var HeaderModule = {
                 $('#searchfield').focus();
                 this.show_menu();
 
+            } else if (  $(window).scrollTop() > $('#header').height()
+                         && $('.header-container').hasClass('active')
+                         && e.keyCode === 32 ) {
+
+                if ( $('#searchfield').val() === '' || $('#searchfield').val() === ' ' ) {
+                    e.preventDefault();
+                    $('#searchfield').val( '' );
+                    this.show_menu();
+                }
+
             }
         }.bind(this));
         
