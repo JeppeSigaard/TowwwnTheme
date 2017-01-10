@@ -51,7 +51,7 @@ jQuery.prototype.monthPicker = function( options, callback ) {
             pickerHtml += '<div class="month" data-key="'+key+'" id="'+year+'-'+key+'"><div class="monthTitle">'+months[key]+'</div>';
             pickerHtml += '<div class="yearTitle" data-key="'+years[year]+'">'+years[year]+'</div></div>';
         }
-    }pickerHtml += '</div>';
+    } pickerHtml += '</div>';
     
     // Adds html to elem itself
     elem.html( 'Alle <div class="pickerArrow"></div>' );
