@@ -34,15 +34,24 @@ jQuery.prototype.monthPicker = function( options, callback ) {
         '11': 'Dec',
     }
     
+    var years = [
+        '2016',
+        '2017',
+        '2018'
+    ]
+
     var elem = $(this),
         pickerClass = 'monthPicker_selector',
         pickerHtml = '<div class="'+pickerClass+'">',
         previousSelctions = [],
         clickPoint = null;
     
-    for ( var key in months ) {
-        pickerHtml += '<div class="month" data-key="'+key+'" id="'+key+'">'+months[key]+'</div>';
-    } pickerHtml += '</div>';
+    for ( var year in years ) {
+        for ( var key in months ) {
+            pickerHtml += '<div class="month" data-key="'+key+'" id="'+year+'-'+key+'"><div class="monthTitle">'+months[key]+'</div>';
+            pickerHtml += '<div class="yearTitle" data-key="'+years[year]+'">'+years[year]+'</div></div>';
+        }
+    }pickerHtml += '</div>';
     
     // Adds html to elem itself
     elem.html( 'Alle <div class="pickerArrow"></div>' );
@@ -91,8 +100,9 @@ jQuery.prototype.monthPicker = function( options, callback ) {
                 previousSelctions = [];
 
                 var ncpMonth = parseInt($(this).attr('data-key'));
-                var from = new Date(2017, ncpMonth).getTime();
-                var to = new Date(2017, ncpMonth+1).getTime();
+                var ncpYear = parseInt($('.yearTitle', this).attr('data-key'))
+                var from = new Date(ncpYear, ncpMonth).getTime();
+                var to = new Date(ncpYear, ncpMonth+1).getTime();
 
                 if ( clickPoint !== null ) {
                     if ($(this).attr('data-key') === clickPoint.attr('data-key')) {
@@ -105,35 +115,63 @@ jQuery.prototype.monthPicker = function( options, callback ) {
                     }
 
                     var ocpMonth = parseInt(clickPoint.attr('data-key'));
-                    var fromPoint = 0, toPoint = 0;
-                    if ( new Date( 2017, ocpMonth ).getTime() < new Date ( 2017, ncpMonth ) ) {
-                        from = new Date( 2017, ocpMonth ).getTime(); fromPoint = ocpMonth;
-                        to = new Date( 2017, ncpMonth+1 ).getTime(); toPoint = ncpMonth;
-                        $('.'+pickerClass+' #'+ocpMonth).addClass('active-left');
+                    var ocpYear = parseInt($('.yearTitle', clickPoint).attr('data-key'));
+                    var fromPoint = 0, toPoint = 0, fromYear = 0, toYear = 0;
+                    if ( new Date( ocpYear, ocpMonth ).getTime() < new Date ( ncpYear, ncpMonth ) ) {
+                        from = new Date( ocpYear, ocpMonth ).getTime(); fromPoint = ocpMonth; fromYear = ocpYear;
+                        to = new Date( ncpYear, ncpMonth+1 ).getTime(); toPoint = ncpMonth; toYear = ncpYear;
+                        $('.'+pickerClass+' #'+ocpYear+'-'+ocpMonth).addClass('active-left');
                         $(this).addClass('active-right')
                     } else {
-                        from = new Date( 2017, ncpMonth ).getTime(); fromPoint = ncpMonth;
-                        to = new Date( 2017, ocpMonth+1 ).getTime(); toPoint = ocpMonth;
+                        from = new Date( ncpYear, ncpMonth ).getTime(); fromPoint = ncpMonth; fromYear = ncpYear;
+                        to = new Date( ocpYear, ocpMonth+1 ).getTime(); toPoint = ocpMonth; toYear = ocpYear;
                         $(this).addClass('active-left');
-                        $('.'+pickerClass+' #'+ocpMonth).addClass('active-right')
+                        $('.'+pickerClass+' #'+ocpYear+'-'+ocpMonth).addClass('active-right')
                     }
 
-                    elem.html( months[fromPoint]+' - '+months[toPoint] + '<div class="pickerArrow"></div>' );
+                    elem.html( months[fromPoint]+' '+fromYear+' - '+months[toPoint]+' '+toYear+'<div class="pickerArrow"></div>' );
 
-                    for ( var i = fromPoint+1; i < toPoint; i++ ) {
-                        $('.'+pickerClass+' #'+i).addClass('active-middle');
+                    if ( fromYear === toYear ) {
+                        for ( var i = fromPoint+1; i < toPoint; i++ ) {
+                            $('.'+pickerClass+' #'+fromYear+'-'+i).addClass('active-middle');
+                        }
+                    } else if ( parseInt(fromYear)+1 === parseInt(toYear) ) {
+                        for ( var i = fromPoint+1; i < 12; i++ ) {
+                            $('.'+pickerClass+' #'+fromYear+'-'+i).addClass('active-middle');
+                        }
+
+                        for ( var i = 0; i < toPoint; i++ ) {
+                            $('.'+pickerClass+' #'+toYear+'-'+i).addClass('active-middle');
+                        }
+                    } else {
+                        for ( var i = fromPoint+1; i < 12; i++ ) {
+                            $('.'+pickerClass+' #'+fromYear+'-'+i).addClass('active-middle');
+                        }
+
+                        for ( var i = fromYear+1; i < toYear; i++ ) {
+                            for ( var im = 0; im < 12; im++ ) {
+                                $('.'+pickerClass+' #'+im+'-'+i).addClass('active-middle');
+                            }
+                        }
+
+                        for ( var i = 0; i < toPoint; i++ ) {
+                            $('.'+pickerClass+' #'+toYear+'-'+i).addClass('active-middle');
+                        }
                     }
+
 
                     clickPoint = null;
                 } else {
                     clickPoint = $(this);
                     $(this).addClass('active');
-                    elem.html( months[$(this).attr('data-key')] + '<div class="pickerArrow"></div>' );
-                    previousSelctions.push( $(this).attr('data-key') );
+                    elem.html( months[$(this).attr('data-key')]+' '+$('.yearTitle').attr('data-key')+'<div class="pickerArrow"></div>' );
+                    previousSelctions.push( $('.yearTitle',this).attr('data-key')+'-'+$(this).attr('data-key') );
                 }
 
-                for ( var i = fromPoint; i < toPoint+1; i++ ) {
-                    previousSelctions.push( i );
+                for ( var iy = fromYear; iy < toYear+1; iy++ ) {
+                    for ( var i = fromPoint; i < toPoint+1; i++ ) {
+                        previousSelctions.push( iy+'-'+i );
+                    }
                 }
 
                 elem[0].month_from = from;

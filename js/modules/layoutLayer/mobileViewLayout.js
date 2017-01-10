@@ -31,9 +31,13 @@ var MobileLayoutModule = {
     // Activate back button
     activeBackButton: function() {
         if ( !this.settings.bbActive ) {
-            this.settings.backButton.addClass('active');
+            setTimeout(function() {
+                this.settings.backButton.addClass('active');
+            }.bind(this), 300);
+
             this.settings.betaWarning.removeClass('active');
             this.settings.socialMedia.removeClass('active');
+
             this.settings.bbActive = true;
         }
     },
@@ -42,8 +46,12 @@ var MobileLayoutModule = {
     disableBackButton: function() {
         if ( this.settings.bbActive ) {
             this.settings.backButton.removeClass('active');
-            this.settings.betaWarning.addClass('active');
-            this.settings.socialMedia.addClass('active');
+
+            setTimeout(function() {
+                this.settings.betaWarning.addClass('active');
+                this.settings.socialMedia.addClass('active');
+            }.bind(this), 300);
+
             this.settings.bbActive = false;
         }
     }

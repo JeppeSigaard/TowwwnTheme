@@ -1,7 +1,7 @@
 
             <div class="footer">
                 <div class="copyright">
-                    Copyright <?php echo date_i18n('Y', time()); ?> Towwwn Something... Yada yada
+                    Copyright <?php echo date_i18n('Y', time()); ?> Towwwn Something... Yea
                 </div>
             </div>
 

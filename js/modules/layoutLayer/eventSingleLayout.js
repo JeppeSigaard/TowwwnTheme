@@ -24,6 +24,8 @@ var EventSingleModule = {
             }
         }
         
+        console.log( event );
+
         // Generates html
         ViewHandler.settings.right_container.html( this.generate_sv_event_html( event ) );
         ViewHandler.settings.right_container.addClass( 'active' );
@@ -38,7 +40,7 @@ var EventSingleModule = {
     generate_sv_event_html: function( event ) {
         
         var desc = HelpFunctions.nl2p(HelpFunctions.linkifier( event.description[0] ));
-        var start_time = HelpFunctions.formatDate( event.start_time[0], true );
+        var start_time = HelpFunctions.formatDate( event.start_time[0], true, true );
         
         var response = '<div class="event-singleview-container" >';
         response += '<div class="sync-container">';

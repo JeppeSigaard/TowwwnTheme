@@ -5,6 +5,9 @@ var FrontPageModule = {
     settings: {  
         ready: false,
         lc: '',
+
+        loadMoreGetNum: 10,
+        firstGetNum: 20,
     },
     
     // Init
@@ -19,6 +22,8 @@ var FrontPageModule = {
         lc += '</div><div class="picker"></div>';
         
         lc += '<div class="eventscontainer"></div>';
+        lc += '<div class="load-more">Indlæs '+this.settings.loadMoreGetNum+' mere</div>'
+
         this.settings.lc = lc;
         $('.left-container').html(lc);
         
@@ -40,7 +45,7 @@ var FrontPageModule = {
         this.bindUIActions();
         
         // Gets events and locations categories
-        EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 55, acceptOld: false });
+        EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: this.settings.firstGetNum, acceptOld: false });
         ViewHandler.bindUIActions();
 
         // Reload view heights
@@ -70,6 +75,27 @@ var FrontPageModule = {
             }.bind( this ));
         }
         
+        $('.load-more').on('click', function() {
+            var rest = EventCalenderModule.loadMore( this.settings.loadMoreGetNum );
+            if ( rest > this.settings.loadMoreGetNum ) rest = this.settings.loadMoreGetNum;
+            else if ( rest === 0 ) {
+                $('.left-container').addClass('all-loaded');
+
+                if(ViewHandler.settings.poly_view){
+                    setTimeout(function(){
+                        $('.left-container').css('height', 'auto');
+                        $('.right-container').css('height', '0');
+                        $('.content-container').flickity('reloadCells');
+                        $('.left-container, .right-container').css('height', $('.content-container .flickity-viewport').height());
+                        $(window).trigger('scroll');
+                        ViewHandler.go_to(0);
+                    },150);
+                }
+            }
+
+            $('.load-more').html( 'Indlæs '+rest+' mere' );
+        }.bind(this));
+
         $('.blocklayoutbtn').on( 'click', function() {
             $('.eventscontainer').removeClass('lineLayout'); 
             if(ViewHandler.settings.poly_view){
@@ -103,7 +129,7 @@ var FrontPageModule = {
         }, function( elem ) {
 
             $('.eventscontainer').html( '' );
-            EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 150, acceptOld: false, from: elem[0].month_from, to: elem[0].month_to });
+            EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 20, acceptOld: true, from: elem[0].month_from, to: elem[0].month_to });
             if(ViewHandler.settings.poly_view){
                 setTimeout(function(){
                     $('.left-container').css('height', 'auto');

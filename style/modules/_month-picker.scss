@@ -25,6 +25,7 @@
     }
 
     .month {
+        position: relative;
         box-sizing: border-box;
         color: white;
         display: inline-block;
@@ -34,7 +35,7 @@
         width: 42px;
         height: 42px;
         margin: 9px 0px 9px 0px;
-        line-height: 42px;
+        line-height: 31px;
         transition: border-radius 150ms, background-color 150ms;
         font-size: 11px;
         text-transform: uppercase;
@@ -69,6 +70,13 @@
             height: 36px;
             line-height: 36px;
             margin: 12px 0px 12px 0px;
+        }
+
+        .year-title{
+            position: absolute;
+            top: 11px;
+            left: 50%;
+            transform: translate(-50%, 0);
         }
     }
 }

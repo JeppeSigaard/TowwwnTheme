@@ -4,6 +4,12 @@ var EventCalenderModule = {
     // Fields
     settings: {  
         html: '',
+        breakpointHtml: '',
+        breakpoint: -1,
+        breakpointArray: [],
+        breakpointFrom: -1,
+        breakpointTo: -1,
+        breakpointView: '',
     },
     
     // Init
@@ -12,6 +18,8 @@ var EventCalenderModule = {
     
     // Render Events
     renderEventCalender: function( view, modifiers ) {
+        this.settings.breakpointView = view;
+        $('.left-container').removeClass('all-loaded');
         
         // Checks for modifiers
         var acceptOld = false, getNum = 37, from = -1, to = -1, buffer = false, sort = true;
@@ -24,9 +32,10 @@ var EventCalenderModule = {
         if ( !buffer ) {
 
             // Makes render buffer array
-            var buffer = [], events = EventContentModule.settings.events;
-            for ( var i = 0; i < events.length; i++ ) {
-                if ( buffer.length > getNum ) break;
+            var buffer = [], events = EventContentModule.settings.events, i;
+            for ( i = 0; i < events.length; i++ ) {
+                if ( buffer.length > getNum ) {
+                    this.settings.breakpoint = i; break; }
 
                 var eventTime = new Date(events[i].start_time[0].substr(0,16)).getTime();
                 if ( !acceptOld && eventTime < new Date().getTime() ) continue;
@@ -36,22 +45,23 @@ var EventCalenderModule = {
                 buffer.push( events[i] );
             }
 
-            // Sorts buffer
-            buffer.sort( function( a, b ) {
-                var aTime = new Date(a.start_time[0].substr(0,16)).getTime();
-                var bTime = new Date(b.start_time[0].substr(0,16)).getTime();
-                if ( aTime < bTime ) return -1;
-                if ( aTime > bTime ) return 1;
-                return 0;
-            });
+            this.settings.breakpointArray = events;
 
+        } else {
+            this.settings.breakpointArray = modifiers.content;
+            this.settings.breakpoint = getNum;
         }
+
+        this.settings.breakpointFrom = from;
+        this.settings.breakpointTo = to;
 
         // Generates html
         for ( var i = 0; i < buffer.length; i++ ) {
             this.settings.html+=this.generateEventHtml( buffer[i] );
         }
         
+        this.settings.breakpointHtml = this.settings.html;
+
         // Renders
         $(view).html( this.settings.html );
         this.settings.html = '';
@@ -69,12 +79,56 @@ var EventCalenderModule = {
         
     },
     
+    // Load more
+    loadMore: function( getNum ) {
+
+        console.log( this.settings.breakpoint + ' - ' + this.settings.breakpointArray.length );
+
+        // Generates event array
+        var buffer = [], bpArray = this.settings.breakpointArray;
+        for ( var i = this.settings.breakpoint; i < bpArray.length; i++ ) {
+            var eventTime = new Date(bpArray[i].start_time[0].substr(0,16)).getTime();
+            if ( buffer.length >= getNum ) {
+                this.settings.breakpoint = i; break; }
+
+            if ( this.settings.breakpointFrom !== -1 && this.settings.breakpointFrom > eventTime ) continue;
+            if ( this.settings.breakpointTo !== -1 && this.settings.breakpointTo < eventTime ) continue;
+
+            buffer.push( bpArray[i] );
+        }
+
+        // If no more events were found
+        if ( buffer.length < getNum ) {
+            this.settings.breakpoint = bpArray.length;
+        }
+
+        // Renders the events
+        for ( var i = 0; i < buffer.length; i++ ) {
+            this.settings.breakpointHtml+=this.generateEventHtml( buffer[i] );
+        }  $(this.settings.breakpointView).html( this.settings.breakpointHtml );
+
+        // Reload view heights
+        if(ViewHandler.settings.poly_view){
+            setTimeout(function(){
+                $('.left-container').css('height', 'auto');
+                $('.right-container').css('height', $('.sync-container').innerHeight());
+                $('.content-container').flickity('reloadCells');
+                $('.left-container, .right-container').css('height', $('.content-container .flickity-viewport').height());
+                $(window).trigger('scroll');
+            },150);
+        }
+
+        // Return the rest
+        return bpArray.length-this.settings.breakpoint;
+
+    },
+
     // Generate Event HTML
     generateEventHtml: function( elem ) {
         
         // Sets up vars
         var response = '',
-            time_formatted = HelpFunctions.formatDate( elem.start_time[0] ),
+            time_formatted = HelpFunctions.formatDate( elem.start_time[0], false, false ),
             name = String(elem.name).substr(0, 36) + ( String(elem.name).substr(36,99).split( ' ' )[0] );
         
         // Adds length formatting to name
