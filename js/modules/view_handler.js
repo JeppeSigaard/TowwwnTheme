@@ -12,6 +12,7 @@ var ViewHandler = {
     
     // Init
     init: function() {
+
         // Load event single view
         var event_sv, lastScroll = 0, isNew = false;
         $(document).on( 'click', '.event', function() {

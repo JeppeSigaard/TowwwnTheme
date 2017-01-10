@@ -27,8 +27,7 @@ $(function() {
     EventContentModule.init(function() {
         onContentLoad();
     });
-    
-    ViewHandler.poly_view_init();
+
     var onContentLoad = function() {
         FrontPageModule.init();
         SearchModule.init();
@@ -36,3 +35,8 @@ $(function() {
         EventSingleModule.init();
     }
 });
+=======
+        //ViewHandler.poly_view_init();
+    }
+});
+>>>>>>> origin/master

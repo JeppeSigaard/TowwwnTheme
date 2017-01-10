@@ -62,12 +62,11 @@ var FrontPageModule = {
 
         // Annnnnd its ready
         this.settings.ready = true;
-    
+
     },
     
     // Bind UI Actions
     bindUIActions: function() {
-        
         if ( !this.settings.ready ) {
             $('.logo-container').on( 'click', function() {
                 this.generate_front_page();

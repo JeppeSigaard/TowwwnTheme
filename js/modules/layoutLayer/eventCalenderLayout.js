@@ -4,12 +4,15 @@ var EventCalenderModule = {
     // Fields
     settings: {  
         html: '',
+<<<<<<< HEAD
         breakpointHtml: '',
         breakpoint: -1,
         breakpointArray: [],
         breakpointFrom: -1,
         breakpointTo: -1,
         breakpointView: '',
+=======
+>>>>>>> origin/master
     },
     
     // Init
@@ -18,6 +21,7 @@ var EventCalenderModule = {
     
     // Render Events
     renderEventCalender: function( view, modifiers ) {
+<<<<<<< HEAD
         this.settings.breakpointView = view;
         $('.left-container').removeClass('all-loaded');
         
@@ -55,11 +59,38 @@ var EventCalenderModule = {
         this.settings.breakpointFrom = from;
         this.settings.breakpointTo = to;
 
+=======
+
+        // Checks for modifiers
+        var acceptOld = false, getNum = 37, month;
+        if ( typeof modifiers.acceptOld !== 'undefined' ) acceptOld = modifiers.acceptOld;
+        if ( typeof modifiers.getNum !== 'undefined' ) getNum = modifiers.getNum;
+        if ( typeof modifiers.month !== 'undefined' ) month = modifiers.month;
+
+        // Makes render buffer array
+        var buffer = [], events = EventContentModule.settings.events;
+        for ( var i = 0; i < events.length; i++ ) {
+            if ( buffer.length > getNum ) break;
+            if ( !acceptOld && new Date(events[i].start_time[0]).getTime() < new Date().getTime() ) continue;
+            buffer.push( events[i] );
+        }
+
+        // Sorts buffer
+        buffer.sort( function( a, b ) {
+            var aTime = new Date(a.start_time[0]).getTime();
+            var bTime = new Date(b.start_time[0]).getTime();
+            if ( aTime < bTime ) return -1;
+            if ( aTime > bTime ) return 1;
+            return 0;
+        });
+
+>>>>>>> origin/master
         // Generates html
         for ( var i = 0; i < buffer.length; i++ ) {
             this.settings.html+=this.generateEventHtml( buffer[i] );
         }
         
+<<<<<<< HEAD
         this.settings.breakpointHtml = this.settings.html;
 
         // Renders
@@ -123,12 +154,23 @@ var EventCalenderModule = {
 
     },
 
+=======
+        // Renders
+        $(view).html( this.settings.html );
+
+    },
+
+>>>>>>> origin/master
     // Generate Event HTML
     generateEventHtml: function( elem ) {
         
         // Sets up vars
         var response = '',
+<<<<<<< HEAD
             time_formatted = HelpFunctions.formatDate( elem.start_time[0], false, false ),
+=======
+            time_formatted = HelpFunctions.formatDate( elem.start_time[0] ),
+>>>>>>> origin/master
             name = String(elem.name).substr(0, 36) + ( String(elem.name).substr(36,99).split( ' ' )[0] );
         
         // Adds length formatting to name
@@ -153,4 +195,8 @@ var EventCalenderModule = {
         
     },
     
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/master

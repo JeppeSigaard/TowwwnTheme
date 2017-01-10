@@ -72,7 +72,6 @@ var HeaderModule = {
                     $('#searchfield').val( '' );
                     this.show_menu();
                 }
-
             }
         }.bind(this));
         

@@ -39,10 +39,6 @@
                     <img src="<?php echo get_template_directory_uri() . "/style/assets/icons/left-pointing-arrow.svg"; ?>" class="back-img" />
                     </div>
 
-                    <div class="socialmedia active">
-                        <a href="<?php echo get_theme_mod('facebook_url'); ?>" class="fb_link" >
-                            <img src="<?php echo get_template_directory_uri() . '/style/assets/icons/facebook.svg' ?>" class="fb_img" />
-                        </a>
-                    </div>
+                    <div class="socialmedia active"></div>
                 </div>
             </div>
