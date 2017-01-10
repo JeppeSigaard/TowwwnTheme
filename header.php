@@ -15,9 +15,6 @@
                         <img id="searchicon" src="<?php echo get_template_directory_uri() . '/style/assets/icons/search.svg'; ?>">
                         <input id="searchfield" name="searchfield">
                     </div>
-                    <div id="fb-login">
-                        <div class="fb-login-btn">Log ind</div>
-                    </div>
                 </div>
                 <div class="headerbar-placeholder"></div>
                 <div id="headerbar">
@@ -33,14 +30,15 @@
                         <img src="<?php echo get_template_directory_uri() . '/style/assets/icons/arrow.svg' 
                         ?>" class="menu-hide-img" >
                     </div>
-                    <div class="beta-warning"> 
+
+                    <div class="beta-warning active">
                         <div class="info">Info</div>
                         <div class="version"><?php echo get_theme_mod('version'); ?></div> 
                     </div>
-                    <div class="socialmedia">
-                        <a href="<?php echo get_theme_mod('facebook_url'); ?>" class="fb_link" >
-                            <img src="<?php echo get_template_directory_uri() . '/style/assets/icons/facebook.svg' ?>" class="fb_img" />
-                        </a>
+                    <div class="back-button">
+                    <img src="<?php echo get_template_directory_uri() . "/style/assets/icons/left-pointing-arrow.svg"; ?>" class="back-img" />
                     </div>
+
+                    <div class="socialmedia active"></div>
                 </div>
             </div>

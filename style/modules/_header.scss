@@ -1,6 +1,30 @@
+<<<<<<< HEAD
 @media screen and (max-width: $bp-1) {
     .header-container{
         max-width: $main-container-width-bp-1!important;
+    }
+}
+
+@media screen and (max-width: $bp-m) {
+    .header-container{
+        position: fixed;
+        top: -$top-area-height;
+        transition: 200ms;
+
+        &.active{
+            top: 0;
+        }
+    }
+
+    .header-placeholder{
+        height: $menu-bar-height!important;
+        display: block!important;
+    }
+
+    #header{
+        #searchfield{
+            width: 250px!important;
+        }
     }
 }
 
@@ -8,6 +32,11 @@
     width: 100%;
     max-width: $main-container-width;
     transition: 200ms;
+=======
+.header-container{
+    width: 100%;
+    max-width: $main-container-width;
+>>>>>>> origin/master
     height: auto;
     z-index: 100000;
     
@@ -88,7 +117,9 @@
             }
         }
     }
-    
+<<<<<<< HEAD
+=======
+
     #fb-login{
         position: absolute;
         bottom: 0;
@@ -97,10 +128,9 @@
         height: 32px;
         font-size: 15px;
         line-height: 32px;
-        background-color: darken($color-blue-2, 10%);
         text-align: center;
-        cursor: pointer;
-        
+        background-color: darken($color-blue-2, 10%);
+
         &::before{
             content: '';
             position: absolute;
@@ -110,20 +140,21 @@
             width: 0;
             border-top: 16px solid transparent;
             border-bottom: 16px solid darken($color-blue-2, 10%);
-            border-left: 8px solid transparent;
-            border-right: 8px solid darken($color-blue-2, 10%);
+            border-left: 14px solid transparent;
+            border-right: 14px solid darken($color-blue-2, 10%);
         }
-        
-        .fb-login-btn{
+
+        .fb-login-anchor{
             text-decoration: none;
             color: rgba(white, .8);
             transition: 150ms;
-            
+
             &:hover{
                 color: white;
             }
         }
     }
+>>>>>>> origin/master
 }
 
 

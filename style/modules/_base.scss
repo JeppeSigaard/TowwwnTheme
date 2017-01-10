@@ -14,23 +14,39 @@ body {
     }
 }
 
+@media screen and (max-width: $bp-m) {
+    .content-container{
+        .left-container{
+            min-height: calc(100vh - #{$menu-bar-height})!important;
+        }
+
+        .right-container{
+            min-height: calc(100vh - #{$menu-bar-height})!important;
+        }
+    }
+}
+
 .main-container{
     position: relative;
     margin: 0 auto;
     width: 100%;
     height: auto;
     box-shadow: 0px 0px 10px rgba(0,0,0,1);
-    
     max-width: $main-container-width;
     transition: 200ms;
-    
     overflow: hidden;
 }
 
 .content-container{
     width: 100%;
     height: auto;
-    display: flex;
+    background-color: white;
+    box-shadow: 0px 2px 8px rgba(0,0,0,.4);
+    z-index: 1;
+
+    .flickity-viewport{
+        width: 100%;
+    }
     
     .load-container{
         position: absolute;
@@ -49,31 +65,42 @@ body {
     }
     
     .left-container{
-        position: relative;
-        overflow: hidden;
         width: 100%;
         height: auto;
-        min-height: calc(100vh - #{$top-area-height} - #{$menu-bar-height})!important;
+        min-height: calc(100vh - #{$top-area-height} - #{$menu-bar-height});
         background-color: #CDCDCD;
-        flex-grow: 1;
         transition: width 100ms;
-    
-        &.active{
-            width: 50%;
-        }
+        padding-bottom: 141px;
     }
     
     .right-container{
-        position: relative;
-        overflow: hidden;
+        width: 100%;
         height: auto;
-        min-height: calc(100vh - #{$top-area-height} - #{$menu-bar-height})!important;
+        min-height: calc(100vh - #{$top-area-height} - #{$menu-bar-height});
         background-color: white;
-        flex-grow: 1;
-        transition: width 100ms;
+        transition: width 100ms, opacity 100ms;
 
-        &.active{
-            width: 50%;
+        &.spoopy{
+            opacity: 0;
+            transition: opacity 0ms;
         }
     }
+}
+
+
+@media only screen and(min-width:640px){
+    .content-container .left-container.active,
+    .content-container .right-container.active{
+        width: 50%;
+    }
+}
+
+@media only screen and(min-width:1080px){
+    .content-container .left-container.active{
+        width: calc(100% - 700px);
+    }
+    .content-container .right-container.active{
+        width: 700px;
+    }
+
 }
