@@ -32,11 +32,7 @@ $(function() {
         FrontPageModule.init();
         SearchModule.init();
         ViewHandler.init();
+        ViewHandler.poly_view_init();
         EventSingleModule.init();
     }
 });
-=======
-        //ViewHandler.poly_view_init();
-    }
-});
->>>>>>> origin/master

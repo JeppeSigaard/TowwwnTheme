@@ -6,8 +6,8 @@ var FrontPageModule = {
         ready: false,
         lc: '',
 
-        loadMoreGetNum: 10,
-        firstGetNum: 20,
+        loadMoreGetNum: 25,
+        firstGetNum: 30,
     },
     
     // Init
