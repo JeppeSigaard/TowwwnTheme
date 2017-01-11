@@ -8,7 +8,7 @@
 // @koala-prepend 'modules/layoutLayer/frontpageLayout.js';
 // @koala-prepend 'modules/layoutLayer/eventCalenderLayout.js';
 // @koala-prepend 'modules/layoutLayer/eventSingleLayout.js';
-// @koala-prepend 'modules/layoutLayer/mobileViewLayout.js';
+// @koala-prepend 'modules/layoutLayer/viewController.js';
 // @koala-prepend 'modules/search.js';
 
 $(function() {
@@ -19,10 +19,7 @@ $(function() {
     });
 
     HeaderModule.init();
-
-    if ( $(window).innerWidth() <= 640 ) {
-        MobileLayoutModule.init();
-    }
+    ViewControllerModule.init();
 
     EventContentModule.init(function() {
         onContentLoad();

@@ -71,6 +71,10 @@ body {
         background-color: #CDCDCD;
         transition: width 100ms;
         padding-bottom: 141px;
+
+        &.no-trans{
+            transition: 0ms;
+        }
     }
     
     .right-container{
@@ -83,6 +87,10 @@ body {
         &.spoopy{
             opacity: 0;
             transition: opacity 0ms;
+        }
+
+        &.no-trans{
+            transition: 0ms;
         }
     }
 }

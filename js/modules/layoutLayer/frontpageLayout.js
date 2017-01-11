@@ -50,12 +50,8 @@ var FrontPageModule = {
 
         // Reload view heights
         if(ViewHandler.settings.poly_view){
+            ViewHandler.reload_view( true );
             setTimeout(function(){
-                $('.left-container').css('height', 'auto');
-                $('.right-container').css('height', '0');
-                $('.content-container').flickity('reloadCells');
-                $('.left-container, .right-container').css('height', $('.content-container .flickity-viewport').height());
-                $(window).trigger('scroll');
                 ViewHandler.go_to(0);
             },150);
         }
@@ -74,22 +70,16 @@ var FrontPageModule = {
             }.bind( this ));
         }
         
+        $(document).on('click', '.event', function() {
+            this.updateLayoutPosition();
+        }.bind(this));
+
         $('.load-more').on('click', function() {
             var rest = EventCalenderModule.loadMore( this.settings.loadMoreGetNum );
             if ( rest > this.settings.loadMoreGetNum ) rest = this.settings.loadMoreGetNum;
             else if ( rest === 0 ) {
                 $('.left-container').addClass('all-loaded');
-
-                if(ViewHandler.settings.poly_view){
-                    setTimeout(function(){
-                        $('.left-container').css('height', 'auto');
-                        $('.right-container').css('height', '0');
-                        $('.content-container').flickity('reloadCells');
-                        $('.left-container, .right-container').css('height', $('.content-container .flickity-viewport').height());
-                        $(window).trigger('scroll');
-                        ViewHandler.go_to(0);
-                    },150);
-                }
+                ViewHandler.reload_view( true );
             }
 
             $('.load-more').html( 'Indlæs '+rest+' mere' );
@@ -97,30 +87,12 @@ var FrontPageModule = {
 
         $('.blocklayoutbtn').on( 'click', function() {
             $('.eventscontainer').removeClass('lineLayout'); 
-            if(ViewHandler.settings.poly_view){
-                setTimeout(function(){
-                    $('.left-container').css('height', 'auto');
-                    $('.right-container').css('height', '0');
-                    $('.content-container').flickity('reloadCells');
-                    $('.left-container, .right-container').css('height', $('.content-container .flickity-viewport').height());
-                    $(window).trigger('scroll');
-                    ViewHandler.go_to(0);
-                },150);
-            }
+            ViewHandler.reload_view( true );
         });
         
         $('.linelayoutbtn').on( 'click', function() {
             $('.eventscontainer').addClass('lineLayout');
-            if(ViewHandler.settings.poly_view){
-                setTimeout(function(){
-                    $('.left-container').css('height', 'auto');
-                    $('.right-container').css('height', '0');
-                    $('.content-container').flickity('reloadCells');
-                    $('.left-container, .right-container').css('height', $('.content-container .flickity-viewport').height());
-                    $(window).trigger('scroll');
-                    ViewHandler.go_to(0);
-                },150);
-            }
+            ViewHandler.reload_view( true );
         });
         
         $('.monthSelector').monthPicker({
@@ -129,17 +101,24 @@ var FrontPageModule = {
 
             $('.eventscontainer').html( '' );
             EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 20, acceptOld: true, from: elem[0].month_from, to: elem[0].month_to });
-            if(ViewHandler.settings.poly_view){
-                setTimeout(function(){
-                    $('.left-container').css('height', 'auto');
-                    $('.right-container').css('height', '0');
-                    $('.content-container').flickity('reloadCells');
-                    $('.left-container, .right-container').css('height', $('.content-container .flickity-viewport').height());
-                    $(window).trigger('scroll');
-                },150);
-            }
+            ViewHandler.reload_view( false );
+            this.updateLayoutPosition();
 
         }.bind(this));
     },
     
+    // Update layout parts position
+    updateLayoutPosition: function() {
+        if ( !$('.left-container').hasClass('all-loaded') ) {
+            setTimeout(function() {
+                var esvi_height = $('.event-sv-info').outerHeight();
+                $('.load-more').css({'height': esvi_height+'px', 'line-height': esvi_height+'px'});
+                $('.left-container').css({'padding-bottom': esvi_height+'px'});
+                ViewHandler.reload_view( false );
+            }, 150);
+        } else {
+            $('.left-container').css({'padding-bottom': '0px'});
+        }
+    }
+
 }
