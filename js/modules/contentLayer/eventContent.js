@@ -28,8 +28,8 @@ var EventContentModule = {
             
             var json = $.parseJSON( data.target.response );
             for ( var i = 0; i < json.length; i++ ) {
-                if ( json[i].imgurl[0] === 'undefined' || json[i].imgurl[0] === null ) {
-                    json[i].imgurl[0] = this.settings.placeholder_img; }
+                if ( json[i].imgurl === 'undefined' || json[i].imgurl === null ) {
+                    json[i].imgurl = this.settings.placeholder_img; }
                 this.settings.events.push( json[i] );
             }
             
@@ -37,8 +37,8 @@ var EventContentModule = {
                 this.render_ready = true;
                 this.settings.page_counter = 0;
                 this.settings.events.sort(function( a, b ) {
-                    if( a.start_time[0] < b.start_time[0] ) return -1;
-                    if( a.start_time[0] > b.start_time[0] ) return 1;
+                    if( a.start_time < b.start_time ) return -1;
+                    if( a.start_time > b.start_time ) return 1;
                     return 0;
                 });
                 

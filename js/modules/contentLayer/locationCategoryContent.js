@@ -20,8 +20,8 @@ var LocationCategoryModule = {
         // from the existing location array
         var locations = LocationModule.settings.locations;
         for ( var i = 0; i < locations.length; i++ ) {
-            for ( var ci = 0; ci < locations[i].categories[0].length; ci++ ) {
-                var category = locations[i].categories[0][ci];
+            for ( var ci = 0; ci < locations[i].categories.length; ci++ ) {
+                var category = locations[i].categories[ci];
                 if ( typeof this.settings.unsorted_location_categories[category.category_name] === 'undefined' ) {
                     this.settings.unsorted_location_categories[category.category_name] = {
                         category_counter: 1,

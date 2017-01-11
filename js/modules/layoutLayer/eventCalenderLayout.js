@@ -38,7 +38,7 @@ var EventCalenderModule = {
                 if ( buffer.length > getNum ) {
                     this.settings.breakpoint = i; break; }
 
-                var eventTime = new Date(events[i].start_time[0].substr(0,16)).getTime();
+                var eventTime = new Date(events[i].start_time.substr(0,16)).getTime();
                 if ( !acceptOld && eventTime < new Date().getTime() ) continue;
                 if ( from !== -1 && from > eventTime ) continue;
                 if ( to !== -1 && to < eventTime ) continue;
@@ -88,7 +88,7 @@ var EventCalenderModule = {
         // Generates event array
         var buffer = [], bpArray = this.settings.breakpointArray;
         for ( var i = this.settings.breakpoint; i < bpArray.length; i++ ) {
-            var eventTime = new Date(bpArray[i].start_time[0].substr(0,16)).getTime();
+            var eventTime = new Date(bpArray[i].start_time.substr(0,16)).getTime();
             if ( buffer.length >= getNum ) {
                 this.settings.breakpoint = i; break; }
 
@@ -143,7 +143,7 @@ var EventCalenderModule = {
         
         // Generates the html itself
         var response = '<div class="event" id="'+elem.id+'">';
-        response += '<div class="imgcontainer" style="background-image:url('+elem.imgurl[0]+')" ></div>';
+        response += '<div class="imgcontainer" style="background-image:url('+elem.imgurl+')" ></div>';
         response += '<div class="eventtext">';
         response += '<div class="title">'+name+'</div>';
         response += '<div class="start_time">'+time_formatted+'</div>';

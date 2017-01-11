@@ -54,11 +54,11 @@ var SearchModule = {
 
                 // Checks for includes of the individual keyword
                 if ( keywords[ki].length > 1 ) {
-                    tTitle += HelpFunctions.numOfIncludes( events[i].name[0].toLowerCase(), keywords[ki] ) * 2;
-                    tParent += HelpFunctions.numOfIncludes( events[i].parentname[0].toLowerCase(), keywords[ki] ) * 4;
+                    tTitle += HelpFunctions.numOfIncludes( events[i].name.toLowerCase(), keywords[ki] ) * 2;
+                    tParent += HelpFunctions.numOfIncludes( events[i].parentname.toLowerCase(), keywords[ki] ) * 4;
 
-                    if ( events[i].description[0] !== null ) {
-                        tDesc += HelpFunctions.numOfIncludes( events[i].description[0].toLowerCase(), keywords[ki] ) / 2;
+                    if ( events[i].description !== null ) {
+                        tDesc += HelpFunctions.numOfIncludes( events[i].description.toLowerCase(), keywords[ki] ) / 2;
                     }
                 }
             }
