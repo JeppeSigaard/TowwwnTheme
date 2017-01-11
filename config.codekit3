@@ -1115,22 +1115,13 @@
 		"oAP": "\/index.php",
 		"oF": 0
 		},
-	"\/js\/index-min.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/js\/index-min-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
 	"\/js\/index.js": {
 		"ft": 64,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
-		"oAP": "\/js\/index-min.js",
-		"oF": 0,
-		"sC": 1,
+		"oAP": "\/js\/index.min.js",
+		"oF": 2,
+		"sC": 0,
 		"tS": 0
 		},
 	"\/js\/index.min.js": {
@@ -1138,15 +1129,6 @@
 		"mi": 1,
 		"oA": 0,
 		"oAP": "\/js\/index.min-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/js\/modules\/contentLayer\/eventContent-min.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/js\/modules\/contentLayer\/eventContent-min-min.js",
 		"oF": 0,
 		"sC": 1,
 		"tS": 0
@@ -1190,90 +1172,90 @@
 	"\/js\/modules\/layoutLayer\/eventCalenderLayout.js": {
 		"ft": 64,
 		"mi": 1,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "\/js\/modules\/layoutLayer\/eventCalenderLayout-min.js",
-		"oF": 0,
+		"oF": 1,
 		"sC": 1,
 		"tS": 0
 		},
 	"\/js\/modules\/layoutLayer\/eventSingleLayout.js": {
 		"ft": 64,
 		"mi": 1,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "\/js\/modules\/layoutLayer\/eventSingleLayout-min.js",
-		"oF": 0,
+		"oF": 1,
 		"sC": 1,
 		"tS": 0
 		},
 	"\/js\/modules\/layoutLayer\/frontpageLayout.js": {
 		"ft": 64,
 		"mi": 1,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "\/js\/modules\/layoutLayer\/frontpageLayout-min.js",
-		"oF": 0,
+		"oF": 1,
 		"sC": 1,
 		"tS": 0
 		},
 	"\/js\/modules\/layoutLayer\/headerLayout.js": {
 		"ft": 64,
 		"mi": 1,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "\/js\/modules\/layoutLayer\/headerLayout-min.js",
-		"oF": 0,
+		"oF": 1,
 		"sC": 1,
 		"tS": 0
 		},
-	"\/js\/modules\/layoutLayer\/mobileViewLayout.js": {
+	"\/js\/modules\/layoutLayer\/viewController.js": {
 		"ft": 64,
 		"mi": 1,
 		"oA": 0,
-		"oAP": "\/js\/modules\/layoutLayer\/mobileViewLayout-min.js",
-		"oF": 0,
+		"oAP": "\/js\/modules\/layoutLayer\/viewController-min.js",
+		"oF": 1,
 		"sC": 1,
 		"tS": 0
 		},
 	"\/js\/modules\/search.js": {
 		"ft": 64,
 		"mi": 1,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "\/js\/modules\/search-min.js",
-		"oF": 0,
+		"oF": 1,
 		"sC": 1,
 		"tS": 0
 		},
 	"\/js\/modules\/tools\/fb.js": {
 		"ft": 64,
 		"mi": 1,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "\/js\/modules\/tools\/fb-min.js",
-		"oF": 0,
+		"oF": 1,
 		"sC": 1,
 		"tS": 0
 		},
 	"\/js\/modules\/tools\/help_functions.js": {
 		"ft": 64,
 		"mi": 1,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "\/js\/modules\/tools\/help_functions-min.js",
-		"oF": 0,
+		"oF": 1,
 		"sC": 1,
 		"tS": 0
 		},
 	"\/js\/modules\/tools\/month_picker.js": {
 		"ft": 64,
 		"mi": 1,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "\/js\/modules\/tools\/month_picker-min.js",
-		"oF": 0,
+		"oF": 1,
 		"sC": 1,
 		"tS": 0
 		},
 	"\/js\/modules\/view_handler.js": {
 		"ft": 64,
 		"mi": 1,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "\/js\/modules\/view_handler-min.js",
-		"oF": 0,
+		"oF": 1,
 		"sC": 1,
 		"tS": 0
 		},
@@ -1725,6 +1707,12 @@
 			"followForSyntaxChecking": 1,
 			"linkedFileAbbreviatedPath": "\/js\/modules\/tools\/help_functions.js",
 			"position": 11,
+			"type": 0
+			},
+		{
+			"followForSyntaxChecking": 1,
+			"linkedFileAbbreviatedPath": "\/js\/modules\/layoutLayer\/viewController.js",
+			"position": 12,
 			"type": 0
 			}
 		]
