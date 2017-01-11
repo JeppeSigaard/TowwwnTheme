@@ -1329,22 +1329,6 @@
 		"oAP": "\/style\/.sass-cache\/dce68a911b84c0f4ef78ad77acd4b3a3202ac7ac\/_avenir.scssc",
 		"oF": 0
 		},
-	"\/style\/assets\/font-faces\/_avenir.css": {
-		"aP": 0,
-		"bl": 0,
-		"ft": 16,
-		"ma": 0,
-		"oA": 1,
-		"oAP": "\/style\/assets\/font-faces\/_avenir-min.css",
-		"oF": 0,
-		"oS": 0
-		},
-	"\/style\/assets\/font-faces\/_avenir.css.map": {
-		"ft": 8192,
-		"oA": 1,
-		"oAP": "\/style\/assets\/font-faces\/_avenir.css.map",
-		"oF": 0
-		},
 	"\/style\/assets\/font-faces\/_avenir.scss": {
 		"aP": 0,
 		"bl": 0,
