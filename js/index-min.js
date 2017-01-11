@@ -1,1 +1,0 @@
-$(function(){$("a").click(function(i){"#"===$(this).attr("href")&&i.preventDefault()}),HeaderModule.init(),EventContentModule.init(function(){i()});var i=function(){FrontPageModule.init(),SearchModule.init(),ViewHandler.init(),EventSingleModule.init(),ViewHandler.poly_view_init()}});

@@ -129,6 +129,7 @@ jQuery.prototype.monthPicker = function( options, callback ) {
                         clickPoint.addClass('active-right');
                     }
 
+
                     elem.html( months[fromPoint]+' '+fromYear+' - '+months[toPoint]+' '+toYear+'<div class="pickerArrow"></div>' );
                     clickPoint = null;
 
