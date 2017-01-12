@@ -15,6 +15,12 @@
 		"oAP": "\/.gitattributes",
 		"oF": 0
 		},
+	"\/.gitignore": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/.gitignore",
+		"oF": 0
+		},
 	"\/footer.php": {
 		"ft": 8192,
 		"oA": 2,
@@ -1127,6 +1133,15 @@
 		"sC": 1,
 		"tS": 0
 		},
+	"\/js\/modules\/contentLayer\/eventContent-min.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/js\/modules\/contentLayer\/eventContent-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
 	"\/js\/modules\/contentLayer\/eventContent.js": {
 		"ft": 64,
 		"mi": 1,
@@ -1199,6 +1214,15 @@
 		"sC": 1,
 		"tS": 0
 		},
+	"\/js\/modules\/layoutLayer\/mobileViewLayout.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/js\/modules\/layoutLayer\/mobileViewLayout-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
 	"\/js\/modules\/layoutLayer\/viewController.js": {
 		"ft": 64,
 		"mi": 1,
@@ -1232,6 +1256,24 @@
 		"oA": 1,
 		"oAP": "\/js\/modules\/tools\/help_functions-min.js",
 		"oF": 1,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/js\/modules\/tools\/month_picker.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/js\/modules\/tools\/month_picker-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/js\/modules\/tools\/sync_scroll.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/js\/modules\/tools\/sync_scroll-min.js",
+		"oF": 0,
 		"sC": 1,
 		"tS": 0
 		},
@@ -1312,6 +1354,12 @@
 		"ft": 8192,
 		"oA": 1,
 		"oAP": "\/style\/.sass-cache\/dce68a911b84c0f4ef78ad77acd4b3a3202ac7ac\/_avenir.scssc",
+		"oF": 0
+		},
+	"\/style\/assets\/font-faces\/_avenir.css.map": {
+		"ft": 8192,
+		"oA": 1,
+		"oAP": "\/style\/assets\/font-faces\/_avenir.css.map",
 		"oF": 0
 		},
 	"\/style\/assets\/font-faces\/_avenir.scss": {
@@ -1646,20 +1694,32 @@
 			},
 		{
 			"followForSyntaxChecking": 1,
-			"linkedFileAbbreviatedPath": "\/js\/modules\/layoutLayer\/eventSingleLayout.js",
+			"linkedFileAbbreviatedPath": "\/js\/modules\/tools\/month_picker.js",
 			"position": 9,
 			"type": 0
 			},
 		{
 			"followForSyntaxChecking": 1,
-			"linkedFileAbbreviatedPath": "\/js\/modules\/tools\/help_functions.js",
+			"linkedFileAbbreviatedPath": "\/js\/modules\/layoutLayer\/eventSingleLayout.js",
 			"position": 10,
 			"type": 0
 			},
 		{
 			"followForSyntaxChecking": 1,
-			"linkedFileAbbreviatedPath": "\/js\/modules\/layoutLayer\/viewController.js",
+			"linkedFileAbbreviatedPath": "\/js\/modules\/tools\/sync_scroll.js",
 			"position": 11,
+			"type": 0
+			},
+		{
+			"followForSyntaxChecking": 1,
+			"linkedFileAbbreviatedPath": "\/js\/modules\/tools\/help_functions.js",
+			"position": 12,
+			"type": 0
+			},
+		{
+			"followForSyntaxChecking": 1,
+			"linkedFileAbbreviatedPath": "\/js\/modules\/layoutLayer\/viewController.js",
+			"position": 13,
 			"type": 0
 			}
 		]
