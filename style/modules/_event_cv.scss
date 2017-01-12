@@ -1,6 +1,8 @@
-@media screen and (max-width: 710px) {
-    #events{
-        width: 100%;
+@media screen and (max-width: $bp-m) {
+    #eventsbar{
+        .monthSelector{
+            right: 20px!important;
+        }
     }
 }
     
@@ -52,6 +54,7 @@
         cursor: pointer;
         padding-right: 28px;
         text-transform: uppercase;
+        transition: 120ms;
     }
 }
 

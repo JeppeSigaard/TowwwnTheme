@@ -19,7 +19,6 @@ var ViewHandler = {
             ViewHandler.settings.right_container.addClass('spoopy');
 
             $('.right-container').html('<div class="load-container"><img src="'+template_uri+'/style/assets/icons/loading.gif" class="loader" /></div>');
-            ViewHandler.sync_scroll( $('.load-container'), lastScroll, true );
             EventSingleModule.render_sv_event( $(this).attr('id') );
             EventSingleModule.bindUIActions();
 
@@ -35,16 +34,7 @@ var ViewHandler = {
                 },100);
             }
 
-            event_sv = $('.event-singleview-container .sync-container');
-            isNew = true;
-
         });
-
-        // Sync scroll
-        $(window).on( 'scroll', function() {
-            lastScroll = this.sync_scroll( event_sv, lastScroll, isNew );
-            isNew = false;
-        }.bind(this));
         
         // Resize update
         $(window).on('resize', function() {
@@ -87,42 +77,7 @@ var ViewHandler = {
     go_to: function( index ) {
         $('.content-container').flickity( 'select', index );
     },
-    
-    // Sync Scroll
-    sync_scroll: function( event_sv, lastScroll, isNew ) {
-        if ( typeof event_sv !== 'undefined' ) {
-            var st = $(window).scrollTop(),
-                delta = st - lastScroll,
-                newTop;
-            
-            // If new elem
-            if ( isNew ) {
-                newTop = $(window).scrollTop() - event_sv.parent().offset().top + $('#headerbar').innerHeight();
-            }
-                
-            // Down
-            if ( st + $(window).innerHeight() > event_sv.offset().top + event_sv.innerHeight() && delta >= 0) {
-                newTop = st + ( $(window).innerHeight() - event_sv.innerHeight() ) - event_sv.parent().offset().top }
-            
-            // Up
-            if ( event_sv.innerHeight() < $(window).innerHeight() - $('#headerbar').innerHeight() ||
-                 (st < event_sv.offset().top - $('#headerbar').innerHeight() && delta < 0 )) {
-                newTop = st - event_sv.parent().offset().top + $('#headerbar').innerHeight(); }
-            
-            // Top
-            if ( newTop < 0 ) { newTop = 0; }
-            if ( newTop > event_sv.parent().innerHeight() - event_sv.innerHeight() ) {
-                newTop = event_sv.parent().innerHeight() - event_sv.innerHeight();
-            }
-            
-            event_sv.css({'top':newTop+'px'});
-            return st;
-        }
-        
-        // Failure
-        return 0;
-    },
-    
+
     // Reload view
     reload_view: function( timeout ) {
 
@@ -155,7 +110,7 @@ var ViewHandler = {
         }.bind(this), 150);
 
         ViewHandler.go_to( 0 );
-    }
+    },
 
 };
 

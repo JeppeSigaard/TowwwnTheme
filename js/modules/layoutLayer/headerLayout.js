@@ -10,6 +10,13 @@ var HeaderModule = {
     
     // Init
     init: function() {
+        var commercial_swiper = new Swiper ('.commercial-container', {
+            direction: 'horizontal',
+            loop: true,
+            prevButton: '.prevButton',
+            nextButton: '.nextButton',
+        });
+
         this.bindUIActions();
     },
     
