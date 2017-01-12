@@ -27,9 +27,9 @@ $(function() {
 
     var onContentLoad = function() {
         FrontPageModule.init();
-        SearchModule.init();
         ViewHandler.init();
-        ViewHandler.poly_view_init();
+        SearchModule.init();
         EventSingleModule.init();
+        syncScroll.init($('#page-content'), '.container-section');
     }
 });

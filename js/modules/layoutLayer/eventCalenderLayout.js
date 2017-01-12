@@ -20,7 +20,7 @@ var EventCalenderModule = {
     renderEventCalender: function( view, modifiers ) {
 
         this.settings.breakpointView = view;
-        $('.left-container').removeClass('all-loaded');
+        ViewHandler.settings.left_container.removeClass('all-loaded');
         
         // Checks for modifiers
         var acceptOld = false, getNum = 37, from = -1, to = -1, buffer = false, sort = true;
@@ -66,18 +66,7 @@ var EventCalenderModule = {
         // Renders
         $(view).html( this.settings.html );
         this.settings.html = '';
-        
-        // Reload view heights
-        if(ViewHandler.settings.poly_view){
-            setTimeout(function(){
-                $('.left-container').css('height', 'auto');
-                $('.right-container').css('height', $('.sync-container').innerHeight());
-                $('.content-container').flickity('reloadCells');
-                $('.left-container, .right-container').css('height', $('.content-container .flickity-viewport').height());
-                $(window).trigger('scroll');
-            },150);
-        }
-        
+
     },
     
     // Load more
@@ -107,18 +96,6 @@ var EventCalenderModule = {
         for ( var i = 0; i < buffer.length; i++ ) {
             this.settings.breakpointHtml+=this.generateEventHtml( buffer[i] );
         }  $(this.settings.breakpointView).html( this.settings.breakpointHtml );
-
-        // Reload view heights
-        if(ViewHandler.settings.poly_view){
-            setTimeout(function(){
-                $('.left-container').css('height', 'auto');
-                $('.right-container').css('height', $('.sync-container').innerHeight());
-                $('.content-container').flickity('reloadCells');
-                $('.left-container, .right-container').css('height', $('.content-container .flickity-viewport').height());
-                $(window).trigger('scroll');
-            },150);
-        }
-
         // Return the rest
         return bpArray.length-this.settings.breakpoint;
 

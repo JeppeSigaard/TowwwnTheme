@@ -25,7 +25,7 @@ var FrontPageModule = {
         lc += '<div class="load-more">Indlæs '+this.settings.loadMoreGetNum+' mere</div>'
 
         this.settings.lc = lc;
-        $('.left-container').html(lc);
+        ViewHandler.settings.left_container.html(lc);
         
         // Generates front page
         this.generate_front_page();
@@ -39,11 +39,11 @@ var FrontPageModule = {
         if ( ViewHandler.settings.poly_view ) {
             ViewHandler.closeSingleView();
         } else {
-            $('.left-container').removeClass('active');
-            $('.right-container').html('').removeClass('active');
+            ViewHandler.settings.left_container.removeClass('active');
+            ViewHandler.settings.right_container.html('').removeClass('active');
         }
 
-        $('.left-container').html( this.settings.lc );
+        ViewHandler.settings.left_container.html( this.settings.lc );
         $('.eventscontainer').removeClass('lineLayout');
         
         // Binds ui actions
@@ -85,9 +85,12 @@ var FrontPageModule = {
             var rest = EventCalenderModule.loadMore( this.settings.loadMoreGetNum );
             if ( rest > this.settings.loadMoreGetNum ) rest = this.settings.loadMoreGetNum;
             else if ( rest === 0 ) {
-                $('.left-container').addClass('all-loaded');
+                ViewHandler.settings.left_container.addClass('all-loaded');
                 ViewHandler.reload_view( true );
-            } $('.load-more').html( 'Indlæs '+rest+' mere' );
+            }
+            $('.load-more').html( 'Indlæs '+rest+' mere' );
+            syncScroll.rescaleContainer();
+            $(window).trigger('scroll');
         }.bind(this));
 
         $('.blocklayoutbtn').on( 'click', function() {
@@ -114,17 +117,17 @@ var FrontPageModule = {
     
     // Update layout parts position
     updateLayoutPosition: function() {
-        if ( !$('.left-container').hasClass('all-loaded') ) {
+        if ( !ViewHandler.settings.left_container.hasClass('all-loaded') ) {
             setTimeout(function() {
                 if ( $('.event-sv-info').length > 0 ) { var esvi_height = $('.event-sv-info').outerHeight(); }
                 else { var esvi_height = 141; }
 
                 $('.load-more').css({'height': esvi_height+'px', 'line-height': esvi_height+'px'});
-                $('.left-container').css({'padding-bottom': esvi_height+'px'});
+                ViewHandler.settings.left_container.css({'padding-bottom': esvi_height+'px'});
                 ViewHandler.reload_view( false );
             }, 150);
         } else {
-            $('.left-container').css({'padding-bottom': '0px'});
+            ViewHandler.settings.left_container.css({'padding-bottom': '0px'});
         }
     }
 
