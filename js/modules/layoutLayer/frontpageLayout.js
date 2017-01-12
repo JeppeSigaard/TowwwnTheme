@@ -36,9 +36,14 @@ var FrontPageModule = {
     generate_front_page: function( ) {
         
         // Adds the base front page html to the container
-        $('.left-container').removeClass('active');
+        if ( ViewHandler.settings.poly_view ) {
+            ViewHandler.closeSingleView();
+        } else {
+            $('.left-container').removeClass('active');
+            $('.right-container').html('').removeClass('active');
+        }
+
         $('.left-container').html( this.settings.lc );
-        $('.right-container').html('').removeClass('active');
         $('.eventscontainer').removeClass('lineLayout');
         
         // Binds ui actions
@@ -47,11 +52,13 @@ var FrontPageModule = {
         // Gets events and locations categories
         EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: this.settings.firstGetNum, acceptOld: false });
         ViewHandler.bindUIActions();
+        this.updateLayoutPosition();
+        ViewControllerModule.disableBackButton();
 
         // Reload view heights
         if(ViewHandler.settings.poly_view){
-            ViewHandler.reload_view( true );
             setTimeout(function(){
+                ViewHandler.reload_view( false );
                 ViewHandler.go_to(0);
             },150);
         }
@@ -80,9 +87,7 @@ var FrontPageModule = {
             else if ( rest === 0 ) {
                 $('.left-container').addClass('all-loaded');
                 ViewHandler.reload_view( true );
-            }
-
-            $('.load-more').html( 'Indlæs '+rest+' mere' );
+            } $('.load-more').html( 'Indlæs '+rest+' mere' );
         }.bind(this));
 
         $('.blocklayoutbtn').on( 'click', function() {
@@ -101,7 +106,7 @@ var FrontPageModule = {
 
             $('.eventscontainer').html( '' );
             EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 20, acceptOld: true, from: elem[0].month_from, to: elem[0].month_to });
-            ViewHandler.reload_view( false );
+            ViewHandler.reload_view( true );
             this.updateLayoutPosition();
 
         }.bind(this));
@@ -111,7 +116,9 @@ var FrontPageModule = {
     updateLayoutPosition: function() {
         if ( !$('.left-container').hasClass('all-loaded') ) {
             setTimeout(function() {
-                var esvi_height = $('.event-sv-info').outerHeight();
+                if ( $('.event-sv-info').length > 0 ) { var esvi_height = $('.event-sv-info').outerHeight(); }
+                else { var esvi_height = 141; }
+
                 $('.load-more').css({'height': esvi_height+'px', 'line-height': esvi_height+'px'});
                 $('.left-container').css({'padding-bottom': esvi_height+'px'});
                 ViewHandler.reload_view( false );

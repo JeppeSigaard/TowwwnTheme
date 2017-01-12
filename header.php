@@ -10,6 +10,23 @@
            <div class="header-placeholder"></div>
            <div class="header-container">
                 <div id="header">
+                    <div class="commercial-container">
+                        <div class="swiper-wrapper">
+                           <div class="swiper-slide"></div>
+                            <?php $commercials = get_theme_mod('header_commercials');
+                            for ($i = 0; $i < sizeof($commercials); $i++ ) : ?>
+                                <div class="swiper-slide">
+                                    <!--<a href="<?php echo $commercials[$i]['commercial_link'] ?>" >-->
+                                        <div class="img-container" style="background-image:url(<?php
+                                            echo wp_get_attachment_url( $commercials[$i]['commercial_img'] ); ?>);">
+                                        </div>
+                                    <!--</a>-->
+                                </div>
+                            <?php endfor; ?>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+
                     <div id="searchcontainer">
                         <label id="searchlabel" for="searchfield">Søg:</label>
                         <img id="searchicon" src="<?php echo get_template_directory_uri() . '/style/assets/icons/search.svg'; ?>">
