@@ -59,47 +59,20 @@
                     background-color: $color-blue-1;
                 }
 
-                .event-sv-status-btns{
-                    margin: 18px 0;
-
-                    .status-btn{
-                        position: relative;
-                        color: #4b4f56;
-                        border: 1px solid #f6f7f9;
-                        border-radius: 2px;
-                        box-shadow: inset 0px 0px 3px rgba(0,0,0,.5);
-                        font-size: 12px;
-                        padding: 0 10px 0px 25px;
-                        width: auto;
-                        height: 26px;
-                        line-height: 24px;
-                        display: inline-block;
-                        cursor: pointer;
-                        margin-right: 8px;
-
-                        &:active{
-                            box-shadow: inset 0px 0px 5px rgba(0,0,0,.7);
-                        }
-
-                        .icon{
-                            position: absolute;
-                            left: 10px;
-                            top: 53%;
-                            transform: translate(0,-50%);
-                            font-size: 16px;
-                            font-weight: bold;
-                        }
-
-                        .text{
-                            display: inline-block;
-                        }
-                    }
-                }
-
                 .event-sv-desc{
                     * {
                         font-family: 'Avenir';
                         font-size: 14px;
+                    }
+
+                    a{
+                        color: $color-blue-1;
+                        text-decoration: none;
+                        transition: 100ms;
+
+                        &:hover{
+                            color: darken( $color-blue-1, 15% );
+                        }
                     }
                 }
 

@@ -140,11 +140,18 @@
         line-height: 18px;
         transition: 300ms;
         z-index: 9;
+        cursor: pointer;
         &.active { right: 22px; }
         
         .info {
             text-transform: uppercase;
             font-size: 14px;
+
+            .info-arrow-img{
+                width: 10px;
+                height: 10px;
+                margin-left: 4px;
+            }
         }
         
         .version {

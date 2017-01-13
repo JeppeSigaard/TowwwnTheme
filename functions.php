@@ -20,6 +20,11 @@ if ( class_exists( "Kirki" ) ) {
     ), 'kirki');
 }
 
+// Custom types
+get_functions_part(array(
+    'commercials',
+), 'custom-types');
+
 // get_functions_part([$filnavn],[$undermappe]);
 function smamo_include_functions_part_if_exists($fetch, $in = false){
     if ($in){$fetch = $in . '/' . $fetch;}

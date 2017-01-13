@@ -10,6 +10,13 @@ var HeaderModule = {
     
     // Init
     init: function() {
+        var header_commercials = new Swiper ('.header-commercials', {
+            direction: 'horizontal',
+            loop: true,
+            autoplay: 4500, //ms
+            autoplayDisableOnInteraction: false,
+        });
+
         this.bindUIActions();
     },
     

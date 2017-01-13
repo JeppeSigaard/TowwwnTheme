@@ -10,6 +10,18 @@
            <div class="header-placeholder"></div>
            <div class="header-container">
                 <div id="header">
+                    <div class="header-commercials">
+                        <div class="swiper-wrapper">
+                            <?php $commercials = get_posts(array( 'post_type' => 'commercial', 'numberposts' => -1 ));
+                            for ( $i = 0; $i < sizeof( $commercials ); $i++ ) : ?>
+                                <div class="swiper-slide">
+                                    <div class="overlay"></div>
+                                    <div class="img-container" style="background-image:url(<?php
+                                        echo get_the_post_thumbnail_url( $commercials[$i]->ID ); ?>)"></div>
+                                </div>
+                            <?php endfor; ?>
+                        </div>
+                    </div>
                     <div id="searchcontainer">
                         <label id="searchlabel" for="searchfield">Søg:</label>
                         <img id="searchicon" src="<?php echo get_template_directory_uri() . '/style/assets/icons/search.svg'; ?>">
@@ -31,12 +43,12 @@
                         ?>" class="menu-hide-img" >
                     </div>
 
-                    <div class="beta-warning active">
-                        <div class="info">Info</div>
+                    <a href="<?php echo get_theme_mod('facebook_url'); ?>"><div class="beta-warning active">
+                        <div class="info">Info<img class="info-arrow-img" src="<?php echo get_template_directory_uri() . "/style/assets/icons/arrow-info.svg"; ?>"></div>
                         <div class="version"><?php echo get_theme_mod('version'); ?></div> 
-                    </div>
+                        </div></a>
                     <div class="back-button">
-                    <img src="<?php echo get_template_directory_uri() . "/style/assets/icons/left-pointing-arrow.svg"; ?>" class="back-img" />
+                    <img src="<?php echo get_template_directory_uri() . "/style/assets/icons/arrow-close.svg"; ?>" class="back-img" />
                     </div>
 
                     <div class="socialmedia active"></div>

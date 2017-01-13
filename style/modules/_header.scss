@@ -21,6 +21,14 @@
     }
 
     #header{
+        .prevButton{
+            left: calc(50% - 135px)!important;
+        }
+
+        .nextButton{
+            left: calc(50% + 135px)!important;
+        }
+
         #searchfield{
             width: 250px!important;
         }
@@ -65,12 +73,83 @@
     background-size: cover;
     background-position: center;
     transition: 200ms;
+    overflow: hidden;
+
+    .header-commercials{
+        width: 100%;
+        height: 100%;
+
+        .swiper-wrapper{
+            width: 100%;
+            height: 100%;
+
+            .swiper-slide{
+                .overlay{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba($color-blue-1, .7);
+                    z-index: 9;
+                }
+
+                .img-container{
+                    width: 100%;
+                    height: 100%;
+                    background-size: cover;
+                    background-position: center;
+                }
+            }
+        }
+
+        .prevButton{
+            box-sizing: border-box;
+            position: absolute;
+            top: 50%;
+            left: calc(50% - 160px);
+            transform: translate(-100%, -50%);
+            width: 0;
+            height: 0;
+            border: 12px solid transparent;
+            border-right: 12px solid white;
+            border-left: none;
+            opacity: .8;
+            transition: 150ms;
+            z-index: 10;
+
+            &:hover{
+                opacity: 1;
+            }
+        }
+
+        .nextButton{
+            box-sizing: border-box;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 160px);
+            transform: translate(0, -50%);
+            width: 0;
+            height: 0;
+            border: 12px solid transparent;
+            border-right: none;
+            border-left: 12px solid white;
+            opacity: .8;
+            transition: 150ms;
+            z-index: 10;
+
+            &:hover{
+                opacity: 1;
+            }
+        }
+    }
 
     #searchcontainer{
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        z-index: 10;
 
         #searchlabel{
             position: absolute;

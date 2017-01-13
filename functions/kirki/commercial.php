@@ -29,3 +29,26 @@ Kirki::add_field( 'smamo_kirki_config', array(
 	'default'     => '',
 	'priority'    => 10,
 ));
+/*
+// Adds header commercial repeate
+Kirki::add_field( 'smamo_kirki_config', array(
+	'type'        => 'repeater',
+	'label'       => __( 'Tilføj header reklmer' ),
+	'section'     => 'commercial_section',
+	'settings'    => 'header_commercials',
+	'priority'    => 10,
+	'row_label' => array(
+		'type' => 'text',
+		'value' => __( 'Reklame' ),
+	),
+	'fields' => array(
+		'img' => array(
+			'type'        => 'image',
+			'label'       => __( 'Reklame billede' ),
+		),
+		'link' => array(
+			'type'        => 'text',
+			'label'       => __( 'Reklame link' ),
+		),
+	)
+) );*/

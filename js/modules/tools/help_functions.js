@@ -49,9 +49,9 @@ var HelpFunctions = {
 
         if ( includeHour ) {
             if ( date.getMinutes() < 10 ) {
-                response += ' '+(date.getHours()-1)+':0'+date.getMinutes();
+                response += ' Klokken '+(date.getHours()-1)+':0'+date.getMinutes();
             } else {
-                response += ' '+(date.getHours()-1)+':'+date.getMinutes();
+                response += ' Klokken '+(date.getHours()-1)+':'+date.getMinutes();
             }
         }
             
