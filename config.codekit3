@@ -15,12 +15,6 @@
 		"oAP": "\/.gitattributes",
 		"oF": 0
 		},
-	"\/.gitignore": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/.gitignore",
-		"oF": 0
-		},
 	"\/footer.php": {
 		"ft": 8192,
 		"oA": 2,
@@ -1241,15 +1235,6 @@
 		"sC": 1,
 		"tS": 0
 		},
-	"\/js\/modules\/tools\/month_picker.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 1,
-		"oAP": "\/js\/modules\/tools\/month_picker-min.js",
-		"oF": 1,
-		"sC": 1,
-		"tS": 0
-		},
 	"\/js\/modules\/view_handler.js": {
 		"ft": 64,
 		"mi": 1,
@@ -1443,22 +1428,6 @@
 		"opt": 0,
 		"plM": 3758088159,
 		"prP": 0
-		},
-	"\/style\/index.css": {
-		"aP": 0,
-		"bl": 0,
-		"ft": 16,
-		"ma": 0,
-		"oA": 2,
-		"oAP": "\/style\/index-min.css",
-		"oF": 0,
-		"oS": 0
-		},
-	"\/style\/index.css.map": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/style\/index.css.map",
-		"oF": 0
 		},
 	"\/style\/index.scss": {
 		"aP": 0,
@@ -1677,26 +1646,20 @@
 			},
 		{
 			"followForSyntaxChecking": 1,
-			"linkedFileAbbreviatedPath": "\/js\/modules\/tools\/month_picker.js",
+			"linkedFileAbbreviatedPath": "\/js\/modules\/layoutLayer\/eventSingleLayout.js",
 			"position": 9,
 			"type": 0
 			},
 		{
 			"followForSyntaxChecking": 1,
-			"linkedFileAbbreviatedPath": "\/js\/modules\/layoutLayer\/eventSingleLayout.js",
+			"linkedFileAbbreviatedPath": "\/js\/modules\/tools\/help_functions.js",
 			"position": 10,
 			"type": 0
 			},
 		{
 			"followForSyntaxChecking": 1,
-			"linkedFileAbbreviatedPath": "\/js\/modules\/tools\/help_functions.js",
-			"position": 11,
-			"type": 0
-			},
-		{
-			"followForSyntaxChecking": 1,
 			"linkedFileAbbreviatedPath": "\/js\/modules\/layoutLayer\/viewController.js",
-			"position": 12,
+			"position": 11,
 			"type": 0
 			}
 		]
