@@ -2,8 +2,8 @@
 <?php
 
 // Commercial Post type
-add_action( 'init', 'smamo_add_post_type_location' );
-function smamo_add_post_type_location() {
+add_action( 'init', 'smamo_add_post_type_commercial' );
+function smamo_add_post_type_commercial() {
 	register_post_type( 'commercial', array(
 
         'menu_icon' 		 => 'dashicons-format-image',

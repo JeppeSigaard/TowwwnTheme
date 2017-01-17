@@ -47,11 +47,11 @@ var HelpFunctions = {
 
         response+=parseInt(date.getDate())+' / '+parseInt((date.getMonth()+1))+' - '+parseInt(date.getFullYear());
 
-        if ( includeHour ) {
+        if ( includeHour ) {1
             if ( date.getMinutes() < 10 ) {
-                response += ' Klokken '+(date.getHours()-1)+':0'+date.getMinutes();
+                response += ' kl. '+(date.getHours()-1)+':0'+date.getMinutes();
             } else {
-                response += ' Klokken '+(date.getHours()-1)+':'+date.getMinutes();
+                response += ' kl. '+(date.getHours()-1)+':'+date.getMinutes();
             }
         }
             

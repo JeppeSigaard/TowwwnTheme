@@ -7,7 +7,6 @@ var FrontPageModule = {
         lc: '',
 
         loadMoreGetNum: 25,
-        firstGetNum: 30,
     },
     
     // Init
@@ -35,6 +34,9 @@ var FrontPageModule = {
     // Generate front page
     generate_front_page: function( ) {
         
+        ViewHandler.closeSingleView();
+        ViewControllerModule.disableBackButton();
+
         // Adds the base front page html to the container
         $('.left-container').removeClass('active');
         $('.left-container').html( this.settings.lc );
@@ -45,7 +47,8 @@ var FrontPageModule = {
         this.bindUIActions();
         
         // Gets events and locations categories
-        EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: this.settings.firstGetNum, acceptOld: false });
+        EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 0, acceptOld: false });
+        $('.load-more').trigger('click');
         ViewHandler.bindUIActions();
 
         // Reload view heights
@@ -77,12 +80,8 @@ var FrontPageModule = {
         $('.load-more').on('click', function() {
             var rest = EventCalenderModule.loadMore( this.settings.loadMoreGetNum );
             if ( rest > this.settings.loadMoreGetNum ) rest = this.settings.loadMoreGetNum;
-            else if ( rest === 0 ) {
-                $('.left-container').addClass('all-loaded');
-                ViewHandler.reload_view( true );
-            }
-
-            $('.load-more').html( 'Indlæs '+rest+' mere' );
+            if ( rest > 0 ) { $('.load-more').html( 'Indlæs '+rest+' mere' ); }
+            else { $('.load-more').html( 'Alt indhold indlæst' ); }
         }.bind(this));
 
         $('.blocklayoutbtn').on( 'click', function() {
@@ -101,7 +100,8 @@ var FrontPageModule = {
 
             $('.eventscontainer').html( '' );
             EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 20, acceptOld: true, from: elem[0].month_from, to: elem[0].month_to });
-            ViewHandler.reload_view( false );
+            ViewHandler.closeSingleView();
+            ViewHandler.reload_view( true );
             this.updateLayoutPosition();
 
         }.bind(this));

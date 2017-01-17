@@ -20,10 +20,9 @@ var EventCalenderModule = {
     renderEventCalender: function( view, modifiers ) {
 
         this.settings.breakpointView = view;
-        $('.left-container').removeClass('all-loaded');
         
         // Checks for modifiers
-        var acceptOld = false, getNum = 37, from = -1, to = -1, buffer = false, sort = true;
+        var acceptOld = false, getNum = 25, from = -1, to = -1, buffer = false, sort = true;
         if ( typeof modifiers.acceptOld !== 'undefined' ) acceptOld = modifiers.acceptOld;
         if ( typeof modifiers.getNum !== 'undefined' ) getNum = modifiers.getNum;
         if ( typeof modifiers.from !== 'undefined' ) from = modifiers.from;
@@ -51,6 +50,7 @@ var EventCalenderModule = {
         } else {
             this.settings.breakpointArray = modifiers.content;
             this.settings.breakpoint = getNum;
+            buffer = buffer.slice(0,getNum);
         }
 
         this.settings.breakpointFrom = from;
@@ -68,22 +68,12 @@ var EventCalenderModule = {
         this.settings.html = '';
         
         // Reload view heights
-        if(ViewHandler.settings.poly_view){
-            setTimeout(function(){
-                $('.left-container').css('height', 'auto');
-                $('.right-container').css('height', $('.sync-container').innerHeight());
-                $('.content-container').flickity('reloadCells');
-                $('.left-container, .right-container').css('height', $('.content-container .flickity-viewport').height());
-                $(window).trigger('scroll');
-            },150);
-        }
+        ViewHandler.reload_view( true );
         
     },
     
     // Load more
     loadMore: function( getNum ) {
-
-        console.log( this.settings.breakpoint + ' - ' + this.settings.breakpointArray.length );
 
         // Generates event array
         var buffer = [], bpArray = this.settings.breakpointArray;
@@ -109,15 +99,7 @@ var EventCalenderModule = {
         }  $(this.settings.breakpointView).html( this.settings.breakpointHtml );
 
         // Reload view heights
-        if(ViewHandler.settings.poly_view){
-            setTimeout(function(){
-                $('.left-container').css('height', 'auto');
-                $('.right-container').css('height', $('.sync-container').innerHeight());
-                $('.content-container').flickity('reloadCells');
-                $('.left-container, .right-container').css('height', $('.content-container .flickity-viewport').height());
-                $(window).trigger('scroll');
-            },150);
-        }
+        ViewHandler.reload_view( true );
 
         // Return the rest
         return bpArray.length-this.settings.breakpoint;

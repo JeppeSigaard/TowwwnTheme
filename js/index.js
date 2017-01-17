@@ -19,6 +19,8 @@ $(function() {
     });
 
     HeaderModule.init();
+    ViewHandler.init();
+    ViewHandler.poly_view_init();
     ViewControllerModule.init();
 
     EventContentModule.init(function() {
@@ -28,8 +30,6 @@ $(function() {
     var onContentLoad = function() {
         FrontPageModule.init();
         SearchModule.init();
-        ViewHandler.init();
-        ViewHandler.poly_view_init();
         EventSingleModule.init();
     }
 });

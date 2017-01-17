@@ -83,7 +83,10 @@ var SearchModule = {
             events.push( resp[i][1] );
         }
         
-        EventCalenderModule.renderEventCalender('.eventscontainer', { acceptOld: true, content: events } );
+        EventCalenderModule.renderEventCalender('.eventscontainer', { acceptOld: true, getNum: 0, content: events } );
+        $('.load-more').trigger('click');
+        ViewHandler.closeSingleView();
+        ViewHandler.reload_view( true );
         
     },
     

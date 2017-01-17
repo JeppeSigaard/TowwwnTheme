@@ -39,9 +39,10 @@ var ViewControllerModule = {
         this.settings.backButton.on( 'click', function() {
             if ( this.settings.mobile ) {
                 ViewHandler.go_to( 0 );
-            } else {
-                ViewHandler.closeSingleView();
-            } this.disableBackButton();
+            }
+
+            this.disableBackButton();
+            ViewHandler.closeSingleView();
         }.bind(this));
     },
 

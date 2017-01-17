@@ -132,6 +132,7 @@ var ViewHandler = {
             if ( timeout ) to = 150;
             setTimeout(function(){
                 $('.left-container').css('height', 'auto');
+                $('.sync-container').css('height', 'auto');
                 $('.right-container').css('height', $('.sync-container').innerHeight());
                 $('.content-container').flickity('reloadCells');
                 $('.left-container, .right-container').css('height', $('.content-container .flickity-viewport').height());
@@ -145,13 +146,13 @@ var ViewHandler = {
     closeSingleView: function() {
         $('.left-container').addClass('no-trans');
         $('.right-container').addClass('no-trans');
-        $('.right-container').css({'height': '0px'}).html('').removeClass('active');
+        $('.right-container').html('').css({'height': '0px'}).removeClass('active');
         $('.left-container').removeClass('active');
 
         setTimeout(function() {
             $('.left-container').removeClass('no-trans');
             $('.right-container').removeClass('no-trans');
-            this.reload_view( false );
+            this.reload_view( true );
         }.bind(this), 150);
 
         ViewHandler.go_to( 0 );
