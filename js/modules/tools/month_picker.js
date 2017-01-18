@@ -34,11 +34,9 @@ jQuery.prototype.monthPicker = function( options, callback ) {
         '11': 'Dec',
     }
     
-    var years = [
-        '2016',
-        '2017',
-        '2018'
-    ]
+    var years = [];
+    for ( var i = 2010; i <= 2020; i++ ) {
+        years.push( i.toString() ); }
 
     var elem = $(this),
         pickerClass = 'monthPicker_selector',
@@ -77,7 +75,6 @@ jQuery.prototype.monthPicker = function( options, callback ) {
                 cellAlign: 'center',
                 prevNextButtons: false,
                 pageDots: false,
-                contain: true,
             });
 
             $('.'+pickerClass).addClass('active');
@@ -91,6 +88,22 @@ jQuery.prototype.monthPicker = function( options, callback ) {
                 }
             }
             
+            // Centers current date
+            var nDate = new Date(),
+                nYear = new Date().getFullYear().toString(),
+                nMonth = new Date().getMonth().toString(),
+                index;
+
+            for ( index = 0; index < years.length; index++ ) {
+                if ( years[index] === nYear ) { index*=12; break; }}
+
+            for ( var key in months ) {
+                if ( months.key === nMonth ) {
+                    index += parseInt( key ); }}
+
+            console.log( index );
+            $('.'+pickerClass).flickity( 'select', index );
+
             // Picker functionality
             $('.'+pickerClass+' .month').click( function() {
                 $('.'+pickerClass+' .month').removeClass('active');
