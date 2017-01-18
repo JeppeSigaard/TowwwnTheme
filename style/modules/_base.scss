@@ -45,6 +45,19 @@ body {
     z-index: 1;
     display: flex;
 
+    &.poly-view{
+        .left-container{
+            max-width: 50%;
+        }
+
+        .right-container{
+            min-width: 50%;
+
+            @media screen and (min-width: $bp-2) {
+                min-width: 700px;
+            }
+        }
+    }
     
     .loader{
         position: absolute;

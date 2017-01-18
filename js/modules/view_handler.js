@@ -6,6 +6,7 @@ var ViewHandler = {
     settings: {
         ready: false,
         poly_view: false,
+        content_container: $('.content-container'),
         left_container: $('.left-container .content'),
         right_container: $('.right-container .content'),
     },
@@ -28,6 +29,8 @@ var ViewHandler = {
                 ViewHandler.settings.right_container.removeClass('spoopy');
             },120);
 
+            ViewHandler.toggle_poly_view( true );
+
         });
 
         this.settings.ready = true;
@@ -37,15 +40,26 @@ var ViewHandler = {
     bindUIActions: function() {
     },
     
+    // Toggle poly view
+    toggle_poly_view: function( activeOnly ) {
+        if ( activeOnly ) {
+            this.settings.content_container.addClass('poly-view');
+            return;
+        }
+
+        if ( this.settings.content_container.hasClass( 'poly-view' ) ) {
+            this.settings.content_container.removeClass( 'poly-view' );
+        } else {
+            this.settings.content_container.addClass( 'poly-view' );
+        }
+    },
 
     // Go to
     go_to: function( index ) {
-
     },
 
     // Reload view
     reload_view: function( timeout ) {
-
     },
 
     // Close single view
