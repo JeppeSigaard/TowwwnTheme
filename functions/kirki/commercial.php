@@ -29,7 +29,7 @@ Kirki::add_field( 'smamo_kirki_config', array(
 	'default'     => '',
 	'priority'    => 10,
 ));
-<<<<<<< HEAD
+
 /*
 // Adds header commercial repeate
 Kirki::add_field( 'smamo_kirki_config', array(
@@ -53,30 +53,3 @@ Kirki::add_field( 'smamo_kirki_config', array(
 		),
 	)
 ) );*/
-=======
-
-// Adds commercial header bar reapeater
-Kirki::add_field( 'smamo_kirki_config', array(
-	'type'        => 'repeater',
-	'label'       => __('Header reklamer'),
-	'section'     => 'commercial_section',
-	'priority'    => 10,
-	'settings'    => 'header_commercials',
-    'row_label' => array(
-		'type' => 'text',
-		'value' => __('Reklame'),
-	),
-	'fields' => array(
-		'commercial_img' => array(
-			'type'        => 'image',
-			'label'       => __( 'Reklame billede' ),
-			'description' => '',
-		),
-		'commercial_link' => array(
-			'type'        => 'text',
-			'label'       => __( 'Reklame link' ),
-			'default'     => '',
-		),
-	)
-) );
->>>>>>> origin/no-sync-scroll

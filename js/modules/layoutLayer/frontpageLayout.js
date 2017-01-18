@@ -87,18 +87,8 @@ var FrontPageModule = {
         $('.load-more').on('click', function() {
             var rest = EventCalenderModule.loadMore( this.settings.loadMoreGetNum );
             if ( rest > this.settings.loadMoreGetNum ) rest = this.settings.loadMoreGetNum;
-<<<<<<< HEAD
             if ( rest > 0 ) { $('.load-more').html( 'Indlæs '+rest+' mere' ); }
             else { $('.load-more').html( 'Alt indhold indlæst' ); }
-=======
-            else if ( rest === 0 ) {
-                ViewHandler.settings.left_container.addClass('all-loaded');
-                ViewHandler.reload_view( true );
-            }
-            $('.load-more').html( 'Indlæs '+rest+' mere' );
-            syncScroll.rescaleContainer();
-            $(window).trigger('scroll');
->>>>>>> origin/no-sync-scroll
         }.bind(this));
 
         $('.blocklayoutbtn').on( 'click', function() {
@@ -117,10 +107,7 @@ var FrontPageModule = {
 
             $('.eventscontainer').html( '' );
             EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 20, acceptOld: true, from: elem[0].month_from, to: elem[0].month_to });
-<<<<<<< HEAD
             ViewHandler.closeSingleView();
-=======
->>>>>>> origin/no-sync-scroll
             ViewHandler.reload_view( true );
             this.updateLayoutPosition();
 

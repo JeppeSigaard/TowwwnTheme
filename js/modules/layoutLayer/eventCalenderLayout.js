@@ -20,10 +20,6 @@ var EventCalenderModule = {
     renderEventCalender: function( view, modifiers ) {
 
         this.settings.breakpointView = view;
-<<<<<<< HEAD
-=======
-        ViewHandler.settings.left_container.removeClass('all-loaded');
->>>>>>> origin/no-sync-scroll
         
         // Checks for modifiers
         var acceptOld = false, getNum = 25, from = -1, to = -1, buffer = false, sort = true;
@@ -70,14 +66,6 @@ var EventCalenderModule = {
         // Renders
         $(view).html( this.settings.html );
         this.settings.html = '';
-<<<<<<< HEAD
-        
-        // Reload view heights
-        ViewHandler.reload_view( true );
-        
-=======
-
->>>>>>> origin/no-sync-scroll
     },
     
     // Load more
@@ -105,13 +93,12 @@ var EventCalenderModule = {
         for ( var i = 0; i < buffer.length; i++ ) {
             this.settings.breakpointHtml+=this.generateEventHtml( buffer[i] );
         }  $(this.settings.breakpointView).html( this.settings.breakpointHtml );
-<<<<<<< HEAD
 
-        // Reload view heights
-        ViewHandler.reload_view( true );
+        // Rescales container
+        setTimeout(function() {
+            syncScroll.rescaleContainer();
+        }, 150);
 
-=======
->>>>>>> origin/no-sync-scroll
         // Return the rest
         return bpArray.length-this.settings.breakpoint;
 

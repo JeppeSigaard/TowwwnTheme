@@ -46,12 +46,14 @@ body {
     display: flex;
 
     &.poly-view{
+        .content{ height: auto!important; }
+
         .left-container{
-            max-width: 50%;
+            width: 50%!important;
         }
 
         .right-container{
-            min-width: 50%;
+            width: 50%!important;
 
             @media screen and (min-width: $bp-2) {
                 min-width: 700px;
@@ -79,7 +81,7 @@ body {
 
     .left-container{
         background-color: #CDCDCD;
-        transition: width 100ms;
+        transition: width 250ms;
         flex-grow: 1;
         padding-bottom: 141px;
 
@@ -92,7 +94,7 @@ body {
         background-color: white;
         width: 0;
         flex-grow: 0;
-        transition: width 100ms, opacity 100ms;
+        transition: width 250ms, opacity 100ms;
 
         &.spoopy{
             opacity: 0;

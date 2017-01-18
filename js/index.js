@@ -21,7 +21,6 @@ $(function() {
 
     HeaderModule.init();
     ViewHandler.init();
-    ViewHandler.poly_view_init();
     ViewControllerModule.init();
 
     EventContentModule.init(function() {
@@ -30,12 +29,12 @@ $(function() {
 
     var onContentLoad = function() {
         FrontPageModule.init();
-<<<<<<< HEAD
-=======
-        ViewHandler.init();
->>>>>>> origin/no-sync-scroll
         SearchModule.init();
         EventSingleModule.init();
         syncScroll.init($('#page-content'), '.container-section');
+
+        setTimeout(function() {
+            syncScroll.rescaleContainer();
+        }, 150);
     }
 });
