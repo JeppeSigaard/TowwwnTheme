@@ -24,7 +24,7 @@ var FrontPageModule = {
         lc += '<div class="load-more">Indlæs '+this.settings.loadMoreGetNum+' mere</div>'
 
         this.settings.lc = lc;
-        $('.left-container').html(lc);
+        ViewHandler.settings.left_container.html(lc);
         
         // Generates front page
         this.generate_front_page();
@@ -38,9 +38,14 @@ var FrontPageModule = {
         ViewControllerModule.disableBackButton();
 
         // Adds the base front page html to the container
-        $('.left-container').removeClass('active');
-        $('.left-container').html( this.settings.lc );
-        $('.right-container').html('').removeClass('active');
+        if ( ViewHandler.settings.poly_view ) {
+            ViewHandler.closeSingleView();
+        } else {
+            ViewHandler.settings.left_container.removeClass('active');
+            ViewHandler.settings.right_container.html('').removeClass('active');
+        }
+
+        ViewHandler.settings.left_container.html( this.settings.lc );
         $('.eventscontainer').removeClass('lineLayout');
         
         // Binds ui actions
@@ -50,11 +55,13 @@ var FrontPageModule = {
         EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 0, acceptOld: false });
         $('.load-more').trigger('click');
         ViewHandler.bindUIActions();
+        this.updateLayoutPosition();
+        ViewControllerModule.disableBackButton();
 
         // Reload view heights
         if(ViewHandler.settings.poly_view){
-            ViewHandler.reload_view( true );
             setTimeout(function(){
+                ViewHandler.reload_view( false );
                 ViewHandler.go_to(0);
             },150);
         }
@@ -80,8 +87,18 @@ var FrontPageModule = {
         $('.load-more').on('click', function() {
             var rest = EventCalenderModule.loadMore( this.settings.loadMoreGetNum );
             if ( rest > this.settings.loadMoreGetNum ) rest = this.settings.loadMoreGetNum;
+<<<<<<< HEAD
             if ( rest > 0 ) { $('.load-more').html( 'Indlæs '+rest+' mere' ); }
             else { $('.load-more').html( 'Alt indhold indlæst' ); }
+=======
+            else if ( rest === 0 ) {
+                ViewHandler.settings.left_container.addClass('all-loaded');
+                ViewHandler.reload_view( true );
+            }
+            $('.load-more').html( 'Indlæs '+rest+' mere' );
+            syncScroll.rescaleContainer();
+            $(window).trigger('scroll');
+>>>>>>> origin/no-sync-scroll
         }.bind(this));
 
         $('.blocklayoutbtn').on( 'click', function() {
@@ -100,7 +117,10 @@ var FrontPageModule = {
 
             $('.eventscontainer').html( '' );
             EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 20, acceptOld: true, from: elem[0].month_from, to: elem[0].month_to });
+<<<<<<< HEAD
             ViewHandler.closeSingleView();
+=======
+>>>>>>> origin/no-sync-scroll
             ViewHandler.reload_view( true );
             this.updateLayoutPosition();
 
@@ -109,15 +129,17 @@ var FrontPageModule = {
     
     // Update layout parts position
     updateLayoutPosition: function() {
-        if ( !$('.left-container').hasClass('all-loaded') ) {
+        if ( !ViewHandler.settings.left_container.hasClass('all-loaded') ) {
             setTimeout(function() {
-                var esvi_height = $('.event-sv-info').outerHeight();
+                if ( $('.event-sv-info').length > 0 ) { var esvi_height = $('.event-sv-info').outerHeight(); }
+                else { var esvi_height = 141; }
+
                 $('.load-more').css({'height': esvi_height+'px', 'line-height': esvi_height+'px'});
-                $('.left-container').css({'padding-bottom': esvi_height+'px'});
+                ViewHandler.settings.left_container.css({'padding-bottom': esvi_height+'px'});
                 ViewHandler.reload_view( false );
             }, 150);
         } else {
-            $('.left-container').css({'padding-bottom': '0px'});
+            ViewHandler.settings.left_container.css({'padding-bottom': '0px'});
         }
     }
 

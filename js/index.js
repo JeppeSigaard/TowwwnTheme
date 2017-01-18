@@ -1,5 +1,6 @@
 // @koala-prepend 'modules/tools/help_functions.js';
 // @koala-prepend 'modules/tools/month_picker.js';
+// @koala-prepend 'modules/tools/sync_scroll.js';
 // @koala-prepend 'modules/contentLayer/eventContent.js';
 // @koala-prepend 'modules/contentLayer/locationContent.js';
 // @koala-prepend 'modules/contentLayer/locationCategoryContent.js';
@@ -29,7 +30,12 @@ $(function() {
 
     var onContentLoad = function() {
         FrontPageModule.init();
+<<<<<<< HEAD
+=======
+        ViewHandler.init();
+>>>>>>> origin/no-sync-scroll
         SearchModule.init();
         EventSingleModule.init();
+        syncScroll.init($('#page-content'), '.container-section');
     }
 });

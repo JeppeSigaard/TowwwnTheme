@@ -143,7 +143,7 @@ jQuery.prototype.monthPicker = function( options, callback ) {
                     }
 
 
-                    elem.html( months[fromPoint]+' '+fromYear+' - '+months[toPoint]+' '+toYear+'<div class="pickerArrow"></div>' );
+                    elem.html( months[fromPoint]+' '+String(fromYear).substr(2,3)+' - '+months[toPoint]+' '+String(toYear).substr(2,3)+'<div class="pickerArrow"></div>' );
                     clickPoint = null;
 
                 } else {

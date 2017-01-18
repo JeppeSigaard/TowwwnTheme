@@ -10,11 +10,19 @@ var HeaderModule = {
     
     // Init
     init: function() {
+<<<<<<< HEAD
         var header_commercials = new Swiper ('.header-commercials', {
             direction: 'horizontal',
             loop: true,
             autoplay: 4500, //ms
             autoplayDisableOnInteraction: false,
+=======
+        var commercial_swiper = new Swiper ('.commercial-container', {
+            direction: 'horizontal',
+            loop: true,
+            prevButton: '.prevButton',
+            nextButton: '.nextButton',
+>>>>>>> origin/no-sync-scroll
         });
 
         this.bindUIActions();

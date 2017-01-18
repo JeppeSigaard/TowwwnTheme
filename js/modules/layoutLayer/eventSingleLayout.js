@@ -23,8 +23,6 @@ var EventSingleModule = {
                 event = EventContentModule.settings.events[i]; break;
             }
         }
-        
-        console.log( event );
 
         // Generates html
         ViewHandler.settings.right_container.html( this.generate_sv_event_html( event ) );
@@ -42,9 +40,8 @@ var EventSingleModule = {
         var desc = HelpFunctions.nl2p(HelpFunctions.linkifier( event.description ));
         var start_time = HelpFunctions.formatDate( event.start_time, true, true );
         
-        var response = '<div class="event-singleview-container" >';
-        response += '<div class="sync-container">';
-        response += '<div class="event-sv-content-container">';
+
+        var response = '<div class="event-sv-content-container">';
         response += '<div class="event-singleview">';
         response += '<div class="event-sv-parentname">'+event.parentname+'</div>';
         response += '<div class="event-sv-img" style="background-image:url('+event.imgurl+');"></div>';
@@ -90,7 +87,7 @@ var EventSingleModule = {
             response += '<a href="'+commercial_link+'"><div class="commercial-img" style="background-image:url('+commercial_image_url+');"></div></a>';
         }
         
-        return response+='</div></div>';
+        return response;
         
     },
     

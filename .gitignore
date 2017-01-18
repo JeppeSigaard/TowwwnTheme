@@ -47,7 +47,14 @@ Temporary Items
 .apdisk
 /config.codekit3
 /js/index.min.js
+<<<<<<< HEAD
 /style/assets/font-faces/_avenir.css
 /style/assets/font-faces/_avenir.css.map
 /style/index.css.map
 /style/index.css
+=======
+/style/index.css
+/style/index.css.map
+/style/assets/font-faces/_avenir.css.map
+/style/assets/font-faces/_avenir.css
+>>>>>>> origin/no-sync-scroll

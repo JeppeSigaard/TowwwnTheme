@@ -6,8 +6,8 @@ var SearchModule = {
     settings: {
         keyword: '',
         getnum: 15,
-        left_container: $('.left-container'),
-        right_container: $('.right-container'),
+        left_container: $('.left-container .content'),
+        right_container: $('.right-container .content'),
     },
     
     // Init
