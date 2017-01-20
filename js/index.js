@@ -37,4 +37,5 @@ $(function() {
             syncScroll.rescaleContainer();
         }, 150);
     }
+
 });

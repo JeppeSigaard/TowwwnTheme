@@ -108,26 +108,26 @@ var FrontPageModule = {
             $('.eventscontainer').html( '' );
             EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 20, acceptOld: true, from: elem[0].month_from, to: elem[0].month_to });
             ViewHandler.closeSingleView();
-            ViewHandler.reload_view( true );
+            ViewControllerModule.disableBackButton();
             this.updateLayoutPosition();
+
+            setTimeout(function() {
+                syncScroll.rescaleContainer();
+            }, 100);
 
         }.bind(this));
     },
     
     // Update layout parts position
     updateLayoutPosition: function() {
-        if ( !ViewHandler.settings.left_container.hasClass('all-loaded') ) {
-            setTimeout(function() {
-                if ( $('.event-sv-info').length > 0 ) { var esvi_height = $('.event-sv-info').outerHeight(); }
-                else { var esvi_height = 141; }
+        setTimeout(function() {
+            if ( $('.event-sv-info').length > 0 ) { var esvi_height = $('.event-sv-info').outerHeight(); }
+            else { var esvi_height = 141; }
 
-                $('.load-more').css({'height': esvi_height+'px', 'line-height': esvi_height+'px'});
-                ViewHandler.settings.left_container.css({'padding-bottom': esvi_height+'px'});
-                ViewHandler.reload_view( false );
-            }, 150);
-        } else {
-            ViewHandler.settings.left_container.css({'padding-bottom': '0px'});
-        }
+            $('.load-more').css({'height': esvi_height+'px', 'line-height': esvi_height+'px'});
+            ViewHandler.settings.left_container.css({'padding-bottom': esvi_height+'px'});
+            syncScroll.rescaleContainer();
+        }, 150);
     }
 
 }

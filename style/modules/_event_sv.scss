@@ -7,9 +7,13 @@
     z-index: 10;
 
     .event-singleview{
-        padding: 21px 32px 21px 32px;
+        padding: 40px 64px 40px 64px;
         width: 100%;
         height: auto;
+
+        @media screen and (max-width: 1000px) {
+            padding: 21px 32px 21px 32px;
+        }
 
         .event-sv-parentname{
             font-size: 16px;
@@ -23,7 +27,7 @@
             border: 1px solid $color-blue-1;
             margin-bottom: 16px;
             background-size: cover;
-            background-position: center;
+            background-position: center 20%;
             margin: 0;
         }
 

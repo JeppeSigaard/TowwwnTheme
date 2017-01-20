@@ -56,6 +56,10 @@ jQuery.prototype.monthPicker = function( options, callback ) {
     
     // Appends on click
     elem.click( function() {
+        setTimeout(function() {
+            syncScroll.rescaleContainer();
+        }, 200);
+
         if ( $(this).hasClass('pickerActive') ) {
             
             // Removes Month picker
@@ -149,7 +153,7 @@ jQuery.prototype.monthPicker = function( options, callback ) {
                 } else {
                     clickPoint = $(this);
                     $(this).addClass('active');
-                    elem.html( months[$(this).attr('data-key')]+' '+$('.yearTitle').attr('data-key')+'<div class="pickerArrow"></div>' );
+                    elem.html( months[$(this).attr('data-key')]+' '+$('.yearTitle', this).attr('data-key')+'<div class="pickerArrow"></div>' );
                     previousSelctions.push( $('.yearTitle',this).attr('data-key')+'-'+$(this).attr('data-key') );
                 }
 
