@@ -5,6 +5,7 @@ var FrontPageModule = {
     settings: {  
         ready: false,
         lc: '',
+        loadMoreGetNum: 25,
     },
     
     // Init
@@ -16,11 +17,13 @@ var FrontPageModule = {
         lc += '<img class="blocklayoutbtn" src="'+template_uri+'/style/assets/icons/blockLayout.PNG" />';
         lc += '<img class="linelayoutbtn" src="'+template_uri+'/style/assets/icons/lineLayout.PNG" /></div>';
         lc += '<div class="monthSelector"></div>';
-        lc += '<div class="picker"></div></div>';
+        lc += '</div><div class="picker"></div>';
         
         lc += '<div class="eventscontainer"></div>';
+        lc += '<div class="load-more">Indlæs '+this.settings.loadMoreGetNum+' mere</div>'
+
         this.settings.lc = lc;
-        $('.left-container').html(lc);
+        ViewHandler.settings.left_container.html(lc);
         
         // Generates front page
         this.generate_front_page();
@@ -28,68 +31,103 @@ var FrontPageModule = {
     },
     
     // Generate front page
-    generate_front_page: function() {
+    generate_front_page: function( ) {
         
+        ViewHandler.closeSingleView();
+        ViewControllerModule.disableBackButton();
+
         // Adds the base front page html to the container
-        $('.left-container').removeClass('active');
-        $('.left-container').html( this.settings.lc );
-        $('.right-container').html('').removeClass('active');
+        if ( ViewHandler.settings.poly_view ) {
+            ViewHandler.closeSingleView();
+        } else {
+            ViewHandler.settings.left_container.removeClass('active');
+            ViewHandler.settings.right_container.html('').removeClass('active');
+        }
+
+        ViewHandler.settings.left_container.html( this.settings.lc );
         $('.eventscontainer').removeClass('lineLayout');
         
         // Binds ui actions
         this.bindUIActions();
         
         // Gets events and locations categories
-        EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 49, acceptOld: false });
+        EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 0, acceptOld: false });
+        $('.load-more').trigger('click');
         ViewHandler.bindUIActions();
+        this.updateLayoutPosition();
+        ViewControllerModule.disableBackButton();
 
-        // Do flickilty stuff 
+        // Reload view heights
         if(ViewHandler.settings.poly_view){
-            ViewHandler.settings.right_container.addClass('spoopy');
             setTimeout(function(){
-                ViewHandler.settings.right_container.removeClass('spoopy');
-                $('.left-container, .right-container').css('height', 'auto');
-                $('.content-container').flickity('reloadCells');
-                $('.left-container, .right-container').css('height', $('.content-container .flickity-viewport').height());
-                $(window).trigger('scroll');
+                ViewHandler.reload_view( false );
                 ViewHandler.go_to(0);
-            },100);
+            },150);
         }
-        
-        
+
         // Annnnnd its ready
         this.settings.ready = true;
-    
+
     },
     
     // Bind UI Actions
     bindUIActions: function() {
-        
+
         if ( !this.settings.ready ) {
             $('.logo-container').on( 'click', function() {
                 this.generate_front_page();
-                $(window).scrollTop(0);
                 $('#searchfield').val('');
-                this.bindUIActions();
             }.bind( this ));
         }
         
+        $(document).on('click', '.event', function() {
+            this.updateLayoutPosition();
+        }.bind(this));
+
+        $('.load-more').on('click', function() {
+            var rest = EventCalenderModule.loadMore( this.settings.loadMoreGetNum );
+            if ( rest > this.settings.loadMoreGetNum ) rest = this.settings.loadMoreGetNum;
+            if ( rest > 0 ) { $('.load-more').html( 'Indlæs '+rest+' mere' ); }
+            else { $('.load-more').html( 'Alt indhold indlæst' ); }
+        }.bind(this));
+
         $('.blocklayoutbtn').on( 'click', function() {
             $('.eventscontainer').removeClass('lineLayout'); 
+            ViewHandler.reload_view( true );
         });
         
         $('.linelayoutbtn').on( 'click', function() {
             $('.eventscontainer').addClass('lineLayout');
+            ViewHandler.reload_view( true );
         });
         
-        $('.monthSelector').initMonthPicker({
+        $('.monthSelector').monthPicker({
             'appendSelector': '.picker',
         }, function( elem ) {
-            
+
             $('.eventscontainer').html( '' );
-            EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 49, acceptOld: false, from: elem[0].month_from, to: elem[0].month_to });
-        
+            EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 20, acceptOld: true, from: elem[0].month_from, to: elem[0].month_to });
+            ViewHandler.closeSingleView();
+            ViewControllerModule.disableBackButton();
+            this.updateLayoutPosition();
+
+            setTimeout(function() {
+                syncScroll.rescaleContainer();
+            }, 100);
+
         }.bind(this));
     },
     
+    // Update layout parts position
+    updateLayoutPosition: function() {
+        setTimeout(function() {
+            if ( $('.event-sv-info').length > 0 ) { var esvi_height = $('.event-sv-info').outerHeight(); }
+            else { var esvi_height = 141; }
+
+            $('.load-more').css({'height': esvi_height+'px', 'line-height': esvi_height+'px'});
+            ViewHandler.settings.left_container.css({'padding-bottom': esvi_height+'px'});
+            syncScroll.rescaleContainer();
+        }, 150);
+    }
+
 }

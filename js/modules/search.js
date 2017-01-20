@@ -6,8 +6,8 @@ var SearchModule = {
     settings: {
         keyword: '',
         getnum: 15,
-        left_container: $('.left-container'),
-        right_container: $('.right-container'),
+        left_container: $('.left-container .content'),
+        right_container: $('.right-container .content'),
     },
     
     // Init
@@ -44,32 +44,29 @@ var SearchModule = {
         
         // Checks if events have been loaded in
         var resp = [];
-        var events = EventModule.settings.events;
+        var events = EventContentModule.settings.events;
 
         // Loops through all events and assigns them a fitness score
         for ( var i = 0; i < events.length; i++ ) {
-            console.log( 'hi' );
-            var fitness = 0, tTitle = 0, tDesc = 0;
+            var fitness = 0, tTitle = 0, tDesc = 0, tParent = 0;
             var keywords = this.settings.keyword.split(' ');
             for ( var ki = 0; ki < keywords.length; ki++ ) {
 
                 // Checks for includes of the individual keyword
                 if ( keywords[ki].length > 1 ) {
-                    tTitle += HelpFunctions.numOfIncludes( events[i].name[0].toLowerCase(), keywords[ki] ) * 2;
-                    tDesc += HelpFunctions.numOfIncludes( events[i].description[0].toLowerCase(), keywords[ki] );
-                }
+                    tTitle += HelpFunctions.numOfIncludes( events[i].name.toLowerCase(), keywords[ki] ) * 2;
+                    tParent += HelpFunctions.numOfIncludes( events[i].parentname.toLowerCase(), keywords[ki] ) * 4;
 
-                // Checks for includes of chars in the keyword
-                for( var ni = 0; ni < keywords[ki].length; ni++ ) {
-                    tTitle += HelpFunctions.numOfIncludes( events[i].name[0].toLowerCase(), keywords[ki].charAt(ni) ) / 15;
-                    tDesc += HelpFunctions.numOfIncludes( events[i].name[0].toLowerCase(), keywords[ki].charAt(ni) ) / 120;
+                    if ( events[i].description !== null ) {
+                        tDesc += HelpFunctions.numOfIncludes( events[i].description.toLowerCase(), keywords[ki] ) / 2;
+                    }
                 }
             }
 
             // Adds elemnt if fitness is more than 0
-            if ( tTitle + tDesc > 0 ) {
-                fitness = tTitle + tDesc / 2;
-                resp.push( [ fitness, events[i] ] )
+            fitness = tTitle + tDesc + tParent;
+            if ( fitness >= 4 || tTitle > 0 ) {
+                resp.push( [ fitness, events[i] ] );
             }
         }
         
@@ -81,32 +78,15 @@ var SearchModule = {
         });
         
         // Renders the results
-        this.render_results( resp );
+        var events = [];
+        for ( var i = 0; i < resp.length; i++ ) {
+            events.push( resp[i][1] );
+        }
         
-    },
-    
-    // Render search results
-    render_results: function( results ) {
-        
-        // Sets up the left container html variable
-        var lc = '<div class="search-field-container">';
-        lc += '<input type="text" class="search-field" /></div>';
-        
-        // Loops through results and generates html
-        var fitness = 0, counter = 0; do {
-            fitness = results[counter][0];
-            if ( fitness <= 1 ) break;
-            lc += '<div class="result">';
-            lc += '<div class="result-title">'+results[counter][1].name+'</div></div>';
-            counter++;
-        } while ( fitness > 1 );
-        
-        // Sets up the right container html variable
-        var rc = '';
-        
-        // Renders the html
-        $('.left-container').html( lc );
-        $('.right-container').html( rc );
+        EventCalenderModule.renderEventCalender('.eventscontainer', { acceptOld: true, getNum: 0, content: events } );
+        $('.load-more').trigger('click');
+        ViewHandler.closeSingleView();
+        ViewHandler.reload_view( true );
         
     },
     

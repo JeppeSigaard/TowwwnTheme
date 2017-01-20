@@ -1,0 +1,30 @@
+.sync-outer{
+    position:relative;
+    height: auto;
+    overflow: hidden;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    clear: both;
+}
+.sync-outer.fixed{
+    overflow: hidden;
+    position: fixed;
+    left: 0;
+    top: 60px;
+    bottom: -100px;
+    padding-bottom: 100px;
+}
+.sync-outer.bottom{
+    top: auto;
+    bottom: 0;
+    position: absolute;
+}
+.sync-outer .sync-inner{
+    position: relative;
+    min-height: auto;
+    overflow: auto;
+    padding: 0;
+    margin: 0;
+    clear: both;
+}

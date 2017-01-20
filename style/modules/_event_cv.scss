@@ -1,6 +1,8 @@
-@media screen and (max-width: 710px) {
-    #events{
-        width: 100%;
+@media screen and (max-width: $bp-m) {
+    #eventsbar{
+        .monthSelector{
+            right: 20px!important;
+        }
     }
 }
     
@@ -10,7 +12,7 @@
     height: $menu-bar-height;
     background-color: $color-blue-2;
     z-index: 10;
-    box-shadow: 0px 1px 5px rgba(1,1,1,.5);
+    // box-shadow: 0px 1px 5px rgba(1,1,1,.5);
 
     #eventslayoutbtns{
         position: relative;
@@ -50,6 +52,9 @@
         transform: translate(0, -50%);
         color: white;
         cursor: pointer;
+        padding-right: 28px;
+        text-transform: uppercase;
+        transition: 120ms;
     }
 }
 
@@ -73,7 +78,8 @@
     &.lineLayout{
         .event{
             width: 100%;
-            height: 110px;
+            min-height: 110px;
+            height: auto;
             
             .imgcontainer{
                 float: left;
@@ -81,24 +87,31 @@
                 height: 100%;
                 border-bottom: none;
                 border-right: 1px solid $color-blue-1;
+                padding-bottom: 0;
             }
 
             .eventtext{
-                display: inline-block;
                 width: auto;
-                height: 100%;
+                height: auto;
                 padding: 16px;
-                margin-bottom: 24px;
+                margin-bottom: 36px;
 
                 .title{
                     width: auto;
                     font-size: 14px;
+                    margin-left: 160px;
+                }
+
+                .start_time{
+                    margin-top: 0px;
+                    margin-left: 160px;
                 }
 
                 .eventlocation-container {
                     width: calc( 100% - 192px );
                     right: 16px;
                     left: auto;
+                    bottom: 10px;
                     
                     .eventblackbar{
                         height: 2px;
@@ -121,9 +134,9 @@
 
         .imgcontainer{
             width: 100%;
-            padding-bottom: 50%;
+            padding-bottom: 90px; // 50%;
             background-size: cover;
-            background-position: center;
+            background-position: center 20%;
             border-bottom: 1px solid $color-blue-1;
         }
 
@@ -131,7 +144,7 @@
             padding: 15px;
             padding-top: 15px;
             width: 100%;
-            height: 150px;
+            height: 160px;
             text-transform: uppercase;
 
             .title{
@@ -168,4 +181,27 @@
             }
         }
     }
+}
+
+.left-container{
+    &.all-loaded{
+        padding-bottom: 0;
+
+        .load-more{
+            display: none;
+        }
+    }
+}
+
+.load-more{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 141px;
+    line-height: 141px;
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    background-color: $color-blue-2;
+    cursor: pointer;
 }

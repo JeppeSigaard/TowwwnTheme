@@ -10,6 +10,13 @@ var HeaderModule = {
     
     // Init
     init: function() {
+        var header_commercials = new Swiper ('.header-commercials', {
+            direction: 'horizontal',
+            loop: true,
+            autoplay: 4500, //ms
+            autoplayDisableOnInteraction: false,
+        });
+
         this.bindUIActions();
     },
     
@@ -37,7 +44,20 @@ var HeaderModule = {
                 this.settings.menu_ready = false;
             }
             
+            if ( $(window).innerWidth() <= 640 ) {
+                $('.header-container').addClass( 'fixed' );
+                $('.header-placeholder').addClass( 'fixed' );
+                $('.menu-show-btns').addClass( 'show' );
+                $('.event-singleview').addClass( 'fixed' );
+                this.settings.menu_ready = true;
+            }
+
         }.bind(this));
+        $(window).trigger('scroll');
+
+        $(window).on('resize', function() {
+            $(this).trigger('scroll');
+        });
         
         // Checks for key press on space
         $('.menu-show-btns').on('click', this.show_menu.bind(this));
@@ -50,6 +70,15 @@ var HeaderModule = {
                 $('#searchfield').focus();
                 this.show_menu();
 
+            } else if (  $(window).scrollTop() > $('#header').height()
+                         && $('.header-container').hasClass('active')
+                         && e.keyCode === 32 ) {
+
+                if ( $('#searchfield').val() === '' || $('#searchfield').val() === ' ' ) {
+                    e.preventDefault();
+                    $('#searchfield').val( '' );
+                    this.show_menu();
+                }
             }
         }.bind(this));
         

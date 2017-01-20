@@ -37,16 +37,15 @@ var EventSingleModule = {
     // Generate single view event html
     generate_sv_event_html: function( event ) {
         
-        var desc = HelpFunctions.nl2p(HelpFunctions.linkifier( event.description[0] ));
-        var start_time = HelpFunctions.formatDate( event.start_time[0], true );
+        var desc = HelpFunctions.nl2p(HelpFunctions.linkifier( event.description ));
+        var start_time = HelpFunctions.formatDate( event.start_time, true, true );
         
-        var response = '<div class="event-singleview-container" >';
-        response += '<div class="sync-container">';
-        response += '<div class="event-sv-content-container">';
+
+        var response = '<div class="event-sv-content-container">';
         response += '<div class="event-singleview">';
-        response += '<div class="event-sv-parentname">'+event.parentname[0]+'</div>';
-        response += '<div class="event-sv-img" style="background-image:url('+event.imgurl[0]+');"></div>';
-        response += '<div class="event-sv-title">'+event.name[0]+'</div>';
+        response += '<div class="event-sv-parentname">'+event.parentname+'</div>';
+        response += '<div class="event-sv-img" style="background-image:url('+event.imgurl+');"></div>';
+        response += '<div class="event-sv-title">'+event.name+'</div>';
         response += '<div class="event-sv-start-time">'+start_time+'</div>';
         response += '<hr class="lineBreak" />';
         
@@ -66,20 +65,20 @@ var EventSingleModule = {
         }
         
         response += '</div>';*/
-        
+
         response += '<div class="event-sv-desc">'+desc+'</div>';
         response += '</div>';
         
         response += '<div class="event-sv-info-placeholder"></div>';
         response += '<div class="event-sv-info">';
-        response += '<div class="event-sv-parentname">'+event.parentname[0]+'</div>';
+        response += '<div class="event-sv-parentname">'+event.parentname+'</div>';
         
-        if ( event.adress[0] !== null && typeof event.adress[0] !== 'undefined' ) {
-            response += '<div class="event-sv-adress">'+event.adress[0]+'</div>';
+        if ( event.adress !== null && typeof event.adress !== 'undefined' ) {
+            response += '<div class="event-sv-adress">'+event.adress+'</div>';
         }
             
-        if ( event.website[0] !== null && typeof event.website[0] !== 'undefined' ) {
-            response += '<a class="event-sv-website" href="'+event.website[0]+'">'+event.website[0]+'</a>';
+        if ( event.website !== null && typeof event.website !== 'undefined' ) {
+            response += '<a class="event-sv-website" href="'+event.website+'">'+event.website+'</a>';
         }
         
         response += '</div></div>';
@@ -88,7 +87,8 @@ var EventSingleModule = {
             response += '<a href="'+commercial_link+'"><div class="commercial-img" style="background-image:url('+commercial_image_url+');"></div></a>';
         }
         
-        return response+='</div></div>';
+
+        return response;
         
     },
     
