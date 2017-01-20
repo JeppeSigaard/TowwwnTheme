@@ -14,23 +14,29 @@ var EventCalenderModule = {
     renderEventCalender: function( view, modifiers ) {
         
         // Checks for modifiers
-        var acceptOld = false, getNum = 37, month;
+        var acceptOld = false, getNum = 37, from = -1, to = -1;
         if ( typeof modifiers.acceptOld !== 'undefined' ) acceptOld = modifiers.acceptOld;
         if ( typeof modifiers.getNum !== 'undefined' ) getNum = modifiers.getNum;
-        if ( typeof modifiers.month !== 'undefined' ) month = modifiers.month;
+        if ( typeof modifiers.from !== 'undefined' ) from = modifiers.from;
+        if ( typeof modifiers.to !== 'undefined' ) to = modifiers.to;
         
         // Makes render buffer array
         var buffer = [], events = EventContentModule.settings.events;
         for ( var i = 0; i < events.length; i++ ) {
             if ( buffer.length > getNum ) break;
-            if ( !acceptOld && new Date(events[i].start_time[0]).getTime() < new Date().getTime() ) continue;
+            
+            var eventTime = new Date(events[i].start_time[0].substr(0,16)).getTime();
+            if ( !acceptOld && eventTime < new Date().getTime() ) continue;
+            if ( from !== -1 && from > eventTime ) continue;
+            if ( to !== -1 && to < eventTime ) continue;
+            
             buffer.push( events[i] );
         }
         
         // Sorts buffer
         buffer.sort( function( a, b ) {
-            var aTime = new Date(a.start_time[0]).getTime();
-            var bTime = new Date(b.start_time[0]).getTime();
+            var aTime = new Date(a.start_time[0].substr(0,16)).getTime();
+            var bTime = new Date(b.start_time[0].substr(0,16)).getTime();
             if ( aTime < bTime ) return -1;
             if ( aTime > bTime ) return 1;
             return 0;
@@ -43,6 +49,7 @@ var EventCalenderModule = {
         
         // Renders
         $(view).html( this.settings.html );
+        this.settings.html = '';
         
     },
     

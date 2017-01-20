@@ -37,9 +37,18 @@ var HelpFunctions = {
     }, 
     
     // Format date
-    formatDate: function( timestamp ) {
-        var date = new Date( timestamp );
-        return date.getDate()+' / '+(date.getMonth()+1)+' - '+date.getFullYear()
+    formatDate: function( timestr, hourly ) {
+        var date = new Date( timestr.substr(0, 16) );
+        var response = parseInt(date.getDate())+' / '+parseInt((date.getMonth()+1))+' - '+parseInt(date.getFullYear());
+        if ( hourly ) {
+            if ( date.getMinutes() < 10 ) {
+                response += ' '+(date.getHours()+1)+':0'+date.getMinutes();
+            } else {
+                response += ' '+(date.getHours()+1)+':'+date.getMinutes();
+            }
+        }
+            
+        return response;
     }
     
 }

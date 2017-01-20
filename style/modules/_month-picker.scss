@@ -1,0 +1,12 @@
+.monthPicker_selector{
+    background-color: darken($color-blue-2, 15%);
+    border: 2px solid white;
+    margin: 4px 32px 0 128px;
+    
+    * {
+        color: white;
+        display: inline-block;
+        margin: 8px;
+        cursor: pointer;
+    }
+}

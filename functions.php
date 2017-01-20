@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 // Aut
 $aut = 657576;
@@ -8,7 +7,6 @@ $aut = 657576;
 get_functions_part(array(
     'settings',
     'includes',
-    'fb',
 ));
 
 // Kirki
@@ -17,6 +15,7 @@ if ( class_exists( "Kirki" ) ) {
         'config',
         'information',
         'social_media',
+        'commercial',
         'api_settings',
     ), 'kirki');
 }

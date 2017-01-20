@@ -5,6 +5,7 @@
 }
     
 #eventsbar{
+    position: relative;
     width: 100%;
     height: $menu-bar-height;
     background-color: $color-blue-2;
@@ -17,6 +18,7 @@
         height: 100%;
         border-right: 1px solid #CDCDCD;
         transition: 300ms;
+        display: inline-block;
 
         &:hover {
             background-color: lighten($color-blue-2, 4%);
@@ -39,6 +41,23 @@
             left: 66%;
         }
     }
+    
+    .monthSelector{
+        position: absolute;
+        display: inline-block;
+        top: 50%;
+        right: 32px;
+        transform: translate(0, -50%);
+        color: white;
+        cursor: pointer;
+    }
+}
+
+.events-sync-container{
+    position: absolute;
+    width: 100%;
+    min-height: calc( 100vh - 60px );
+    height: auto;    
 }
 
 .eventscontainer {
@@ -93,8 +112,7 @@
         box-sizing: border-box;
         position: relative;
         display: inline-block;
-        width: 150px;
-        height: 220px;
+        width: 160px;
         border: 1px solid $color-blue-1;
         margin: 6px;
         background-color: #FFF;
@@ -103,7 +121,7 @@
 
         .imgcontainer{
             width: 100%;
-            height: 70px;
+            padding-bottom: 50%;
             background-size: cover;
             background-position: center;
             border-bottom: 1px solid $color-blue-1;
@@ -113,7 +131,7 @@
             padding: 15px;
             padding-top: 15px;
             width: 100%;
-            height: 130px;
+            height: 150px;
             text-transform: uppercase;
 
             .title{
@@ -121,9 +139,10 @@
             }
 
             .start_time{
-                font-size: 15px;
+                font-size: 12px;
                 text-align: justify;
                 color: #999;
+                margin-top: 5px;
             }
 
             .eventlocation-container {
@@ -131,6 +150,7 @@
                 position: absolute;
                 bottom: 15px;
                 left: 15px;
+                height: 2em;
 
                 .eventblackbar{
                     height: 3px;
@@ -141,7 +161,7 @@
                 }
 
                 .eventlocation{
-                    font-size: 10px;
+                    font-size: 9px;
                     color: $color-blue-1;
                     line-height: 11px;
                 }
