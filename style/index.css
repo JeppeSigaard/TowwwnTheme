@@ -50,6 +50,8 @@ body {
   display: flex; }
   .content-container.poly-view .content {
     height: auto !important; }
+  .content-container.poly-view .left-container {
+    width: calc( 100% - 720px ); }
   .content-container.poly-view .right-container {
     width: 720px !important; }
   .content-container .loader {

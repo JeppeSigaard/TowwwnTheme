@@ -48,9 +48,9 @@ body {
     &.poly-view{
         .content{ height: auto!important; }
 
-//        .left-container{
-//            width: 33%!important;
-//        }
+        .left-container{
+            width: calc( 100% - 720px );
+        }
 
         .right-container{
             width: 720px!important;

@@ -14,6 +14,44 @@ var EventCalenderModule = {
     
     // Init
     init: function() {
+        this.bindUIActions();
+    },
+    
+    // Bind UI Actions
+    bindUIActions: function() {
+        $(window).on('resize', function() {
+            var lastOffset = -1,
+                rowLength = 0,
+                oneRow = true;
+            $('.event').each( function( iter, elem ) {
+                if ( lastOffset === -1 ) {
+                    lastOffset = elem.offsetTop;
+                    rowLength++;
+                } else {
+                    if ( lastOffset === elem.offsetTop ) {
+                        rowLength++;
+                    } else { 
+                        oneRow = false;
+                        return; 
+                    }
+                }
+            });
+            
+            var ecc = $('.eventscontainer').children(), 
+                rest = ecc.length % rowLength;
+            ecc.css('max-width', 'none').removeClass('last-row');
+            if ( oneRow === false ) {
+                for ( var i = 0; i < rest; i++ ) {
+                    console.log( i );
+                    $('#'+ecc[ecc.length-(i+1)].attributes.id.value).css('max-width', $('#'+ecc[0].attributes.id.value).outerWidth() + 'px').addClass('last-row');
+                }
+            } else {
+                if ( !$('.eventscontainer').hasClass('lineLayout') ) {
+                    ecc.css('max-width', '195px').addClass('last-row');
+                }
+            }
+            
+        });
     },
     
     // Render Events
@@ -100,7 +138,8 @@ var EventCalenderModule = {
 
         // Rescales container
         setTimeout(function() {
-            syncScroll.rescaleContainer();
+            //syncScroll.rescaleContainer();
+            $(window).trigger('resize');
         }, 150);
 
         // Return the rest
