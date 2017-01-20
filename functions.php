@@ -5,9 +5,14 @@ $aut = 657576;
 
 // Includes php from root functions folder
 get_functions_part(array(
-    'settings',
     'includes',
+    'settings',
 ));
+
+// Custom types
+get_functions_part(array(
+    'commercials',
+), 'custom-types');
 
 // Kirki
 if ( class_exists( "Kirki" ) ) {
@@ -19,11 +24,6 @@ if ( class_exists( "Kirki" ) ) {
         'api_settings',
     ), 'kirki');
 }
-
-// Custom types
-get_functions_part(array(
-    'commercials',
-), 'custom-types');
 
 // get_functions_part([$filnavn],[$undermappe]);
 function smamo_include_functions_part_if_exists($fetch, $in = false){

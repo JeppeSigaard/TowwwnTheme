@@ -72,7 +72,7 @@ var EventCalenderModule = {
     
     // Load more
     loadMore: function( getNum ) {
-
+        
         // Generates event array
         var buffer = [], bpArray = this.settings.breakpointArray;
         for ( var i = this.settings.breakpoint; i < bpArray.length; i++ ) {
@@ -90,6 +90,8 @@ var EventCalenderModule = {
         if ( buffer.length < getNum ) {
             this.settings.breakpoint = bpArray.length;
         }
+        
+        if ( buffer.length === 0 ) return -1;
 
         // Renders the events
         for ( var i = 0; i < buffer.length; i++ ) {

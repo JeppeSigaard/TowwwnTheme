@@ -41,10 +41,19 @@ var ViewHandler = {
     
     // Toggle poly view
     toggle_poly_view: function( activeOnly ) {
+        
         if ( activeOnly == true ) {
+            if ( !this.settings.content_container.hasClass('poly-view') ) {
+                $('.monthSelector').monthPicker({ remove: true });        
+            }
+            
             this.settings.content_container.addClass('poly-view');
             return;
         } else if ( activeOnly == false ) {
+            if ( this.settings.content_container.hasClass('poly-view') ) {
+                $('.monthSelector').monthPicker({ remove: true });        
+            }
+            
             this.settings.content_container.removeClass('poly-view');
             return;
         }
@@ -54,6 +63,8 @@ var ViewHandler = {
         } else {
             this.settings.content_container.addClass( 'poly-view' );
         }
+                
+        $('.monthSelector').monthPicker({ remove: true });   
     },
 
     // Go to

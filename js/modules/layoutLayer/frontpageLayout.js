@@ -89,6 +89,10 @@ var FrontPageModule = {
             if ( rest > this.settings.loadMoreGetNum ) rest = this.settings.loadMoreGetNum;
             if ( rest > 0 ) { $('.load-more').html( 'Indlæs '+rest+' mere' ); }
             else { $('.load-more').html( 'Alt indhold indlæst' ); }
+            
+            setTimeout(function() {
+                $(window).trigger('scroll');    
+            }, 150);
         }.bind(this));
 
         $('.blocklayoutbtn').on( 'click', function() {
@@ -106,10 +110,11 @@ var FrontPageModule = {
         }, function( elem ) {
 
             $('.eventscontainer').html( '' );
-            EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 20, acceptOld: true, from: elem[0].month_from, to: elem[0].month_to });
-            ViewHandler.closeSingleView();
-            ViewControllerModule.disableBackButton();
-            this.updateLayoutPosition();
+            EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 0, acceptOld: true, from: elem[0].month_from, to: elem[0].month_to });
+            var loadResponse = EventCalenderModule.loadMore();
+            if ( loadResponse === -1 ) {
+                $('.eventscontainer').html( '<div class="error">Ingen elementer fundet</div>' );
+            } this.updateLayoutPosition();
 
             setTimeout(function() {
                 syncScroll.rescaleContainer();

@@ -3,11 +3,11 @@
     box-sizing: content-box;
     width: 0;
     height: 0;
-    border: 10px solid transparent;
-    border-top: 9px solid white;
+    border: 6px solid transparent;
+    border-top: 8px solid white;
     position: absolute;
     right: 0;
-    top: 5px;
+    top: 4px;
 }
 
 .monthPicker_selector{
@@ -44,6 +44,10 @@
         &.active{
             background-color: $color-blue-2;
             color: white;
+            
+            .yearTitle{
+                color: #ddd;
+            }
         }
 
         &.active-left{
@@ -53,6 +57,10 @@
             height: 36px;
             line-height: 25px;
             margin: 12px 0px 12px 0px;
+            
+            .yearTitle{
+                color: #ddd;
+            }
         }
 
         &.active-middle{
@@ -62,6 +70,10 @@
             height: 36px;
             line-height: 25px;
             margin: 12px 0px 12px 0px;
+            
+            .yearTitle{
+                color: #ddd;
+            }
         }
 
         &.active-right{
@@ -71,6 +83,10 @@
             height: 36px;
             line-height: 25px;
             margin: 12px 0px 12px 0px;
+            
+            .yearTitle{
+                color: #ddd;
+            }
         }
 
         .yearTitle{
@@ -78,7 +94,7 @@
             top: 11px;
             left: 50%;
             transform: translate(-50%, 0);
-            color: #777;
+            color: #9d9d9d;
         }
     }
 } 

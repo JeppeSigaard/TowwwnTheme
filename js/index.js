@@ -13,6 +13,7 @@
 // @koala-prepend 'modules/search.js';
 
 $(function() {
+    
     $('a').click(function(e) {
         if ($(this).attr('href') === '#') {
             e.preventDefault();

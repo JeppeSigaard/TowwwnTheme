@@ -1,14 +1,19 @@
 
 // JQuery prototype function month picker
 jQuery.prototype.monthPicker = function( options, callback ) {
-
+    
+    var pickerClass = 'monthPicker_selector';
+    
     if ( options.remove === true ) {
+        
         // Removes Month picker
         $('.'+pickerClass).removeClass('active');
         $(this).removeClass('pickerActive');
         setTimeout(function() {
             $('.'+pickerClass).remove();
-        }, 150);
+        }, 150); 
+        return;
+        
     }
     
     // Params
@@ -40,7 +45,6 @@ jQuery.prototype.monthPicker = function( options, callback ) {
         years.push( i.toString() ); }
 
     var elem = $(this),
-        pickerClass = 'monthPicker_selector',
         pickerHtml = '<div class="'+pickerClass+'">',
         previousSelctions = [],
         clickPoint = null;

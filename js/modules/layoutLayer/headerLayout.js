@@ -10,12 +10,16 @@ var HeaderModule = {
     
     // Init
     init: function() {
-        var header_commercials = new Swiper ('.header-commercials', {
-            direction: 'horizontal',
-            loop: true,
-            autoplay: 4500, //ms
-            autoplayDisableOnInteraction: false,
-        });
+        
+        var swiperSlides = $('.header-commercials').find('.swiper-slide').length;
+        if ( swiperSlides > 1 ) {
+            var header_commercials = new Swiper ('.header-commercials', {
+                direction: 'horizontal',
+                loop: true,
+                autoplay: 4500, //ms
+                autoplayDisableOnInteraction: false,
+            });
+        }
 
         this.bindUIActions();
     },

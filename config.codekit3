@@ -33,6 +33,30 @@
 		"oAP": "\/functions.php",
 		"oF": 0
 		},
+	"\/functions\/custom-types\/commercials.php": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/functions\/custom-types\/commercials.php",
+		"oF": 0
+		},
+	"\/functions\/fb-sdk\/src\/Facebook\/GraphNodes\/GraphCoverPhoto.php": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/functions\/fb-sdk\/src\/Facebook\/GraphNodes\/GraphCoverPhoto.php",
+		"oF": 0
+		},
+	"\/functions\/fb-sdk\/src\/Facebook\/GraphNodes\/GraphObjectFactory.php": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/functions\/fb-sdk\/src\/Facebook\/GraphNodes\/GraphObjectFactory.php",
+		"oF": 0
+		},
+	"\/functions\/fb.php": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/functions\/fb.php",
+		"oF": 0
+		},
 	"\/functions\/includes.php": {
 		"ft": 8192,
 		"oA": 2,
@@ -195,6 +219,24 @@
 		"sC": 1,
 		"tS": 0
 		},
+	"\/js\/modules\/layoutLayer\/mobileViewLayout.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/js\/modules\/layoutLayer\/mobileViewLayout-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/js\/modules\/layoutLayer\/viewController.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/js\/modules\/layoutLayer\/viewController-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
 	"\/js\/modules\/search.js": {
 		"ft": 64,
 		"mi": 1,
@@ -227,6 +269,15 @@
 		"mi": 1,
 		"oA": 1,
 		"oAP": "\/js\/modules\/tools\/month_picker-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/js\/modules\/tools\/sync_scroll.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/js\/modules\/tools\/sync_scroll-min.js",
 		"oF": 0,
 		"sC": 1,
 		"tS": 0
@@ -268,6 +319,12 @@
 		"oAP": "\/style\/.sass-cache\/7f2bb8e796ef550277591f97709d22fcf9162489\/_event_sv.scssc",
 		"oF": 0
 		},
+	"\/style\/.sass-cache\/7f2bb8e796ef550277591f97709d22fcf9162489\/_footer.scssc": {
+		"ft": 8192,
+		"oA": 1,
+		"oAP": "\/style\/.sass-cache\/7f2bb8e796ef550277591f97709d22fcf9162489\/_footer.scssc",
+		"oF": 0
+		},
 	"\/style\/.sass-cache\/7f2bb8e796ef550277591f97709d22fcf9162489\/_header-bar.scssc": {
 		"ft": 8192,
 		"oA": 1,
@@ -292,6 +349,12 @@
 		"oAP": "\/style\/.sass-cache\/7f2bb8e796ef550277591f97709d22fcf9162489\/_month-picker.scssc",
 		"oF": 0
 		},
+	"\/style\/.sass-cache\/7f2bb8e796ef550277591f97709d22fcf9162489\/_sync-scroll.scssc": {
+		"ft": 8192,
+		"oA": 1,
+		"oAP": "\/style\/.sass-cache\/7f2bb8e796ef550277591f97709d22fcf9162489\/_sync-scroll.scssc",
+		"oF": 0
+		},
 	"\/style\/.sass-cache\/7f2bb8e796ef550277591f97709d22fcf9162489\/_vars.scssc": {
 		"ft": 8192,
 		"oA": 1,
@@ -308,12 +371,6 @@
 		"ft": 8192,
 		"oA": 1,
 		"oAP": "\/style\/.sass-cache\/dce68a911b84c0f4ef78ad77acd4b3a3202ac7ac\/_avenir.scssc",
-		"oF": 0
-		},
-	"\/style\/assets\/font-faces\/_avenir.css.map": {
-		"ft": 8192,
-		"oA": 1,
-		"oAP": "\/style\/assets\/font-faces\/_avenir.css.map",
 		"oF": 0
 		},
 	"\/style\/assets\/font-faces\/_avenir.scss": {
@@ -347,6 +404,26 @@
 		"oAP": "\/style\/assets\/font-faces\/AvenirNextLTPro-Regular.woff",
 		"oF": 0
 		},
+	"\/style\/assets\/icons\/arrow-close.svg": {
+		"ft": 2097152,
+		"miP": 0,
+		"oA": 2,
+		"oAP": "\/style\/assets\/icons\/arrow-close.svg",
+		"oF": 0,
+		"opt": 0,
+		"plM": 3758088159,
+		"prP": 0
+		},
+	"\/style\/assets\/icons\/arrow-info.svg": {
+		"ft": 2097152,
+		"miP": 0,
+		"oA": 2,
+		"oAP": "\/style\/assets\/icons\/arrow-info.svg",
+		"oF": 0,
+		"opt": 0,
+		"plM": 3758088159,
+		"prP": 0
+		},
 	"\/style\/assets\/icons\/arrow.svg": {
 		"ft": 2097152,
 		"miP": 0,
@@ -370,6 +447,16 @@
 		"miP": 0,
 		"oA": 2,
 		"oAP": "\/style\/assets\/icons\/facebook.svg",
+		"oF": 0,
+		"opt": 0,
+		"plM": 3758088159,
+		"prP": 0
+		},
+	"\/style\/assets\/icons\/left-pointing-arrow.svg": {
+		"ft": 2097152,
+		"miP": 0,
+		"oA": 2,
+		"oAP": "\/style\/assets\/icons\/left-pointing-arrow.svg",
 		"oF": 0,
 		"opt": 0,
 		"plM": 3758088159,
@@ -502,6 +589,19 @@
 		"oS": 0,
 		"uL": 1
 		},
+	"\/style\/modules\/_footer.scss": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 1,
+		"oAP": "\/style\/modules\/_footer.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
+		},
 	"\/style\/modules\/_header-bar.scss": {
 		"aP": 0,
 		"bl": 0,
@@ -563,6 +663,19 @@
 		"ma": 0,
 		"oA": 1,
 		"oAP": "\/style\/modules\/_month-picker.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
+		},
+	"\/style\/modules\/_sync-scroll.scss": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 1,
+		"oAP": "\/style\/modules\/_sync-scroll.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -641,14 +754,32 @@
 			},
 		{
 			"followForSyntaxChecking": 1,
-			"linkedFileAbbreviatedPath": "\/js\/modules\/search.js",
+			"linkedFileAbbreviatedPath": "\/js\/modules\/layoutLayer\/mobileViewLayout.js",
 			"position": 9,
 			"type": 0
 			},
 		{
 			"followForSyntaxChecking": 1,
-			"linkedFileAbbreviatedPath": "\/js\/modules\/view_handler.js",
+			"linkedFileAbbreviatedPath": "\/js\/modules\/layoutLayer\/viewController.js",
 			"position": 10,
+			"type": 0
+			},
+		{
+			"followForSyntaxChecking": 1,
+			"linkedFileAbbreviatedPath": "\/js\/modules\/search.js",
+			"position": 11,
+			"type": 0
+			},
+		{
+			"followForSyntaxChecking": 1,
+			"linkedFileAbbreviatedPath": "\/js\/modules\/tools\/sync_scroll.js",
+			"position": 12,
+			"type": 0
+			},
+		{
+			"followForSyntaxChecking": 1,
+			"linkedFileAbbreviatedPath": "\/js\/modules\/view_handler.js",
+			"position": 13,
 			"type": 0
 			}
 		]
