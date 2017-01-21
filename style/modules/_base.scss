@@ -48,13 +48,46 @@ body {
     &.poly-view{
         .content{ height: auto!important; }
 
-//        .left-container{
-//            width: 33%!important;
-//        }
+        .left-container{
+            width: 0%;
+        }
 
         .right-container{
-            width: 720px!important;
+            width: 100%;
         }
+
+        @media( min-width: 480px){
+
+            .left-container{
+
+                width: 240px;
+            }
+
+            .right-container{
+                width: calc(100% - 240px);
+            }
+        }
+
+        @media( min-width: 640px){
+
+            .left-container{
+
+                width: 320px;
+            }
+
+            .right-container{
+                width: calc(100% - 320px);
+            }
+        }
+
+        @media( min-width: 768px){
+
+            .left-container,
+            .right-container{
+                width: 50%;
+            }
+        }
+
     }
     
     .loader{
@@ -79,7 +112,6 @@ body {
         transition: width 250ms;
         flex-grow: 1;
         padding-bottom: 141px;
-        border-right: 1px solid #333;
 
         .content{
             min-height: calc(100vh - #{$menu-bar-height});
@@ -108,21 +140,20 @@ body {
 }
 
 
-@media only screen and(min-width:640px){
-    .content-container .left-container.active,
-    .content-container .right-container.active{
-        display: inline-block;
-        vertical-align: top;
-        width: 50%;
-        flex-grow: 1;
+@media only screen and(min-width:1080px){
+    .content-container.poly-view .left-container{
+        width: calc(100% - 640px);
+    }
+    .content-container.poly-view .right-container{
+        width: 640px;
     }
 }
 
-@media only screen and(min-width:1080px){
-    .content-container .left-container.active{
-        width: calc(100% - 700px);
+@media only screen and(min-width:1400px){
+    .content-container.poly-view .left-container{
+        width: calc(100% - 720px);
     }
-    .content-container .right-container.active{
-        width: 700px;
+    .content-container.poly-view .right-container{
+        width: 720px;
     }
 }
