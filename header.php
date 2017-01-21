@@ -17,8 +17,10 @@
                             for ( $i = 0; $i < sizeof( $commercials ); $i++ ) : ?>
                                 <div class="swiper-slide">
                                     <div class="overlay"></div>
-                                    <div class="img-container" style="background-image:url(<?php
-                                        echo get_the_post_thumbnail_url( $commercials[$i]->ID ); ?>)"></div>
+                                    <img data-src-small="<?php echo get_post_meta($commercials[$i]->ID, 'commercial_tn_small', true); ?>" 
+                                         data-src-medium="<?php echo get_post_meta($commercials[$i]->ID, 'commercial_tn_medium', true); ?>"
+                                         data-src-large="<?php echo get_post_meta($commercials[$i]->ID, 'commercial_tn_large', true); ?>"
+                                         class="slide-img">
                                 </div>
                             <?php endfor; ?>
                         </div>

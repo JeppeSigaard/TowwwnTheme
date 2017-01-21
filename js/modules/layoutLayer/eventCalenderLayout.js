@@ -131,9 +131,10 @@ var EventCalenderModule = {
         if ( buffer.length === 0 ) return -1;
 
         // Renders the events
+        this.settings.breakpointHtml = '';
         for ( var i = 0; i < buffer.length; i++ ) {
             this.settings.breakpointHtml+=this.generateEventHtml( buffer[i] );
-        }  $(this.settings.breakpointView).html( this.settings.breakpointHtml );
+        }  $(this.settings.breakpointView).append( this.settings.breakpointHtml );
 
         // Rescales container
         setTimeout(function() {
@@ -165,7 +166,13 @@ var EventCalenderModule = {
         
         // Generates the html itself
         var response = '<div class="event" id="'+elem.id+'">';
-        response += '<div class="imgcontainer" style="background-image:url('+elem.imgurl+')" ></div>';
+        
+        if ( elem.imgurl !== '' && elem.imgurl !== null && typeof elem.imgurl !== 'undefined' ) {
+            response += '<div class="imgcontainer" data-image-src="'+elem.imgurl+'" ></div>'; // style="background-image:url('+elem.imgurl+')" ></div>';
+        } else {
+            response += '<div class="imgcontainer imgloaded" style="background-image:url(http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png)" ></div>';
+        }
+        
         response += '<div class="eventtext">';
         response += '<div class="title">'+name+'</div>';
         response += '<div class="start_time">'+time_formatted+'</div>';

@@ -10,7 +10,6 @@ var EventContentModule = {
         page_counter: 1,
         default_appendSelector: '.eventscontainer',
         events: [],
-        placeholder_img: 'https://developer.walgreens.com/sites/default/files/404.jpg',
     },
     
     // Ctor
@@ -28,8 +27,6 @@ var EventContentModule = {
             
             var json = $.parseJSON( data.target.response );
             for ( var i = 0; i < json.length; i++ ) {
-                if ( json[i].imgurl === 'undefined' || json[i].imgurl === null ) {
-                    json[i].imgurl = this.settings.placeholder_img; }
                 this.settings.events.push( json[i] );
             }
             

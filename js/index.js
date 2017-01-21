@@ -9,7 +9,8 @@
 // @koala-prepend 'modules/layoutLayer/frontpageLayout.js';
 // @koala-prepend 'modules/layoutLayer/eventCalenderLayout.js';
 // @koala-prepend 'modules/layoutLayer/eventSingleLayout.js';
-// @koala-prepend 'modules/layoutLayer/viewController.js';
+// @koala-prepend 'modules/controllers/viewController.js';
+// @koala-prepend 'modules/controllers/imageController.js';
 // @koala-prepend 'modules/search.js';
 
 $(function() {
@@ -28,6 +29,7 @@ $(function() {
     });
      
     HeaderModule.init();
+    ImageController.init();
     ViewHandler.init();
     ViewControllerModule.init();
     EventCalenderModule.init();
