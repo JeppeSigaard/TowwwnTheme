@@ -16,7 +16,7 @@ var LocationModule = {
     },
     
     // Get locations
-    get_locations() {
+    get_locations : function() {
         
         // Opens up new xhrequest
         var request = new XMLHttpRequest();
