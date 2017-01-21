@@ -166,9 +166,11 @@ var EventCalenderModule = {
         
         // Generates the html itself
         var response = '<div class="event" id="'+elem.id+'">';
-
-        if ( elem.imgurl !== '' && elem.imgurl !== null && typeof elem.imgurl !== 'undefined' ) {
-            response += '<div class="imgcontainer" data-image-src="'+elem.imgurl+'" ></div>'; // style="background-image:url('+elem.imgurl+')" ></div>';
+        
+        if ( elem.images[130] !== null && typeof elem.images[130] !== 'undefined' ) {
+            response += '<div class="imgcontainer" data-image-src="'+elem.images[130]+'" ></div>';
+        } else if ( elem.imgurl !== '' && elem.imgurl !== null && typeof elem.imgurl !== 'undefined' ) {
+            response += '<div class="imgcontainer" data-image-src="'+elem.imgurl+'" ></div>';
         } else {
             response += '<div class="imgcontainer imgloaded" style="background-image:url(http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png)" ></div>';
         }
