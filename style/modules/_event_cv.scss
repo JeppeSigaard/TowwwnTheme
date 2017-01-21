@@ -199,6 +199,12 @@
             background-position: center 20%;
             border-bottom: 1px solid rgba($color-blue-1, .6);
 
+            &.loading{
+                background-repeat: no-repeat;
+                background-size: 50%;
+                background-position: center;
+            }
+
             @media(min-width:64x0px){
                 padding-bottom: 90px;
                 border-bottom: 1px solid $color-blue-1;
