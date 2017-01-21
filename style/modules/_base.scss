@@ -79,7 +79,6 @@ body {
         transition: width 250ms;
         flex-grow: 1;
         padding-bottom: 141px;
-        border-right: 1px solid #333;
 
         .content{
             min-height: calc(100vh - #{$menu-bar-height});

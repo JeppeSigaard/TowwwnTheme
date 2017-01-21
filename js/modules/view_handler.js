@@ -83,6 +83,7 @@ var ViewHandler = {
         if ( syncScroll.settings.inner !== null ) {
             setTimeout(function() {
                 syncScroll.rescaleContainer();
+                $(window).trigger('resize');
             }, 300);
         }
     },

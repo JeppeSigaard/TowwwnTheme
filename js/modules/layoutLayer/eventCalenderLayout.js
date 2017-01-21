@@ -42,7 +42,6 @@ var EventCalenderModule = {
             ecc.css('max-width', 'none').removeClass('last-row');
             if ( oneRow === false ) {
                 for ( var i = 0; i < rest; i++ ) {
-                    console.log( i );
                     $('#'+ecc[ecc.length-(i+1)].attributes.id.value).css('max-width', $('#'+ecc[0].attributes.id.value).outerWidth() + 'px').addClass('last-row');
                 }
             } else {

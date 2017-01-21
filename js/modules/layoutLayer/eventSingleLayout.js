@@ -6,10 +6,33 @@ var EventSingleModule = {
     
     // Init
     init: function() {
+        var lastTime = 0;
+        $(document).on('mouseup', '.share', function() {
+            if ( new Date().getTime() - lastTime > 1000 ) {
+                window.open( 'https://www.facebook.com/sharer/sharer.php?u=https%3A//www.facebook.com/events/'+$(this).parent().attr('id') );
+                lastTime = new Date().getTime();
+            }
+        });
+        
+        var fbLastTime = 0;
+        $(document).on('mouseup', '.fb', function() {
+            if ( new Date().getTime() - fbLastTime > 1000 ) {
+                window.open( 'https://fb.com/'+$(this).attr('id') );
+                fbLastTime = new Date().getTime();
+            }
+        });
+        
+        var ticketLastTime = 0;
+        $(document).on('mouseup', '.ticket', function() {
+           if ( new Date().getTime() - ticketLastTime > 1000 ) {
+                window.open( $(this).attr('data-ticket') );
+                ticketLastTime = new Date().getTime();
+           } 
+        });
     },
     
     // Bind UI Actions
-    bindUIActions: function() {  
+    bindUIActions: function() {
     },
     
     // Render Single View Event
@@ -23,6 +46,8 @@ var EventSingleModule = {
                 event = EventContentModule.settings.events[i]; break;
             }
         }
+        
+        console.log( event );
         
         // Generates html
         ViewHandler.settings.right_container.html( this.generate_sv_event_html( event ) );
@@ -53,6 +78,17 @@ var EventSingleModule = {
         response += '<div class="event-sv-title">'+event.name+'</div>';
         response += '<div class="event-sv-start-time">'+start_time+'</div>';
         response += '<hr class="lineBreak" />';
+        response += '<div class="es-btns" id="'+event.fbid+'">';
+        response += '<div class="status-btn share"><img src="'+template_uri+'/style/assets/icons/share.svg" class="icon share" />';
+            response += '<div class="text">Del</div></div>';
+        
+        if ( event.ticket_uri !== '' && event.ticket_uri !== null ) {
+            response += '<div class="status-btn ticket" data-ticket="'+event.ticket_uri+'">';
+            response += '<img src="'+template_uri+'/style/assets/icons/ticket.svg" class="icon ticket" />';
+            response += '<div class="text">Køb billet</div></div>';
+        }
+        
+        response += '</div><hr class="lineBreak" />';
         
         /* Status buttons
         response += '<div class="event-sv-status-btns" id="'+event.fbid[0]+'">';
@@ -78,14 +114,16 @@ var EventSingleModule = {
         response += '<div class="event-sv-info">';
         response += '<div class="event-sv-parentname">'+event.parentname+'</div>';
         
+        var adress = '';
         if ( event.adress !== null && typeof event.adress !== 'undefined' ) {
-            response += '<div class="event-sv-adress">'+event.adress+'</div>';
-        }
-            
+            adress = event.adress;
+        } response += '<div class="event-sv-adress">'+adress+'</div>';
+        
         if ( event.website !== null && typeof event.website !== 'undefined' ) {
             response += '<a class="event-sv-website" href="'+event.website+'">'+event.website+'</a>';
-        }
+        } 
         
+        response += '<div class="fb" id="'+event.fbid+'"><img class="fbIcon" src="'+template_uri+'/style/assets/icons/facebook.svg" /></div>';
         response += '</div></div>';
         if ( commercial_image_url !== '' ) {
             response += '<div class="commercial-placeholder"></div>';
