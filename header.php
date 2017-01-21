@@ -7,9 +7,10 @@
         <?php wp_head(); ?>
     </head>
     <body>
-       <div class="main-container">
-           <div class="header-placeholder"></div>
-           <div class="header-container">
+        <?php get_template_part('svg'); ?>
+        <div class="main-container">
+            <div class="header-placeholder"></div>
+            <div class="header-container">
                 <div id="header">
                     <div class="header-commercials">
                         <div class="swiper-wrapper">
