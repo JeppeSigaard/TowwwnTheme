@@ -28,10 +28,11 @@
         
         .logo{
             position: absolute;
-            width: 70px;
+            width: 66px;
             height: auto;
-            top: 10px;
+            top: 12px;
             left: 50%;
+            fill: rgba(white,.9);
             transform: translate(-50%,0);
         }
         
@@ -43,7 +44,7 @@
             transform: translate(-50%, 0);
             width: auto;
             text-align: center;
-            font-size: 11px;
+            font-size: 10px;
             text-transform: uppercase;
         }
     }
@@ -58,6 +59,7 @@
         opacity: .4;
     
         .menu-show-img{
+            fill: white;
             position: absolute;
             top: 60px;
             width: 38px;
@@ -67,6 +69,7 @@
         }
         
         .menu-hide-img{
+            fill: white;
             position: absolute;
             top: 60px;
             width: 38px;
@@ -120,6 +123,8 @@
         }
 
         .back-img{
+            fill: white;
+            opacity: .8;
             position: absolute;
             width: 36px;
             height: 36px;
@@ -148,6 +153,7 @@
             font-size: 14px;
 
             .info-arrow-img{
+                fill: white;
                 width: 10px;
                 height: 10px;
                 margin-left: 4px;
