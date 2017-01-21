@@ -27,7 +27,8 @@ var ViewHandler = {
                 syncScroll.rescaleContainer();
                 syncScroll.setHorizontalPosition();
                 ViewHandler.settings.right_container.removeClass('spoopy');
-            },120);
+                $(window).trigger('scroll');
+            },250);
 
             ViewHandler.toggle_poly_view( true );
 

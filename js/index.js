@@ -19,10 +19,18 @@ $(function() {
             e.preventDefault();
         }
     });
+
+    $(window).on('click', function() {
+        $(window).trigger('resize');
+        setTimeout(function() {
+            syncScroll.rescaleContainer();
+        }, 200);
+    });
      
     HeaderModule.init();
     ViewHandler.init();
     ViewControllerModule.init();
+    EventCalenderModule.init();
 
     EventContentModule.init(function() {
         onContentLoad();

@@ -32,6 +32,11 @@ var EventSingleModule = {
         // Defines height of blue box height
         $('.event-sv-info-placeholder').css({height: $('.event-sv-info').outerHeight() + 'px'});
         
+        // Trigger resize
+        setTimeout(function() {
+            $(window).trigger('resize');
+        }, 200);
+
     },
     
     // Generate single view event html

@@ -65,6 +65,10 @@ var FrontPageModule = {
             },150);
         }
 
+        setTimeout(function() {
+            $(window).trigger('resize');
+        }, 250);
+
         // Annnnnd its ready
         this.settings.ready = true;
 
@@ -91,7 +95,8 @@ var FrontPageModule = {
             else { $('.load-more').html( 'Alt indhold indlæst' ); }
             
             setTimeout(function() {
-                $(window).trigger('scroll');    
+                $(window).trigger('scroll');
+                syncScroll.rescaleContainer();
             }, 150);
         }.bind(this));
 
@@ -111,13 +116,14 @@ var FrontPageModule = {
 
             $('.eventscontainer').html( '' );
             EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 0, acceptOld: true, from: elem[0].month_from, to: elem[0].month_to });
-            var loadResponse = EventCalenderModule.loadMore();
+            var loadResponse = EventCalenderModule.loadMore( 25 );
             if ( loadResponse === -1 ) {
                 $('.eventscontainer').html( '<div class="error">Ingen elementer fundet</div>' );
             } this.updateLayoutPosition();
 
             setTimeout(function() {
                 syncScroll.rescaleContainer();
+                $(window).trigger('resize');
             }, 100);
 
         }.bind(this));
