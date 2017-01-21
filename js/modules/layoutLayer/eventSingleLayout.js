@@ -61,7 +61,7 @@ var EventSingleModule = {
         setTimeout(function() {
             $(window).trigger('resize');
         }, 200);
-        
+
     },
     
     // Generate single view event html

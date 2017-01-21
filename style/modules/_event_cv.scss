@@ -12,7 +12,7 @@
     height: $menu-bar-height;
     background-color: $color-blue-2;
     z-index: 10;
-    // box-shadow: 0px 1px 5px rgba(1,1,1,.5);
+    border-right: 1px solid rgba(0,0,0,.2);
 
     #eventslayoutbtns{
         position: relative;
@@ -67,13 +67,14 @@
 }
 
 .eventscontainer {
+    border-right: 1px solid rgba(0,0,0,.15);
     position: relative;
     box-sizing: border-box;
     width: 100%;
     height: auto;
     padding: 4px;
 
-    @media(min-width: 480px){
+    @media(min-width: 640px){
        padding: 10px;
 
     }
@@ -138,7 +139,7 @@
                 }
             }
 
-            @media(min-width:480px){
+            @media(min-width:640px){
                 min-height: 110px;
 
                 .imgcontainer{
@@ -185,7 +186,7 @@
         flex-grow: 1;
         cursor: pointer;
 
-        @media(min-width:480px){
+        @media(min-width:640px){
             width: 160px;
             margin: 6px;
             border: 1px solid $color-blue-1;
@@ -198,7 +199,7 @@
             background-position: center 20%;
             border-bottom: 1px solid rgba($color-blue-1, .6);
 
-            @media(min-width:480px){
+            @media(min-width:64x0px){
                 padding-bottom: 90px;
                 border-bottom: 1px solid $color-blue-1;
             }
@@ -245,7 +246,7 @@
             }
 
 
-            @media(min-width:480px){
+            @media(min-width:640px){
                 height: 160px;
                 padding: 15px;
                 padding-top: 15px;
@@ -297,4 +298,5 @@
     font-size: 16px;
     background-color: $color-blue-2;
     cursor: pointer;
+    border-right: 1px solid rgba(black, .3);
 }

@@ -8,12 +8,17 @@
     z-index: 10;
 
     .event-singleview{
-        padding: 21px 64px 21px 64px;
+        padding: 21px 12px 21px 12px;
         width: 100%;
         height: auto;
 
-        @media screen and (max-width: 1000px) {
+        @media (min-width: 640px){
             padding: 21px 32px 21px 32px;
+        }
+
+        @media screen and (min-width: 1400px) {
+
+            padding: 21px 64px 21px 64px;
         }
 
         .event-sv-parentname{

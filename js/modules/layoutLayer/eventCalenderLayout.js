@@ -16,7 +16,7 @@ var EventCalenderModule = {
     init: function() {
         this.bindUIActions();
     },
-    
+
     // Bind UI Actions
     bindUIActions: function() {
         $(window).on('resize', function() {
@@ -30,14 +30,14 @@ var EventCalenderModule = {
                 } else {
                     if ( lastOffset === elem.offsetTop ) {
                         rowLength++;
-                    } else { 
+                    } else {
                         oneRow = false;
-                        return; 
+                        return;
                     }
                 }
             });
-            
-            var ecc = $('.eventscontainer').children(), 
+
+            var ecc = $('.eventscontainer').children(),
                 rest = ecc.length % rowLength;
             ecc.css('max-width', 'none').removeClass('last-row');
             if ( oneRow === false ) {
@@ -49,7 +49,7 @@ var EventCalenderModule = {
                     ecc.css('max-width', '195px').addClass('last-row');
                 }
             }
-            
+
         });
     },
     

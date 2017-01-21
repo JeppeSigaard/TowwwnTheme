@@ -64,7 +64,7 @@ var FrontPageModule = {
                 ViewHandler.go_to(0);
             },150);
         }
-        
+
         setTimeout(function() {
             $(window).trigger('resize');
         }, 250);

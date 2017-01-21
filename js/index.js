@@ -19,7 +19,7 @@ $(function() {
             e.preventDefault();
         }
     });
-    
+
     $(window).on('click', function() {
         $(window).trigger('resize');
         setTimeout(function() {
@@ -31,7 +31,7 @@ $(function() {
     ViewHandler.init();
     ViewControllerModule.init();
     EventCalenderModule.init();
-    
+
     EventContentModule.init(function() {
         onContentLoad();
     });
