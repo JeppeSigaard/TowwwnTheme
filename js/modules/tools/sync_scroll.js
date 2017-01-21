@@ -75,7 +75,7 @@ var syncScroll = {
         });
 
         syncScroll.settings.container.css('height', syncScroll.settings.containerHeight);
-        highestElem.parent('.sync-outer').addClass('high');
+        highestElem.parent('.sync-outer').removeClass('fixed').addClass('high');
     },
 
     // Align to top
