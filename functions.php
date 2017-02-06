@@ -7,6 +7,8 @@ $aut = 657576;
 get_functions_part(array(
     'includes',
     'settings',
+    'menu',
+    'location-list',
 ));
 
 // Custom types

@@ -24,7 +24,7 @@ var ImageController = {
             ImageController.settings.loaderReady = true;
         }
         
-        xhr.open( 'GET', template_uri+'/style/assets/icons/loading.gif' );
+        xhr.open( 'GET', template_uri+'/style/assets/icons/loading.svg' );
         xhr.send();
         
         // Loads in image at correct size to header
@@ -64,46 +64,62 @@ var ImageController = {
         // Checks if header image needs changing
         $(window).on('resize', function() {
             this.headerImgControl();
+            this.lazyLoad();
         }.bind(this));
         
         // Lazy load
         $(window).on('scroll', function() {
-            $('[data-image-src]').each(function( iter, elem ) {
-                var top = $(this).offset().top - $(this).outerHeight(),
-                    bottom = $(this).offset().top;
+            this.lazyLoad();
+        }.bind(this));
+    },
+
+
+    isInView : function(obj){
+        var docViewTop = $(window).scrollTop();
+        var docViewBottom = docViewTop + $(window).height();
+
+        var elemTop = obj.offset().top;
+        var elemBottom = elemTop + obj.height();
+
+        return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+    },
+
+    // Lazy load
+    lazyLoad : function(){
+        $('[data-image-src]').each(function( iter, elem ) {
+            var elem = $(this),
+                imgSrc = elem.attr('data-image-src'),
+                Src = elem.attr('data-src');
+
+            // If element is in view load image
+            if ( ImageController.isInView(elem) ) {
+
                 
-                // If element is in view load image
-                if ( top > $(window).scrollTop() && 
-                     bottom < $(window).scrollTop() + $(window).innerHeight() &&
-                     typeof $(this).attr('data-image-src') !== 'undefined' &&
-                     !$(this).hasClass('imgloaded') ) {
-                    
-                    $(this).addClass('imgloaded');
-                    
-                    // Puts loading gif in
-                    if ( ImageController.settings.loaderReady ) {
-                        if ( ImageController.settings.backImages ) {
-                            $(this).css( 'background-image', 'url('+template_uri+'/style/assets/icons/loading.gif)' ).addClass('loading'); 
-                        } else {
-                            $(this).attr( 'src', template_uri+'/style/assets/icons/loading.gif' ).addClass('loading'); 
-                        }
+                elem.addClass('imgloaded');
+
+                // Puts loading gif in
+                if ( ImageController.settings.loaderReady ) {
+                    if ( ImageController.settings.backImages ) {
+                        elem.css( 'background-image', 'url('+template_uri+'/style/assets/icons/loading.svg)' ).addClass('loading');
+                    } else {
+                        elem.attr( 'src', template_uri+'/style/assets/icons/loading.svg' ).addClass('loading');
                     }
-                        
-                    // Loads new image
-                    var xhr = new XMLHttpRequest();
-                    xhr.onload = function() {
-                        if ( ImageController.settings.backImages ) {
-                            $(this).css( 'background-image', 'url('+$(this).attr('data-image-src')+')' );
-                        } else {
-                            $(this).attr( 'src', $(this).attr('data-src') );  
-                        } $(this).removeAttr( 'data-image-src' ).removeClass('loading');
-                    }.bind(this);
-                    
-                    xhr.open( 'GET', $(this).attr('data-image-src') );
-                    xhr.send();
-                    
                 }
-            });
+
+                // Loads new image
+                var xhr = new XMLHttpRequest();
+                xhr.onload = function() {
+                    if ( ImageController.settings.backImages ) {
+                        elem.css( 'background-image', 'url('+imgSrc+')' );
+                    } else {
+                        elem.attr( 'src', Src );
+                    } elem.removeAttr( 'data-image-src' ).removeClass('loading');
+                }.bind(this);
+
+                xhr.open( 'GET', imgSrc );
+                xhr.send();
+
+            }
         });
     },
     
@@ -117,17 +133,17 @@ var ImageController = {
         $('.slide-img').each(function( iter, elem ) {
             if ( $(window).innerWidth() > bpLarge ) {
                 if ( s.state !== 0 ) { 
-                    $(this).attr('src', $(this).attr('data-src-large'));
+                    $(this).css('background-image', 'url('+$(this).attr('data-src-large')+')');
                     s.state = 0;
                 }
             } else if ( $(window).innerWidth() > bpMedium ) {
                 if ( s.state !== 1 ) {
-                    $(this).attr('src', $(this).attr('data-src-medium'));
+                    $(this).css('background-image', 'url('+$(this).attr('data-src-medium')+')');
                     s.state = 1;
                 }
             } else {
                 if ( s.state !== 2 ) {
-                    $(this).attr('src', $(this).attr('data-src-small'));
+                    $(this).css('background-image', 'url('+$(this).attr('data-src-small')+')');
                     s.state = 2;
                 }
             }

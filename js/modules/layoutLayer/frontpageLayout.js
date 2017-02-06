@@ -9,7 +9,7 @@ var FrontPageModule = {
     },
     
     // Init
-    init: function() {  
+    init: function( tmp ) {
         
         // Generates left container content
         var lc = '<div id="eventsbar">';
@@ -20,32 +20,40 @@ var FrontPageModule = {
         lc += '</div><div class="picker"></div>';
         
         lc += '<div class="eventscontainer"></div>';
-        lc += '<div class="load-more">Indlæs '+this.settings.loadMoreGetNum+' mere</div>'
+        
+        if ( tmp ) {
+            lc += '<div class="load-more">Indlæser flere elementer...</div>'
+        } else {
+            lc += '<div class="load-more">Indlæs '+this.settings.loadMoreGetNum+' mere</div>'
+        }
 
         this.settings.lc = lc;
-        ViewHandler.settings.left_container.html(lc);
-        
+        if ( tmp ) ViewHandler.settings.left_container.html(lc);
+
         // Generates front page
-        this.generate_front_page();
+        this.generate_front_page( tmp );
         
     },
     
     // Generate front page
-    generate_front_page: function( ) {
+    generate_front_page: function( tmp ) {
         
-        ViewHandler.closeSingleView();
-        ViewControllerModule.disableBackButton();
-
-        // Adds the base front page html to the container
-        if ( ViewHandler.settings.poly_view ) {
+        if ( tmp ) {
             ViewHandler.closeSingleView();
-        } else {
-            ViewHandler.settings.left_container.removeClass('active');
-            ViewHandler.settings.right_container.html('').removeClass('active');
+            ViewControllerModule.disableBackButton();
+
+            // Adds the base front page html to the container
+            if ( ViewHandler.settings.poly_view ) {
+                ViewHandler.closeSingleView();
+            } else {
+                ViewHandler.settings.left_container.removeClass('active');
+                ViewHandler.settings.right_container.html('').removeClass('active');
+            }
+
+            $('.eventscontainer').removeClass('lineLayout');
         }
 
         ViewHandler.settings.left_container.html( this.settings.lc );
-        $('.eventscontainer').removeClass('lineLayout');
         
         // Binds ui actions
         this.bindUIActions();
@@ -53,17 +61,10 @@ var FrontPageModule = {
         // Gets events and locations categories
         EventCalenderModule.renderEventCalender( '.eventscontainer', { getNum: 0, acceptOld: false });
         $('.load-more').trigger('click');
+        if ( tmp ) $('.load-more').html( 'Indlæser flere elementer...' );
         ViewHandler.bindUIActions();
         this.updateLayoutPosition();
         ViewControllerModule.disableBackButton();
-
-        // Reload view heights
-        if(ViewHandler.settings.poly_view){
-            setTimeout(function(){
-                ViewHandler.reload_view( false );
-                ViewHandler.go_to(0);
-            },150);
-        }
 
         setTimeout(function() {
             $(window).trigger('resize');
@@ -78,7 +79,10 @@ var FrontPageModule = {
     bindUIActions: function() {
 
         if ( !this.settings.ready ) {
-            $('.logo-container').on( 'click', function() {
+            $('.logo-container').on( 'click', function(e) {
+                if($('body').hasClass('app')){
+                    e.preventDefault();
+                }
                 this.generate_front_page();
                 $('#searchfield').val('');
             }.bind( this ));
@@ -99,6 +103,19 @@ var FrontPageModule = {
                 syncScroll.rescaleContainer();
             }, 150);
         }.bind(this));
+
+          /*
+        var can_load_on_scroll = true
+        $(window).on('scroll', function(){
+            if (0 > $('.load-more').offset().top - $(window).scrollTop() - $(window).height() && can_load_on_scroll){
+                can_load_on_scroll = false;
+                $('.load-more').trigger('click');
+                setTimeout(function(){
+                     can_load_on_scroll = true;
+                },2000);
+            }
+        });
+        */
 
         $('.blocklayoutbtn').on( 'click', function() {
             $('.eventscontainer').removeClass('lineLayout'); 
@@ -131,14 +148,6 @@ var FrontPageModule = {
     
     // Update layout parts position
     updateLayoutPosition: function() {
-        setTimeout(function() {
-            if ( $('.event-sv-info').length > 0 ) { var esvi_height = $('.event-sv-info').outerHeight(); }
-            else { var esvi_height = 141; }
-
-            $('.load-more').css({'height': esvi_height+'px', 'line-height': esvi_height+'px'});
-            ViewHandler.settings.left_container.css({'padding-bottom': esvi_height+'px'});
-            syncScroll.rescaleContainer();
-        }, 150);
     }
 
 }

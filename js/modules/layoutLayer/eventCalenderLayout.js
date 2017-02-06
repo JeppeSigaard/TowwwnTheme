@@ -10,6 +10,7 @@ var EventCalenderModule = {
         breakpointFrom: -1,
         breakpointTo: -1,
         breakpointView: '',
+        page : 2,
     },
     
     // Init
@@ -20,36 +21,7 @@ var EventCalenderModule = {
     // Bind UI Actions
     bindUIActions: function() {
         $(window).on('resize', function() {
-            var lastOffset = -1,
-                rowLength = 0,
-                oneRow = true;
-            $('.event').each( function( iter, elem ) {
-                if ( lastOffset === -1 ) {
-                    lastOffset = elem.offsetTop;
-                    rowLength++;
-                } else {
-                    if ( lastOffset === elem.offsetTop ) {
-                        rowLength++;
-                    } else {
-                        oneRow = false;
-                        return;
-                    }
-                }
-            });
-
-            var ecc = $('.eventscontainer').children(),
-                rest = ecc.length % rowLength;
-            ecc.css('max-width', 'none').removeClass('last-row');
-            if ( oneRow === false ) {
-                for ( var i = 0; i < rest; i++ ) {
-                    $('#'+ecc[ecc.length-(i+1)].attributes.id.value).css('max-width', $('#'+ecc[0].attributes.id.value).outerWidth() + 'px').addClass('last-row');
-                }
-            } else {
-                if ( !$('.eventscontainer').hasClass('lineLayout') ) {
-                    ecc.css('max-width', '195px').addClass('last-row');
-                }
-            }
-
+            EventCalenderModule.setEventCalendarWidth();
         });
     },
     
@@ -167,9 +139,13 @@ var EventCalenderModule = {
         // Generates the html itself
         var response = '<div class="event" id="'+elem.id+'">';
         
-        if ( elem.images[130] !== null && typeof elem.images[130] !== 'undefined' ) {
+        if ( typeof elem.images !== 'undefined' &&
+            elem.images[130] !== null &&
+            typeof elem.images[130] !== 'undefined' ) {
             response += '<div class="imgcontainer" data-image-src="'+elem.images[130]+'" ></div>';
-        } else if ( elem.imgurl !== '' && elem.imgurl !== null && typeof elem.imgurl !== 'undefined' ) {
+        } else if ( elem.imgurl !== '' &&
+                   elem.imgurl !== null &&
+                   typeof elem.imgurl !== 'undefined' ) {
             response += '<div class="imgcontainer" data-image-src="'+elem.imgurl+'" ></div>';
         } else {
             response += '<div class="imgcontainer imgloaded" style="background-image:url(http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png)" ></div>';
@@ -183,6 +159,43 @@ var EventCalenderModule = {
         response += '<div class="eventlocation">'+elem.parentname+'</div></div></div></div>';
         return response;
         
+    },
+
+    // Rescales widths of last children in event calendar
+    setEventCalendarWidth : function(){
+
+        var lastOffset = -1,
+            rowLength = 0,
+            oneRow = true;
+
+
+        $('.event').each( function( iter, elem ) {
+            if ( lastOffset === -1 ) {
+                lastOffset = elem.offsetTop;
+                rowLength++;
+            } else {
+                if ( lastOffset === elem.offsetTop ) {
+                    rowLength++;
+                } else {
+                    oneRow = false;
+                    return;
+                }
+            }
+        });
+
+        var ecc = $('.eventscontainer').children(),
+            rest = ecc.length % rowLength;
+        ecc.css('max-width', 'none').removeClass('last-row');
+
+        if ( oneRow === false ) {
+            for ( var i = 0; i < rest; i++ ) {
+                $('#'+ecc[ecc.length-(i+1)].attributes.id.value).css('max-width', $('#'+ecc[0].attributes.id.value).outerWidth() + 'px').addClass('last-row');
+            }
+        } else {
+            if ( !$('.eventscontainer').hasClass('lineLayout') ) {
+                ecc.css('max-width', '195px').addClass('last-row');
+            }
+        }
     },
 
 }

@@ -37,7 +37,6 @@ var HelpFunctions = {
     }, 
     
     // Format date
-
     formatDate: function( timestr, includeHour, includeDay ) {
         var date = new Date( timestr.substr(0, 16) );
         var response = '';
@@ -57,6 +56,6 @@ var HelpFunctions = {
         }
             
         return response;
-    }
+    },
     
 }

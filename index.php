@@ -1,25 +1,20 @@
+<?php
 
-<?php get_header(); ?>
+$temp_paths = array(
+    'sub-page'  => is_page() && !is_front_page(),
+    'app'   => is_front_page() || is_search() || is_home() || is_singular() || is_archive() || is_tax(),
+    '404'   => is_404(),
+);
 
-<div class="content-container" id="page-content">
-    <section class="container-section left-container">
-        <div class="sync-outer">
-            <div class="sync-inner">
-                <div class="content">
-                    <img class="loader" src="<?php echo get_template_directory_uri() . '/style/assets/icons/loading.gif' ?>" />
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="container-section right-container">
-        <div class="sync-outer">
-            <div class="sync-inner">
-                <div class="content">
-                    <img class="loader" src="<?php echo get_template_directory_uri() . '/style/assets/icons/loading.gif' ?>" />
-                </div>
-            </div>
-        </div>
-    </section>
-</div>
+$f = true;
+$GLOBALS['template'] = null;
+foreach($temp_paths as $t => $b){
+    if($b && $f){
+        $GLOBALS['template'] = $t;
+        $f = false; // hent kun første godkendte template
+    }
+}
 
-<?php get_footer(); ?>
+get_header();
+get_template_part('templates/' . $GLOBALS['template']);
+get_footer();

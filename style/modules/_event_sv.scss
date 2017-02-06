@@ -52,53 +52,51 @@
         
         .lineBreak{
             border: 0px;
-            height: 1px;
-            background-color: #333;
+            height: 2px;
+            background-color: #444;
+            border-bottom: 1px solid #ddd;
         }
         
         .es-btns{
-            padding: 8px 0px;
+            padding: 1px 0px;
             
             .status-btn{
+                margin: 11px 0px;
                 position: relative;
-                display: inline-block;
-                background-color: lighten($color-blue-1, 5%);
-                padding: 6px 8px 6px 29px;
-                border-radius: 2px;
-                font-size: 13px;
-                text-transform: uppercase;
-                border: 1px solid #494949;
-                box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.13);
+                width: 100%;
+                height: 32px;
                 cursor: pointer;
-                color: white;
-                transition: 100ms;
-                margin-right: 16px;
                 
                 .icon{
                     position: absolute;
+                    left: 2px;
+                    top: 2px;
+                    display: inline-block;
+                    width: 27px;
+                    height: 27px;
+                    margin-right: 8px;
                     
-                    &.share{
-                        left: 10px;
-                        top: 13px;
-                        width: 12px;
-                        height: 12px;
-                    }
-                    
-                    &.ticket{
-                        left: 8px;
-                        top: 7px;
-                        width: 15px;
-                        height: 15px;
-                        transform: rotate(-45deg);
+                    svg{
+                        width: 29px;
+                        height: 29px;
+                        fill: #444;
                     }
                 }
                 
-                &:hover{
-                    box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.08);
-                }
-                
-                &:active{
-                    box-shadow: inset 0px 0px 5px rgba(0,0,0,.2);
+                .text{
+                    position: absolute;
+                    left: 29px;
+                    display: inline-block;
+                    width: auto;
+                    height: auto;
+                    padding: 8px 10px 6px 10px;
+                    background-color: darken($color-blue-2, 10%);
+                    box-shadow: inset 0px 0px 1px rgba(0,0,0,.3);
+                    margin-left: 8px;
+                    color: white;
+                    font-family: 'Avenir';
+                    font-size: 14px;
+                    text-transform: uppercase;
                 }
             }
         }
@@ -121,15 +119,6 @@
             }
         }
 
-        .icon{
-            position: absolute;
-            left: 10px;
-            top: 53%;
-            transform: translate(0,-50%);
-            font-size: 16px;
-            font-weight: bold;
-        }
-
         .text{
             display: inline-block;
         }
@@ -137,7 +126,15 @@
         .event-sv-desc{
             * {
                 font-family: 'Avenir';
-                font-size: 14px;
+                font-size: 12px;
+
+                 @media (min-width: 480px){
+                    font-size: 14px;
+                }
+
+                @media (min-width: 1280px){
+                    font-size: 16px;
+                }
             }
         }
 
@@ -169,48 +166,80 @@
         left: 0;
         width: 100%;
         height: auto;
-        padding: 32px;
-        background-color: darken($color-blue-2, 10%);
+        min-height: 64px;
         color: white;
-
-        .event-sv-parentname{
-            font-size: 14px;
-            text-transform: uppercase;
-            margin-left: 45px;
-        }
-
-        .event-sv-adress{
-            font-size: 13px;
-            margin-left: 45px;
-        }
-
-        .event-sv-website{
-            display: inline-block;
-            margin-top: 16px;
-            color: rgba(lighten($color-green-1, 0%), .9);
-            font-size: 13px;
-            text-decoration: none;
-            transition: 200ms;
-
-            &:hover{
-                color: rgba(lighten($color-green-1, 0%), 1);
-            }
-        }
         
-        .fb{
-            position: absolute;
-            top: 32px;
-            left: 32px;
-            cursor: pointer;
-            opacity: .85;
+        .event-footer-block{
+            position: relative;
+            width: 100%;
+            height: auto;
+            background-color: darken($color-blue-2, 10%);
+            font-family: 'Avenir';
+            transition: 120ms;
             
-            .fbIcon{
-                width: 32px;
-                height: 32px;
+            &.clickable{
+                cursor: pointer;
+
+                &:hover{
+                    background-color: darken($color-blue-2, 20%);
+                }
             }
             
-            &:hover{
-                opacity: 1;
+            &.title{
+                background-color: darken($color-blue-2, 5%);
+
+                &.clickable{
+                    &:hover{
+                        background-color: darken($color-blue-2, 18%);
+                    }
+                }
+
+                .value{
+                    text-transform: uppercase;
+                    font-size: 20px;
+                    font-family: 'Avenir';
+                    padding: 32px 32px 28px 100px;
+                }
+            }
+
+            &.dark{
+                background-color: darken($color-blue-2, 15%);
+
+                &.clickable{
+                    &:hover{
+                        background-color: darken($color-blue-2, 22%);
+                    }
+                }
+            }
+
+            .icon{
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 75px;
+                height: 100%;
+                background-color: rgba(0,0,0,.13);
+                background-size: 50px;
+                background-position: center;
+                background-repeat: no-repeat;
+
+                svg{
+                    position: absolute;
+                    fill: #eee;
+                    width: 27px;
+                    height: 27px;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+            }
+
+            .value{
+                padding: 24px 32px 22px 100px;
+                color: white;
+                font-size: 13px;
+                font-family: 'Avenir';
+                border-top: 1px solid rgba(40, 40, 40,0.2);
             }
         }
     }

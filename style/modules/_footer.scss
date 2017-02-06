@@ -11,16 +11,22 @@
 .footer{
     position: relative;
     width: 100%;
-    height: 60px;
-    background-color: $color-grey-1;
-    color: white;
-    padding: 16px;
 
     .copyright{
-        position: absolute;
-        top: 50%;
-        right: 16px;
-        transform: translate(0,-50%);
+        position: relative;
+        color: #e0e0e0;
+        padding: 30px 20px;
+        text-align: center;
         font-size: 12px;
+        background-color: $color-grey-1;
+
+        a{
+            color: inherit;
+            text-decoration: none;
+
+            &:hover{
+                text-decoration: underline;
+            }
+        }
     }
 }

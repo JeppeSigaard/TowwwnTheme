@@ -6,7 +6,7 @@
         <title><?php bloginfo("name"); ?></title>
         <?php wp_head(); ?>
     </head>
-    <body>
+    <body <?php body_class($GLOBALS['template']); ?>>
         <?php get_template_part('svg'); ?>
         <div class="main-container">
             <div class="header-placeholder"></div>
@@ -17,10 +17,10 @@
                             <?php $commercials = get_posts(array( 'post_type' => 'commercial', 'numberposts' => -1 ));
                             foreach($commercials as $com) : ?>
                                 <div class="swiper-slide">
-                                    <div class="overlay"></div>
-                                    <img data-src-small="<?php echo get_post_meta($com->ID, 'commercial_tn_small', true); ?>"
+                                    <div data-src-small="<?php echo get_post_meta($com->ID, 'commercial_tn_small', true); ?>"
                                          data-src-medium="<?php echo get_post_meta($com->ID, 'commercial_tn_medium', true); ?>"
-                                         data-src-large="<?php echo get_post_meta($com->ID, 'commercial_tn_large', true); ?>" class="slide-img">
+                                         data-src-large="<?php echo get_post_meta($com->ID, 'commercial_tn_large', true); ?>"
+                                         class="slide-img"></div>
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -29,6 +29,7 @@
                         <label id="searchlabel" for="searchfield">Søg</label>
                         <svg id="searchicon" viewBox="0 0 32 32"><use xlink:href="#icon-search"></use></svg>
                         <input id="searchfield" name="searchfield">
+                        <?php wp_nav_menu(array('theme_location' => 'header-menu', 'container' => false, 'fallback_cb' => null)) ?>
                     </div>
                 </div>
                 <div class="headerbar-placeholder"></div>
@@ -36,10 +37,10 @@
                     <div class="logo-bg-container">
                         <div class="logo-bg"></div>
                     </div>
-                    <div class="logo-container">
+                    <a href="<?php echo get_bloginfo('url'); ?>" class="logo-container">
                         <svg class="logo" viewBox="0 0 200 70"><use xlink:href="#towwwn-logo"></use></svg>
                         <div class="city"><?php echo get_theme_mod('city'); ?></div>
-                    </div>
+                    </a>
                     <div class="menu-show-btns">
                         <svg class="menu-show-img" viewBox="0 0 32 32"><use xlink:href="#icon-search-circle" ></use></svg>
                         <svg class="menu-hide-img" viewBox="0 0 32 32"><use xlink:href="#icon-show-menu" ></use></svg>

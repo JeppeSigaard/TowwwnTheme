@@ -20,6 +20,7 @@ var SearchModule = {
         
         // Visual
         $('#searchfield').on('focus', function() {
+            $('#searchfield').select();
             $('#searchlabel').addClass("not-visible");
          });
 
@@ -29,18 +30,43 @@ var SearchModule = {
             }
         });
         
+        $('#searchicon').on('click', function() {
+             this.settings.keyword = $('#searchfield').val().toLowerCase();
+            this.search();
+                $('#searchfield').blur();
+                HeaderModule.show_menu( true );
+        }.bind(this));
+
         // Search itself
+        var lsKeyUp = new Date().getTime();
         $('#searchfield').on( 'keyup', function(e) {
             this.settings.keyword = $('#searchfield').val().toLowerCase();
-            if ( e.keyCode === 13 && this.settings.keyword !== '' ) {
+            lsKeyUp = new Date().getTime();
+
+            if ( e.keyCode === 13 ) {
                 this.search();
+                $('#searchfield').blur();
+                HeaderModule.show_menu( true );
+            }
+
+            else{
+               /* setTimeout(function() {
+                if ( new Date().getTime() - lsKeyUp > 1500 ) {
+                    this.search(); }
+                }.bind(this), 1500); */
             }
         }.bind(this));
         
     },
     
     // Search function
-    search: function() {
+    search: function(term) {
+        if (typeof term === 'undefined'){ term = this.settings.keyword; }
+
+        if ( term === '' ) {
+            FrontPageModule.generate_front_page();
+            return;
+        }
         
         // Checks if events have been loaded in
         var resp = [];
@@ -49,7 +75,7 @@ var SearchModule = {
         // Loops through all events and assigns them a fitness score
         for ( var i = 0; i < events.length; i++ ) {
             var fitness = 0, tTitle = 0, tDesc = 0, tParent = 0;
-            var keywords = this.settings.keyword.split(' ');
+            var keywords = term.split(' ');
             for ( var ki = 0; ki < keywords.length; ki++ ) {
 
                 // Checks for includes of the individual keyword
@@ -83,11 +109,17 @@ var SearchModule = {
             events.push( resp[i][1] );
         }
         
-        EventCalenderModule.renderEventCalender('.eventscontainer', { acceptOld: true, getNum: 0, content: events } );
-        $('.load-more').trigger('click');
+        if ( events.length <= 0 ) {
+            $('.eventscontainer').html('<div class="error">Ingen elementer fundet</div>');
+        } else {
+            EventCalenderModule.renderEventCalender('.eventscontainer', { acceptOld: true, getNum: 0, content: events } );
+            $('.load-more').trigger('click');
+        }
         ViewHandler.closeSingleView();
         $(window).trigger('resize');
         setTimeout(function() {
+            $('html,body').animate({scrollTop : $('#page-content').offset().top},200);
+            ImageController.lazyLoad();
             syncScroll.rescaleContainer();
         }, 50);
         

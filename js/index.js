@@ -27,19 +27,23 @@ $(function() {
             syncScroll.rescaleContainer();
         }, 200);
     });
-     
+
+    $(document).on('click', '[data-link]', function(){
+        if ( $(this).attr('data-link-type') === 'redirect' ) {
+            window.location.href = $(this).attr('data-link');
+        } else {
+            window.open( $(this).attr('data-link') );
+        }
+    });
+
     HeaderModule.init();
     ImageController.init();
     ViewHandler.init();
     ViewControllerModule.init();
     EventCalenderModule.init();
 
-    EventContentModule.init(function() {
-        onContentLoad();
-    });
-
-    var onContentLoad = function() {
-        FrontPageModule.init();
+    var onContentLoad = function( tmp ) {
+        FrontPageModule.init( tmp );
         SearchModule.init();
         EventSingleModule.init();
         syncScroll.init($('#page-content'), '.container-section');
@@ -49,4 +53,17 @@ $(function() {
         }, 150);
     }
 
+    if($('body').hasClass('app')){
+        EventContentModule.init(function( tmp ) {
+            onContentLoad( tmp );
+        });
+    }
+
+    else{
+        SearchModule.init();
+        syncScroll.init($('#page-content'), '.container-section');
+        setTimeout(function() {
+            syncScroll.rescaleContainer();
+        }, 150);
+    }
 });

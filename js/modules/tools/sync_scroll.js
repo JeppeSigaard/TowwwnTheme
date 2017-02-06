@@ -110,6 +110,13 @@ var syncScroll = {
     // Scroll event handler
     onScroll : function(){
 
+        syncScroll.settings.elem.each(function(){
+            if($(this).hasClass('high')){
+                $(this).removeClass('fixed');
+            }
+
+        });
+
         var container = syncScroll.settings.container,
             st = $(window).scrollTop(),
 			diff = st - syncScroll.settings.lastScrollTop;
