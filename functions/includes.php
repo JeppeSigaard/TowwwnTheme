@@ -1,12 +1,29 @@
 <?php
 
 add_action('wp_head',function(){
+
+     $temp_paths = array(
+        'sub-page'  => is_page() && !is_front_page(),
+        'app'   => is_front_page() || is_search() || is_home() || is_singular() || is_archive() || is_tax(),
+        '404'   => is_404(),
+    );
+
+    $f = true;
+    $template = null;
+    foreach($temp_paths as $t => $b){
+        if($b && $f){
+            $template = $t;
+            $f = false;
+        }
+    }
+
     echo '<script> 
     var rest_api = "' . get_theme_mod('rest_api_url') . '"; 
     var main_path = "' . site_url() . '";
     var template_uri = "' . get_template_directory_uri() . '";
     var commercial_image_url = "'. get_theme_mod('commercial') .'";
     var commercial_link = "'. get_theme_mod('commercial_link') .'";
+    var template = "' . $template .  '";
     </script>';
 });
 

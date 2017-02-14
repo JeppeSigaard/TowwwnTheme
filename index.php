@@ -7,14 +7,14 @@ $temp_paths = array(
 );
 
 $f = true;
-$GLOBALS['template'] = null;
+$template = null;
 foreach($temp_paths as $t => $b){
     if($b && $f){
-        $GLOBALS['template'] = $t;
+        $template = $t;
         $f = false; // hent kun første godkendte template
     }
 }
 
 get_header();
-get_template_part('templates/' . $GLOBALS['template']);
+get_template_part('templates/' . $template);
 get_footer();

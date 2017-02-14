@@ -53,7 +53,7 @@ $(function() {
         }, 150);
     }
 
-    if($('body').hasClass('app')){
+    if('app' === template){
         EventContentModule.init(function( tmp ) {
             onContentLoad( tmp );
         });

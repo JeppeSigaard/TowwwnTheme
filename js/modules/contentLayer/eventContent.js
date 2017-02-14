@@ -17,7 +17,7 @@ var EventContentModule = {
     // Ctor
     init: function( cb ) {
         this.settings.cb = cb;
-        this.get_events();
+        this.get_upcoming_events(25);
     },
 
     // Get upcoming event

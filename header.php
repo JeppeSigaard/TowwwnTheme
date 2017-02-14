@@ -6,7 +6,7 @@
         <title><?php bloginfo("name"); ?></title>
         <?php wp_head(); ?>
     </head>
-    <body <?php body_class($GLOBALS['template']); ?>>
+    <body <?php body_class() ?>>
         <?php get_template_part('svg'); ?>
         <div class="main-container">
             <div class="header-placeholder"></div>
