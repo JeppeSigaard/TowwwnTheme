@@ -128,24 +128,14 @@ var ImageController = {
         var s = this.settings,
             bpLarge = s.size_medium + ( s.size_large - s.size_medium ) / 2,
             bpMedium = s.size_small + ( s.size_medium - s.size_small ) / 2;
-        
         // Loads in image at correct size to header
         $('.slide-img').each(function( iter, elem ) {
             if ( $(window).innerWidth() > bpLarge ) {
-                if ( s.state !== 0 ) { 
-                    $(this).css('background-image', 'url('+$(this).attr('data-src-large')+')');
-                    s.state = 0;
-                }
+                $(this).css('background-image', 'url('+$(this).attr('data-src-large')+')');
             } else if ( $(window).innerWidth() > bpMedium ) {
-                if ( s.state !== 1 ) {
-                    $(this).css('background-image', 'url('+$(this).attr('data-src-medium')+')');
-                    s.state = 1;
-                }
+                $(this).css('background-image', 'url('+$(this).attr('data-src-medium')+')');
             } else {
-                if ( s.state !== 2 ) {
-                    $(this).css('background-image', 'url('+$(this).attr('data-src-small')+')');
-                    s.state = 2;
-                }
+                $(this).css('background-image', 'url('+$(this).attr('data-src-small')+')');
             }
         });
     },

@@ -14,45 +14,50 @@ var EventSingleModule = {
     
     // Render Single View Event
     render_sv_event: function( eventid, cb ) {
-
-        
-        // Finds event in eventmodule event array
         var event;
-        for ( var i = 0; i < EventContentModule.settings.events.length; i++ ) {
-            if ( EventContentModule.settings.events[i].id.toString() === eventid ) {
-                event = EventContentModule.settings.events[i]; break;
-            }
-        }
+        $.get(rest_api + 'events/' + eventid, function(data){
+            if(typeof data[0] !== 'undefined'){
+                event = data[0];
 
-        // Generates html
-        ViewHandler.settings.right_container.html( this.generate_sv_event_html( event ) );
-        ViewHandler.settings.right_container.addClass( 'active' );
-        ViewHandler.settings.left_container.addClass( 'active' );
-        ViewHandler.settings.right_container.parents('.sync-outer').scrollTop(0);
 
-        var lastDark = true;
-        $('.event-footer-block').each(function(iter, elem) {
-            if ( lastDark ) { lastDark = false; }
-            else {
-                $(this).addClass('dark');
-                lastDark = true;
+                // Generates html
+                ViewHandler.settings.right_container.html( EventSingleModule.generate_sv_event_html( event ) );
+                ViewHandler.settings.right_container.addClass( 'active' );
+                ViewHandler.settings.left_container.addClass( 'active' );
+                ViewHandler.settings.right_container.parents('.sync-outer').scrollTop(0);
+
+                var lastDark = true;
+                $('.event-footer-block').each(function(iter, elem) {
+                    if ( lastDark ) { lastDark = false; }
+                    else {
+                        $(this).addClass('dark');
+                        lastDark = true;
+                    }
+                });
+
+                // Defines height of blue box height
+                $('.event-sv-info-placeholder').css({height: $('.event-sv-info').outerHeight() + 'px'});
+                ViewHandler.settings.right_container.removeClass('spoopy');
+
+                // Trigger resize
+                setTimeout(function() {
+                    $(window).trigger('resize');
+                }, 200);
+
             }
         });
 
-        // Defines height of blue box height
-        $('.event-sv-info-placeholder').css({height: $('.event-sv-info').outerHeight() + 'px'});
-        
-        // Trigger resize
-        setTimeout(function() {
-            $(window).trigger('resize');
-        }, 200);
 
     },
     
     // Generate single view event html
     generate_sv_event_html: function( event ) {
-        
-        var desc = HelpFunctions.nl2p(HelpFunctions.linkifier( event.description ));
+        var desc_raw = event.description;
+            if(desc_raw === null){desc_raw = '  ';}
+
+        var desc = HelpFunctions.nl2p(HelpFunctions.linkifier( desc_raw ));
+
+
         var start_time = HelpFunctions.formatDate( event.start_time, true, true );
         
 

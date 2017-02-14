@@ -6,6 +6,13 @@ Post Type: commercial
 */
 
 
+// Link
+piklist('field',array(
+    'type' => 'url',
+    'field' => 'link',
+    'label' => 'Link',
+));
+
 // Large commercial
 piklist('field', array(
     'type' => 'file'

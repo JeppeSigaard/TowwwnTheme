@@ -66,4 +66,34 @@ $(function() {
             syncScroll.rescaleContainer();
         }, 150);
     }
+
+
+    $('.sub-page-menu').on('click','a',function(){
+
+        var href = $(this).attr('href'),
+            li = $(this).parents('.menu-item-has-children'),
+            a = li.children('a').first(),
+            prehref = a.attr('href');
+
+        if ($(href).length){
+            //$('html,body').animate({scrollTop : $(href).offset().top - 80},900);
+            setTimeout(function(){
+                var st = $('body').scrollTop() - 80;
+                $('body').scrollTop(st);
+            },10);
+        }
+
+        else if ($('a[name="'+href.replace('#','')+'"]').length){
+            //$('html,body').animate({scrollTop : $('a[name="'+href.replace('#','')+'"]').offset().top - 80},900);
+            setTimeout(function(){
+                var st = $('body').scrollTop() - 80;
+                $('body').scrollTop(st);
+            },10);
+
+        }
+
+        else{
+            window.location.href = prehref + href;
+        }
+    });
 });

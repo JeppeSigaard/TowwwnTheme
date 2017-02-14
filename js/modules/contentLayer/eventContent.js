@@ -6,7 +6,7 @@ var EventContentModule = {
     settings: {
         cb: function() {},
         ready: false,
-        get_url: rest_api+'events?per_page=100&page=',
+        get_url: rest_api+'events?per_page=100&after=now&page=',
         upcoming_get_url: rest_api+'events?page=1&after=now&per_page=',
         page_counter: 1,
         default_appendSelector: '.eventscontainer',
@@ -17,7 +17,7 @@ var EventContentModule = {
     // Ctor
     init: function( cb ) {
         this.settings.cb = cb;
-        this.get_upcoming_events( 25 );
+        this.get_events();
     },
 
     // Get upcoming event

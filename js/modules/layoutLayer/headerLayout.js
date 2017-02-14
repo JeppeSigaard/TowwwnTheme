@@ -17,8 +17,11 @@ var HeaderModule = {
             var header_commercials = new Swiper ('.header-commercials', {
                 direction: 'horizontal',
                 loop: true,
-                autoplay: 4500, //ms
+                autoplay: 9000, //ms
                 autoplayDisableOnInteraction: false,
+                pagination: '.header-commercial-bullets',
+                paginationType : 'bullets',
+                paginationClickable : true,
             });
         }
 

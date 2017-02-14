@@ -80,6 +80,21 @@
         width: 100%;
         height: $top-area-height;
 
+        .header-commercial-bullets{
+            position: absolute;
+            z-index: 10;
+            top: 5px;
+            right: 10px;
+            left: auto;
+            bottom: auto;
+            width: auto;
+
+            .swiper-pagination-bullet-active{
+                background: white;
+                opacity: .8;
+            }
+        }
+
         .swiper-wrapper{
             width: 100%;
             height: $top-area-height;

@@ -13,15 +13,17 @@
             <div class="header-container">
                 <div id="header">
                     <div class="header-commercials">
+                        <div class="header-commercial-bullets"></div>
                         <div class="swiper-wrapper">
                             <?php $commercials = get_posts(array( 'post_type' => 'commercial', 'numberposts' => -1 ));
                             foreach($commercials as $com) : ?>
-                                <div class="swiper-slide">
+                               <?php $link = (get_post_meta($com->ID,'link', true)) ? esc_url(get_post_meta($com->ID,'link', true)): '#'; ?>
+                                <a target="_blank" class="swiper-slide" href="<?php echo $link ?>">
                                     <div data-src-small="<?php echo get_post_meta($com->ID, 'commercial_tn_small', true); ?>"
                                          data-src-medium="<?php echo get_post_meta($com->ID, 'commercial_tn_medium', true); ?>"
                                          data-src-large="<?php echo get_post_meta($com->ID, 'commercial_tn_large', true); ?>"
                                          class="slide-img"></div>
-                                </div>
+                                </a>
                             <?php endforeach; ?>
                         </div>
                     </div>

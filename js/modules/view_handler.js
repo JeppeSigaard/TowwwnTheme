@@ -26,7 +26,7 @@ var ViewHandler = {
             setTimeout(function(){
                 syncScroll.rescaleContainer();
                 syncScroll.setHorizontalPosition();
-                ViewHandler.settings.right_container.removeClass('spoopy');
+
                 $(window).trigger('scroll');
             },250);
 
