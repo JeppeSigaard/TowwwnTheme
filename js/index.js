@@ -41,6 +41,11 @@ $(function() {
     ViewHandler.init();
     ViewControllerModule.init();
     EventCalenderModule.init();
+    
+    LocationModule.init( function() {
+        LocationCategoryModule.init();
+        LocationCategoryModule.render_location_categories( '#section2 .content' );
+    });
 
     var onContentLoad = function( tmp ) {
         FrontPageModule.init( tmp );

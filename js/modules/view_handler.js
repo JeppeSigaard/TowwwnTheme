@@ -7,9 +7,11 @@ var ViewHandler = {
         ready: false,
         poly_view: false,
         content_container: $('.content-container'),
-        left_container: $('.left-container .content'),
-        right_container: $('.right-container .content'),
-        views: [], ls: 0,
+        left_container: $('#section1 .content'),
+        right_container: $('#section0 .content'),
+        views: [], 
+        ls: $('.content-container-inner').position().left,
+        centered_view: [ 1, 2 ],
     },
     
     // Init
@@ -25,7 +27,10 @@ var ViewHandler = {
 
             ViewHandler.settings.right_container.addClass('spoopy');
 
-            EventSingleModule.render_sv_event( $(this).attr('id') );
+            EventSingleModule.render_sv_event( $(this).attr('id'), function() {
+                ViewHandler.change_view_focus( 0 );
+            }, $(this));
+            
             EventSingleModule.bindUIActions();
         
             setTimeout(function(){
@@ -77,7 +82,15 @@ var ViewHandler = {
             
             this.settings.ls = -( from - ( $('.content-container').innerWidth() - width ) / 2 );
             $('.content-container-inner').css({ 'left': this.settings.ls + 'px' });
-        }
+        } 
+        
+        var interval = setInterval( function() {
+            $(window).trigger('resize');
+        }, 1000 / 120 );
+        
+        setTimeout( function() { 
+            clearInterval( interval );
+        }, 400 );
     },
     
     // Toggle poly view
@@ -118,8 +131,13 @@ var ViewHandler = {
 
     // Close single view
     closeSingleView: function() {
-        this.settings.right_container.html('');
         this.toggle_poly_view( false );
+        this.change_view_focus( this.settings.centered_view );
+        
+        setTimeout(function(){
+            this.settings.right_container.html('');
+        }.bind(this), 200);
+        
         if ( syncScroll.settings.inner !== null ) {
             setTimeout(function() {
                 syncScroll.rescaleContainer();

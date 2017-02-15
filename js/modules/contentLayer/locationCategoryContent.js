@@ -53,14 +53,14 @@ var LocationCategoryModule = {
     
     // Render Location Categories
     render_location_categories: function( appendSelector ) {
-        var response = '<div class="category-container">'; 
+        var response = '<div class="category-bar">Kategorier</div><div class="category-container">'; 
         
         // Loops through all categories and generates html
         for ( var i = 0; i < this.settings.sorted_location_categories.length; i++ ) {
              response += this.generate_category_html( this.settings.sorted_location_categories[i] ); }
         
         // Appends html
-        $( appendSelector ).append( response+='</div>' );
+        $( appendSelector ).html( response+='</div>' );
     
     },
     

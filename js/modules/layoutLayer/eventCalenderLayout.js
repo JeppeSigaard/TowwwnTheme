@@ -142,13 +142,16 @@ var EventCalenderModule = {
         if ( typeof elem.images !== 'undefined' &&
             elem.images[130] !== null &&
             typeof elem.images[130] !== 'undefined' ) {
-            response += '<div class="imgcontainer" data-image-src="'+elem.images[130]+'" ></div>';
+            response += '<div class="imgcontainer" data-image-src="'+elem.images[130]+'" >';
+            response += '<div class="loader"><img src="'+template_uri+'/style/assets/icons/loading-white.svg" /></div></div>';
         } else if ( elem.imgurl !== '' &&
                    elem.imgurl !== null &&
                    typeof elem.imgurl !== 'undefined' ) {
-            response += '<div class="imgcontainer" data-image-src="'+elem.imgurl+'" ></div>';
+            response += '<div class="imgcontainer" data-image-src="'+elem.imgurl+'" >';
+            response += '<div class="loader"><img src="'+template_uri+'/style/assets/icons/loading-white.svg" /></div></div>';
         } else {
-            response += '<div class="imgcontainer imgloaded" style="background-image:url(http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png)" ></div>';
+            response += '<div class="imgcontainer imgloaded" style="background-image:url(http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png)" >';
+            response += '<div class="loader"><img src="'+template_uri+'/style/assets/icons/loading-white.svg" /></div></div>';
         }
 
         response += '<div class="eventtext">';

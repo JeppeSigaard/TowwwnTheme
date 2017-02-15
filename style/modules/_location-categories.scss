@@ -19,8 +19,20 @@
      height: auto;
 }
 
+.category-bar{
+    width: 100%;
+    height: 60px;
+    background-color: $color-blue-2;
+    line-height: 60px;
+    font-size: 14px;
+    text-transform: uppercase;
+    padding-left: 20px;
+    color: white;
+}
+
 .category-container{
     padding: 16px;
+    padding-bottom: 2px;
     width: 100%;
     height: auto;
     box-sizing: border-box;

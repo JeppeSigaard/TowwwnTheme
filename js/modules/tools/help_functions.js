@@ -7,9 +7,7 @@ var HelpFunctions = {
         while ( indexOf !== -1 ) { 
             indexOf = haystack.indexOf( needle, indexOf );
             if ( indexOf !== -1 ) { numOf++; indexOf++; }
-        } 
-
-        return numOf;
+        } return numOf;
     },
     
     // Nl2p

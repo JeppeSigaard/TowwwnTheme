@@ -40,6 +40,7 @@ body {
     max-width: $main-container-width;
     transition: 200ms;
     overflow: hidden;
+    z-index: 20;
     border-top: none;
     border-bottom: none;
 }
@@ -53,11 +54,15 @@ body {
     overflow: hidden;
     
     .content-container-inner{
-        width: 150%; height: 100%;
+        width: calc(100% / 2 * 4); height: 100%;
         position: absolute;
-        top: 0; left: 0;
+        top: 0; left: 0%;
         display: flex;
         transition: 400ms;
+        
+        @media screen and (max-width: 640px) {
+            width: calc(100% / 1 * 4);
+        }
     }
     
     &.poly-view{
@@ -116,20 +121,23 @@ body {
 
     .container-section{
         position: relative;
+        max-width: 25%;
+        min-width: 25%;
         height: auto;
         min-height: calc(100vh - #{$top-area-height} - #{$menu-bar-height});
         flex-grow: 1;
         transition: 250ms;
     }
     
-    #section1{ background-color: #f0f0f0; }
+    #section2{ background-color: white; }
+    #section3{ background-color: #f0f0f0; }
 
     .left-container{
         background-color: #f0f0f0;
         transition: width 250ms;
         padding-bottom: 141px;
-        width: 67%;
-        max-width: 67%;
+        // width: 25%;
+        // max-width: 25%;
         
         .content{
             min-height: calc(100vh - #{$menu-bar-height});
@@ -142,8 +150,7 @@ body {
     
     .right-container{
         background-color: white;
-        width: 0;
-        flex-grow: 0;
+        // flex-grow: 1;
         // transition: width 250ms, opacity 100ms;
 
         &.no-trans{
@@ -154,8 +161,8 @@ body {
 
 @media only screen and(min-width:1080px){
     .content-container.poly-view .left-container{
-        width: calc(67% - 640px);
-        max-width: calc(67% - 720px);
+        width: calc(50% - 640px);
+        max-width: calc(50% - 720px);
     }
     .content-container.poly-view .right-container{
         width: 640px;
@@ -164,8 +171,8 @@ body {
 
 @media only screen and(min-width:1400px){
     .content-container.poly-view .left-container{
-        width: calc(67% - 720px);
-        max-width: calc(67% - 720px);
+        width: calc(50% - 720px);
+        max-width: calc(50% - 720px);
     }
     .content-container.poly-view .right-container{
         width: 720px;

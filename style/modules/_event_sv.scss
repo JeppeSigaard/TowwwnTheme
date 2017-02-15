@@ -1,6 +1,28 @@
 
 // Event Single View
 
+.event-bar{
+    position: relative;
+    width: 100%;
+    height: 60px;
+    padding-left: 20px;
+    line-height: 60px;
+    color: white;
+    text-transform: uppercase;
+    font-size: 14px;
+    background-color: $color-blue-2;
+    
+    .close-button{
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translate(0,-50%);
+        color: white;
+        font-size: 37px;
+        cursor: pointer;
+    }
+}
+
 .event-sv-content-container {
     position: relative;
     min-height: calc( 100vh - #{$menu-bar-height} );

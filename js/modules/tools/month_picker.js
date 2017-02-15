@@ -57,7 +57,7 @@ jQuery.prototype.monthPicker = function( options, callback ) {
     } pickerHtml += '</div>';
     
     // Adds html to elem itself
-    elem.html( 'Alle <div class="pickerArrow"></div>' );
+    elem.html( 'Kommende begivenheder <div class="pickerArrow"></div>' );
     
     // Appends on click
     elem.click( function() {
@@ -132,7 +132,7 @@ jQuery.prototype.monthPicker = function( options, callback ) {
                         elem[0].month_from = new Date().getTime();
                         elem[0].month_to = new Date(3000, 1).getTime();
                         clickPoint = null;
-                        elem.html( 'Alle <div class="pickerArrow"></div>' );
+                        elem.html( 'Kommende begivenheder <div class="pickerArrow"></div>' );
                         callback( elem ); return;
                     }
 

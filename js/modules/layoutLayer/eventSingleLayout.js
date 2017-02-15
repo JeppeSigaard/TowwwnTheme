@@ -2,6 +2,9 @@ var EventSingleModule = {
     
     // Fields
     settings: {
+        callback: function() {},
+        elem: null,
+        elem_back: '',
     },
     
     // Init
@@ -13,7 +16,11 @@ var EventSingleModule = {
     },
     
     // Render Single View Event
-    render_sv_event: function( eventid, cb ) {
+    render_sv_event: function( eventid, cb, elem ) {
+        this.settings.elem = elem;
+        $('.imgcontainer', elem).addClass('loadingsv');
+        this.settings.callback = cb;
+        
         var event;
         $.get(rest_api + 'events/' + eventid, function(data){
             if(typeof data[0] !== 'undefined'){
@@ -43,9 +50,13 @@ var EventSingleModule = {
                 setTimeout(function() {
                     $(window).trigger('resize');
                 }, 200);
-
+                
+                setTimeout(function() {
+                    $('.imgcontainer', EventSingleModule.settings.elem).removeClass('loadingsv');
+                    EventSingleModule.settings.callback();
+                }, 300);
             }
-        });
+        }.bind(this));
 
 
     },
@@ -61,9 +72,9 @@ var EventSingleModule = {
         var start_time = HelpFunctions.formatDate( event.start_time, true, true );
         
 
-        var response = '<div class="event-sv-content-container">';
+        var response = '<div class="event-bar">'+event.parentname+'<div class="close-button">&times;</div></div>';
+        response += '<div class="event-sv-content-container">';
         response += '<div class="event-singleview">';
-        response += '<div class="event-sv-parentname">'+event.parentname+'</div>';
 
         if ( event.imgurl !== '' && event.imgurl !== null && typeof event.imgurl !== 'undefined' ) {
             response += '<div class="event-sv-img" style="background-image:url('+event.imgurl+');"></div>';

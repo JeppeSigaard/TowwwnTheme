@@ -47,7 +47,7 @@ var FrontPageModule = {
                 ViewHandler.closeSingleView();
             } else {
                 ViewHandler.settings.left_container.removeClass('active');
-                ViewHandler.settings.right_container.html('').removeClass('active');
+                // ViewHandler.settings.right_container.html('').removeClass('active');
             }
 
             $('.eventscontainer').removeClass('lineLayout');
