@@ -9,10 +9,15 @@ var ViewHandler = {
         content_container: $('.content-container'),
         left_container: $('.left-container .content'),
         right_container: $('.right-container .content'),
+        views: [], ls: 0,
     },
     
     // Init
     init: function() {
+        
+        $('.container-section').each(function( iter, elem ) {
+            this.settings.views.push( $(elem) );
+        }.bind(this));
 
         // Load event single view
         var event_sv, lastScroll = 0, isNew = false;
@@ -38,6 +43,41 @@ var ViewHandler = {
     
     // Bind UI Actions
     bindUIActions: function() {
+    },
+    
+    // Change focus
+    change_view_focus: function( viewIndex ) {
+        var cls = -( $('.content-container-inner').position().left ),
+            crs = cls + $('.content-container').innerWidth();
+        
+        if ( typeof viewIndex === 'number' ) {
+            var elem = this.settings.views[viewIndex],
+                elem_ls = elem.position().left,
+                elem_rs = elem.position().left + elem.innerWidth();
+            
+            if ( elem_ls < cls ) {
+                this.settings.ls = -elem_ls;
+                $('.content-container-inner').css({ 'left': this.settings.ls + 'px' });
+            } else if ( elem_rs > crs ) {
+                this.settings.ls = -( elem_rs - $('.content-container').innerWidth() );
+                $('.content-container-inner').css({ 'left': this.settings.ls + 'px' });
+            }
+        } else if ( typeof viewIndex === 'object' ) {
+            viewIndex.sort(function( a, b ) { 
+                if ( a < b ) return -1;
+                if ( a > b ) return 1;
+                return 0;
+            }); 
+            
+            var lowElem = this.settings.views[viewIndex[0]],
+                highElem = this.settings.views[viewIndex[viewIndex.length-1]],
+                from = lowElem.position().left,
+                to = highElem.position().left + highElem.innerWidth(),
+                width = Math.abs( to - from );
+            
+            this.settings.ls = -( from - ( $('.content-container').innerWidth() - width ) / 2 );
+            $('.content-container-inner').css({ 'left': this.settings.ls + 'px' });
+        }
     },
     
     // Toggle poly view

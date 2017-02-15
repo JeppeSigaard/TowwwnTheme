@@ -45,12 +45,21 @@ body {
 }
 
 .content-container{
+    position: relative;
     width: 100%;
     height: auto;
     background-color: white;
     z-index: 1;
-    display: flex;
-
+    overflow: hidden;
+    
+    .content-container-inner{
+        width: 150%; height: 100%;
+        position: absolute;
+        top: 0; left: 0;
+        display: flex;
+        transition: 400ms;
+    }
+    
     &.poly-view{
         .content{ height: auto!important; }
 
@@ -107,18 +116,21 @@ body {
 
     .container-section{
         position: relative;
-        width: 100%;
         height: auto;
         min-height: calc(100vh - #{$top-area-height} - #{$menu-bar-height});
+        flex-grow: 1;
+        transition: 250ms;
     }
-
+    
+    #section1{ background-color: #f0f0f0; }
 
     .left-container{
         background-color: #f0f0f0;
         transition: width 250ms;
-        flex-grow: 1;
         padding-bottom: 141px;
-
+        width: 67%;
+        max-width: 67%;
+        
         .content{
             min-height: calc(100vh - #{$menu-bar-height});
         }
@@ -132,7 +144,7 @@ body {
         background-color: white;
         width: 0;
         flex-grow: 0;
-        transition: width 250ms, opacity 100ms;
+        // transition: width 250ms, opacity 100ms;
 
         &.no-trans{
             transition: 0ms;
@@ -142,7 +154,8 @@ body {
 
 @media only screen and(min-width:1080px){
     .content-container.poly-view .left-container{
-        width: calc(100% - 640px);
+        width: calc(67% - 640px);
+        max-width: calc(67% - 720px);
     }
     .content-container.poly-view .right-container{
         width: 640px;
@@ -151,7 +164,8 @@ body {
 
 @media only screen and(min-width:1400px){
     .content-container.poly-view .left-container{
-        width: calc(100% - 720px);
+        width: calc(67% - 720px);
+        max-width: calc(67% - 720px);
     }
     .content-container.poly-view .right-container{
         width: 720px;
