@@ -177,6 +177,7 @@
     }
 
     .event {
+        overflow: hidden;
         box-sizing: border-box;
         position: relative;
         display: inline-block;
@@ -204,6 +205,8 @@
             background-size: cover;
             background-position: center 20%;
             border-bottom: 1px solid rgba($color-blue-1, .6);
+            position: relative;
+            z-index: 1;
 
             &.loading{
                 background-repeat: no-repeat;

@@ -1,0 +1,23 @@
+@keyframes ripple{
+	0%{transform: translate(-50%,-50%) scale(0); opacity: 1; }
+	80%{transform: translate(-50%,-50%) scale(3); opacity: .5; }
+	100%{transform: translate(-50%,-50%) scale(5); opacity: 0; }
+}
+
+
+.ripple{
+
+	&.animate{
+		opacity: 1;
+		animation: ripple linear forwards .5s;
+		width: 400px;
+		height: 400px;
+	}
+
+	pointer-events: none;
+	z-index: 0;
+	position: absolute;
+	border-radius: 100%;
+	transform-origin: center;
+	background: rgba($color-blue-2,.05);
+}
