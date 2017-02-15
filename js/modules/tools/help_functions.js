@@ -19,6 +19,9 @@ var HelpFunctions = {
  
     // Linkifier
     linkifier: function( text ) {
+        if(!text || null === text){
+            return '';
+        }
         
         // URLs starting with http://, https://, or ftp://
         var replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
