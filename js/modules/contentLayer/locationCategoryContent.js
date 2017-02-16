@@ -25,10 +25,14 @@ var LocationCategoryModule = {
                 if ( typeof this.settings.unsorted_location_categories[category.category_name] === 'undefined' ) {
                     this.settings.unsorted_location_categories[category.category_name] = {
                         category_counter: 1,
+                        category_locations: [ locations[i] ],
                         category_name: category.category_name,
                         category_imgurl: category.category_imgurl,
                     };
-                } else { this.settings.unsorted_location_categories[category.category_name].category_counter++; }
+                } else { 
+                    this.settings.unsorted_location_categories[category.category_name].category_counter++;
+                    this.settings.unsorted_location_categories[category.category_name].category_locations.push( locations[i] );
+                }
             }
         } 
         
@@ -45,6 +49,11 @@ var LocationCategoryModule = {
             
             if ( !isset ) buffer.push( this.settings.unsorted_location_categories[key] );
         } this.settings.sorted_location_categories = buffer;
+        
+        // Assigns an id to each category
+        for ( var iter = 0; iter < this.settings.sorted_location_categories.length; iter++ ) {
+            this.settings.sorted_location_categories[iter].id = iter;
+        }
         
         // Annnnd its ready
         this.settings.ready = true;
@@ -68,7 +77,7 @@ var LocationCategoryModule = {
     generate_category_html: function( category ) {
         
         // Generates html
-        var response = '<div class="category" style="background-image:url('+category.category_imgurl+')">';
+        var response = '<div class="category" style="background-image:url('+category.category_imgurl+')" id="'+category.id+'" >';
         response += '<div class="category-content-container">';
         response += '<div class="category-title">'+category.category_name+'</div>';
         response += '<div class="category-count">'+category.category_counter+'</div></div></div>';

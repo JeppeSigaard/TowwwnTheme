@@ -54,14 +54,14 @@ body {
     overflow: hidden;
     
     .content-container-inner{
-        width: calc(100% / 2 * 4); height: 100%;
+        width: calc(100% / 2 * #{$views}); height: 100%;
         position: absolute;
         top: 0; left: 0%;
-        display: flex;
+        font-size: 0;
         transition: 400ms;
         
         @media screen and (max-width: 640px) {
-            width: calc(100% / 1 * 4);
+            width: calc(100% / 1 * #{$views});
         }
     }
     
@@ -121,23 +121,53 @@ body {
 
     .container-section{
         position: relative;
-        max-width: 25%;
-        min-width: 25%;
-        height: auto;
+        width: calc( 100% / #{$views} );
+        height: 100%;
         min-height: calc(100vh - #{$top-area-height} - #{$menu-bar-height});
-        flex-grow: 1;
-        transition: 250ms;
+        transition: 400ms;
+        font-size: 16px;
+        display: inline-block;
+        vertical-align: top;
+    
+        .sync-outer:not(.fixed){
+            width: 100%;
+        }
+    
+        .content{
+            min-height: calc( 100vh - #{$menu-bar-height} );
+        }
     }
     
-    #section2{ background-color: white; }
-    #section3{ background-color: #f0f0f0; }
-
-    .left-container{
+    // Location categories
+    #section2{ 
+        background-color: white;
+        width: calc( 100% / #{$views} * 2 / 3 );
+        transition: 400ms;
+        
+        &.normalize{
+            width: calc( 100% / #{$views} );
+        }
+    }
+    
+    // Locations
+    #section3{ 
         background-color: #f0f0f0;
-        transition: width 250ms;
+    }
+
+    #section4{
+        background-color: #fff;
+    }
+    
+    // Event Calender
+    #section1{
+        background-color: #f0f0f0;
+        transition: 400ms;
         padding-bottom: 141px;
-        // width: 25%;
-        // max-width: 25%;
+        width: calc( 100% / #{$views} * 2 / 3 * 2 ); 
+        
+        &.normalize{
+            width: calc( 100% / #{$views} );;
+        }
         
         .content{
             min-height: calc(100vh - #{$menu-bar-height});
@@ -148,8 +178,10 @@ body {
         }
     }
     
-    .right-container{
+    // Event single view
+    #section0{
         background-color: white;
+        width: calc( 100% / #{$views} );;
         // flex-grow: 1;
         // transition: width 250ms, opacity 100ms;
 
@@ -159,10 +191,9 @@ body {
     }
 }
 
-@media only screen and(min-width:1080px){
+/*@media only screen and(min-width:1080px){
     .content-container.poly-view .left-container{
         width: calc(50% - 640px);
-        max-width: calc(50% - 720px);
     }
     .content-container.poly-view .right-container{
         width: 640px;
@@ -172,9 +203,8 @@ body {
 @media only screen and(min-width:1400px){
     .content-container.poly-view .left-container{
         width: calc(50% - 720px);
-        max-width: calc(50% - 720px);
     }
     .content-container.poly-view .right-container{
         width: 720px;
     }
-}
+}*/

@@ -28,10 +28,10 @@ var EventSingleModule = {
 
 
                 // Generates html
-                ViewHandler.settings.right_container.html( EventSingleModule.generate_sv_event_html( event ) );
-                ViewHandler.settings.right_container.addClass( 'active' );
-                ViewHandler.settings.left_container.addClass( 'active' );
-                ViewHandler.settings.right_container.parents('.sync-outer').scrollTop(0);
+                ViewHandler.settings.event_singleview.html( EventSingleModule.generate_sv_event_html( event ) );
+                ViewHandler.settings.event_singleview.addClass( 'active' );
+                ViewHandler.settings.event_calender.addClass( 'active' );
+                ViewHandler.settings.event_singleview.parents('.sync-outer').scrollTop(0);
 
                 var lastDark = true;
                 $('.event-footer-block').each(function(iter, elem) {
@@ -44,7 +44,7 @@ var EventSingleModule = {
 
                 // Defines height of blue box height
                 $('.event-sv-info-placeholder').css({height: $('.event-sv-info').outerHeight() + 'px'});
-                ViewHandler.settings.right_container.removeClass('spoopy');
+                ViewHandler.settings.event_singleview.removeClass('spoopy');
 
                 // Trigger resize
                 setTimeout(function() {

@@ -7,8 +7,19 @@ var ViewHandler = {
         ready: false,
         poly_view: false,
         content_container: $('.content-container'),
-        left_container: $('#section1 .content'),
-        right_container: $('#section0 .content'),
+        
+        event_calender: $('#section1 .content'),
+        event_singleview: $('#section0 .content'),
+        location_categories: $('#section2 .content'),
+        location_listview: $('#section3 .content'),
+        location_singleview: $('#section4 .content'),
+        
+        event_calender_outer: $('#section1'),
+        event_singleview_outer: $('#section0'),
+        location_categories_outer: $('#section2'),
+        location_listview_outer: $('#section3'),
+        location_singleview_outer: $('#section4'),  
+        
         views: [], 
         ls: $('.content-container-inner').position().left,
         centered_view: [ 1, 2 ],
@@ -24,11 +35,12 @@ var ViewHandler = {
         // Load event single view
         var event_sv, lastScroll = 0, isNew = false;
         $(document).on( 'click', '.event', function() {
-
-            ViewHandler.settings.right_container.addClass('spoopy');
+            ViewHandler.settings.event_singleview.addClass('spoopy');
 
             EventSingleModule.render_sv_event( $(this).attr('id'), function() {
                 ViewHandler.change_view_focus( 0 );
+                ViewHandler.settings.event_calender_outer.addClass( 'normalize' );
+                ViewHandler.settings.location_categories_outer.addClass( 'normalize' );
             }, $(this));
             
             EventSingleModule.bindUIActions();
@@ -41,8 +53,8 @@ var ViewHandler = {
             },250);
 
             ViewHandler.toggle_poly_view( true );
-
         });
+        
         this.settings.ready = true;
     },
     
@@ -133,10 +145,12 @@ var ViewHandler = {
     closeSingleView: function() {
         this.toggle_poly_view( false );
         this.change_view_focus( this.settings.centered_view );
+        this.settings.event_calender_outer.removeClass('normalize');
+        this.settings.location_categories_outer.removeClass('normalize');
         
         setTimeout(function(){
-            this.settings.right_container.html('');
-        }.bind(this), 200);
+            this.settings.event_singleview.html('');
+        }.bind(this), 400);
         
         if ( syncScroll.settings.inner !== null ) {
             setTimeout(function() {

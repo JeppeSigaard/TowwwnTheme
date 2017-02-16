@@ -28,7 +28,7 @@ var FrontPageModule = {
         }
 
         this.settings.lc = lc;
-        if ( tmp ) ViewHandler.settings.left_container.html(lc);
+        if ( tmp ) ViewHandler.settings.event_calender.html(lc);
 
         // Generates front page
         this.generate_front_page( tmp );
@@ -46,14 +46,14 @@ var FrontPageModule = {
             if ( ViewHandler.settings.poly_view ) {
                 ViewHandler.closeSingleView();
             } else {
-                ViewHandler.settings.left_container.removeClass('active');
+                ViewHandler.settings.event_calender.removeClass('active');
                 // ViewHandler.settings.right_container.html('').removeClass('active');
             }
 
             $('.eventscontainer').removeClass('lineLayout');
         }
 
-        ViewHandler.settings.left_container.html( this.settings.lc );
+        ViewHandler.settings.event_calender.html( this.settings.lc );
         
         // Binds ui actions
         this.bindUIActions();
@@ -148,6 +148,6 @@ var FrontPageModule = {
     
     // Update layout parts position
     updateLayoutPosition: function() {
-    }
+    },
 
 }

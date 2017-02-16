@@ -36,5 +36,14 @@
                 </div>
             </div>
         </section>
+        <section class="container-section" id="section4">
+            <div class="sync-outer">
+                <div class="sync-inner">
+                    <div class="content">
+                        <img class="loader" src="<?php echo get_template_directory_uri() . '/style/assets/icons/loading.svg' ?>" />
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 </div>
