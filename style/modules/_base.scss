@@ -14,23 +14,7 @@ body {
     }
 }
 
-@media screen and (max-width: $bp-1) {
-    .main-container{
-        max-width: $main-container-width-bp-1!important;
-    }
-}
 
-@media screen and (max-width: $bp-m) {
-    .content-container{
-        .left-container{
-            min-height: calc(100vh - #{$menu-bar-height})!important;
-        }
-
-        .right-container{
-            min-height: calc(100vh - #{$menu-bar-height})!important;
-        }
-    }
-}
 
 .spoopy{
     opacity: 0;
@@ -63,7 +47,8 @@ body {
         position: absolute;
         top: 0; left: 0%;
         font-size: 0;
-        transition: 400ms;
+        transition: 600ms;
+        transition-timing-function: cubic-bezier(.73, .01, .61, 1.03);
         
         &.notrans{
             transition: 0ms!important;
@@ -78,50 +63,8 @@ body {
         }
     }
     
-    &.poly-view{
-        .content{ height: auto!important; }
+    &.poly-view .content{ height: auto!important; }
 
-        .left-container{
-            width: 0%;
-        }
-
-        .right-container{
-            width: 100%;
-        }
-
-        @media( min-width: 480px){
-
-            .left-container{
-
-                width: 240px;
-            }
-
-            .right-container{
-                width: calc(100% - 240px);
-            }
-        }
-
-        @media( min-width: 640px){
-
-            .left-container{
-
-                width: 320px;
-            }
-
-            .right-container{
-                width: calc(100% - 320px);
-            }
-        }
-
-        @media( min-width: 768px){
-
-            .left-container,
-            .right-container{
-                width: 50%;
-            }
-        }
-
-    }
     
     .loader{
         position: absolute;
@@ -154,13 +97,8 @@ body {
     // Location categories
     #section2{ 
         background-color: white;
-        width: calc( 100% / #{$views} * 2 / 3 );
         transition: 400ms;
-        
-        @media screen and (max-width: 640px) {
-            width: calc( 100% / #{$views} );
-        }
-        
+
         &.normalize{
             width: calc( 100% / #{$views} );
         }
@@ -180,11 +118,6 @@ body {
         background-color: #f0f0f0;
         transition: 400ms;
         padding-bottom: 141px;
-        width: calc( 100% / #{$views} * 2 / 3 * 2 );
-        
-        @media screen and (max-width: 640px) {
-            width: calc( 100% / #{$views} );
-        }
         
         &.normalize{
             width: calc( 100% / #{$views} );;
@@ -211,21 +144,3 @@ body {
         }
     }
 }
-
-/*@media only screen and(min-width:1080px){
-    .content-container.poly-view .left-container{
-        width: calc(50% - 640px);
-    }
-    .content-container.poly-view .right-container{
-        width: 640px;
-    }
-}
-
-@media only screen and(min-width:1400px){
-    .content-container.poly-view .left-container{
-        width: calc(50% - 720px);
-    }
-    .content-container.poly-view .right-container{
-        width: 720px;
-    }
-}*/

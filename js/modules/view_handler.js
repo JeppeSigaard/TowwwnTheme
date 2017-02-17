@@ -43,7 +43,6 @@ var ViewHandler = {
         var event_sv, lastScroll = 0, isNew = false;
         $(document).on( 'click', '.event', function() {
             ViewHandler.settings.event_singleview.addClass('spoopy');
-
             EventSingleModule.render_sv_event( $(this).attr('id'), function() {
                 ViewHandler.change_view_focus( 0 );
                 ViewHandler.settings.event_calender_outer.addClass( 'normalize' );
@@ -127,7 +126,7 @@ var ViewHandler = {
         syncScroll.lockView();
         setTimeout(function(){
             syncScroll.releaseView();
-        }, 400);
+        }, 650);
     },
     
     // Swipe functionlaity
@@ -137,6 +136,7 @@ var ViewHandler = {
             touchstartX = null, touchstartY = null,
             touchposX = null, containerposX = null,
             timestart = null;
+            viewLocked = false;
         
         $('.content-container').on( 'touchstart', function(e) {
             $('.content-container-inner').addClass('notrans');
@@ -158,9 +158,15 @@ var ViewHandler = {
             xDirection = Math.cos( direction );
 
             if ( ((( xDirection > 0.85 || xDirection < -0.85 )) || changed) && changeable ) {
-              $('.content-container-inner').css({ 'left': ( containerposX - Math.abs( distanceX ) * xDirection ) + 'px' });
-              changed = true;
-            } else if ( distance > 30 ) {
+                $('.content-container-inner').css({ 'left': ( containerposX - Math.abs( distanceX ) * xDirection ) + 'px' });
+                changed = true;
+
+                if(!viewLocked){
+                    viewLocked = true;
+                    syncScroll.lockView();
+                }
+
+            } else if ( distance > 10 ) {
               changeable = false;
             }
           }
@@ -197,19 +203,16 @@ var ViewHandler = {
           $('.content-container-inner').addClass('transition');
           $('.content-container-inner').css({ 'left': -( lowestElemCenter - $('.content-container').outerWidth() / 2 ) + 'px' });
           setTimeout(function() {
-            $('.content-container-inner').removeClass('transition');
+              $('.content-container-inner').removeClass('transition');
+
+              if(viewLocked){
+                viewLocked = false;
+                syncScroll.releaseView();
+            }
+
           }, 250);
           
           $('.content-container-inner').removeClass('notrans');
-
-          // Bad code again, uses too many resources
-          var interval = setInterval(function() {
-              $(window).trigger('resize');
-          }, 1000 / 60);
-
-          setTimeout(function() {
-              clearInterval( interval );
-          }, 300);
 
         });
         
