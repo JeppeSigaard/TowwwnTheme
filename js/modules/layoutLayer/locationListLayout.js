@@ -34,7 +34,7 @@ var LocationListModule = {
         $.get(rest_api + 'categories/' + categoryDomElem.attr('id'), function(data){
 
             var html = '<div class="locationlist-bar">'+data.category_name+'<div class="close-button">&times;</div></div>';
-            html += '<div class="locations-container" >';
+            html += '<div class="location-list" >';
 
             for (var i in data.locations){
                 html += this.generateLocationElemHtml( data.locations[i]);
@@ -50,13 +50,15 @@ var LocationListModule = {
     
     // Generate Location List Html
     generateLocationElemHtml: function( location ) {
-        var response = '<div class="location-container" id="'+location.id+'">';
+        var response = '<a href="#" class="location-container" id="'+location.id+'">',
+            about = typeof location.about !== 'undefined' ? location.about : '';
 
-        response += '<div class="location-picture" style="background-image:url('+location.picture+');"></div>';
-        response += '<div class="location-title"><h2>'+location.name+'</h2></div>';
+        response += '<span class="location-picture" style="background-image:url('+location.picture+');"></span>';
+        response += '<span class="location-description"><h2 class="location-title">'+location.name+'</h2>';
+        response += '<p class="location-about">'+about+'</p></span>';
 
 
-        return response += '</div>';
+        return response += '</a>';
     },
     
 };

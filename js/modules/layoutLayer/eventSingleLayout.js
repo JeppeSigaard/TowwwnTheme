@@ -32,6 +32,8 @@ var EventSingleModule = {
                 ViewHandler.settings.event_singleview.addClass( 'active' );
                 ViewHandler.settings.event_calender.addClass( 'active' );
                 ViewHandler.settings.event_singleview.parents('.sync-outer').scrollTop(0);
+                ViewHandler.settings.event_singleview_outer.removeClass('spoopy');
+                $('.imgcontainer', EventSingleModule.settings.elem).removeClass('loadingsv');
 
                 var lastDark = true;
                 $('.event-footer-block').each(function(iter, elem) {
@@ -44,17 +46,8 @@ var EventSingleModule = {
 
                 // Defines height of blue box height
                 $('.event-sv-info-placeholder').css({height: $('.event-sv-info').outerHeight() + 'px'});
-                ViewHandler.settings.event_singleview.removeClass('spoopy');
-
-                // Trigger resize
-                setTimeout(function() {
-                    $(window).trigger('resize');
-                }, 200);
                 
-                setTimeout(function() {
-                    $('.imgcontainer', EventSingleModule.settings.elem).removeClass('loadingsv');
-                    EventSingleModule.settings.callback();
-                }, 300);
+                EventSingleModule.settings.callback();
             }
         }.bind(this));
 

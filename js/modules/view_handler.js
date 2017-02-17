@@ -42,7 +42,7 @@ var ViewHandler = {
         // Load event single view
         var event_sv, lastScroll = 0, isNew = false;
         $(document).on( 'click', '.event', function() {
-            ViewHandler.settings.event_singleview.addClass('spoopy');
+            ViewHandler.settings.event_singleview_outer.addClass('spoopy');
             EventSingleModule.render_sv_event( $(this).attr('id'), function() {
                 ViewHandler.change_view_focus( 0 );
                 ViewHandler.settings.event_calender_outer.addClass( 'normalize' );
