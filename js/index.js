@@ -44,7 +44,7 @@ $(function() {
     
     LocationModule.init( function() {
         LocationCategoryModule.init();
-        LocationCategoryModule.render_location_categories( '#section2 .content' );
+        //LocationCategoryModule.render_location_categories( '#section2 .content' );
         LocationListModule.init();
         LocationSingleViewModule.init();
     });

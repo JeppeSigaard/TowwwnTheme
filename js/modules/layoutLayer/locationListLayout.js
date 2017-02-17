@@ -31,19 +31,21 @@ var LocationListModule = {
     // Render Locatiions
     renderLocationList: function( categoryDomElem ) {
         
-        // Gets elem
-        elem = LocationCategoryModule.settings.sorted_location_categories[ parseInt( categoryDomElem.attr('id') ) ];
-        
-        // Generates top bar
-        var html = '<div class="locationlist-bar">'+elem.category_name+'<div class="close-button">&times;</div></div>';
-        html += '<div class="locations-container" >';
-        for ( var iter = 0; iter < elem.category_locations.length; iter++ ) {
-            html += this.generateLocationElemHtml( elem.category_locations[ iter ] ); }
-        html += '</div>';
-        
-        // Renders the html
-        ViewHandler.settings.location_listview.html( html );
-        
+        $.get(rest_api + 'categories/' + categoryDomElem.attr('id'), function(data){
+
+            var html = '<div class="locationlist-bar">'+data.category_name+'<div class="close-button">&times;</div></div>';
+            html += '<div class="locations-container" >';
+
+            for (var i in data.locations){
+                html += this.generateLocationElemHtml( data.locations[i]);
+            }
+
+            html += '</div>';
+
+            // Renders the html
+            ViewHandler.settings.location_listview.html( html );
+
+        }.bind(this));
     },
     
     // Generate Location List Html
