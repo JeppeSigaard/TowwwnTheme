@@ -28,9 +28,13 @@ var ViewHandler = {
     // Init
     init: function() {
         
+        // Generates view array
         $('.container-section').each(function( iter, elem ) {
             this.settings.views.push( $(elem) );
         }.bind(this));
+        
+        // Loads swipe functionality
+        this.swipe();
 
         // Load event single view
         var event_sv, lastScroll = 0, isNew = false;
@@ -63,7 +67,7 @@ var ViewHandler = {
     },
     
     // Change focus
-    change_view_focus: function( viewIndex ) {
+    change_view_focus: function( viewIndex, forceLeft, forceRight ) {
         var cls = -( $('.content-container-inner').position().left ),
             crs = cls + $('.content-container').innerWidth();
         
@@ -72,13 +76,20 @@ var ViewHandler = {
                 elem_ls = elem.position().left,
                 elem_rs = elem.position().left + elem.innerWidth();
             
-            if ( elem_ls < cls ) {
+            if ( forceLeft ) {
+                this.settings.ls = -elem_ls;
+                $('.content-container-inner').css({ 'left': this.settings.ls + 'px' });
+            } else if ( forceRight ) {
+                this.settings.ls = -( elem_rs - $('.content-container').innerWidth() );
+                $('.content-container-inner').css({ 'left': this.settings.ls + 'px' });
+            } else if ( elem_ls < cls ) {
                 this.settings.ls = -elem_ls;
                 $('.content-container-inner').css({ 'left': this.settings.ls + 'px' });
             } else if ( elem_rs > crs ) {
                 this.settings.ls = -( elem_rs - $('.content-container').innerWidth() );
                 $('.content-container-inner').css({ 'left': this.settings.ls + 'px' });
             }
+            
         } else if ( typeof viewIndex === 'object' ) {
             viewIndex.sort(function( a, b ) { 
                 if ( a < b ) return -1;
@@ -103,6 +114,80 @@ var ViewHandler = {
         setTimeout( function() { 
             clearInterval( interval );
         }, 400 );
+    },
+    
+    // Swipe functionlaity
+    swipe: function() {
+        
+        var elems = this.settings.views,
+            touchstartX = null, touchstartY = null,
+            touchposX = null, containerposX = null,
+            timestart = null;
+        
+        $('.content-container').on( 'touchstart', function(e) {
+            $('.content-container-inner').addClass('notrans');
+            touchstartX = e.touches[0].pageX;
+            touchstartY = e.touches[0].pageY;
+            touchposX = touchstartX - $('.content-container-inner').position().left;
+            containerposX = $('.content-container-inner').position().left;
+            timestart = new Date().getTime();
+        });
+
+        var changed = false, changeable = true, xDirection = 0;
+        $('.content-container').on( 'touchmove', function( e ) {
+          if ( touchstartX !== null && touchstartY !== null ) {
+            var distanceX = touchstartX - e.touches[0].pageX , 
+                distanceY = touchstartY - e.touches[0].pageY,
+                distance = Math.sqrt( distanceX * distanceX + distanceY * distanceY ),
+                direction = Math.atan2( distanceY, distanceX );
+
+            xDirection = Math.cos( direction );
+
+            if ( ((( xDirection > 0.85 || xDirection < -0.85 )) || changed) && changeable ) {
+              $('.content-container-inner').css({ 'left': ( containerposX - Math.abs( distanceX ) * xDirection ) + 'px' });
+              changed = true;
+            } else if ( distance > 30 ) {
+              changeable = false;
+            }
+          }
+
+          if( -($('.content-container-inner').position().left) < 0 ) {
+            $('.content-container-inner').css({ 'left': 0 });    
+          } if ( -($('.content-container-inner').position().left) + $('.content-container').innerWidth() >
+                 $('.content-container-inner').outerWidth()) {
+            $('.content-container-inner').css({ 'left': -($('.content-container-inner').outerWidth() - $('.content-container').innerWidth()) + 'px' });
+          }
+        });
+
+        $('.content-container').on( 'touchend', function(e) {
+          changed = false;
+          changeable = true;
+          touchstartX = null;
+          touchstartY = null;
+          containerposX = null;
+
+          var lowestDistance = null, lowestElem = null, lowestElemCenter = null, date = new Date(),
+              containerCenter = (-($('.content-container-inner').position().left) + $('.content-container').outerWidth() / 2)
+                + (20000 /  (date.getTime() - timestart) * xDirection);
+          for ( var iter = 0; iter < elems.length; iter++ ) {
+            var elemCenter = elems[iter].position().left + elems[iter].outerWidth() / 2;
+            if ( lowestDistance === null || Math.abs( containerCenter - elemCenter ) < lowestDistance ) {
+              lowestDistance = Math.abs( containerCenter - elemCenter );
+              lowestElem = elems[iter];
+              lowestElemCenter = elemCenter;
+            }
+          }
+
+          $('.content-container-inner').addClass('transition');
+          $('.content-container-inner').css({ 'left': -( lowestElemCenter - $('.content-container').outerWidth() / 2 ) + 'px' });
+          setTimeout(function() {
+            $('.content-container-inner').removeClass('transition');
+          }, 250);
+          
+          $('.content-container-inner').removeClass('notrans');
+
+        });
+        
     },
     
     // Toggle poly view
@@ -144,7 +229,7 @@ var ViewHandler = {
     // Close single view
     closeSingleView: function() {
         this.toggle_poly_view( false );
-        this.change_view_focus( this.settings.centered_view );
+        this.change_view_focus( 1, true, false );
         this.settings.event_calender_outer.removeClass('normalize');
         this.settings.location_categories_outer.removeClass('normalize');
         

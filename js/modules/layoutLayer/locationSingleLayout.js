@@ -15,7 +15,7 @@ var LocationSingleViewModule = {
         
         // Closes single view
         $(document).on('click', '.location-singleview-bar .close-button', function () {
-            ViewHandler.change_view_focus( [ 2, 3 ] );
+            ViewHandler.change_view_focus( 3, false, true );
             setTimeout(function() {
                 ViewHandler.settings.location_singleview.html( '' );
             }, 400);

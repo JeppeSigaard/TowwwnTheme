@@ -60,6 +60,14 @@ body {
         font-size: 0;
         transition: 400ms;
         
+        &.notrans{
+            transition: 0ms!important;
+        }
+
+        &.transition{
+            transition: 250ms;
+        }
+        
         @media screen and (max-width: 640px) {
             width: calc(100% / 1 * #{$views});
         }
@@ -144,6 +152,10 @@ body {
         width: calc( 100% / #{$views} * 2 / 3 );
         transition: 400ms;
         
+        @media screen and (max-width: 640px) {
+            width: calc( 100% / #{$views} );
+        }
+        
         &.normalize{
             width: calc( 100% / #{$views} );
         }
@@ -163,7 +175,11 @@ body {
         background-color: #f0f0f0;
         transition: 400ms;
         padding-bottom: 141px;
-        width: calc( 100% / #{$views} * 2 / 3 * 2 ); 
+        width: calc( 100% / #{$views} * 2 / 3 * 2 );
+        
+        @media screen and (max-width: 640px) {
+            width: calc( 100% / #{$views} );
+        }
         
         &.normalize{
             width: calc( 100% / #{$views} );;

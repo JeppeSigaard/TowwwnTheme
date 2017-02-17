@@ -17,7 +17,7 @@ var LocationListModule = {
         
         // Closes location list view
         $(document).on( 'click', '.locationlist-bar .close-button', function() {
-            ViewHandler.change_view_focus( ViewHandler.settings.centered_view );
+            ViewHandler.change_view_focus( 2, false, true );
             ViewHandler.settings.event_calender_outer.removeClass('normalize');
             ViewHandler.settings.location_categories_outer.removeClass('normalize');
             
