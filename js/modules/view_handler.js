@@ -48,13 +48,6 @@ var ViewHandler = {
             }, $(this));
             
             EventSingleModule.bindUIActions();
-        
-            setTimeout(function(){
-                syncScroll.rescaleContainer();
-                syncScroll.setHorizontalPosition();
-
-                $(window).trigger('scroll');
-            },250);
 
             ViewHandler.toggle_poly_view( true );
         });
@@ -105,15 +98,15 @@ var ViewHandler = {
             
             this.settings.ls = -( from - ( $('.content-container').innerWidth() - width ) / 2 );
             $('.content-container-inner').css({ 'left': this.settings.ls + 'px' });
-        } 
-        
-        var interval = setInterval( function() {
-            $(window).trigger('resize');
-        }, 1000 / 120 );
-        
-        setTimeout( function() { 
-            clearInterval( interval );
-        }, 400 );
+        }
+
+
+        syncScroll.lockView();
+        setTimeout(function(){
+            syncScroll.releaseView();
+        }, 400);
+
+
     },
     
     // Swipe functionlaity

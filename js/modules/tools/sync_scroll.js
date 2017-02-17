@@ -29,8 +29,10 @@ var syncScroll = {
         });
 
         $(window).on('resize',function(){
-            syncScroll.rescaleContainer();
-            syncScroll.setHorizontalPosition();
+            if(syncScroll.settings.canFixedScroll){
+                syncScroll.rescaleContainer();
+                syncScroll.setHorizontalPosition();
+            }
         });
     },
 
@@ -172,4 +174,30 @@ var syncScroll = {
 
         syncScroll.settings.lastScrollTop = st;
     },
+
+    lockView : function(){
+
+        $('body').addClass('no-scroll');
+        syncScroll.settings.canFixedScroll = false;
+        $('.sync-outer').each(function(){
+            var innerScroll = $(this).scrollTop();
+            console.log(innerScroll);
+
+            $(this).removeAttr('style').css({
+                position : 'absolute',
+                width: '100%',
+                top : $(this).offset().top - $(this).parent().offset().top - innerScroll,
+                left : '0',
+            });
+
+        });
+    },
+
+    releaseView : function(){
+        syncScroll.settings.canFixedScroll = true;
+        $('.sync-outer').removeAttr('style');
+        syncScroll.onScroll();
+        $('body').removeClass('no-scroll');
+    }
 }
+

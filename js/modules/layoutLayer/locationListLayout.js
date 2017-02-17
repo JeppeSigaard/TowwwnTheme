@@ -50,8 +50,12 @@ var LocationListModule = {
     
     // Generate Location List Html
     generateLocationElemHtml: function( location ) {
-        var response = '<div class="location-container">';
-        response += '<div class="location-title"><h1>'+location.name+'</h1></div>'
+        var response = '<div class="location-container" id="'+location.id+'">';
+
+        response += '<div class="location-picture" style="background-image:url('+location.picture+');"></div>';
+        response += '<div class="location-title"><h2>'+location.name+'</h2></div>';
+
+
         return response += '</div>';
     },
     
