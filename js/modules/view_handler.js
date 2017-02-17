@@ -23,6 +23,9 @@ var ViewHandler = {
         views: [], 
         ls: $('.content-container-inner').position().left,
         centered_view: [ 1, 2 ],
+        currentIndex: 1,
+        forcedLeft: false,
+        forcedRight: false,
     },
     
     // Init
@@ -52,6 +55,23 @@ var ViewHandler = {
             ViewHandler.toggle_poly_view( true );
         });
         
+        // Reloads current view to fit mobile screen sizes
+        var lastSize = $(window).innerWidth();
+        $(window).on( 'resize', function() {
+            if ( ( $(window).innerWidth() <= 640 && lastSize > 640 ) || ( $(window).innerWidth() > 640 && lastSize <= 640 ) ) {
+                setTimeout( function() {
+                    this.change_view_focus( this.settings.currentIndex, this.settings.forcedLeft, this.settings.forcedRight );
+                }.bind(this), 400);
+            } lastSize = $(window).innerWidth();
+        }.bind(this));
+
+        // Swipes from categories to events on load
+        var elem = $('.content-container-inner', this.settings.content_container);
+        elem.addClass('notrans');
+        this.change_view_focus( 2 );
+        elem.removeClass('notrans');
+        this.change_view_focus( 1 );
+
         this.settings.ready = true;
     },
     
@@ -61,6 +81,9 @@ var ViewHandler = {
     
     // Change focus
     change_view_focus: function( viewIndex, forceLeft, forceRight ) {
+        this.settings.currentIndex = viewIndex;
+        this.settings.forcedLeft = forceLeft;
+        this.settings.forcedRight = forceRight;
         var cls = -( $('.content-container-inner').position().left ),
             crs = cls + $('.content-container').innerWidth();
         
@@ -70,17 +93,17 @@ var ViewHandler = {
                 elem_rs = elem.position().left + elem.innerWidth();
             
             if ( forceLeft ) {
-                this.settings.ls = -elem_ls;
-                $('.content-container-inner').css({ 'left': this.settings.ls + 'px' });
+                this.settings.ls = -( elem_ls / $('.content-container').innerWidth() * 100 );
+                $('.content-container-inner').css({ 'left': this.settings.ls + '%' });
             } else if ( forceRight ) {
-                this.settings.ls = -( elem_rs - $('.content-container').innerWidth() );
-                $('.content-container-inner').css({ 'left': this.settings.ls + 'px' });
+                this.settings.ls = -( ( elem_rs - $('.content-container').innerWidth() ) / $('.content-container').innerWidth() * 100 );
+                $('.content-container-inner').css({ 'left': this.settings.ls + '%' });
             } else if ( elem_ls < cls ) {
-                this.settings.ls = -elem_ls;
-                $('.content-container-inner').css({ 'left': this.settings.ls + 'px' });
+                this.settings.ls = -( elem_ls / $('.content-container').innerWidth() * 100 );
+                $('.content-container-inner').css({ 'left': this.settings.ls + '%' });
             } else if ( elem_rs > crs ) {
-                this.settings.ls = -( elem_rs - $('.content-container').innerWidth() );
-                $('.content-container-inner').css({ 'left': this.settings.ls + 'px' });
+                this.settings.ls = -( ( elem_rs - $('.content-container').innerWidth() ) / $('.content-container').innerWidth() * 100 );
+                $('.content-container-inner').css({ 'left': this.settings.ls + '%' });
             }
             
         } else if ( typeof viewIndex === 'object' ) {
@@ -96,7 +119,7 @@ var ViewHandler = {
                 to = highElem.position().left + highElem.innerWidth(),
                 width = Math.abs( to - from );
             
-            this.settings.ls = -( from - ( $('.content-container').innerWidth() - width ) / 2 );
+            this.settings.ls = -( ( from - ( $('.content-container').innerWidth() - width ) / 2 ) );
             $('.content-container-inner').css({ 'left': this.settings.ls + 'px' });
         }
 
@@ -105,8 +128,6 @@ var ViewHandler = {
         setTimeout(function(){
             syncScroll.releaseView();
         }, 400);
-
-
     },
     
     // Swipe functionlaity
@@ -150,6 +171,8 @@ var ViewHandler = {
                  $('.content-container-inner').outerWidth()) {
             $('.content-container-inner').css({ 'left': -($('.content-container-inner').outerWidth() - $('.content-container').innerWidth()) + 'px' });
           }
+
+          $(window).trigger('resize');
         });
 
         $('.content-container').on( 'touchend', function(e) {
@@ -161,7 +184,7 @@ var ViewHandler = {
 
           var lowestDistance = null, lowestElem = null, lowestElemCenter = null, date = new Date(),
               containerCenter = (-($('.content-container-inner').position().left) + $('.content-container').outerWidth() / 2)
-                + (20000 /  (date.getTime() - timestart) * xDirection);
+                + (20000 /  (date.getTime() - timestart) * xDirection); // Change this... Really, its bad:((
           for ( var iter = 0; iter < elems.length; iter++ ) {
             var elemCenter = elems[iter].position().left + elems[iter].outerWidth() / 2;
             if ( lowestDistance === null || Math.abs( containerCenter - elemCenter ) < lowestDistance ) {
@@ -178,6 +201,15 @@ var ViewHandler = {
           }, 250);
           
           $('.content-container-inner').removeClass('notrans');
+
+          // Bad code again, uses too many resources
+          var interval = setInterval(function() {
+              $(window).trigger('resize');
+          }, 1000 / 60);
+
+          setTimeout(function() {
+              clearInterval( interval );
+          }, 300);
 
         });
         

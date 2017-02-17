@@ -4,8 +4,7 @@ var LocationCategoryModule = {
     // Fields
     settings: {
         ready: false,
-        unsorted_location_categories: {},
-        sorted_location_categories: [],
+        location_categories: [],
     },
     
     // Init
@@ -18,9 +17,13 @@ var LocationCategoryModule = {
         
         $.get(rest_api + 'categories?featured=1',function(data){
 
-            for ( var i in data){
-                 this.settings.sorted_location_categories.push(data[i]);
-            }
+            // Pushes & sorts the data
+            for ( var i in data){ this.settings.location_categories.push(data[i]); }
+            this.settings.location_categories.sort(function( a, b ) {
+                if ( a.location_count < b.location_count ) return 1;
+                if ( a.location_count > b.location_count ) return -1;
+                return 0;
+            });
             
             // Annnnd its ready
             this.settings.ready = true;
@@ -35,9 +38,9 @@ var LocationCategoryModule = {
         var response = '<div class="category-bar">Kategorier</div><div class="category-container">'; 
         
         // Loops through all categories and generates html
-        for ( var i in this.settings.sorted_location_categories ) {
-            if(this.settings.sorted_location_categories[i].location_count !== 0){
-                response += this.generate_category_html( this.settings.sorted_location_categories[i] );
+        for ( var i in this.settings.location_categories ) {
+            if(this.settings.location_categories[i].location_count !== 0){
+                response += this.generate_category_html( this.settings.location_categories[i] );
             }
         }
         
