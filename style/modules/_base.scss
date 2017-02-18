@@ -59,6 +59,7 @@ body {
         top: 0; left: 0%;
         font-size: 0;
         transition: 400ms;
+        transition-timing-function: cubic-bezier(.63, -0.04, .36, 1.04);
         
         &.notrans{
             transition: 0ms!important;
@@ -149,7 +150,7 @@ body {
     // Location categories
     #section2{ 
         background-color: white;
-        width: calc( 100% / #{$views} * 2 / 3 );
+        width: calc( 100% / #{$views} );
         transition: 400ms;
         
         @media screen and (max-width: 640px) {
@@ -175,7 +176,7 @@ body {
         background-color: #f0f0f0;
         transition: 400ms;
         padding-bottom: 141px;
-        width: calc( 100% / #{$views} * 2 / 3 * 2 );
+        width: calc( 100% / #{$views} );
         
         @media screen and (max-width: 640px) {
             width: calc( 100% / #{$views} );
