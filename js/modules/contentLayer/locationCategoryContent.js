@@ -16,7 +16,7 @@ var LocationCategoryModule = {
     get_location_categories: function() {
         
         $.get(rest_api + 'categories?featured=1',function(data){
-            
+
             // Pushes & sorts the data
             for ( var i in data){ this.settings.location_categories.push(data[i]); }
             this.settings.location_categories.sort(function( a, b ) {

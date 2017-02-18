@@ -15,7 +15,7 @@
 
 $(function() {
     
-    $('a').click(function(e) {
+    $(document).on('click','a', function(e) {
         if ($(this).attr('href') === '#') {
             e.preventDefault();
         }
