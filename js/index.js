@@ -9,6 +9,9 @@
 // @koala-prepend 'modules/layoutLayer/frontpageLayout.js';
 // @koala-prepend 'modules/layoutLayer/eventCalenderLayout.js';
 // @koala-prepend 'modules/layoutLayer/eventSingleLayout.js';
+// @koala-prepend 'modules/layoutLayer/locationListLayout.js';
+// @koala-prepend 'modules/layoutLayer/locationSingleLayout.js';
+// @koala-prepend 'modules/layoutLayer/mobileViewLayout.js';
 // @koala-prepend 'modules/controllers/viewController.js';
 // @koala-prepend 'modules/controllers/imageController.js';
 // @koala-prepend 'modules/search.js';
@@ -22,10 +25,9 @@ $(function() {
     });
 
     $(window).on('click', function() {
-        $(window).trigger('resize');
         setTimeout(function() {
             syncScroll.rescaleContainer();
-        }, 200);
+        }, 500);
     });
 
     $(document).on('click', '[data-link]', function(){

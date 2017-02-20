@@ -43,7 +43,9 @@ var ViewHandler = {
         var event_sv, lastScroll = 0, isNew = false;
         $(document).on( 'click', '.event', function() {
             ViewHandler.settings.event_singleview_outer.addClass('spoopy');
-            EventSingleModule.render_sv_event( $(this).attr('id'), function() {
+            EventSingleModule.render_sv_event( $(this).attr('id'), function(event) {
+                history.pushState({ type : 'event', id : event.id }, event.name + ' · Towwwn', main_path + '/begivenhed/' + event.slug);
+
                 ViewHandler.change_view_focus( 0 );
                 ViewHandler.settings.event_calender_outer.addClass( 'normalize' );
                 ViewHandler.settings.location_categories_outer.addClass( 'normalize' );
@@ -126,19 +128,39 @@ var ViewHandler = {
         syncScroll.lockView();
         setTimeout(function(){
             syncScroll.releaseView();
-        }, 650);
+        }, 420);
     },
     
     // Swipe functionlaity
     swipe: function() {
         
+        // add rudimentary swipe for mouse (prolly improve, k fam?)
+        var mousePos = false, canSwipe = false;
+        $('.content-container').on('mousedown',function(e){
+            mousePos = e.pageX; canSwipe = true;
+            setTimeout(function(){canSwipe = false;},500);
+        }).on('mouseup',function(e){ if(canSwipe){
+            var mousemoved = e.pageX - mousePos, curLeft, length = $('.container-section').length - 1;
+            $('.container-section').each(function(){ if($(this).offset().left === 0){ curLeft = $(this).index(); } });
+            if(mousemoved > 30){ curLeft --; if(curLeft < 0){curLeft = 0;} this.change_view_focus(curLeft, true); }
+            if(mousemoved < -30){ curLeft ++; if(curLeft > length){curLeft = length;} this.change_view_focus(curLeft, true); }
+            mousepos = false;
+            HelpFunctions.clearSelection();
+        }}.bind(this));
+        // end shoddy mouse stuff
+
         var elems = this.settings.views,
             touchstartX = null, touchstartY = null,
             touchposX = null, containerposX = null,
             timestart = null;
-            viewLocked = false;
+            viewLocked = false,
+            too_fast = false;
         
         $('.content-container').on( 'touchstart', function(e) {
+
+            too_fast = true;
+            setTimeout(function(){too_fast = false;},100);
+
             $('.content-container-inner').addClass('notrans');
             touchstartX = e.touches[0].pageX;
             touchstartY = e.touches[0].pageY;
@@ -147,7 +169,7 @@ var ViewHandler = {
             timestart = new Date().getTime();
         });
 
-        var changed = false, changeable = true, xDirection = 0;
+        var changed = false, changeable = true, xDirection = 0, yDirection = 0;
         $('.content-container').on( 'touchmove', function( e ) {
           if ( touchstartX !== null && touchstartY !== null ) {
             var distanceX = touchstartX - e.touches[0].pageX , 
@@ -156,8 +178,13 @@ var ViewHandler = {
                 direction = Math.atan2( distanceY, distanceX );
 
             xDirection = Math.cos( direction );
+            var tolerance = .95;
 
-            if ( ((( xDirection > 0.85 || xDirection < -0.85 )) || changed) && changeable ) {
+            if ( xDirection <= tolerance && xDirection >= tolerance && distance > 30 ) {
+                changeable = false;
+            }
+
+            if ( ((( xDirection > tolerance || xDirection < -tolerance )) || changed) && changeable ) {
                 $('.content-container-inner').css({ 'left': ( containerposX - Math.abs( distanceX ) * xDirection ) + 'px' });
                 changed = true;
 
@@ -166,7 +193,10 @@ var ViewHandler = {
                     syncScroll.lockView();
                 }
 
-            } else if ( distance > 10 ) {
+                e.stopPropagation();
+                return false;
+
+            } else if ( distance > 30 ) {
               changeable = false;
             }
           }
@@ -177,8 +207,6 @@ var ViewHandler = {
                  $('.content-container-inner').outerWidth()) {
             $('.content-container-inner').css({ 'left': -($('.content-container-inner').outerWidth() - $('.content-container').innerWidth()) + 'px' });
           }
-
-          $(window).trigger('resize');
         });
 
         $('.content-container').on( 'touchend', function(e) {
@@ -188,9 +216,15 @@ var ViewHandler = {
           touchstartY = null;
           containerposX = null;
 
-          var lowestDistance = null, lowestElem = null, lowestElemCenter = null, date = new Date(),
-              containerCenter = (-($('.content-container-inner').position().left) + $('.content-container').outerWidth() / 2)
+          var lowestDistance = null, lowestElem = null, lowestElemCenter = null, date = new Date();
+
+          if ( !too_fast ) {
+              var containerCenter = (-($('.content-container-inner').position().left) + $('.content-container').outerWidth() / 2)
                 + (20000 /  (date.getTime() - timestart) * xDirection); // Change this... Really, its bad:((
+          } else {
+              var containerCenter = (-($('.content-container-inner').position().left) + $('.content-container').outerWidth() / 2); // Change this... Really, its bad:((
+          }
+
           for ( var iter = 0; iter < elems.length; iter++ ) {
             var elemCenter = elems[iter].position().left + elems[iter].outerWidth() / 2;
             if ( lowestDistance === null || Math.abs( containerCenter - elemCenter ) < lowestDistance ) {
@@ -214,6 +248,7 @@ var ViewHandler = {
           
           $('.content-container-inner').removeClass('notrans');
 
+          too_fast = false;
         });
         
     },
@@ -260,17 +295,6 @@ var ViewHandler = {
         this.change_view_focus( 1, true, false );
         this.settings.event_calender_outer.removeClass('normalize');
         this.settings.location_categories_outer.removeClass('normalize');
-        
-        setTimeout(function(){
-            this.settings.event_singleview.html('');
-        }.bind(this), 400);
-        
-        if ( syncScroll.settings.inner !== null ) {
-            setTimeout(function() {
-                syncScroll.rescaleContainer();
-                $(window).trigger('resize');
-            }, 300);
-        }
     },
 
 };

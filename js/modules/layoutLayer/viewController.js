@@ -31,6 +31,7 @@ var ViewControllerModule = {
         $(window).on('resize', this.update.bind(this));
         $(document).on( 'click', this.settings.backButton, function() {
             ViewHandler.closeSingleView();
+            history.pushState({ type : 'home', id : null }, event.name + ' · Towwwn', main_path + '/');
         }.bind(this));
     },
 

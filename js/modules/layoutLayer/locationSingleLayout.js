@@ -9,8 +9,22 @@ var LocationSingleViewModule = {
         
         // Opens new single view
         $(document).on('click', '.location-container', function() {
-            LocationSingleViewModule.renderSingleView( $(this) );
-            ViewHandler.change_view_focus( 4 );
+            var container = $(this), id = container.attr('id');
+
+            container.addClass('loading');
+
+            $.get(rest_api + 'locations/' + id, function(data){
+                var location = data[0];
+
+                history.pushState({type : 'location', id : location.id}, location.name, main_path + '/sted/' + location.slug);
+
+                LocationSingleViewModule.renderSingleView( location );
+                ViewHandler.change_view_focus( 4 );
+
+                container.removeClass('loading');
+            });
+
+
         });
         
         // Closes single view
@@ -24,11 +38,15 @@ var LocationSingleViewModule = {
     },
     
     // Render location single view
-    renderSingleView: function( elem ) {
+    renderSingleView: function( obj ) {
         
         // Generates html
-        var html = '<div class="location-singleview-bar"><div class="close-button">&times;</div></div>';
-        html += '<div class="location-singleview-content"></div>';
+        var html = '<div class="location-singleview-bar">'+ obj.name +'<div class="close-button">&times;</div></div>';
+        html += '<div class="location-singleview-content">';
+
+        html += '</div>';
+
+
         
         // Renders the html
         ViewHandler.settings.location_singleview.html( html );

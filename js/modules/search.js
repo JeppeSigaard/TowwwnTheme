@@ -76,14 +76,14 @@ var SearchModule = {
                 resp.push( [ 1, categories[i] ] );
             }
         }
-        
+
         categories = resp;
         categories.sort(function( a, b ) {
             if ( a[0] < b[0] ) return -1;
             if ( a[0] > b[0] ) return 1;
             return 0;
         });
-        
+
         // Checks if events have been loaded in
         var resp = [];
         var events = EventContentModule.settings.events;
@@ -128,26 +128,25 @@ var SearchModule = {
         if ( events.length === 0 && categories.length === 0 ) {
             $('.eventscontainer').html('<div class="error">Ingen elementer fundet</div>');
         } else {
-            
+
             // Generates categories html
             var response = '<div class="search-category-container">Sted kategorier<div class="breakline"></div>';
             for ( var iter = 0; iter < categories.length; iter++ ) {
                 response += '<div class="category-container" style="background-image:url('+categories[iter][1].category_imgurl+')">';
                 response += '<div class="title">'+categories[iter][1].category_name+'</div></div>';
             }
-            
-            // Generates event html    
+
+            // Generates event html
             response += '<div class="search-category-container">Begivenheder<div class="breakline"></div>';
             for ( var iter = 0; iter < events.length; iter++ ) {
                 response += EventCalenderModule.generateEventHtml( events[iter] ); }
-            
+
             // Render the html
             $('.eventscontainer').html( response+='</div>' );
-        
+
         }
-        
+
         ViewHandler.closeSingleView();
-        $(window).trigger('resize');
         setTimeout(function() {
             $('html,body').animate({scrollTop : $('#page-content').offset().top},200);
             ImageController.lazyLoad();

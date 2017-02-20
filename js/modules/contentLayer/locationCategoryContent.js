@@ -35,7 +35,7 @@ var LocationCategoryModule = {
     // Render Location Categories
     render_location_categories: function( appendSelector ) {
 
-        var response = '<div class="category-bar">Kategorier</div><div class="category-container">'; 
+        var response = '<div class="category-bar">Svendborg i udvalg</div><div class="category-container">';
         
         // Loops through all categories and generates html
         for ( var i in this.settings.location_categories ) {
@@ -53,7 +53,7 @@ var LocationCategoryModule = {
     generate_category_html: function( category ) {
         
         // Generates html
-        var response = '<div class="category" style="background-image:url('+category.category_imgurl+')" id="'+category.category_id+'" >';
+        var response = '<div class="category" data-image-src="'+category.category_imgurl+'" id="'+category.category_id+'" >';
         response += '<div class="category-content-container">';
         response += '<div class="category-title">'+category.category_name+'</div>';
         response += '<div class="category-count">'+category.location_count+'</div></div></div>';

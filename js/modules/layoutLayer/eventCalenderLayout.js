@@ -110,8 +110,8 @@ var EventCalenderModule = {
 
         // Rescales container
         setTimeout(function() {
-            //syncScroll.rescaleContainer();
-            $(window).trigger('resize');
+            syncScroll.rescaleContainer();
+            EventCalenderModule.setEventCalendarWidth();
         }, 150);
 
         // Return the rest
