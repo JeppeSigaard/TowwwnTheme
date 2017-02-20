@@ -9,7 +9,7 @@ body {
     }
 
     &.no-scroll{
-        overflow: hidden;
+        // overflow: hidden;
         height: 100%;
     }
 }
@@ -118,6 +118,7 @@ body {
     // Location categories
     #section2{ 
         background-color: white;
+        width: calc( 100% / #{$views} );
         transition: 400ms;
 
         &.normalize{
@@ -139,6 +140,7 @@ body {
         background-color: #f0f0f0;
         transition: 400ms;
         padding-bottom: 141px;
+        width: calc( 100% / #{$views} );
         
         &.normalize{
             width: calc( 100% / #{$views} );;
