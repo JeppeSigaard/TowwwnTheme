@@ -52,9 +52,8 @@ var syncScroll = {
     },
 
     // Set horizontal positions
-    setHorizontalPosition : function(){
-
-       syncScroll.settings.elem.each(function(){
+    setHorizontalPosition : function(){if(syncScroll.settings.elem !== null){
+        syncScroll.settings.elem.each(function(){
             if($(this).hasClass('fixed')){
                 $(this).css({
                     'left' : $(this).parent().offset().left,
@@ -63,7 +62,7 @@ var syncScroll = {
             }
            else{$(this).removeAttr('style');}
         });
-    },
+    }},
 
     // Check if element is within the horizontal scroll erea
     isInView : function(elem){
@@ -72,7 +71,7 @@ var syncScroll = {
 
     // rescale container
     rescaleContainer : function(){
-        if(typeof syncScroll.settings.container !== 'undefined'){
+        if(syncScroll.settings.container !== null){
             $('.sync-outer.high').removeClass('high');
             syncScroll.settings.containerHeight = 0;
             var highestElem = null;
