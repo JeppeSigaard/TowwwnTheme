@@ -71,6 +71,7 @@ var syncScroll = {
 
     // rescale container
     rescaleContainer : function(cb){
+
         if(syncScroll.settings.container !== null){
             var heighHeight = ($('.high').length) ? $('.high').innerHeight() : 0 ;
 
@@ -90,7 +91,7 @@ var syncScroll = {
             });
 
             syncScroll.settings.container.css('height', syncScroll.settings.containerHeight);
-            highestElem.parent('.sync-outer').removeClass('fixed').addClass('high');
+            highestElem.parent('.sync-outer').removeClass('fixed absolute top').addClass('high');
         }
 
         if(typeof cb === 'function'){

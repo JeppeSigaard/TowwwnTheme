@@ -24,11 +24,6 @@ $(function() {
         }
     });
 
-    $(window).on('click', function() {
-        setTimeout(function() {
-            syncScroll.rescaleContainer();
-        }, 500);
-    });
 
     $(document).on('click', '[data-link]', function(){
         if ( $(this).attr('data-link-type') === 'redirect' ) {
@@ -56,10 +51,6 @@ $(function() {
         SearchModule.init();
         EventSingleModule.init();
         syncScroll.init($('#page-content'), '.container-section');
-
-        setTimeout(function() {
-            syncScroll.rescaleContainer();
-        }, 150);
     }
 
     if('app' === template){
@@ -71,9 +62,6 @@ $(function() {
     else{
         SearchModule.init();
         syncScroll.init($('#page-content'), '.container-section');
-        setTimeout(function() {
-            syncScroll.rescaleContainer();
-        }, 150);
     }
 
 
