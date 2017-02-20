@@ -37,7 +37,7 @@ var LocationListModule = {
     // Render Locatiions
     renderLocationList: function( id, cb ) {
 
-        $('#'+id).addClass('loading');
+        $('#'+id).addClass('loadingsv');
         
         $.get(rest_api + 'categories/' + id, function(data){
 
@@ -52,7 +52,7 @@ var LocationListModule = {
 
             // Renders the html
             ViewHandler.settings.location_listview.html( html );
-            $('#'+id).removeClass('loading');
+            $('#'+id).removeClass('loadingsv');
 
             if(typeof cb === 'function'){
                 cb(data);

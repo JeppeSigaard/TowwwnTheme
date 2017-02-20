@@ -70,8 +70,10 @@ var syncScroll = {
     },
 
     // rescale container
-    rescaleContainer : function(){
+    rescaleContainer : function(cb){
         if(syncScroll.settings.container !== null){
+            var heighHeight = ($('.high').length) ? $('.high').innerHeight() : 0 ;
+
             $('.sync-outer.high').removeClass('high');
             syncScroll.settings.containerHeight = 0;
             var highestElem = null;
@@ -89,6 +91,10 @@ var syncScroll = {
 
             syncScroll.settings.container.css('height', syncScroll.settings.containerHeight);
             highestElem.parent('.sync-outer').removeClass('fixed').addClass('high');
+        }
+
+        if(typeof cb === 'function'){
+            cb();
         }
     },
 
@@ -220,8 +226,10 @@ var syncScroll = {
         $('.sync-outer').removeAttr('style');
         $('body').removeClass('no-scroll').removeAttr('style');
 
-        syncScroll.rescaleContainer();
         syncScroll.setHorizontalPosition();
+        syncScroll.rescaleContainer();
+
+
     }
 }
 

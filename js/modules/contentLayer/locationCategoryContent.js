@@ -53,7 +53,7 @@ var LocationCategoryModule = {
     generate_category_html: function( category ) {
         
         // Generates html
-        var response = '<div class="category" style="background-image:url('+category.category_imgurl+')" id="'+category.category_id+'" >';
+        var response = '<div class="category" data-image-src="'+category.category_imgurl+'" id="'+category.category_id+'" >';
         response += '<div class="category-content-container">';
         response += '<div class="category-title">'+category.category_name+'</div>';
         response += '<div class="category-count">'+category.location_count+'</div></div></div>';

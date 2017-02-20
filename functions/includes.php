@@ -1,21 +1,7 @@
 <?php
 
 add_action('wp_head',function(){
-
-     $temp_paths = array(
-        'sub-page'  => is_page() && !is_front_page(),
-        'app'   => is_front_page() || is_search() || is_home() || is_singular() || is_archive() || is_tax(),
-        '404'   => is_404(),
-    );
-
-    $f = true;
-    $template = null;
-    foreach($temp_paths as $t => $b){
-        if($b && $f){
-            $template = $t;
-            $f = false;
-        }
-    }
+    $template = (is_page() && !is_front_page()) ? 'sub-page' : 'app';
 
     echo '<script> 
     var rest_api = "' . get_theme_mod('rest_api_url') . '"; 
@@ -49,4 +35,13 @@ add_action( 'wp_enqueue_scripts', function() {
     wp_enqueue_style( 'flickityStyle', 'https://unpkg.com/flickity@2/dist/flickity.min.css' );
     wp_enqueue_style( 'mainStyle', get_template_directory_uri() . '/style/index.css');
     
+});
+
+add_filter('template_redirect', function() {
+    global $wp_query;
+
+    if(!isset($_GET['404'])){
+        status_header( 200 );
+        $wp_query->is_404=false;
+    }
 });

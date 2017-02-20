@@ -92,7 +92,7 @@ var ImageController = {
                 Src = elem.attr('data-src');
 
             // If element is in view load image
-            if ( ImageController.isInView(elem) ) {
+            if ( ImageController.isInView(elem) && !elem.hasClass('loading') ) {
 
                 
                 elem.addClass('imgloaded');

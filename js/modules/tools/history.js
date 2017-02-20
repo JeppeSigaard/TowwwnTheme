@@ -6,7 +6,7 @@ var historyModule = {
 
         // When browser history changes
         window.onpopstate = function(event) {
-            if (null === event.state){
+            if (null === event.state || 'home' == event.state.type){
                 // Go to front page mby?
                 ViewHandler.change_view_focus( 1, true );
             }

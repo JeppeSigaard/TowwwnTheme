@@ -153,9 +153,14 @@ var ViewHandler = {
             touchstartX = null, touchstartY = null,
             touchposX = null, containerposX = null,
             timestart = null;
-            viewLocked = false;
+            viewLocked = false,
+            too_fast = false;
         
         $('.content-container').on( 'touchstart', function(e) {
+
+            too_fast = true;
+            setTimeout(function(){too_fast = false;},100);
+
             $('.content-container-inner').addClass('notrans');
             touchstartX = e.touches[0].pageX;
             touchstartY = e.touches[0].pageY;
@@ -164,7 +169,7 @@ var ViewHandler = {
             timestart = new Date().getTime();
         });
 
-        var changed = false, changeable = true, xDirection = 0;
+        var changed = false, changeable = true, xDirection = 0, yDirection = 0;
         $('.content-container').on( 'touchmove', function( e ) {
           if ( touchstartX !== null && touchstartY !== null ) {
             var distanceX = touchstartX - e.touches[0].pageX , 
@@ -173,8 +178,13 @@ var ViewHandler = {
                 direction = Math.atan2( distanceY, distanceX );
 
             xDirection = Math.cos( direction );
+            var tolerance = .95;
 
-            if ( ((( xDirection > 0.85 || xDirection < -0.85 )) || changed) && changeable ) {
+            if ( xDirection <= tolerance && xDirection >= tolerance && distance > 30 ) {
+                changeable = false;
+            }
+
+            if ( ((( xDirection > tolerance || xDirection < -tolerance )) || changed) && changeable ) {
                 $('.content-container-inner').css({ 'left': ( containerposX - Math.abs( distanceX ) * xDirection ) + 'px' });
                 changed = true;
 
@@ -183,7 +193,10 @@ var ViewHandler = {
                     syncScroll.lockView();
                 }
 
-            } else if ( distance > 50 ) {
+                e.stopPropagation();
+                return false;
+
+            } else if ( distance > 30 ) {
               changeable = false;
             }
           }
@@ -203,9 +216,15 @@ var ViewHandler = {
           touchstartY = null;
           containerposX = null;
 
-          var lowestDistance = null, lowestElem = null, lowestElemCenter = null, date = new Date(),
-              containerCenter = (-($('.content-container-inner').position().left) + $('.content-container').outerWidth() / 2)
+          var lowestDistance = null, lowestElem = null, lowestElemCenter = null, date = new Date();
+
+          if ( !too_fast ) {
+              var containerCenter = (-($('.content-container-inner').position().left) + $('.content-container').outerWidth() / 2)
                 + (20000 /  (date.getTime() - timestart) * xDirection); // Change this... Really, its bad:((
+          } else {
+              var containerCenter = (-($('.content-container-inner').position().left) + $('.content-container').outerWidth() / 2); // Change this... Really, its bad:((
+          }
+
           for ( var iter = 0; iter < elems.length; iter++ ) {
             var elemCenter = elems[iter].position().left + elems[iter].outerWidth() / 2;
             if ( lowestDistance === null || Math.abs( containerCenter - elemCenter ) < lowestDistance ) {
@@ -229,6 +248,7 @@ var ViewHandler = {
           
           $('.content-container-inner').removeClass('notrans');
 
+          too_fast = false;
         });
         
     },
