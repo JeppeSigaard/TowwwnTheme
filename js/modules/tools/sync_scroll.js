@@ -65,17 +65,25 @@ var syncScroll = {
         });
     },
 
+    // Check if element is within the horizontal scroll erea
+    isInView : function(elem){
+        return elem.offset().left >= 0 && elem.offset().left < $(window).innerWidth();
+    },
+
     // rescale container
     rescaleContainer : function(){
-
         $('.sync-outer.high').removeClass('high');
         syncScroll.settings.containerHeight = 0;
         var highestElem = null;
 
-        syncScroll.settings.inner.each(function(){
-            if ($(this).innerHeight() > syncScroll.settings.containerHeight){
-                syncScroll.settings.containerHeight = $(this).innerHeight();
-                highestElem = $(this);
+        $('.sync-outer .sync-inner').each(function(){
+            var elem = $(this);
+            if (elem.innerHeight() > syncScroll.settings.containerHeight){
+
+                if(syncScroll.isInView(elem)){
+                    syncScroll.settings.containerHeight = elem.innerHeight();
+                    highestElem = elem;
+                }
             }
         });
 
@@ -117,7 +125,7 @@ var syncScroll = {
         if (this.ready){
             syncScroll.settings.elem.each(function(){
                 if($(this).hasClass('high')){
-                    $(this).removeClass('fixed');
+                    $(this).removeClass('fixed top bottom');
                 }
 
             });
@@ -181,7 +189,16 @@ var syncScroll = {
 
     lockView : function(){
 
-        $('body').addClass('no-scroll');
+        $('body').addClass('no-scroll').css({height:'100%',overflow:'hidden'});
+
+        if(null !== syncScroll.settings.container){
+            syncScroll.settings.container.css({
+                height : $(window).innerHeight - syncScroll.settings.container.offset().top,
+                overflow : 'hidden',
+            });
+
+        }
+
         syncScroll.settings.canFixedScroll = false;
         $('.sync-outer').each(function(){
             var innerScroll = $(this).scrollTop();
@@ -198,9 +215,12 @@ var syncScroll = {
 
     releaseView : function(){
         syncScroll.settings.canFixedScroll = true;
+
         $('.sync-outer').removeAttr('style');
-        syncScroll.onScroll();
-        $('body').removeClass('no-scroll');
+        $('body').removeClass('no-scroll').removeAttr('style');
+
+        syncScroll.rescaleContainer();
+        syncScroll.setHorizontalPosition();
     }
 }
 

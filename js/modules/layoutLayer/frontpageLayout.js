@@ -66,10 +66,6 @@ var FrontPageModule = {
         this.updateLayoutPosition();
         ViewControllerModule.disableBackButton();
 
-        setTimeout(function() {
-            $(window).trigger('resize');
-        }, 250);
-
         // Annnnnd its ready
         this.settings.ready = true;
 
@@ -140,7 +136,6 @@ var FrontPageModule = {
 
             setTimeout(function() {
                 syncScroll.rescaleContainer();
-                $(window).trigger('resize');
             }, 100);
 
         }.bind(this));

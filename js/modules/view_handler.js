@@ -43,7 +43,9 @@ var ViewHandler = {
         var event_sv, lastScroll = 0, isNew = false;
         $(document).on( 'click', '.event', function() {
             ViewHandler.settings.event_singleview_outer.addClass('spoopy');
-            EventSingleModule.render_sv_event( $(this).attr('id'), function() {
+            EventSingleModule.render_sv_event( $(this).attr('id'), function(event) {
+                history.pushState({ type : 'event', id : event.id }, event.name + ' · Towwwn', main_path + '/begivenhed/' + event.slug);
+
                 ViewHandler.change_view_focus( 0 );
                 ViewHandler.settings.event_calender_outer.addClass( 'normalize' );
                 ViewHandler.settings.location_categories_outer.addClass( 'normalize' );
@@ -126,12 +128,27 @@ var ViewHandler = {
         syncScroll.lockView();
         setTimeout(function(){
             syncScroll.releaseView();
-        }, 650);
+        }, 420);
     },
     
     // Swipe functionlaity
     swipe: function() {
         
+        // add rudimentary swipe for mouse (prolly improve, k fam?)
+        var mousePos = false, canSwipe = false;
+        $('.content-container').on('mousedown',function(e){
+            mousePos = e.pageX; canSwipe = true;
+            setTimeout(function(){canSwipe = false;},500);
+        }).on('mouseup',function(e){ if(canSwipe){
+            var mousemoved = e.pageX - mousePos, curLeft, length = $('.container-section').length - 1;
+            $('.container-section').each(function(){ if($(this).offset().left === 0){ curLeft = $(this).index(); } });
+            if(mousemoved > 30){ curLeft --; if(curLeft < 0){curLeft = 0;} this.change_view_focus(curLeft, true); }
+            if(mousemoved < -30){ curLeft ++; if(curLeft > length){curLeft = length;} this.change_view_focus(curLeft, true); }
+            mousepos = false;
+            HelpFunctions.clearSelection();
+        }}.bind(this));
+        // end shoddy mouse stuff
+
         var elems = this.settings.views,
             touchstartX = null, touchstartY = null,
             touchposX = null, containerposX = null,
@@ -166,7 +183,7 @@ var ViewHandler = {
                     syncScroll.lockView();
                 }
 
-            } else if ( distance > 10 ) {
+            } else if ( distance > 50 ) {
               changeable = false;
             }
           }
@@ -177,8 +194,6 @@ var ViewHandler = {
                  $('.content-container-inner').outerWidth()) {
             $('.content-container-inner').css({ 'left': -($('.content-container-inner').outerWidth() - $('.content-container').innerWidth()) + 'px' });
           }
-
-          $(window).trigger('resize');
         });
 
         $('.content-container').on( 'touchend', function(e) {
@@ -260,17 +275,6 @@ var ViewHandler = {
         this.change_view_focus( 1, true, false );
         this.settings.event_calender_outer.removeClass('normalize');
         this.settings.location_categories_outer.removeClass('normalize');
-        
-        setTimeout(function(){
-            this.settings.event_singleview.html('');
-        }.bind(this), 400);
-        
-        if ( syncScroll.settings.inner !== null ) {
-            setTimeout(function() {
-                syncScroll.rescaleContainer();
-                $(window).trigger('resize');
-            }, 300);
-        }
     },
 
 };

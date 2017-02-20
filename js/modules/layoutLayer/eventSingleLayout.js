@@ -47,7 +47,7 @@ var EventSingleModule = {
                 // Defines height of blue box height
                 $('.event-sv-info-placeholder').css({height: $('.event-sv-info').outerHeight() + 'px'});
                 
-                EventSingleModule.settings.callback();
+                EventSingleModule.settings.callback(event);
             }
         }.bind(this));
 

@@ -116,7 +116,6 @@ var SearchModule = {
             $('.load-more').trigger('click');
         }
         ViewHandler.closeSingleView();
-        $(window).trigger('resize');
         setTimeout(function() {
             $('html,body').animate({scrollTop : $('#page-content').offset().top},200);
             ImageController.lazyLoad();

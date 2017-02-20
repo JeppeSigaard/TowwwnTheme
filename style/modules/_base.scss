@@ -37,6 +37,7 @@ body {
     background-image: url(assets/icons/loading-white.svg);
     background-position: center;
     background-repeat: no-repeat;
+    background-size: 64px;
     opacity: 0;
     animation: fadein .3s linear forwards;
 }
@@ -67,7 +68,7 @@ body {
         position: absolute;
         top: 0; left: 0%;
         font-size: 0;
-        transition: 600ms;
+        transition: 400ms;
         transition-timing-function: cubic-bezier(.73, .01, .61, 1.03);
         
         &.notrans{

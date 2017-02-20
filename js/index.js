@@ -22,10 +22,9 @@ $(function() {
     });
 
     $(window).on('click', function() {
-        $(window).trigger('resize');
         setTimeout(function() {
             syncScroll.rescaleContainer();
-        }, 200);
+        }, 500);
     });
 
     $(document).on('click', '[data-link]', function(){

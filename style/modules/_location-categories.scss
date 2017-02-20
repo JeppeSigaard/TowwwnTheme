@@ -69,6 +69,34 @@
                 background-color: rgba(darken($color-blue-1, 9.5%), .9);
             }
         }
+
+        &.loading{
+
+            .category-content-container{
+
+                 background-color: rgba(darken($color-blue-1, 22%), .9);
+
+                .category-count{
+                    display: none;
+                }
+
+                &:after{
+                    content: '';
+                    background-image: url('assets/icons/loading.svg');
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: 32px;
+                    position: absolute;
+                    top: 60%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 40px;
+                    height: 40px;
+                    background-color: white;
+                }
+
+            }
+        }
         
         .category-content-container{
             position: absolute;

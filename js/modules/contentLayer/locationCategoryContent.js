@@ -35,7 +35,7 @@ var LocationCategoryModule = {
     // Render Location Categories
     render_location_categories: function( appendSelector ) {
 
-        var response = '<div class="category-bar">Kategorier</div><div class="category-container">'; 
+        var response = '<div class="category-bar">Svendborg i udvalg</div><div class="category-container">';
         
         // Loops through all categories and generates html
         for ( var i in this.settings.location_categories ) {

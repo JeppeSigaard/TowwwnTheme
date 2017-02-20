@@ -9,15 +9,21 @@ var LocationListModule = {
         
         // Opens location list view
         $(document).on( 'click', '.category', function() {
-            LocationListModule.renderLocationList( $(this) );
-            ViewHandler.settings.event_calender_outer.addClass('normalize');
-            ViewHandler.settings.location_categories_outer.addClass('normalize');
-            ViewHandler.change_view_focus( 3 );
+            LocationListModule.renderLocationList( $(this).attr('id'),function(data){
+
+                history.pushState({type : 'category', id : data.category_id}, data.category_name, main_path + '/kategori/' + data.category_slug);
+
+                ViewHandler.settings.event_calender_outer.addClass('normalize');
+                ViewHandler.settings.location_categories_outer.addClass('normalize');
+                ViewHandler.change_view_focus( 3 );
+
+            });
         });
         
         // Closes location list view
         $(document).on( 'click', '.locationlist-bar .close-button', function() {
             ViewHandler.change_view_focus( 2, false, true );
+
             ViewHandler.settings.event_calender_outer.removeClass('normalize');
             ViewHandler.settings.location_categories_outer.removeClass('normalize');
             
@@ -29,9 +35,11 @@ var LocationListModule = {
     },
     
     // Render Locatiions
-    renderLocationList: function( categoryDomElem ) {
+    renderLocationList: function( id, cb ) {
+
+        $('#'+id).addClass('loading');
         
-        $.get(rest_api + 'categories/' + categoryDomElem.attr('id'), function(data){
+        $.get(rest_api + 'categories/' + id, function(data){
 
             var html = '<div class="locationlist-bar">'+data.category_name+'<div class="close-button">&times;</div></div>';
             html += '<div class="location-list" >';
@@ -44,6 +52,11 @@ var LocationListModule = {
 
             // Renders the html
             ViewHandler.settings.location_listview.html( html );
+            $('#'+id).removeClass('loading');
+
+            if(typeof cb === 'function'){
+                cb(data);
+            }
 
         }.bind(this));
     },
