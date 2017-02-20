@@ -72,23 +72,25 @@ var syncScroll = {
 
     // rescale container
     rescaleContainer : function(){
-        $('.sync-outer.high').removeClass('high');
-        syncScroll.settings.containerHeight = 0;
-        var highestElem = null;
+        if(typeof syncScroll.settings.container !== 'undefined'){
+            $('.sync-outer.high').removeClass('high');
+            syncScroll.settings.containerHeight = 0;
+            var highestElem = null;
 
-        $('.sync-outer .sync-inner').each(function(){
-            var elem = $(this);
-            if (elem.innerHeight() > syncScroll.settings.containerHeight){
+            $('.sync-outer .sync-inner').each(function(){
+                var elem = $(this);
+                if (elem.innerHeight() > syncScroll.settings.containerHeight){
 
-                if(syncScroll.isInView(elem)){
-                    syncScroll.settings.containerHeight = elem.innerHeight();
-                    highestElem = elem;
+                    if(syncScroll.isInView(elem)){
+                        syncScroll.settings.containerHeight = elem.innerHeight();
+                        highestElem = elem;
+                    }
                 }
-            }
-        });
+            });
 
-        syncScroll.settings.container.css('height', syncScroll.settings.containerHeight);
-        highestElem.parent('.sync-outer').removeClass('fixed').addClass('high');
+            syncScroll.settings.container.css('height', syncScroll.settings.containerHeight);
+            highestElem.parent('.sync-outer').removeClass('fixed').addClass('high');
+        }
     },
 
     // Align to top
