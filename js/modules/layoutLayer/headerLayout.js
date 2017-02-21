@@ -25,40 +25,21 @@ var HeaderModule = {
             });
         }
 
+        this.setMenuPosition();
         this.bindUIActions();
     },
     
     // Bind ui actions
     bindUIActions: function() {
         
-        // Adds classes to menu ( Like active, fixed, etc )
+        // Set menu position
         this.settings.menu_ready = false;
         $(window).on('scroll', function() {
-            if ( Math.abs( $(window).scrollTop() - this.settings.startScroll ) > 10 ) {
-                $('.header-container').removeClass( 'active' );
-                $('.menu-show-btns').removeClass( 'active' );
+            this.setMenuPosition();
+        }.bind(this));
 
-                this.settings.breakpoint = $('#header').height() + $('#header').position().top;
-                if ( $(window).scrollTop() >= this.settings.breakpoint ) {
-                    $('.header-container').addClass( 'fixed' ).hide().show();
-                    $('.header-placeholder').addClass( 'fixed' );
-                    $('.menu-show-btns').addClass( 'show' );
-                    this.settings.menu_ready = true;
-                } else {
-                    $('.header-container').removeClass( 'fixed' ).hide().show();
-                    $('.header-placeholder').removeClass( 'fixed' );
-                    $('.menu-show-btns').removeClass( 'show' );
-                    this.settings.menu_ready = false;
-                }
-
-                if ( $(window).innerWidth() <= 640 ) {
-                    $('.header-container').addClass( 'fixed' ).hide().show();
-                    $('.header-placeholder').addClass( 'fixed' );
-                    $('.menu-show-btns').addClass( 'show' );
-                    this.settings.menu_ready = true;
-                }
-            }
-
+        $(window).on('resize', function() {
+            this.setMenuPosition();
         }.bind(this));
 
         
@@ -87,6 +68,30 @@ var HeaderModule = {
         
     },
     
+    setMenuPosition: function(){
+        if ( Math.abs( $(window).scrollTop() - this.settings.startScroll ) > 10 ) {
+            $('.header-container').removeClass( 'active' );
+            $('.menu-show-btns').removeClass( 'active' );
+
+            this.settings.breakpoint = $('#header').height() + $('#header').position().top;
+            if ( $(window).scrollTop() >= this.settings.breakpoint ) {
+                $('.header-container').addClass( 'fixed' ).hide().show();
+                $('.menu-show-btns').addClass( 'show' );
+                this.settings.menu_ready = true;
+            } else {
+                $('.header-container').removeClass( 'fixed' );
+                $('.menu-show-btns').removeClass( 'show' );
+                this.settings.menu_ready = false;
+            }
+
+            if ( $(window).innerWidth() <= 640 ) {
+                $('.header-container').addClass( 'fixed' ).hide().show();
+                $('.menu-show-btns').addClass( 'show' );
+                this.settings.menu_ready = true;
+            }
+        }
+    },
+
     // Show menu ( Drop down look-a-like )
     show_menu: function( forceHide ) {
 

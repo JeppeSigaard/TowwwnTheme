@@ -1,3 +1,9 @@
+#site-header{
+    position: relative;
+    background-color: $color-grey-1;
+    height: $menu-bar-height + $top-area-height;
+}
+
 @media screen and (max-width: $bp-1) {
     .header-container{
         max-width: $main-container-width-bp-1!important;
@@ -5,6 +11,11 @@
 }
 
 @media screen and (max-width: $bp-m) {
+
+    #site-header{
+        height: 0px;
+    }
+
     .header-container{
         position: fixed;
         top: -$top-area-height;
