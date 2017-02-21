@@ -145,8 +145,8 @@ var syncScroll = {
             // Over sync scroll område
             if(syncScroll.settings.container.offset().top >= $(window).scrollTop() + 60){
                 syncScroll.settings.elem.each(function(){
-                    if(!$(this).hasClass('high')){
-                        $(this).addClass('top').removeClass('bottom fixed').removeAttr('style');
+                    if(!$(this).hasClass('high') && !$(this).hasClass('top')){
+                        $(this).addClass('top').removeClass('bottom fixed').removeAttr('style').hide().show();
                     }
                 });
             }
@@ -155,8 +155,8 @@ var syncScroll = {
             // Under sync scroll område
             else if(container.offset().top + container.innerHeight() <= $(window).scrollTop() + $(window).innerHeight()){
                 syncScroll.settings.elem.each(function(){
-                    if(!$(this).hasClass('high')){
-                        $(this).addClass('bottom').removeClass('top fixed').removeAttr('style');
+                    if(!$(this).hasClass('high') && !$(this).hasClass('bottom')){
+                        $(this).addClass('bottom').removeClass('top fixed').removeAttr('style').hide().show();
                     }
 
                 });
@@ -183,7 +183,10 @@ var syncScroll = {
                     }
 
                     else{
-                        $(this).addClass('fixed')
+                        if(!$(this).hasClass('fixed')){
+                            $(this).addClass('fixed').hide().show();
+
+                        }
                         $(this).scrollTop(fancyScrollAmount);
                     }
                 });
