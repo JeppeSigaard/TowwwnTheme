@@ -96,6 +96,7 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
         font-size: 0;
         transition: 400ms;
         transition-timing-function: $horizontal-bezier;
+        //transform: translateZ(0);
         
         &.notrans{
             transition: 0ms!important;

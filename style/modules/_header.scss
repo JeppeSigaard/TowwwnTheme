@@ -13,7 +13,7 @@
 @media screen and (max-width: $bp-m) {
 
     #site-header{
-        height: 0px;
+        height: $menu-bar-height;
     }
 
     .header-container{
