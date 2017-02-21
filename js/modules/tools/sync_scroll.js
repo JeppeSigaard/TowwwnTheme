@@ -172,16 +172,19 @@ var syncScroll = {
     },
 
     lockView : function(){
+
+        this.settings.canFixedScroll = false;
+
         $('body').addClass('no-scroll').css({height:'100%',overflow:'hidden'});
         if(null !== this.settings.container){
             this.settings.container.css({
                 height : $(window).innerHeight - this.settings.container.offset().top,
                 overflow : 'hidden',
             });
-
         }
 
-        this.settings.canFixedScroll = false;
+
+
         $('.sync-outer').each(function(){
             var innerScroll = $(this).scrollTop();
             $(this).removeAttr('style').css({
@@ -199,12 +202,14 @@ var syncScroll = {
         $('.sync-outer').removeAttr('style');
         $('body').removeClass('no-scroll').removeAttr('style');
         
+        this.setHorizontalPosition();
         this.rescaleContainer(function(){
-            siteHeight -= $(document).innerHeight();
-            $(window).scrollTop( $('.high').offset().top - $(window).scrollTop()
-                                + $('#site-header').outerHeight() + siteHeight );
-            this.setHorizontalPosition();
+            // siteHeight -= $(document).innerHeight();
+            // $(window).scrollTop( $('.high').offset().top - $(window).scrollTop()
+            //                     + $('#site-header').outerHeight() + siteHeight );
+
         });
+
 
     }
 }
