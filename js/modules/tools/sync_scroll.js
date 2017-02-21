@@ -230,13 +230,14 @@ var syncScroll = {
         $('.sync-outer').removeAttr('style');
         $('body').removeClass('no-scroll').removeAttr('style');
         
-        var siteHeight = $(document).innerHeight();
-        syncScroll.rescaleContainer();
-        siteHeight -= $(document).innerHeight();
-        $(window).scrollTop( $('.high').offset().top - $(window).scrollTop() 
-                            + $('#site-header').outerHeight() - siteHeight );
-        
         syncScroll.setHorizontalPosition();
+        
+        //var siteHeight = $(document).innerHeight();
+        syncScroll.rescaleContainer();
+        /*siteHeight -= $(document).innerHeight();
+        $(window).scrollTop( $('.high').offset().top - $(window).scrollTop() 
+                            + $('#site-header').outerHeight() + siteHeight );*/
+        
 
     }
 }

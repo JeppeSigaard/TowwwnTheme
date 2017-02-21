@@ -9,7 +9,7 @@ jQuery.prototype.smamo_slider = function( options ) {
         timestart = null, viewLocked = false,
         tolerance = 1 - ( typeof options.tolerance === 'undefined' ? 0.5 : options.tolerance );
         
-    $('.content-container').on( 'touchstart', function(e) {
+    $('.content-container').on( 'mousedown', function(e) {
         $('.content-container-inner').addClass('notrans');
         touchstartX = e.touches[0].pageX;
         touchstartY = e.touches[0].pageY;
@@ -19,10 +19,10 @@ jQuery.prototype.smamo_slider = function( options ) {
     });
 
     var changed = false, changeable = true, xDirection = 0;
-    $('.content-container').on( 'touchmove', function( e ) {
+    $('.content-container').on( 'mousemove', function( e ) {
       if ( touchstartX !== null && touchstartY !== null ) {
-        var distanceX = touchstartX - e.touches[0].pageX , 
-            distanceY = touchstartY - e.touches[0].pageY,
+        var distanceX = touchstartX - e.pageX , 
+            distanceY = touchstartY - e.pageY,
             distance = Math.sqrt( distanceX * distanceX + distanceY * distanceY ),
             direction = Math.atan2( distanceY, distanceX );
 
@@ -56,7 +56,7 @@ jQuery.prototype.smamo_slider = function( options ) {
       $(window).trigger('resize');
     });
 
-    $('.content-container').on( 'touchend', function(e) {
+    $('.content-container').on( 'mouseup', function(e) {
       changed = false;
       changeable = true;
       touchstartX = null;

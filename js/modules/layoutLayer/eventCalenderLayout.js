@@ -46,7 +46,7 @@ var EventCalenderModule = {
                     $('.filled .ripple').removeClass('animateBack');
                     $('.filled').removeClass('filled');
                     $('.eventtext', this).addClass('filled');
-                }.bind(this), 200);
+                }.bind(this), 300);
             }
         });
     },
