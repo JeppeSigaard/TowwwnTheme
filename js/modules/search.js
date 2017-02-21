@@ -18,6 +18,11 @@ var SearchModule = {
     // Bind UI Actions
     bindUIActions: function() {
         
+        $('#searchcontainer').on('submit', function(e) {
+            e.preventDefault();
+            this.search($('#searchfield').val());
+         }.bind(this));
+
         // Visual
         $('#searchfield').on('focus', function() {
             $('#searchfield').select();
