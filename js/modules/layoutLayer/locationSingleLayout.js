@@ -29,12 +29,14 @@ var LocationSingleViewModule = {
         
         // Closes single view
         $(document).on('click', '.location-singleview-bar .close-button', function () {
+            var list = $('.location-list');
+
+            if(list.length){
+                history.pushState({type : 'category', id : list.attr('id')}, 'Towwwwn', main_path + '/kategori/' + list.attr('data-slug'));
+            }
+
             ViewHandler.change_view_focus( 3, false, true );
-            setTimeout(function() {
-                ViewHandler.settings.location_singleview.html( '' );
-            }, 400);
         });
-        
     },
     
     // Render location single view

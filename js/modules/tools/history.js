@@ -39,6 +39,21 @@ var historyModule = {
                 });
 
             }
+
+            else if(event.state.type && 'location' == event.state.type){
+
+                $('#'+ event.state.id).addClass('loading');
+
+                $.get(rest_api + 'locations/' + event.state.id, function(data){
+                    var location = data[0];
+
+                    LocationSingleViewModule.renderSingleView( location );
+                    ViewHandler.change_view_focus( 4 );
+
+                    $('#'+ event.state.id).removeClass('loading');
+                });
+
+            }
         };
 
     },
@@ -50,7 +65,6 @@ var historyModule = {
 
         this.bindUIActions();
     },
-
 
 };
 

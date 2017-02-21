@@ -22,16 +22,12 @@ var LocationListModule = {
         
         // Closes location list view
         $(document).on( 'click', '.locationlist-bar .close-button', function() {
+            history.pushState({type : 'home', id : null}, 'Towwwwn', main_path );
             ViewHandler.change_view_focus( 2, false, true );
 
             ViewHandler.settings.event_calender_outer.removeClass('normalize');
             ViewHandler.settings.location_categories_outer.removeClass('normalize');
-            
-            setTimeout(function() {
-                ViewHandler.settings.location_listview.html('');
-            }, 400);
         });
-        
     },
     
     // Render Locatiions
@@ -42,7 +38,7 @@ var LocationListModule = {
         $.get(rest_api + 'categories/' + id, function(data){
 
             var html = '<div class="locationlist-bar">'+data.category_name+'<div class="close-button">&times;</div></div>';
-            html += '<div class="location-list" >';
+            html += '<div class="location-list" id="'+data.category_id+'" data-slug="'+data.category_slug+'">';
 
             for (var i in data.locations){
                 html += this.generateLocationElemHtml( data.locations[i]);

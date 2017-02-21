@@ -13,6 +13,30 @@ body {
         height: 100%;
         // margin-right: 16px;
     }
+
+    @media(min-width:#{$bp-1}){
+        &:before, &:after{
+            content: '';
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            background-color: inherit;
+            width: calc((100% - #{$bp-1}) / 2);
+            z-index: 100;
+        }
+
+        &:after{
+            left: auto;
+            right: 0;
+        }
+    }
+
+    @media(min-width:#{$bp-2}){
+        &:before, &:after{
+            width: calc((100% - #{$bp-2}) / 2);
+        }
+    }
 }
 
 @keyframes fadein{
@@ -50,12 +74,12 @@ body {
     height: auto;
     max-width: $main-container-width;
     transition: 200ms;
-    overflow: hidden;
     z-index: 20;
     border-top: none;
     border-bottom: none;
 }
 
+$horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
 .content-container{
     position: relative;
     width: 100%;
@@ -63,6 +87,7 @@ body {
     background-color: white;
     z-index: 1;
     overflow: hidden;
+    min-height: 100vh;
     
     .content-container-inner{
         width: calc(100% / 2 * #{$views}); height: 100%;
@@ -70,7 +95,7 @@ body {
         top: 0; left: 0%;
         font-size: 0;
         transition: 400ms;
-        transition-timing-function: cubic-bezier(.73, .01, .61, 1.03);
+        transition-timing-function: $horizontal-bezier;
         
         &.notrans{
             transition: 0ms!important;
@@ -120,7 +145,9 @@ body {
     #section2{ 
         background-color: white;
         width: calc( 100% / #{$views} );
-        transition: 400ms;
+        transition: width 400ms;
+        transition-timing-function: $horizontal-bezier;
+        @media(min-width: 640px){width: 17.5%; &.normalize{width: calc( 100% / #{$views} );}}
 
         &.normalize{
             width: calc( 100% / #{$views} );
@@ -139,12 +166,14 @@ body {
     // Event Calender
     #section1{
         background-color: #f0f0f0;
-        transition: 400ms;
+        transition: width 400ms;
+        transition-timing-function: $horizontal-bezier;
         padding-bottom: 141px;
         width: calc( 100% / #{$views} );
+        @media(min-width: 640px){width: 22.5%; &.normalize{width: calc( 100% / #{$views} );}}
         
         &.normalize{
-            width: calc( 100% / #{$views} );;
+            width: calc( 100% / #{$views} );
         }
         
         .content{

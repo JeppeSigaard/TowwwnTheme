@@ -3,7 +3,7 @@ jQuery.prototype.smamo_slider = function( options ) {
     
     var outerView = $(this).css({ 'position' : 'relative', 'overflow' : 'hidden' }),
         innerView = outerView.children()[0].css({ 'position' : 'absolute' }),
-        elems = innerView.children();,
+        elems = innerView.children(),
         touchstartX = null, touchstartY = null,
         touchposX = null, containerposX = null,
         timestart = null, viewLocked = false,
