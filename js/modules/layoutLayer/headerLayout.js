@@ -75,17 +75,17 @@ var HeaderModule = {
 
             this.settings.breakpoint = $('#header').height() + $('#header').position().top;
             if ( $(window).scrollTop() >= this.settings.breakpoint ) {
-                $('.header-container').addClass( 'fixed' ).hide().show();
+                $('.header-container').hide().addClass( 'fixed' ).show();
                 $('.menu-show-btns').addClass( 'show' );
                 this.settings.menu_ready = true;
             } else {
-                $('.header-container').removeClass( 'fixed' );
+                $('.header-container').hide().removeClass( 'fixed' ).show();
                 $('.menu-show-btns').removeClass( 'show' );
                 this.settings.menu_ready = false;
             }
 
             if ( $(window).innerWidth() <= 640 ) {
-                $('.header-container').addClass( 'fixed' ).hide().show();
+                $('.header-container').hide().addClass( 'fixed' ).show();
                 $('.menu-show-btns').addClass( 'show' );
                 this.settings.menu_ready = true;
             }

@@ -14,37 +14,35 @@ var syncScroll = {
 
     // Init
     init: function(parentSelector, elementSelector, vars) {
-        syncScroll.wrapElems(parentSelector, elementSelector, function(){
-            syncScroll.rescaleContainer();
-            syncScroll.bindUIActions(parentSelector, elementSelector, vars);
-        });
+        this.wrapElems(parentSelector, elementSelector, function(){
+            this.rescaleContainer();
+            this.bindUIActions(parentSelector, elementSelector, vars);
+        }.bind(this));
     },
 
     // Bind UI Actions
     bindUIActions: function(parentSelector, elementSelector, vars) {
-
-        this.ready = true;
-        //syncScroll.onScroll();
         $(window).on('scroll',function(){
-            if(syncScroll.settings.canFixedScroll){
-                syncScroll.onScroll();
+            if(this.settings.canFixedScroll){
+                this.onScroll();
             }
-        });
+        }.bind(this));
 
         $(window).on('resize',function(){
-            if(syncScroll.settings.canFixedScroll){
-                syncScroll.rescaleContainer();
-                syncScroll.setHorizontalPosition();
+            if(this.settings.canFixedScroll){
+                this.rescaleContainer();
+                this.setHorizontalPosition();
             }
-        });
+        }.bind(this));
+        this.ready = true;
     },
 
     // Initially wrap scroll elements
     wrapElems : function(parentSelector, elementSelector, cb){
 
-        syncScroll.settings.container = parentSelector;
-        syncScroll.settings.elem = $('.sync-outer');
-        syncScroll.settings.inner = $('.sync-outer .sync-inner');
+        this.settings.container = parentSelector;
+        this.settings.elem = $('.sync-outer');
+        this.settings.inner = $('.sync-outer .sync-inner');
 
         if(typeof cb === 'function'){
             cb();
@@ -52,17 +50,29 @@ var syncScroll = {
     },
 
     // Set horizontal positions
-    setHorizontalPosition : function(){if(syncScroll.settings.elem !== null){
-        syncScroll.settings.elem.each(function(){
-            if($(this).hasClass('fixed')){
-                $(this).css({
-                    'left' : $(this).parent().offset().left,
-                    'width' : $(this).parent().width(),
+    setHorizontalPosition : function(elem){
+        if(typeof elem !== 'undefined'){
+            if(elem.hasClass('fixed')){
+                elem.css({
+                    'left' : elem.parent().offset().left,
+                    'width' : elem.parent().width(),
                 });
             }
-           else{$(this).removeAttr('style');}
-        });
-    }},
+           else{elem.removeAttr('style');}
+        }
+
+        if(this.settings.elem !== null){
+            this.settings.elem.each(function(){
+                if($(this).hasClass('fixed')){
+                    $(this).css({
+                        'left' : $(this).parent().offset().left,
+                        'width' : $(this).parent().width(),
+                    });
+                }
+               else{$(this).removeAttr('style');}
+            });
+        }
+    },
 
     // Check if element is within the horizontal scroll erea
     isInView : function(elem){
@@ -72,11 +82,11 @@ var syncScroll = {
     // rescale container
     rescaleContainer : function(cb){
 
-        if(syncScroll.settings.container !== null){
+        if(this.settings.container !== null){
             var heighHeight = ($('.high').length) ? $('.high').innerHeight() : 0 ;
 
             $('.sync-outer.high').removeClass('high');
-            syncScroll.settings.containerHeight = 0;
+            this.settings.containerHeight = 0;
             var highestElem = null;
 
             $('.sync-outer .sync-inner').each(function(){
@@ -90,7 +100,7 @@ var syncScroll = {
                 }
             });
 
-            syncScroll.settings.container.css('height', syncScroll.settings.containerHeight);
+            this.settings.container.css('height', this.settings.containerHeight);
             highestElem.parent('.sync-outer').removeClass('fixed absolute top').addClass('high');
         }
 
@@ -99,145 +109,95 @@ var syncScroll = {
         }
     },
 
-    // Align to top
-    topAlign : function(elem){
-
-        if(elem.find('.sync-inner').innerHeight() >= syncScroll.settings.containerHeight){
-            $(window).scrollTop(syncScroll.settings.container.offset().top);
-        }
-
-        else if(syncScroll.settings.canFixedScroll){
-            syncScroll.settings.canFixedScroll = false;
-
-            var st = $(window).scrollTop(),
-                ch = syncScroll.settings.containerHeight,
-                ih = elem.find('.inner').innerHeight(),
-                sb = Math.floor(ch - (st + ih));
-
-
-            if(sb < 0){
-                syncScroll.settings.elem.addClass('fixed').removeClass('bottom');
-                syncScroll.setHorizontalPosition();
-                $(window).scrollTop(st + sb);
-            }
-
-            elem.find('.sync-outer').scrollTop('0');
-
-            syncScroll.settings.lastScrollTop = st;
-            syncScroll.settings.canFixedScroll = true;
-        }
-    },
-
     // Scroll event handler
     onScroll : function(){
         if (this.ready){
-            syncScroll.settings.elem.each(function(){
-                if($(this).hasClass('high')){
-                    $(this).removeClass('fixed top bottom');
+            var ct = this.settings.container.offset().top,
+                ch = this.settings.container.innerHeight(),
+                st = $(window).scrollTop(),
+                wh = $(window).height(),
+                diff = st - this.settings.lastScrollTop;
+
+            this.settings.elem.each(function(){
+                var elem = $(this);
+
+                // Over sync scroll område
+                if(ct >= st + 60){
+                    if(elem.hasClass('high')){ elem.removeClass('fixed top bottom'); }
+                    else if(!elem.hasClass('top')){
+                        elem.addClass('top').removeClass('bottom fixed').removeAttr('style').hide().show();
+                    }
                 }
 
-            });
 
-            var container = syncScroll.settings.container,
-                st = $(window).scrollTop(),
-                diff = st - syncScroll.settings.lastScrollTop;
-
-            // Over sync scroll område
-            if(syncScroll.settings.container.offset().top >= $(window).scrollTop() + 60){
-                syncScroll.settings.elem.each(function(){
-                    if(!$(this).hasClass('high') && !$(this).hasClass('top')){
-                        $(this).addClass('top').removeClass('bottom fixed').removeAttr('style').hide().show();
+                // Under sync scroll område
+                else if(ct + ch <= st + wh){
+                    if(elem.hasClass('high')){ elem.removeClass('fixed top bottom'); }
+                    else if(!elem.hasClass('bottom')){
+                        elem.addClass('bottom').removeClass('top fixed').removeAttr('style').hide().show();
                     }
-                });
-            }
+                }
 
 
-            // Under sync scroll område
-            else if(container.offset().top + container.innerHeight() <= $(window).scrollTop() + $(window).innerHeight()){
-                syncScroll.settings.elem.each(function(){
-                    if(!$(this).hasClass('high') && !$(this).hasClass('bottom')){
-                        $(this).addClass('bottom').removeClass('top fixed').removeAttr('style').hide().show();
+                // I sync scroll område
+                else{
+                    if(elem.hasClass('high')){elem.removeClass('fixed top bottom');}
+                    else if(elem.hasClass('bottom')){
+                        elem.addClass('fixed').removeClass('bottom');
+                        elem.scrollTop(50000000000000000);
                     }
-
-                });
-            }
-
-
-            // I sync scroll område
-            else{
-
-                syncScroll.settings.elem.each(function(){
-
-                    var fancyScrollAmount = $(this).scrollTop() + diff;
-
-                    if($(this).hasClass('high')){}
-
-                    else if($(this).hasClass('bottom')){
-                        $(this).addClass('fixed').removeClass('bottom');
-                        $(this).scrollTop(50000000000000000);
+                    else if(elem.hasClass('top')){
+                        elem.addClass('fixed').removeClass('top');
+                        elem.scrollTop('0');
                     }
-
-                    else if($(this).hasClass('top')){
-                        $(this).addClass('fixed').removeClass('top');
-                        $(this).scrollTop('0');
-                    }
-
                     else{
-                        if(!$(this).hasClass('fixed')){
-                            $(this).addClass('fixed').hide().show();
-
+                        var scrollAmount = elem.scrollTop() + diff;
+                        if(!elem.hasClass('fixed')){
+                            elem.hide().addClass('fixed').show();
                         }
-                        $(this).scrollTop(fancyScrollAmount);
+                        elem.scrollTop(scrollAmount);
+                        syncScroll.setHorizontalPosition(elem);
                     }
-                });
-
-                syncScroll.setHorizontalPosition();
-            }
-
-            syncScroll.settings.lastScrollTop = st;
+                }
+            });
+            this.settings.lastScrollTop = st;
         }
     },
 
     lockView : function(){
-
         $('body').addClass('no-scroll').css({height:'100%',overflow:'hidden'});
-
-        if(null !== syncScroll.settings.container){
-            syncScroll.settings.container.css({
-                height : $(window).innerHeight - syncScroll.settings.container.offset().top,
+        if(null !== this.settings.container){
+            this.settings.container.css({
+                height : $(window).innerHeight - this.settings.container.offset().top,
                 overflow : 'hidden',
             });
 
         }
 
-        syncScroll.settings.canFixedScroll = false;
+        this.settings.canFixedScroll = false;
         $('.sync-outer').each(function(){
             var innerScroll = $(this).scrollTop();
-
             $(this).removeAttr('style').css({
                 position : 'absolute',
                 width: '100%',
                 top : $(this).offset().top - $(this).parent().offset().top - innerScroll,
                 left : '0',
             });
-
         });
     },
 
     releaseView : function(){
-        syncScroll.settings.canFixedScroll = true;
-
+        var siteHeight = $(document).innerHeight();
+        this.settings.canFixedScroll = true;
         $('.sync-outer').removeAttr('style');
         $('body').removeClass('no-scroll').removeAttr('style');
+        this.rescaleContainer();
         
-        var siteHeight = $(document).innerHeight();
-        syncScroll.rescaleContainer();
-        siteHeight -= $(document).innerHeight();
-        $(window).scrollTop( $('.high').offset().top - $(window).scrollTop() 
-                            + $('#site-header').outerHeight() - siteHeight );
+        // siteHeight -= $(document).innerHeight();
+        // $(window).scrollTop( $('.high').offset().top - $(window).scrollTop()
+        //                     + $('#site-header').outerHeight() - siteHeight );
         
-        syncScroll.setHorizontalPosition();
-
+        this.setHorizontalPosition();
     }
 }
 
