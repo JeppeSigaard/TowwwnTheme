@@ -23,6 +23,32 @@ var EventCalenderModule = {
         $(window).on('resize', function() {
             EventCalenderModule.setEventCalendarWidth();
         });
+        
+        $(document).on( 'click', '.event', function( e ) {
+            if ( !$('.eventtext', this).hasClass('filled') ) {
+                $('.filled').css({ 'background-color' : 'transparent' });
+                $('.filled .ripple').addClass('animateBack');
+                $('.bookmark-mode').removeClass('bookmark-mode');
+                $('.filled .ripple').css({
+                    'left': ( $('.filled').innerWidth() / 2 - $('.filled .ripple').outerWidth() / 2 ) + 'px',
+                    'top': ( $('.filled').innerHeight() / 2 - $('.filled .ripple').outerHeight() / 2 ) + 'px',
+                });
+                
+                $('.eventtext', this).addClass('bookmark-mode');
+                $('.eventtext .ripple', this).addClass('animate');
+                $('.eventtext .ripple', this).css({
+                    'left': ( e.pageX - $('.eventtext', this).offset().left - $('.ripple', this).outerWidth() / 2 ) + 'px',
+                    'top': ( e.pageY - $('.eventtext', this).offset().top - $('.ripple', this).outerWidth() / 2 ) + 'px',
+                });
+
+                setTimeout(function() {
+                    $('.eventtext .ripple').removeClass('animate');
+                    $('.filled .ripple').removeClass('animateBack');
+                    $('.filled').removeClass('filled');
+                    $('.eventtext', this).addClass('filled');
+                }.bind(this), 200);
+            }
+        });
     },
     
     // Render Events
@@ -155,6 +181,7 @@ var EventCalenderModule = {
         }
 
         response += '<div class="eventtext">';
+        response += '<div class="ripple"></div>';
         response += '<div class="title">'+name+'</div>';
         response += '<div class="start_time">'+time_formatted+'</div>';
         response += '<div class="eventlocation-container">';

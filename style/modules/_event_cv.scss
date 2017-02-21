@@ -243,11 +243,66 @@
         }
 
         .eventtext{
+            position: relative;
+            overflow: hidden;
             padding: 10px;
             padding-top: 10px;
             width: 100%;
             height: 140px;
-            text-transform: uppercase;
+            text-transform: uppercase;    
+            
+            &.filled {
+                background-color: $color-blue-1!important;
+            }
+            
+            * { 
+                z-index: 10;
+                transition: 200ms; 
+                position: relative;
+            }
+            
+            &.bookmark-mode *{
+                color: white!important;
+            }
+            
+            &.bookmark-mode .eventblackbar {
+                background-color: white!important;
+            }
+            
+            .ripple{
+                border-radius: 100%;
+                background-color: lighten($color-blue-2, 0%);
+                position: absolute;
+                width: 700px;
+                height: 700px;
+                transform: scale(0);
+                opacity: 0;
+                z-index: 0;
+
+                @keyframes ripple {
+                    100% {
+                        transform: scale(1);
+                        opacity: 1;
+                    }
+                }
+                
+                @keyframes rippleBack {
+                    100% {
+                        transform: scale(0);
+                        opacity: 0;
+                    }
+                }
+
+                &.animate{
+                    animation: ripple 200ms ease-in forwards;
+                }
+                
+                &.animateBack{
+                    transform: scale(1);
+                    opacity: 1;
+                    animation: rippleBack 0.2s ease-in forwards;
+                }
+            }
 
             .title{
                 font-size: 11px;
