@@ -111,6 +111,7 @@ var syncScroll = {
 
     // Scroll event handler
     onScroll : function(){
+
         if (this.ready){
             var ct = this.settings.container.offset().top,
                 ch = this.settings.container.innerHeight(),
@@ -119,51 +120,58 @@ var syncScroll = {
                 diff = st - this.settings.lastScrollTop;
 
 
-                // Over sync scroll område
-                if(ct >= st + 60){
-                    this.settings.elem.each(function(){
-                        var elem = $(this);
-                        if(elem.hasClass('high')){ elem.removeClass('fixed top bottom'); }
-                        else if(!elem.hasClass('top')){
-                            elem.addClass('top').removeClass('bottom fixed').removeAttr('style').hide().show();
-                        }
-                    });
-                }
+            // Over sync scroll område
+            if(ct >= st + 60){
+                this.settings.elem.each(function(){
+                    var elem = $(this);
+                    if(elem.hasClass('high')){ elem.removeClass('fixed top bottom'); }
+                    else if(!elem.hasClass('top')){
+                        elem.addClass('top').removeClass('bottom fixed').removeAttr('style').hide().show();
+                    }
+                });
+            }
 
 
-                // Under sync scroll område
-                else if(ct + ch <= st + wh){
-                    this.settings.elem.each(function(){
-                        var elem = $(this);
-                        if(elem.hasClass('high')){ elem.removeClass('fixed top bottom'); }
-                        else if(!elem.hasClass('bottom')){
-                            elem.addClass('bottom').removeClass('top fixed').removeAttr('style').hide().show();
-                        }
-                    });
-                }
+            // Under sync scroll område
+            else if(ct + ch <= st + wh){
+                this.settings.elem.each(function(){
+                    var elem = $(this);
+                    if(elem.hasClass('high')){ elem.removeClass('fixed top bottom'); }
+                    else if(!elem.hasClass('bottom')){
+                        elem.addClass('bottom').removeClass('top fixed').removeAttr('style').hide().show();
+                    }
+                });
+            }
 
 
-                // I sync scroll område
-                else{
-                    this.settings.elem.each(function(){
-                        var elem = $(this);
-                        if(elem.hasClass('high')){elem.removeClass('fixed top bottom');}
-                        else if(elem.hasClass('bottom')){
-                            elem.addClass('fixed').removeClass('bottom').scrollTop(50000000000000000);
+            // I sync scroll område
+            else{
+                this.settings.elem.each(function(){
+                    var elem = $(this);
+
+                    if(elem.hasClass('high')){elem.removeClass('fixed top bottom');}
+
+                    else if(elem.hasClass('bottom') && elem.find('.sync-inner').offset().top >= $(window).scrollTop()){
+                        elem.addClass('fixed').removeClass('top bottom').scrollTop(60);
+                    }
+
+                    else if(elem.hasClass('top')){
+                        var inner = elem.find('.sync-inner'),
+                            innerHeight = (inner.offset().top + inner.innerHeight()),
+                            winBottom = ($(window).scrollTop() + $(window).height());
+                        if(innerHeight <= winBottom){
+                            elem.addClass('fixed').removeClass('top bottom').scrollTop(innerHeight);
                         }
-                        else if(elem.hasClass('top')){
-                            elem.addClass('fixed').removeClass('top').scrollTop('0');
-                        }
-                        else{
-                            var scrollAmount = elem.scrollTop() + diff;
-                            if(!elem.hasClass('fixed')){
-                                elem.hide().addClass('fixed').show();
-                            }
-                            elem.scrollTop(scrollAmount);
-                            syncScroll.setHorizontalPosition(elem);
-                        }
-                    });
-                }
+                    }
+
+                    if($(this).hasClass('fixed')){
+                        var scrollAmount = $(this).scrollTop() + diff;
+
+                        $(this).scrollTop(scrollAmount);
+                        syncScroll.setHorizontalPosition($(this));
+                    }
+                });
+            }
 
             this.settings.lastScrollTop = st;
         }
@@ -180,8 +188,6 @@ var syncScroll = {
                 overflow : 'hidden',
             });
         }
-
-
 
         $('.sync-outer').each(function(){
             var innerScroll = $(this).scrollTop();
@@ -201,14 +207,7 @@ var syncScroll = {
         $('body').removeClass('no-scroll').removeAttr('style');
         
         this.setHorizontalPosition();
-        this.rescaleContainer(function(){
-            // siteHeight -= $(document).innerHeight();
-            // $(window).scrollTop( $('.high').offset().top - $(window).scrollTop()
-            //                     + $('#site-header').outerHeight() + siteHeight );
-
-        });
-
-
+        this.rescaleContainer();
     }
 }
 
