@@ -149,12 +149,10 @@ var syncScroll = {
                         var elem = $(this);
                         if(elem.hasClass('high')){elem.removeClass('fixed top bottom');}
                         else if(elem.hasClass('bottom')){
-                            elem.addClass('fixed').removeClass('bottom');
-                            elem.scrollTop(50000000000000000);
+                            elem.addClass('fixed').removeClass('bottom').scrollTop(50000000000000000);
                         }
                         else if(elem.hasClass('top')){
-                            elem.addClass('fixed').removeClass('top');
-                            elem.scrollTop('0');
+                            elem.addClass('fixed').removeClass('top').scrollTop('0');
                         }
                         else{
                             var scrollAmount = elem.scrollTop() + diff;

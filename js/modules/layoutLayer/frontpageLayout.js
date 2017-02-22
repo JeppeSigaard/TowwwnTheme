@@ -113,13 +113,15 @@ var FrontPageModule = {
         });
         */
 
-        $('.blocklayoutbtn').on( 'click', function() {
-            $('.eventscontainer').removeClass('lineLayout'); 
+        $(document).on( 'click', '.blocklayoutbtn', function() {
+            $('.eventscontainer').removeClass('lineLayout');
+            syncScroll.rescaleContainer();
             ViewHandler.reload_view( true );
         });
         
-        $('.linelayoutbtn').on( 'click', function() {
+        $(document).on( 'click', '.linelayoutbtn',function() {
             $('.eventscontainer').addClass('lineLayout');
+            syncScroll.rescaleContainer();
             ViewHandler.reload_view( true );
         });
         
