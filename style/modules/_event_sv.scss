@@ -12,6 +12,14 @@
     font-size: 12px;
     background-color: $color-blue-2;
     
+    a{
+       color: white;
+        text-decoration: none;
+        height: inherit;
+        line-height: inherit;
+        display: inline-block;
+    }
+
     .close-button{
         position: absolute;
         top: 50%;
@@ -243,7 +251,7 @@
                 }
             }
 
-            &.dark{
+            &:nth-child(2n){
                 background-color: darken($color-blue-2, 15%);
 
                 &.clickable{

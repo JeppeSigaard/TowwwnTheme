@@ -2,8 +2,6 @@ var EventSingleModule = {
     
     // Fields
     settings: {
-        callback: function() {},
-        elem: null,
         elem_back: '',
     },
     
@@ -16,42 +14,18 @@ var EventSingleModule = {
     },
     
     // Render Single View Event
-    render_sv_event: function( eventid, cb, elem ) {
-        this.settings.elem = elem;
-        $('.imgcontainer', elem).addClass('loadingsv');
-        this.settings.callback = cb;
-        
-        var event;
-        $.get(rest_api + 'events/' + eventid, function(data){
-            if(typeof data[0] !== 'undefined'){
-                event = data[0];
+    render_sv_event: function( event, cb) {
+
+        // Generates html
+        ViewHandler.settings.event_singleview.html( EventSingleModule.generate_sv_event_html( event ) );
+        ViewHandler.settings.event_singleview.parents('.sync-outer').scrollTop(0);
+        ViewHandler.settings.event_singleview_outer.removeClass('spoopy');
+
+        // Defines height of blue box height
+        $('.event-sv-info-placeholder').css({height: $('.event-sv-info').outerHeight() + 'px'});
 
 
-                // Generates html
-                ViewHandler.settings.event_singleview.html( EventSingleModule.generate_sv_event_html( event ) );
-                ViewHandler.settings.event_singleview.addClass( 'active' );
-                ViewHandler.settings.event_calender.addClass( 'active' );
-                ViewHandler.settings.event_singleview.parents('.sync-outer').scrollTop(0);
-                ViewHandler.settings.event_singleview_outer.removeClass('spoopy');
-                $('.imgcontainer', EventSingleModule.settings.elem).removeClass('loadingsv');
-
-                var lastDark = true;
-                $('.event-footer-block').each(function(iter, elem) {
-                    if ( lastDark ) { lastDark = false; }
-                    else {
-                        $(this).addClass('dark');
-                        lastDark = true;
-                    }
-                });
-
-                // Defines height of blue box height
-                $('.event-sv-info-placeholder').css({height: $('.event-sv-info').outerHeight() + 'px'});
-                
-                EventSingleModule.settings.callback(event);
-            }
-        }.bind(this));
-
-
+        if(typeof cb === 'function') cb();
     },
     
     // Generate single view event html
@@ -65,7 +39,7 @@ var EventSingleModule = {
         var start_time = HelpFunctions.formatDate( event.start_time, true, true );
         
 
-        var response = '<div class="event-bar">'+event.parentname+'<div class="close-button">&times;</div></div>';
+        var response = '<div class="event-bar"><a href="#" data-type="location" data-id="'+event.parentid+'">'+event.parentname+'</a><div class="close-button">&times;</div></div>';
         response += '<div class="event-sv-content-container">';
         response += '<div class="event-singleview">';
 
