@@ -4,7 +4,7 @@ jQuery.prototype.smamo_slider = function( params ) {
     // Params
     var prevButton = typeof params.prevButton !== 'undefined' ? $(params.prevButton, this) : null,
         nextButton = typeof params.nextButton !== 'undefined' ? $(params.nextButton, this) : null,
-        wrapAround = typeof params.wrapAround !== 'undefined' ? params.wrapAround : true;
+        wrapAround = typeof params.wrapAround !== 'undefined' ? params.wrapAround : false;
         
         outer = $(this),
         inner = $('.inner', this).length > 0 ? $('.inner', this) : null,
@@ -16,56 +16,44 @@ jQuery.prototype.smamo_slider = function( params ) {
     if ( inner !== null ) {
         
         // Generates elems array
-        var resetElemsArray = function( ) {
-            while ( elems.length > 0 ) elems.pop();
-            $('.item', this).each( function( index, item ) {
-                elems.push( $(item) ); });
-        }.bind(this); resetElemsArray();
+        $('.item', this).each( function( index, item ) {
+            elems.push( $(item) ); });
         
         
         /* --------------------------------------- */
         // Functions
         
         // Moves item to different location
-        $(this).__proto__.moveItem = function( elem, insertAfter ) {
+        $(this).__proto__.smamo_moveItem = function( elem, insertAfter, cb ) {
             
             // Sets vars
             elem = typeof elem === 'number' ? elems[ elem ] : elem;
             insertAfter = typeof insertAfter === 'number' && insertAfter !== -1 ? elems[ insertAfter ] : insertAfter;
             
             // Insert elem copy
-            elem.remove();
-            if ( insertAfter === -1 ) elem.insertBefore( elems[ 0 ] );
-            else elem.insertAfter( insertAfter );
+            if ( insertAfter === -1 ) elem.clone().insertBefore( elems[ 0 ] );
+            else elem.clone().insertAfter( insertAfter );
             
             // Resets elems array
-            resetElemsArray();
+            $('.item', this).each( function( index, item ) {
+                elems.push( $(item) ); });
             
         };
         
         // Change Index function, 'snap to'.
-        inner.__proto__.changeIndex = function( index ) {
+        inner.__proto__.smamo_changeIndex = function( index ) {
             
             if ( wrapAround ) {
                 
-                inner.addClass('notrans');
-                
                 // Loops around, with cloning
                 var maxIndex = ( elems.length - Math.floor( outer.innerWidth() / elems[0].outerWidth() ) );
-                if ( index >= maxIndex  ) {
-                    $(this).moveItem(0,elems.length-1);
-                    index = maxIndex;
-                    inner.css({ 'left' : -( elems[ index-1 ].position().left ) + 'px' });
+                if ( index >= maxIndex ) {
+                    $(this).smamo_moveItem(0,elems.length-1);
                 } else if ( index <= 0 ) {
-                    $(this).moveItem(elems.length-1,-1);
-                    index = 0;
-                    inner.css({ 'left' : -( elems[ index+1 ].position().left ) + 'px' });
+                    $(this).smamo_moveItem(elems.length-1,-1);
                 }
                 
-                console.log( index );
-                
                 // Resets inner
-                inner.removeClass( 'notrans' );
                 currentIndex = index;
                 
             } else {
@@ -80,14 +68,14 @@ jQuery.prototype.smamo_slider = function( params ) {
             // Changes left pos of inner
             inner.css({ 'left' : -( elems[ currentIndex ].position().left ) + 'px', });
             
-        }; inner.changeIndex( currentIndex );
+        }; // inner.changeIndex( currentIndex );
         
         // Functions end
         /* --------------------------------------- */
         
         // Button action!
-        prevButton.on( 'click', function() { currentIndex--; inner.changeIndex( currentIndex ); });
-        nextButton.on( 'click', function() { currentIndex++; inner.changeIndex( currentIndex ); });
+        prevButton.on( 'click', function() { currentIndex--; inner.smamo_changeIndex( currentIndex ); });
+        nextButton.on( 'click', function() { currentIndex++; inner.smamo_changeIndex( currentIndex ); });
         
         // Mouse drag variables
         var clicking = false,
