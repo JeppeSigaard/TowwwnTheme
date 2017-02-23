@@ -38,6 +38,7 @@ $(function() {
     ViewHandler.init();
     ViewControllerModule.init();
     EventCalenderModule.init();
+    navigationHandler.init();
     
     LocationModule.init( function() {
         LocationCategoryModule.init();

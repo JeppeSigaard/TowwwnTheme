@@ -171,7 +171,7 @@ var EventCalenderModule = {
         
         // Generates the html itself
         var outerClass = typeof outerClass !== 'undefined' ? outerClass : 'event';
-        var response = '<div class="'+outerClass+'" id="'+elem.id+'">';
+        var response = '<div class="'+outerClass+'" id="calendar-event-'+elem.id+'" data-type="event" data-id="'+elem.id+'">';
         
         if ( typeof elem.images !== 'undefined' &&
             elem.images[130] !== null &&

@@ -39,32 +39,6 @@ var ViewHandler = {
         // Loads swipe functionality
         this.swipe();
 
-        // Load event single view
-        var event_sv, lastScroll = 0, isNew = false, clickDown = 0;
-        $(document).on( 'touchdown', '.event', function() { $(document).trigger('mousedown').bind(this); });
-        $(document).on( 'mousedown', '.event', function() {
-            clickDown = new Date().getTime();
-        });
-        
-        $(document).on( 'touchup', '.event', function() { $(document).trigger('mouseup').bind(this); });
-        $(document).on( 'mouseup', '.event', function() {
-            if ( new Date().getTime() - clickDown < 150 ) {
-                
-                ViewHandler.settings.event_singleview_outer.addClass('spoopy');
-                EventSingleModule.render_sv_event( $(this).attr('id'), function(event) {
-                    history.pushState({ type : 'event', id : event.id }, event.name + ' · Towwwn', main_path + '/begivenhed/' + event.slug);
-
-                    ViewHandler.change_view_focus( 0 );
-                    ViewHandler.settings.event_calender_outer.addClass( 'normalize' );
-                    ViewHandler.settings.location_categories_outer.addClass( 'normalize' );
-                }, $(this));
-
-                EventSingleModule.bindUIActions();
-
-                ViewHandler.toggle_poly_view( true );
-            }
-        });
-        
         // Reloads current view to fit mobile screen sizes
         var lastSize = $(window).innerWidth();
         $(window).on( 'resize', function() {
@@ -137,6 +111,7 @@ var ViewHandler = {
         syncScroll.lockView();
         setTimeout(function(){
             syncScroll.releaseView();
+            ImageController.lazyLoad();
         }, 420);
     },
     

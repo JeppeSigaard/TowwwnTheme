@@ -172,7 +172,7 @@ var syncScroll = {
 
                     // Coming from the top, mby go fixed and set scrollTop on inner
                     else if(elem.hasClass('top')){
-                        var inner = elem.find('.sync-inner'),
+                        var inner = $('.sync-inner', elem),
                             innerHeight = inner.offset().top + inner.innerHeight();
                         if(innerHeight <= st + wh){
                             elem.addClass('fixed').removeClass('top bottom').scrollTop(innerHeight);
@@ -181,7 +181,7 @@ var syncScroll = {
                     }
 
                     // Coming from the bottom, mby go fixed and set scrollTop on inner
-                    else if(elem.hasClass('bottom') && elem.find('.sync-inner').offset().top >= st){
+                    else if(elem.hasClass('bottom') && $('.sync-inner', elem).offset().top >= st){
                         elem.addClass('fixed').removeClass('top bottom').scrollTop(60);
                         forceRepaint = true;
                     }

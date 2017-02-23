@@ -6,27 +6,7 @@ var LocationSingleViewModule = {
     
     // Init
     init: function() {
-        
-        // Opens new single view
-        $(document).on('click', '.location-container', function() {
-            var container = $(this), id = container.attr('id');
 
-            container.addClass('loading');
-
-            $.get(rest_api + 'locations/' + id, function(data){
-                var location = data[0];
-
-                history.pushState({type : 'location', id : location.id}, location.name, main_path + '/sted/' + location.slug);
-
-                LocationSingleViewModule.renderSingleView( location );
-                ViewHandler.change_view_focus( 4 );
-
-                container.removeClass('loading');
-            });
-
-
-        });
-        
         // Closes single view
         $(document).on('click', '.location-singleview-bar .close-button', function () {
             var list = $('.location-list');

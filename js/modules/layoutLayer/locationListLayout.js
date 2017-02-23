@@ -5,21 +5,8 @@ var LocationListModule = {
     settings: { },
     
     // Init
-    init: function() { 
-        
-        // Opens location list view
-        $(document).on( 'click', '.category', function() {
-            LocationListModule.renderLocationList( $(this).attr('id'),function(data){
+    init: function() {
 
-                history.pushState({type : 'category', id : data.category_id}, data.category_name, main_path + '/kategori/' + data.category_slug);
-
-                ViewHandler.settings.event_calender_outer.addClass('normalize');
-                ViewHandler.settings.location_categories_outer.addClass('normalize');
-                ViewHandler.change_view_focus( 3 );
-
-            });
-        });
-        
         // Closes location list view
         $(document).on( 'click', '.locationlist-bar .close-button', function() {
             history.pushState({type : 'home', id : null}, 'Towwwwn', main_path );
@@ -61,35 +48,29 @@ var LocationListModule = {
     },
     
     // Render Locatiions
-    renderLocationList: function( id, cb ) {
-
-        $('#'+id).addClass('loadingsv');
+    renderLocationList: function( data, cb ) {
         
-        $.get(rest_api + 'categories/' + id, function(data){
+        var html = '<div class="locationlist-bar">'+data.category_name+'<div class="close-button">&times;</div></div>';
+        html += '<div class="location-list" id="'+data.category_id+'" data-slug="'+data.category_slug+'">';
 
-            var html = '<div class="locationlist-bar">'+data.category_name+'<div class="close-button">&times;</div></div>';
-            html += '<div class="location-list" id="'+data.category_id+'" data-slug="'+data.category_slug+'">';
+        for (var i in data.locations){
+            html += this.generateLocationElemHtml( data.locations[i]);
+        }
 
-            for (var i in data.locations){
-                html += this.generateLocationElemHtml( data.locations[i]);
-            }
+        html += '</div>';
 
-            html += '</div>';
+        // Renders the html
+        ViewHandler.settings.location_listview.html( html );
 
-            // Renders the html
-            ViewHandler.settings.location_listview.html( html );
-            $('#'+id).removeClass('loadingsv');
+        if(typeof cb === 'function'){
+            cb(data);
+        }
 
-            if(typeof cb === 'function'){
-                cb(data);
-            }
-
-        }.bind(this));
     },
     
     // Generate Location List Html
     generateLocationElemHtml: function( location ) {
-        var response = '<a href="#" class="location-container" id="'+location.id+'">',
+        var response = '<a href="#" class="location-container" data-type="location" data-id="'+location.id+'">',
             about = typeof location.about !== 'undefined' && location.about !== null ? location.about : '';
         
         response += '<span class="ripple"></span>';

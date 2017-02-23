@@ -13,7 +13,7 @@ var HeaderModule = {
     // Init
     init: function() {
         
-        var swiperSlides = $('.header-commercials').find('.swiper-slide').length;
+        var swiperSlides = $('.header-commercials .swiper-slide').length;
         if ( swiperSlides > 1 ) {
             var header_commercials = new Swiper ('.header-commercials', {
                 direction: 'horizontal',
