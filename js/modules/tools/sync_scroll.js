@@ -10,6 +10,7 @@ var syncScroll = {
         highestElem : null,
         lastScrollTop : 0,
         ready : false,
+        canPosition: true,
     },
 
     // Init
@@ -111,77 +112,115 @@ var syncScroll = {
 
     // Scroll event handler
     onScroll : function(){
-        if (this.ready){
+
+        // Run if script ready and new cycle is allowed
+        if (this.ready && this.settings.canPosition){
+
+            // dissalow new cycle (until completion) i.e prevent spassing, lul
+            this.settings.canPosition = false;
+
+            // vars
             var ct = this.settings.container.offset().top,
                 ch = this.settings.container.innerHeight(),
-                st = $(window).scrollTop(),
+                st = $('body').scrollTop(),
                 wh = $(window).height(),
-                diff = st - this.settings.lastScrollTop;
+                diff = st - this.settings.lastScrollTop,
+                forceRepaint = false;
 
 
-                // Over sync scroll område
-                if(ct >= st + 60){
-                    this.settings.elem.each(function(){
-                        var elem = $(this);
-                        if(elem.hasClass('high')){ elem.removeClass('fixed top bottom'); }
-                        else if(!elem.hasClass('top')){
-                            elem.addClass('top').removeClass('bottom fixed').removeAttr('style').hide().show();
+            // Above sync scroll area (syncs should either be high or top)
+            if(ct >= st + 60){
+                this.settings.elem.each(function(){
+                    var elem = $(this);
+
+                    // Clean high
+                    if(elem.hasClass('high')){ elem.removeClass('fixed top bottom'); }
+
+                    // Or set to top and force repaint
+                    else if(!elem.hasClass('top')){
+                        elem.addClass('top').removeClass('bottom fixed').removeAttr('style');
+                        forceRepaint = true;
+                    }
+                });
+            }
+
+
+            // Below sync scroll area (syncs should either be high or bottom)
+            else if(ct + ch <= st + wh){
+                this.settings.elem.each(function(){
+                    var elem = $(this);
+
+                    // Clean high
+                    if(elem.hasClass('high')){ elem.removeClass('fixed top bottom'); }
+
+                    // Or set to bottom and force repaint
+                    else if(!elem.hasClass('bottom')){
+                        elem.addClass('bottom').removeClass('top fixed').removeAttr('style');
+                        forceRepaint = true;
+                    }
+                });
+            }
+
+
+            // In sync scroll area
+            else{
+                this.settings.elem.each(function(){
+                    var elem = $(this);
+
+                    // Clean high sync
+                    if(elem.hasClass('high')){elem.removeClass('fixed top bottom');}
+
+                    // Coming from the top, mby go fixed and set scrollTop on inner
+                    else if(elem.hasClass('top')){
+                        var inner = elem.find('.sync-inner'),
+                            innerHeight = inner.offset().top + inner.innerHeight();
+                        if(innerHeight <= st + wh){
+                            elem.addClass('fixed').removeClass('top bottom').scrollTop(innerHeight);
+                            forceRepaint = true;
                         }
-                    });
-                }
+                    }
+
+                    // Coming from the bottom, mby go fixed and set scrollTop on inner
+                    else if(elem.hasClass('bottom') && elem.find('.sync-inner').offset().top >= st){
+                        elem.addClass('fixed').removeClass('top bottom').scrollTop(60);
+                        forceRepaint = true;
+                    }
 
 
-                // Under sync scroll område
-                else if(ct + ch <= st + wh){
-                    this.settings.elem.each(function(){
-                        var elem = $(this);
-                        if(elem.hasClass('high')){ elem.removeClass('fixed top bottom'); }
-                        else if(!elem.hasClass('bottom')){
-                            elem.addClass('bottom').removeClass('top fixed').removeAttr('style').hide().show();
-                        }
-                    });
-                }
+                    // set fixed scrollTop accordingly
+                    if(elem.hasClass('fixed')){
+                        var scrollAmount = elem.scrollTop() + diff;
+                        elem.scrollTop(scrollAmount);
+                        syncScroll.setHorizontalPosition($(this));
+                    }
+                });
+            }
 
+            // Try to repaint when needed (prolly not working)
+            if(forceRepaint){
+                this.settings.container.css({transform: 'translateZ(1)'}).css({transform: 'none'});
+            }
 
-                // I sync scroll område
-                else{
-                    this.settings.elem.each(function(){
-                        var elem = $(this);
-                        if(elem.hasClass('high')){elem.removeClass('fixed top bottom');}
-                        else if(elem.hasClass('bottom')){
-                            elem.addClass('fixed').removeClass('bottom');
-                            elem.scrollTop(50000000000000000);
-                        }
-                        else if(elem.hasClass('top')){
-                            elem.addClass('fixed').removeClass('top');
-                            elem.scrollTop('0');
-                        }
-                        else{
-                            var scrollAmount = elem.scrollTop() + diff;
-                            if(!elem.hasClass('fixed')){
-                                elem.hide().addClass('fixed').show();
-                            }
-                            elem.scrollTop(scrollAmount);
-                            syncScroll.setHorizontalPosition(elem);
-                        }
-                    });
-                }
-
+            // Prepare last scroll top for new cycle
             this.settings.lastScrollTop = st;
+
+            // allow new cycle
+            this.settings.canPosition = true;
         }
     },
 
     lockView : function(){
+
+        this.settings.canFixedScroll = false;
+
         $('body').addClass('no-scroll').css({height:'100%',overflow:'hidden'});
         if(null !== this.settings.container){
             this.settings.container.css({
                 height : $(window).innerHeight - this.settings.container.offset().top,
                 overflow : 'hidden',
             });
-
         }
 
-        this.settings.canFixedScroll = false;
         $('.sync-outer').each(function(){
             var innerScroll = $(this).scrollTop();
             $(this).removeAttr('style').css({
@@ -199,13 +238,10 @@ var syncScroll = {
         $('.sync-outer').removeAttr('style');
         $('body').removeClass('no-scroll').removeAttr('style');
         
-        this.rescaleContainer(function(){
-            /*siteHeight -= $(document).innerHeight();
-            $(window).scrollTop( $('.high').offset().top - $(window).scrollTop()
-                                + $('#site-header').outerHeight() + siteHeight );*/
-            this.setHorizontalPosition();
-        }.bind(this));
-
+        this.setHorizontalPosition();
+        this.rescaleContainer();
+        this.onScroll();
+        EventCalenderModule.setEventCalendarWidth();
     }
 }
 

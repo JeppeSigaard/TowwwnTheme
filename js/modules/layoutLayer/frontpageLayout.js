@@ -14,8 +14,8 @@ var FrontPageModule = {
         // Generates left container content
         var lc = '<div id="eventsbar">';
         lc += '<div id="eventslayoutbtns">';
-        lc += '<img class="blocklayoutbtn" src="'+template_uri+'/style/assets/icons/blockLayout.PNG" />';
-        lc += '<img class="linelayoutbtn" src="'+template_uri+'/style/assets/icons/lineLayout.PNG" /></div>';
+        lc += '<svg viewBox="0 0 32 32" class="blocklayoutbtn"><use xlink:href="#icon-block-layout"></use></svg>';
+        lc += '<svg viewBox="0 0 32 32" class="linelayoutbtn"><use xlink:href="#icon-list-layout"></use></svg></div>';
         lc += '<div class="monthSelector"></div>';
         lc += '</div><div class="picker"></div>';
         
@@ -113,13 +113,15 @@ var FrontPageModule = {
         });
         */
 
-        $('.blocklayoutbtn').on( 'click', function() {
-            $('.eventscontainer').removeClass('lineLayout'); 
+        $(document).on( 'click', '.blocklayoutbtn', function() {
+            $('.eventscontainer').removeClass('lineLayout');
+            syncScroll.rescaleContainer();
             ViewHandler.reload_view( true );
         });
         
-        $('.linelayoutbtn').on( 'click', function() {
+        $(document).on( 'click', '.linelayoutbtn',function() {
             $('.eventscontainer').addClass('lineLayout');
+            syncScroll.rescaleContainer();
             ViewHandler.reload_view( true );
         });
         

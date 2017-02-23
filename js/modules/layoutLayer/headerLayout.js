@@ -7,6 +7,7 @@ var HeaderModule = {
         breakpoint: 0,
         views: [],
         startScroll: $(window).scrollTop(),
+        canCollapse : true,
     },
     
     // Init
@@ -34,6 +35,12 @@ var HeaderModule = {
         
         // Set menu position
         this.settings.menu_ready = false;
+
+        if ( $(window).innerWidth() <= 640 ) {
+            $('.header-container').hide().addClass( 'fixed' ).show();
+            $('.menu-show-btns').addClass( 'show' );
+        }
+
         $(window).on('scroll', function() {
             this.setMenuPosition();
         }.bind(this));
@@ -69,7 +76,7 @@ var HeaderModule = {
     },
     
     setMenuPosition: function(){
-        if ( Math.abs( $(window).scrollTop() - this.settings.startScroll ) > 10 ) {
+        if ( Math.abs( $(window).scrollTop() - this.settings.startScroll ) > 10 && this.settings.canCollapse) {
             $('.header-container').removeClass( 'active' );
             $('.menu-show-btns').removeClass( 'active' );
 
@@ -100,7 +107,7 @@ var HeaderModule = {
         if ( this.settings.menu_ready ) {
 
 
-            if ( $('.menu-show-btns').hasClass( 'active' ) || forceHide === true ) {
+            if ( $('.menu-show-btns').hasClass( 'active' ) || forceHide === true && this.settings.canForceHide) {
                 $('.menu-show-btns').removeClass( 'active' );
                 $('.header-container').removeClass( 'active' );
 
@@ -109,6 +116,8 @@ var HeaderModule = {
                 $('#searchfield').select();
                 $('.menu-show-btns').addClass( 'active' );
                 $('.header-container').addClass( 'active' );
+                this.settings.canCollapse = false;
+                setTimeout(function(){this.settings.canCollapse = true;}.bind(this),400);
             }
         }
     },

@@ -23,16 +23,22 @@
         display: inline-block;
 
         &:hover {
-            background-color: lighten($color-blue-2, 4%);
+            background-color: darken($color-blue-2, 2%);
         }
 
-        img{
+        svg{
             position: absolute;
             top: 50%;
             transform: translate(-50%, -50%);
             width: auto;
             height: 22px;
+            width: 22px;
             cursor: pointer;
+            fill: rgba(white,.9);
+            transition: fill 120ms;
+            &:hover{
+                fill: white;
+            }
         }
 
         .blocklayoutbtn{
@@ -55,7 +61,7 @@
         padding-right: 22px;
         text-transform: uppercase;
         transition: 120ms;
-        font-size: 13px;
+        font-size: 12px;
     }
 }
 

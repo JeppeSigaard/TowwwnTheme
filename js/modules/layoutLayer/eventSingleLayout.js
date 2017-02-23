@@ -59,7 +59,7 @@ var EventSingleModule = {
         var desc_raw = event.description;
             if(desc_raw === null){desc_raw = '  ';}
 
-        var desc = HelpFunctions.nl2p(HelpFunctions.linkifier( desc_raw ));
+        var desc = HelpFunctions.nl2p(HelpFunctions.linkifier( HelpFunctions.ripRep(desc_raw)));
 
 
         var start_time = HelpFunctions.formatDate( event.start_time, true, true );

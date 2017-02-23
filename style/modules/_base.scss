@@ -44,28 +44,7 @@ body {
     50%{opacity: 0;}
     100%{opacity: 1;}
 }
-.spoopy .sync-outer.fixed:after{
-    width: inherit;
-    position: inherit;
-    top: 60px;
-}
-.spoopy .sync-outer:after{
-    display: block;
-    content: '';
-    position: absolute;
-    top: 0;
-    left: inherit;
-    height: 100vh;
-    width: 100%;
-    background-color: rgba(0,0,0,0.4);
-    z-index: 10;
-    background-image: url(assets/icons/loading-white.svg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 64px;
-    opacity: 0;
-    animation: fadein .3s linear forwards;
-}
+
 
 .main-container{
     position: relative;
