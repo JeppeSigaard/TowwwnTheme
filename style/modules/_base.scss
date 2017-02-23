@@ -11,7 +11,7 @@ body {
     &.no-scroll{
         // overflow: hidden;
         height: 100%;
-        // margin-right: 14px;
+        margin-right: 14px;
     }
 
     @media(min-width:#{$bp-1}){

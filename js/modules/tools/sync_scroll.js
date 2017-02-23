@@ -200,11 +200,11 @@ var syncScroll = {
         $('body').removeClass('no-scroll').removeAttr('style');
         
         this.rescaleContainer(function(){
-            siteHeight -= $(document).innerHeight();
+            /*siteHeight -= $(document).innerHeight();
             $(window).scrollTop( $('.high').offset().top - $(window).scrollTop()
-                                + $('#site-header').outerHeight() + siteHeight );
+                                + $('#site-header').outerHeight() + siteHeight );*/
             this.setHorizontalPosition();
-        });
+        }.bind(this));
 
     }
 }

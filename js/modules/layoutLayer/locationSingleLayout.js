@@ -42,19 +42,51 @@ var LocationSingleViewModule = {
     // Render location single view
     renderSingleView: function( obj ) {
         
-        console.log( obj );
-        
-        // Generates html
-        var html = '<div class="location-singleview-bar">'+ obj.name +'<div class="close-button">&times;</div></div>';
-        html += '<div class="location-singleview-content">';
-        
-        html += '<div class="imgcontainer" style="background-image:url('+obj.picture+')"></div>';
-        
-        html += '</div>';
+        $.get( rest_api+'events?parent='+obj.id, {}, function( data ) {
+            
+            // Generates html
+            var html = '<div class="location-singleview-bar">'+ obj.name +'<div class="close-button">&times;</div></div>';
+            html += '<div class="location-singleview-content">';
 
-        // Renders the html
-        ViewHandler.settings.location_singleview.html( html );
-        
+            // Event slider
+            html += '<div class="event-slider" >';
+            html += '<div class="prevButton button"></div>';
+            html += '<div class="nextButton button"></div>';
+            html += '<div class="inner" style="width:'+(data.length/3*100)+'%;">';
+
+            // All events
+            if ( data.length > 0 ) {
+                data.forEach(function( item, index ) {
+                    
+                    html += '<div class="item" style="width:'+(100/data.length)+'%;">';
+                    html += EventCalenderModule.generateEventHtml( item );
+                    html += '</div>';
+                    
+                    /*html += '<div class="item" style="width:'+(100/data.length)+'%;">';
+                    html += '<div class="imgcontainer" style="background-image:url('+item.imgurl+')"></div>';
+                    html += '<div class="textcontainer">';
+                    html += '<p class="location-sv-title">'+item.title+'</p>';
+                    html += '</div>';
+                    html += '</div>';*/
+                });
+            }
+
+            html += '</div>';
+            html += '</div>';
+
+            // Imgs
+            // html += '<div class="imgcontainer" style="background-image:url('+obj.picture+')"></div>';
+
+            html += '</div>';
+
+            // Renders the html
+            ViewHandler.settings.location_singleview.html( html );
+            $('.event-slider').smamo_slider({
+                'prevButton' : '.prevButton',
+                'nextButton' : '.nextButton',
+            });
+            
+        });
     },
     
     // Generate location singleview html
