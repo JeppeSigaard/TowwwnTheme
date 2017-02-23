@@ -56,12 +56,14 @@ $(function() {
     if('app' === template){
         EventContentModule.init(function( tmp ) {
             onContentLoad( tmp );
+            cookie.init();
         });
     }
 
     else{
         SearchModule.init();
         syncScroll.init($('#page-content'), '.container-section');
+        cookie.init();
     }
 
 

@@ -5,19 +5,29 @@
     height: 60px;
     background-color: darken( $color-blue-2, 5% );
     color: white;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 60px;
     padding-left: 20px;
     text-transform: uppercase;
     
+
     .close-button{
         position: absolute;
-        top: 50%; right: 20px;
-        transform: translate(0, -50%);
-        font-size: 37px;
+        top: 50%;
+        right: 0px;
+        width: 65px;
+        text-align: center;
+        transform: translate(0,-50%);
         color: white;
-        line-height: 60px;
+        font-size: 37px;
         cursor: pointer;
+        background-color: transparent;
+        transition: background-color 120ms;
+        border-left: 1px solid rgba(white,.6);
+
+        &:hover{
+            background-color: darken($color-blue-2,3%);
+        }
     }
 }
 

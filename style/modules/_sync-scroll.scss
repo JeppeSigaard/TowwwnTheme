@@ -3,6 +3,10 @@
     100%{transform: translateY(0px);}
 }
 
+.repaint{
+   animation: repaint 1 linear forwards 50ms;
+}
+
 .sync-outer{
     position:relative;
     height: auto;
@@ -11,7 +15,6 @@
     padding: 0;
     margin: 0;
     clear: both;
-    // transform: translateZ(0);
 }
 
 .sync-outer.fixed{
@@ -21,7 +24,6 @@
     top: 60px;
     bottom: -100px;
     padding-bottom: 100px;
-    animation: repaint 1 linear forwards 50ms;
 }
 
 .sync-outer.bottom,
@@ -31,7 +33,6 @@
     bottom: 0;
     padding-bottom: 0;
     position: absolute;
-    animation: repaint 1 linear forwards 50ms;
 }
 .sync-outer .sync-inner{
     position: relative;
@@ -40,7 +41,6 @@
     padding: 0;
     margin: 0;
     clear: both;
-    // transform: translateZ(0);
 }
 
 

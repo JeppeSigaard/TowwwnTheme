@@ -41,9 +41,7 @@ var LocationSingleViewModule = {
     
     // Render location single view
     renderSingleView: function( obj ) {
-        
-        console.log( obj );
-        
+
         // Generates html
         var html = '<div class="location-singleview-bar">'+ obj.name +'<div class="close-button">&times;</div></div>';
         html += '<div class="location-singleview-content">';

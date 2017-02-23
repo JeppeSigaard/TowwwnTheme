@@ -150,7 +150,7 @@ var EventCalenderModule = {
         
         // Sets up vars
         var response = '',
-            time_formatted = HelpFunctions.formatDate( elem.start_time, false, false ),
+            time_formatted = HelpFunctions.formatDate( elem.start_time, false, true, true, false, true),
             name = String(elem.name).substr(0, 36) + ( String(elem.name).substr(36,99).split( ' ' )[0] );
         
         // Adds length formatting to name
