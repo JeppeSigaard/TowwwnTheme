@@ -30,6 +30,12 @@ var HelpFunctions = {
         if(typeof text === 'undefined'|| null === text){return '';}
         return (text.length > 0 ? '<p>' + text.replace(/[\r\n]+/g, '</p><p>') + '</p>' : null);
     },
+
+    // replacement chars
+    ripRep : function(text){
+        if(typeof text === 'undefined'|| null === text){return '';}
+        return text.replace(/\uFFFD/g, '');
+    },
  
     // Linkifier
     linkifier: function( text ) {
