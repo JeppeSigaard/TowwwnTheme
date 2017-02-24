@@ -43,6 +43,9 @@ var navigationHandler = {
             $('.imgcontainer', elem).addClass('loadingsv');
             ViewHandler.settings.event_singleview_outer.addClass('spoopy');
 
+            ViewHandler.change_view_focus( 0 );
+            ViewHandler.settings.event_calender_outer.addClass('normalize');
+            ViewHandler.settings.location_categories_outer.addClass('normalize');
             $.get(rest_api + 'events/' + id, function(data){
 
                 if(typeof data[0] === 'undefined'){ return; }
@@ -51,10 +54,8 @@ var navigationHandler = {
 
                 EventSingleModule.render_sv_event(data[0], function(){
                     $('.imgcontainer', elem).removeClass('loadingsv');
-                    ViewHandler.change_view_focus( 0 );
-                    ViewHandler.settings.event_calender_outer.addClass('normalize');
-                    ViewHandler.settings.location_categories_outer.addClass('normalize');
-                    ViewHandler.settings.event_singleview_outer.removeClass('spoopy');
+
+                    ViewHandler.settings.event_singleview_outer.addClass('spoopy-out').delay(200).removeClass('spoopy spoopy-out');
                 });
 
 
@@ -68,17 +69,22 @@ var navigationHandler = {
 
             elem.addClass('loadingsv');
 
+            ViewHandler.change_view_focus( 3 );
+            ViewHandler.settings.event_calender_outer.addClass('normalize');
+            ViewHandler.settings.location_categories_outer.addClass('normalize');
+            ViewHandler.settings.location_listview_outer.addClass('spoopy');
+
             $.get(rest_api + 'categories/' + id, function( data ){
 
                 if(typeof data === 'undefined'){ return; }
 
+                ViewHandler.settings.location_listview_outer.addClass('spoopy-out').delay(200).removeClass('spoopy spoopy-out');
                 history.pushState({type : 'category', id : data.category_id}, data.category_name, main_path + '/kategori/' + data.category_slug);
 
                 LocationListModule.renderLocationList(data,function(){
                     elem.removeClass('loadingsv');
-                    ViewHandler.settings.event_calender_outer.addClass('normalize');
-                    ViewHandler.settings.location_categories_outer.addClass('normalize');
-                    ViewHandler.change_view_focus( 3 );
+
+
                 });
 
 
@@ -90,16 +96,19 @@ var navigationHandler = {
 
             elem.addClass('loading');
 
+            ViewHandler.change_view_focus( 4 );
+            ViewHandler.settings.location_singleview_outer.addClass('spoopy');
             $.get(rest_api + 'locations/' + id, function( data ){
 
                 if(typeof data[0] === 'undefined'){ return; }
 
                 var location = data[0];
 
+                ViewHandler.settings.location_singleview_outer.addClass('spoopy-out').delay(200).removeClass('spoopy spoopy-out');
                 history.pushState({type : 'location', id : location.id}, location.name, main_path + '/sted/' + location.slug);
 
                 LocationSingleViewModule.renderSingleView( location );
-                ViewHandler.change_view_focus( 4 );
+
 
                 elem.removeClass('loading');
 
