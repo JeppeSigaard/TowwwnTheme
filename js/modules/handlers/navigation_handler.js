@@ -19,6 +19,17 @@ var navigationHandler = {
         this.bindUIActions();
     },
 
+    spoopy : function(elem, add){
+        if(!elem.hasClass('spoopy') && add !== false){
+            elem.addClass('spoopy');
+        }
+        else{
+            elem.addClass('spoopy-out');
+            setTimeout(function(){
+                elem.removeClass('spoopy spoopy-out');
+            },300);
+        }
+    },
 
     dataTypeId : function(elem,type,id){
 
@@ -41,7 +52,7 @@ var navigationHandler = {
         if ('event' === type){
 
             $('.imgcontainer', elem).addClass('loadingsv');
-            ViewHandler.settings.event_singleview_outer.addClass('spoopy');
+            navigationHandler.spoopy(ViewHandler.settings.event_singleview_outer);
 
             ViewHandler.change_view_focus( 0 );
             ViewHandler.settings.event_calender_outer.addClass('normalize');
@@ -54,8 +65,7 @@ var navigationHandler = {
 
                 EventSingleModule.render_sv_event(data[0], function(){
                     $('.imgcontainer', elem).removeClass('loadingsv');
-
-                    ViewHandler.settings.event_singleview_outer.addClass('spoopy-out').delay(200).removeClass('spoopy spoopy-out');
+                    navigationHandler.spoopy(ViewHandler.settings.event_singleview_outer, false);
                 });
 
 
@@ -72,13 +82,13 @@ var navigationHandler = {
             ViewHandler.change_view_focus( 3 );
             ViewHandler.settings.event_calender_outer.addClass('normalize');
             ViewHandler.settings.location_categories_outer.addClass('normalize');
-            ViewHandler.settings.location_listview_outer.addClass('spoopy');
+            navigationHandler.spoopy(ViewHandler.settings.location_listview_outer);
 
             $.get(rest_api + 'categories/' + id, function( data ){
 
                 if(typeof data === 'undefined'){ return; }
 
-                ViewHandler.settings.location_listview_outer.addClass('spoopy-out').delay(200).removeClass('spoopy spoopy-out');
+                navigationHandler.spoopy(ViewHandler.settings.location_listview_outer, false);
                 history.pushState({type : 'category', id : data.category_id}, data.category_name, main_path + '/kategori/' + data.category_slug);
 
                 LocationListModule.renderLocationList(data,function(){
@@ -97,14 +107,14 @@ var navigationHandler = {
             elem.addClass('loading');
 
             ViewHandler.change_view_focus( 4 );
-            ViewHandler.settings.location_singleview_outer.addClass('spoopy');
+            navigationHandler.spoopy(ViewHandler.settings.location_singleview_outer);
             $.get(rest_api + 'locations/' + id, function( data ){
 
                 if(typeof data[0] === 'undefined'){ return; }
 
                 var location = data[0];
 
-                ViewHandler.settings.location_singleview_outer.addClass('spoopy-out').delay(200).removeClass('spoopy spoopy-out');
+                navigationHandler.spoopy(ViewHandler.settings.location_singleview_outer, false);
                 history.pushState({type : 'location', id : location.id}, location.name, main_path + '/sted/' + location.slug);
 
                 LocationSingleViewModule.renderSingleView( location );
