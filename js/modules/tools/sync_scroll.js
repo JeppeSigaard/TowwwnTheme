@@ -23,12 +23,17 @@ var syncScroll = {
 
     // Bind UI Actions
     bindUIActions: function(parentSelector, elementSelector, vars) {
-        $(window).on('scroll',function(){
-            if(this.settings.canFixedScroll){
-                this.onScroll();
-            }
+
+        $(document).on('scroll',function(){
+            this.onScroll();
         }.bind(this));
 
+
+        /*
+        setInterval(function(){
+            this.onScroll();
+        }.bind(this), (1000 / 60));
+        */
         $(window).on('resize',function(){
             if(this.settings.canFixedScroll){
                 this.rescaleContainer();
@@ -77,7 +82,7 @@ var syncScroll = {
 
     // Check if element is within the horizontal scroll erea
     isInView : function(elem){
-        return elem.offset().left >= 0 && elem.offset().left < $(window).innerWidth();
+        return elem.offset().left >= 0 && elem.offset().left < $(window).innerWidth() - 200;
     },
 
     // rescale container
@@ -114,7 +119,7 @@ var syncScroll = {
     onScroll : function(){
 
         // Run if script ready and new cycle is allowed
-        if (this.ready && this.settings.canPosition){
+        if (this.ready && this.settings.canPosition && this.settings.canFixedScroll){
 
             // dissalow new cycle (until completion) i.e prevent spassing, lul
             this.settings.canPosition = false;
@@ -122,14 +127,17 @@ var syncScroll = {
             // vars
             var ct = this.settings.container.offset().top,
                 ch = this.settings.container.innerHeight(),
-                st = $('body').scrollTop(),
+                st = $(window).scrollTop(),
                 wh = $(window).height(),
                 diff = st - this.settings.lastScrollTop,
                 forceRepaint = false;
 
 
+            // if(diff === 0){this.settings.canPosition = true; return;}
+
             // Above sync scroll area (syncs should either be high or top)
             if(ct >= st + 60){
+
                 this.settings.elem.each(function(){
                     var elem = $(this);
 
@@ -226,22 +234,44 @@ var syncScroll = {
             $(this).removeAttr('style').css({
                 position : 'absolute',
                 width: '100%',
-                top : $(this).offset().top - $(this).parent().offset().top - innerScroll,
+                //top : $(this).offset().top - $(this).parent().offset().top - innerScroll,
+                top : $(this).offset().top - $(this).parent().offset().top,
                 left : '0',
             });
         });
     },
 
     releaseView : function(){
-        var siteHeight = $(document).innerHeight();
         this.settings.canFixedScroll = true;
         $('.sync-outer').removeAttr('style');
         $('body').removeClass('no-scroll').removeAttr('style');
         
         this.setHorizontalPosition();
-        this.rescaleContainer();
+
         this.onScroll();
         EventCalenderModule.setEventCalendarWidth();
+        this.rescaleContainer(function(){
+            var goTopSide = false;
+
+            if($(window).width <= 640){
+                goTopSide = true;
+            }
+
+            syncScroll.settings.elem.each(function(){
+                if(syncScroll.isInView($(this)) && !$(this).is('.high')){
+                    goTopSide = false;
+                }
+
+                if(syncScroll.isInView($(this)) && $(this).find('.bookmark-mode').length && goTopSide){
+                    $('html,body').delay(200).animate({scrollTop : $(this).find('.bookmark-mode').parent('.event').offset().top - 70},200);
+                    goTopSide = false;
+                }
+            });
+
+            if(goTopSide === true){
+                $('html,body').animate({scrollTop : syncScroll.settings.container.offset().top - 60}, 0);
+            }
+        });
     }
 }
 

@@ -19,7 +19,6 @@ var EventSingleModule = {
         // Generates html
         ViewHandler.settings.event_singleview.html( EventSingleModule.generate_sv_event_html( event ) );
         ViewHandler.settings.event_singleview.parents('.sync-outer').scrollTop(0);
-        ViewHandler.settings.event_singleview_outer.removeClass('spoopy');
 
         // Defines height of blue box height
         $('.event-sv-info-placeholder').css({height: $('.event-sv-info').outerHeight() + 'px'});
