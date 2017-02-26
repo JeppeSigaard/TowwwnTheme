@@ -24,36 +24,29 @@ var EventCalenderModule = {
             EventCalenderModule.setEventCalendarWidth();
         });
         
-        var clickedDown = 0;
-        $(document).on( 'mousedown', '.event', function() {
-            clickedDown = new Date().getTime();
-        });
-        
         $(document).on( 'mouseup', '.event', function( e ) {
-            if ( new Date().getTime() - clickedDown < 150 ) {
-                if ( !$('.eventtext', this).hasClass('filled') ) {
-                    $('.filled').css({ 'background-color' : 'transparent' });
-                    $('.filled .ripple').addClass('animateBack');
-                    $('.bookmark-mode').removeClass('bookmark-mode');
-                    $('.filled .ripple').css({
-                        'left': ( $('.filled').innerWidth() / 2 - $('.filled .ripple').outerWidth() / 2 ) + 'px',
-                        'top': ( $('.filled').innerHeight() / 2 - $('.filled .ripple').outerHeight() / 2 ) + 'px',
-                    });
+            if ( !$('.eventtext', this).hasClass('filled') ) {
+                $('.filled').css({ 'background-color' : 'transparent' });
+                $('.filled .ripple').addClass('animateBack');
+                $('.bookmark-mode').removeClass('bookmark-mode');
+                $('.filled .ripple').css({
+                    'left': ( $('.filled').innerWidth() / 2 - $('.filled .ripple').outerWidth() / 2 ) + 'px',
+                    'top': ( $('.filled').innerHeight() / 2 - $('.filled .ripple').outerHeight() / 2 ) + 'px',
+                });
 
-                    $('.eventtext', this).addClass('bookmark-mode');
-                    $('.eventtext .ripple', this).addClass('animate');
-                    $('.eventtext .ripple', this).css({
-                        'left': ( e.pageX - $('.eventtext', this).offset().left - $('.ripple', this).outerWidth() / 2 ) + 'px',
-                        'top': ( e.pageY - $('.eventtext', this).offset().top - $('.ripple', this).outerWidth() / 2 ) + 'px',
-                    });
+                $('.eventtext', this).addClass('bookmark-mode');
+                $('.eventtext .ripple', this).addClass('animate');
+                $('.eventtext .ripple', this).css({
+                    'left': ( e.pageX - $('.eventtext', this).offset().left - $('.ripple', this).outerWidth() / 2 ) + 'px',
+                    'top': ( e.pageY - $('.eventtext', this).offset().top - $('.ripple', this).outerWidth() / 2 ) + 'px',
+                });
 
-                    setTimeout(function() {
-                        $('.eventtext .ripple').removeClass('animate');
-                        $('.filled .ripple').removeClass('animateBack');
-                        $('.filled').removeClass('filled');
-                        $('.eventtext', this).addClass('filled');
-                    }.bind(this), 300);
-                }
+                setTimeout(function() {
+                    $('.eventtext .ripple').removeClass('animate');
+                    $('.filled .ripple').removeClass('animateBack');
+                    $('.filled').removeClass('filled');
+                    $('.eventtext', this).addClass('filled');
+                }.bind(this), 300);
             }
         });
     },

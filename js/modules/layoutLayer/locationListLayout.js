@@ -79,7 +79,7 @@ var LocationListModule = {
         response += '<p class="location-about">'+about+'</p></span>';
 
 
-        return response += '</a>';
+        return response + '</a>';
     },
     
 };

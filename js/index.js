@@ -32,6 +32,27 @@ $(function() {
             window.open( $(this).attr('data-link') );
         }
     });
+    
+    // TMP
+    
+    var mouseDownX = null, mouseDownY = null;
+    $(document).on( 'mousedown', function( e ) {
+        e.preventDefault();
+        mouseDownX = e.pageX;
+        mouseDownY = e.pageY;
+    });
+    
+    $(document).on( 'mouseup', function( e ) {
+        var distanceX = Math.abs( e.pageX - mouseDownX );
+        var distanceY = Math.abs( e.pageY - mouseDownY );
+        var distance = Math.sqrt( distanceX * distanceX + distanceY * distanceY );
+        
+        if ( distance >= 30 ) {
+            e.preventDefault();
+        }
+    });
+    
+    // TMP END
 
     HeaderModule.init();
     ImageController.init();

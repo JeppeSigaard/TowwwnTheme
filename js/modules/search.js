@@ -73,7 +73,7 @@ var SearchModule = {
             return;
         }
         
-        // Var categories
+        // Categroies
         var resp = [];
         var categories = LocationCategoryModule.settings.location_categories;
         for ( var i = 0; i < categories.length; i++ ) {
@@ -88,6 +88,14 @@ var SearchModule = {
             if ( a[0] > b[0] ) return 1;
             return 0;
         });
+        
+        // Locations
+        var resp = [];
+        var locations = LocationModule.settings.locations;
+        locations.forEach(function( item, index ) {
+            if ( item.title.toLowerCase().includes( term.toLowerCase() ) ) {
+                resp.push( item ); }
+        }); locations = resp;
 
         // Checks if events have been loaded in
         var resp = [];
@@ -130,24 +138,47 @@ var SearchModule = {
             events.push( resp[i][1] );
         }
         
-        if ( events.length === 0 && categories.length === 0 ) {
-            $('.eventscontainer').html('<div class="error">Ingen elementer fundet</div>');
+        if ( events.length === 0 && categories.length === 0 && locations.length === 0 ) {
+            $('.eventscontainer').html('<div class="error">Ingen resultater fundet</div>');
         } else {
 
             // Generates categories html
-            var response = '<div class="search-category-container">Sted kategorier<div class="breakline"></div>';
-            for ( var iter = 0; iter < categories.length; iter++ ) {
-                response += '<div class="category-container" style="background-image:url('+categories[iter][1].category_imgurl+')">';
-                response += '<div class="title">'+categories[iter][1].category_name+'</div></div>';
+            var response = '<div class="search-container">'; 
+            
+            if ( categories.length > 0 ) {
+                response += '<div class="search-category-container white">Sted kategorier:<div class="breakline"></div>';
+                response += '<div class="flex">';
+                for ( var iter = 0; iter < categories.length; iter++ ) {
+                    response += LocationCategoryModule.generate_category_html( categories[i][1] );
+                } response += '</div></div>';
+            }
+            
+            if ( locations.length > 0 ) {
+                response += '<div class="search-category-container">Steder:<div class="breakline"></div>';
+                response += '<div class="unflex">';
+                
+                locations.forEach(function( item, index ) {
+                    console.log( item );
+                    response += LocationListModule.generateLocationElemHtml( item );
+                }); 
+                
+                response += '</div>';
+                response += '</div>';
             }
 
-            // Generates event html
-            response += '<div class="search-category-container">Begivenheder<div class="breakline"></div>';
-            for ( var iter = 0; iter < events.length; iter++ ) {
-                response += EventCalenderModule.generateEventHtml( events[iter] ); }
+            if ( events.length > 0 ) {
+            
+                // Generates event html
+                response += '<div class="search-category-container white">Begivenheder:<div class="breakline"></div>';
+                response += '<div class="flex">';
+                for ( var iter = 0; iter < events.length; iter++ ) {
+                    response += EventCalenderModule.generateEventHtml( events[iter] ); 
+                } response += '</div>';
+            
+            }
 
             // Render the html
-            $('.eventscontainer').html( response+='</div>' );
+            $('.eventscontainer').html( response+='</div></div>' );
 
         }
 
