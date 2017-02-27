@@ -184,10 +184,10 @@ var EventCalenderModule = {
         response += '<div class="eventtext">';
         response += '<div class="ripple"></div>';
         response += '<div class="title">'+name+'</div>';
-        response += '<div class="start_time">'+time_formatted+'</div>';
+        response += '<div class="start_time">'+time_formatted+'</div></div>';
         response += '<div class="eventlocation-container">';
         response += '<div class="eventblackbar"></div>';
-        response += '<div class="eventlocation">'+elem.parentname+'</div></div></div></div>';
+        response += '<div class="eventlocation">'+elem.parentname+'</div></div></div>';
         return response;
         
     },

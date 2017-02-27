@@ -39,18 +39,33 @@ body {
     }
 }
 
-@keyframes fadein{
-    0%{opacity: 0;}
-    50%{opacity: 0;}
-    100%{opacity: 1;}
-}
+p a{
+    position: relative;
+    color: $color-blue-1;
+    text-decoration: none;
+    transition: 400ms;
+    transition-timing-function: cubic-bezier(.54, 0, .18, 1.5);
 
-@keyframes fadeout{
-    0%{opacity: 1;}
-    50%{opacity: 0;}
-    100%{opacity: 0;}
-}
+    &:hover{
+        color: darken( $color-blue-1, 7% );
 
+        &:before{
+            width: 100%;
+            background-color: darken( $color-blue-1, 7% );
+        }
+    }
+
+    &:before{
+        content: '';
+        position: absolute;
+        left: 50%; bottom: -2px;
+        transform: translate(-50%, 0);
+        width: 0; height: 1px;
+        background-color: $color-blue-1;
+        transition: 400ms;
+        transition-timing-function: cubic-bezier(.54, 0, .18, 1.5);
+    }
+}
 
 .main-container{
     position: relative;

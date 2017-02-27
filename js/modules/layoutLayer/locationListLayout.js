@@ -14,6 +14,7 @@ var LocationListModule = {
 
             ViewHandler.settings.event_calender_outer.removeClass('normalize');
             ViewHandler.settings.location_categories_outer.removeClass('normalize');
+            $('.category-container .selected').removeClass('selected');
         });
         
         // Opens sub category view
@@ -59,16 +60,7 @@ var LocationListModule = {
     // Render Locatiions
     renderLocationList: function( data, cb ) {
         
-        var html = '<div class="locationlist-bar">'+data.category_name+'<div class="sub-categories-title">Underkategorier</div><div class="close-button">&times;</div></div>';
-        
-        html += '<div class="sub-category-outer"><div class="sub-category-inner">';
-        html += '<div class="sub-category"><div class="elem-counter">16</div>Test Kategori 1</div>';
-        html += '<div class="sub-category"><div class="elem-counter">12</div>Test Kategori 2</div>';
-        html += '<div class="sub-category"><div class="elem-counter">11</div>Test Kategori 3</div>';
-        html += '<div class="sub-category"><div class="elem-counter">11</div>Test Kategori 4</div>'; 
-        html += '<div class="sub-category"><div class="elem-counter">4</div>Test Kategori 5</div>';
-        html += '<div class="sub-category"><div class="elem-counter">1</div>Test Kategori 6</div>';
-        html += '</div></div>';
+        var html = '<div class="locationlist-bar">'+data.category_name+'<div class="close-button">&times;</div></div>';
         
         html += '<div class="location-list" id="'+data.category_id+'" data-slug="'+data.category_slug+'">';
 

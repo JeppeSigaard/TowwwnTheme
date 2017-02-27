@@ -77,6 +77,7 @@ var navigationHandler = {
         // Category list
         if ('category' === type){
 
+            if ( !elem.hasClass('selected') ) $('.category-container .selected').removeClass('selected');
             elem.addClass('loadingsv');
 
             ViewHandler.change_view_focus( 3 );
@@ -85,6 +86,8 @@ var navigationHandler = {
             navigationHandler.spoopy(ViewHandler.settings.location_listview_outer);
 
             $.get(rest_api + 'categories/' + id, function( data ){
+
+                elem.addClass('selected');
 
                 if(typeof data === 'undefined'){ return; }
 

@@ -320,28 +320,6 @@
             margin-top: 5px;
         }
 
-        .eventlocation-container {
-            width: calc(100% - 20px);
-            position: absolute;
-            bottom: 15px;
-            left: 10px;
-            height: 2em;
-
-            .eventblackbar{
-                height: 2px;
-                width: 100%;
-                background-color: $color-blue-1;
-                margin-top: 6px;
-                margin-bottom: 5px;
-            }
-
-            .eventlocation{
-                font-size: 8px;
-                color: $color-blue-1;
-                line-height: 11px;
-            }
-        }
-
 
         @media(min-width:640px){
             height: 160px;
@@ -369,6 +347,29 @@
                 height: 3px;
             }
 
+        }
+    }
+
+    .eventlocation-container {
+        width: calc(100% - 20px);
+        position: absolute;
+        bottom: 15px;
+        left: 10px;
+        height: 2em;
+        text-transform: uppercase;
+
+        .eventblackbar{
+            height: 2px;
+            width: 100%;
+            background-color: $color-blue-1;
+            margin-top: 6px;
+            margin-bottom: 5px;
+        }
+
+        .eventlocation{
+            font-size: 9px;
+            color: $color-blue-1;
+            line-height: 11px;
         }
     }
 }

@@ -155,16 +155,6 @@
                 font-size: 14px;
                 line-height: 1.5;
             }
-
-            a{
-                color: $color-blue-1;
-                text-decoration: none;
-                transition: 100ms;
-
-                &:hover{
-                    color: darken( $color-blue-1, 15% );
-                }
-            }
         }
 
         .text{
