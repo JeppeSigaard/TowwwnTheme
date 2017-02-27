@@ -28,6 +28,7 @@ var LocationCategoryModule = {
             // Annnnd its ready
             this.settings.ready = true;
             this.render_location_categories( '#section2 .content' );
+            console.log( this.settings.location_categories );
 
         }.bind(this));
     },

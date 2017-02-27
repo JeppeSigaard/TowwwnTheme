@@ -16,6 +16,15 @@ var LocationListModule = {
             ViewHandler.settings.location_categories_outer.removeClass('normalize');
         });
         
+        // Opens sub category view
+        $(document).on( 'click', '.sub-categories-title', function() {
+            var outer = $('.sub-category-outer'),
+                inner = $('.sub-category-inner');
+            
+            if ( outer.hasClass('open') ) outer.css('height', '0px').removeClass('open');
+            else outer.css('height', inner.outerHeight() + 'px').addClass('open');
+        });
+        
         // Animates ripple
         $(document).on( 'click', '.location-container', function( e ) {
             
@@ -50,7 +59,17 @@ var LocationListModule = {
     // Render Locatiions
     renderLocationList: function( data, cb ) {
         
-        var html = '<div class="locationlist-bar">'+data.category_name+'<div class="close-button">&times;</div></div>';
+        var html = '<div class="locationlist-bar">'+data.category_name+'<div class="sub-categories-title">Underkategorier</div><div class="close-button">&times;</div></div>';
+        
+        html += '<div class="sub-category-outer"><div class="sub-category-inner">';
+        html += '<div class="sub-category"><div class="elem-counter">16</div>Test Kategori 1</div>';
+        html += '<div class="sub-category"><div class="elem-counter">12</div>Test Kategori 2</div>';
+        html += '<div class="sub-category"><div class="elem-counter">11</div>Test Kategori 3</div>';
+        html += '<div class="sub-category"><div class="elem-counter">11</div>Test Kategori 4</div>'; 
+        html += '<div class="sub-category"><div class="elem-counter">4</div>Test Kategori 5</div>';
+        html += '<div class="sub-category"><div class="elem-counter">1</div>Test Kategori 6</div>';
+        html += '</div></div>';
+        
         html += '<div class="location-list" id="'+data.category_id+'" data-slug="'+data.category_slug+'">';
 
         for (var i in data.locations){
