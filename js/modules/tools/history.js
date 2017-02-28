@@ -1,4 +1,4 @@
-var historyModule = {
+var HistoryModule = {
 
     settings : {},
 
@@ -6,6 +6,12 @@ var historyModule = {
 
         // When browser history changes
         window.onpopstate = function(event) {
+            let ViewHandler = require( './../view_handler.js' );
+            let EventSingleModule = require( './../layoutLayer/eventSingleLayout.js' );
+            let LocationListModule = require( './../layoutLayer/locationListLayout.js' );
+            let LocationSingleViewModule = require( './../layoutLayer/locationSingleLayout.js' );
+
+
             if (null === event.state || 'home' == event.state.type){
                 // Go to front page mby?
                 ViewHandler.change_view_focus( 1, true );
@@ -31,11 +37,8 @@ var historyModule = {
                 ViewHandler.change_view_focus( 2, true );
 
                 LocationListModule.renderLocationList( event.state.id, function(data){
-
                     ViewHandler.settings.event_calender_outer.addClass('normalize');
                     ViewHandler.settings.location_categories_outer.addClass('normalize');
-
-
                 });
 
             }
@@ -68,4 +71,5 @@ var historyModule = {
 
 };
 
-historyModule.init();
+HistoryModule.init();
+module.exports = HistoryModule;

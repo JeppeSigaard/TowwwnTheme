@@ -1,21 +1,42 @@
-// @koala-prepend 'modules/tools/help_functions.js';
-// @koala-prepend 'modules/tools/month_picker.js';
-// @koala-prepend 'modules/tools/sync_scroll.js';
-// @koala-prepend 'modules/contentLayer/eventContent.js';
-// @koala-prepend 'modules/contentLayer/locationContent.js';
-// @koala-prepend 'modules/contentLayer/locationCategoryContent.js';
-// @koala-prepend 'modules/view_handler.js';
-// @koala-prepend 'modules/layoutLayer/headerLayout.js';
-// @koala-prepend 'modules/layoutLayer/frontpageLayout.js';
-// @koala-prepend 'modules/layoutLayer/eventCalenderLayout.js';
-// @koala-prepend 'modules/layoutLayer/eventSingleLayout.js';
-// @koala-prepend 'modules/layoutLayer/locationListLayout.js';
-// @koala-prepend 'modules/layoutLayer/locationSingleLayout.js';
-// @koala-prepend 'modules/layoutLayer/mobileViewLayout.js';
-// @koala-prepend 'modules/controllers/viewController.js';
-// @koala-prepend 'modules/controllers/imageController.js';
-// @koala-prepend 'modules/search.js';
 
+// React
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+// Tools
+require( './modules/tools/fixed-sticky.js' );
+require( './modules/tools/month_picker.js' );
+require( './modules/tools/swiper.js' );
+
+let HelpFunctions = require( './modules/tools/help_functions.js' );
+let historyModule = require( './modules/tools/history.js' );
+let syncScroll = require( './modules/tools/sync_scroll.js' );
+
+// Content Layer
+let EventContentModule = require( './modules/contentLayer/eventContent.js' );
+let LocationModule = require( './modules/contentLayer/locationContent.js' );
+let LocationCategoryModule = require( './modules/contentLayer/locationCategoryContent.js' );
+
+// Layout layer
+let EventCalenderModule = require( './modules/layoutLayer/eventCalenderLayout.js' );
+let EventSingleModule = require( './modules/layoutLayer/eventSingleLayout.js' );
+let FrontPageModule = require( './modules/layoutLayer/frontpageLayout.js' );
+let HeaderModule = require( './modules/layoutLayer/headerLayout.js' );
+let LocationListModule = require( './modules/layoutLayer/locationListLayout.js' );
+let LocationSingleViewModule = require( './modules/layoutLayer/locationSingleLayout.js' );
+// require( './modules/layoutLayer/mobileViewLayout.js' );
+// require( './modules/layoutLayer/viewController.js' );
+
+// Handlers
+let navigationHandler = require( './modules/handlers/navigation_handler.js' );
+let ImageController = require( './modules/handlers/imageController.js' );
+
+// Other
+let ViewHandler = require( './modules/view_handler.js' );
+let SearchModule = require( './modules/search.js' );
+let cookie = require( './modules/cookie.js' );
+
+// Main entry point
 $(function() {
     
     $(document).on('click','a', function(e) {
@@ -57,7 +78,7 @@ $(function() {
     HeaderModule.init();
     ImageController.init();
     ViewHandler.init();
-    ViewControllerModule.init();
+    //ViewControllerModule.init();
     EventCalenderModule.init();
     navigationHandler.init();
     

@@ -7,14 +7,19 @@ var EventSingleModule = {
     
     // Init
     init: function() {
+        this.bindUIActions();
     },
     
     // Bind UI Actions
     bindUIActions: function() {
+        let ViewHandler = require( './../view_handler.js' );
+        $(document).on('click', '.event-bar .close-button', function() {
+            ViewHandler.change_view_focus( 1, true, false ); });
     },
     
     // Render Single View Event
     render_sv_event: function( event, cb) {
+        let ViewHandler = require( './../view_handler.js' );
 
         // Generates html
         ViewHandler.settings.event_singleview.html( EventSingleModule.generate_sv_event_html( event ) );
@@ -29,6 +34,8 @@ var EventSingleModule = {
     
     // Generate single view event html
     generate_sv_event_html: function( event ) {
+        let HelpFunctions = require( './../tools/help_functions.js' );
+
         var desc_raw = event.description;
             if(desc_raw === null){desc_raw = '  ';}
 
@@ -112,16 +119,10 @@ var EventSingleModule = {
 
         response += '</div></div>';
         /* FOOTER END */
-
-
-        if ( commercial_image_url !== '' ) {
-            response += '<div class="commercial-placeholder"></div>';
-            response += '<a href="'+commercial_link+'"><div class="commercial-img" style="background-image:url('+commercial_image_url+');"></div></a>';
-        }
         
 
         return response;
         
     },
     
-};
+}; module.exports = EventSingleModule;

@@ -24,7 +24,7 @@ add_action( 'wp_enqueue_scripts', function() {
     wp_enqueue_script( 'swiper', 'https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.1/js/swiper.jquery.min.js' );
     wp_enqueue_script( 'flickityScript', 'https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js' );
     
-    wp_enqueue_script( 'main-script', get_template_directory_uri() . '/js/index.min.js', array(), null, true );
+    wp_enqueue_script( 'main-script', get_template_directory_uri() . '/js/bundle.js', array(), null, true );
     wp_localize_script( 'main-script', 'ajax_obj',
             array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
     

@@ -53,6 +53,7 @@ var EventCalenderModule = {
     
     // Render Events
     renderEventCalender: function( view, modifiers ) {
+        let EventContentModule = require( './../contentLayer/eventContent.js' );
 
         this.settings.breakpointView = view;
         
@@ -107,6 +108,7 @@ var EventCalenderModule = {
     
     // Load more
     loadMore: function( getNum ) {
+        let syncScroll = require( './../tools/sync_scroll.js' );
         
         // Generates event array
         var buffer = [], bpArray = this.settings.breakpointArray;
@@ -137,8 +139,8 @@ var EventCalenderModule = {
         // Rescales container
         setTimeout(function() {
             syncScroll.rescaleContainer();
-            EventCalenderModule.setEventCalendarWidth();
-        }, 150);
+            this.setEventCalendarWidth();
+        }.bind(this), 150);
 
         // Return the rest
         return bpArray.length-this.settings.breakpoint;
@@ -147,6 +149,7 @@ var EventCalenderModule = {
 
     // Generate Event HTML
     generateEventHtml: function( elem, outerClass ) {
+        let HelpFunctions = require( './../tools/help_functions.js' );
         
         // Sets up vars
         var response = '',
@@ -229,4 +232,4 @@ var EventCalenderModule = {
         }
     },
 
-}
+}; module.exports = EventCalenderModule;

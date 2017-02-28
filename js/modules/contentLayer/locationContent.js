@@ -54,4 +54,4 @@ var LocationModule = {
     generate_location_html: function() {
     },
     
-}
+}; module.exports = LocationModule;

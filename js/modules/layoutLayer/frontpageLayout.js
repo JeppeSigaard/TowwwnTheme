@@ -10,6 +10,7 @@ var FrontPageModule = {
     
     // Init
     init: function( tmp ) {
+        let ViewHandler = require( './../view_handler.js' );
         
         // Generates left container content
         var lc = '<div id="eventsbar">';
@@ -37,10 +38,11 @@ var FrontPageModule = {
     
     // Generate front page
     generate_front_page: function( tmp ) {
+        let ViewHandler = require( './../view_handler.js' );
+        let EventCalenderModule = require( './eventCalenderLayout.js' );
         
         if ( tmp ) {
             ViewHandler.closeSingleView();
-            ViewControllerModule.disableBackButton();
 
             // Adds the base front page html to the container
             if ( ViewHandler.settings.poly_view ) {
@@ -64,7 +66,6 @@ var FrontPageModule = {
         if ( tmp ) $('.load-more').html( 'Indlæser flere elementer...' );
         ViewHandler.bindUIActions();
         this.updateLayoutPosition();
-        ViewControllerModule.disableBackButton();
 
         // Annnnnd its ready
         this.settings.ready = true;
@@ -73,6 +74,9 @@ var FrontPageModule = {
     
     // Bind UI Actions
     bindUIActions: function() {
+        let syncScroll = require( './../tools/sync_scroll.js' );
+        let ViewHandler = require( './../view_handler.js' );
+        let EventCalenderModule = require( './eventCalenderLayout.js' );
 
         if ( !this.settings.ready ) {
             $('.logo-container').on( 'click', function(e) {
@@ -147,4 +151,4 @@ var FrontPageModule = {
     updateLayoutPosition: function() {
     },
 
-}
+}; module.exports = FrontPageModule;

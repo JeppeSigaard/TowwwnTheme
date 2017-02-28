@@ -6,6 +6,7 @@ var LocationListModule = {
     
     // Init
     init: function() {
+        let ViewHandler = require( './../view_handler.js' );
 
         // Closes location list view
         $(document).on( 'click', '.locationlist-bar .close-button', function() {
@@ -59,6 +60,7 @@ var LocationListModule = {
     
     // Render Locatiions
     renderLocationList: function( data, cb ) {
+        let ViewHandler = require( './../view_handler.js' );
         
         var html = '<div class="locationlist-bar">'+data.category_name+'<div class="close-button">&times;</div></div>';
         
@@ -93,4 +95,4 @@ var LocationListModule = {
         return response + '</a>';
     },
     
-};
+}; module.exports = LocationListModule;

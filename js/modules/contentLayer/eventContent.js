@@ -79,7 +79,7 @@ var EventContentModule = {
     
     },
     
-}
+}; module.exports = EventContentModule;
 
 
 

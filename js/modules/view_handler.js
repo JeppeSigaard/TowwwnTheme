@@ -65,6 +65,9 @@ var ViewHandler = {
     
     // Change focus
     change_view_focus: function( viewIndex, forceLeft, forceRight ) {
+        let syncScroll = require( './tools/sync_scroll.js' );
+        let ImageController = require( './handlers/imageController.js' );
+
         this.settings.currentIndex = viewIndex;
         this.settings.forcedLeft = forceLeft;
         this.settings.forcedRight = forceRight;
@@ -136,7 +139,7 @@ var ViewHandler = {
         var elems = this.settings.views,
             touchstartX = null, touchstartY = null,
             touchposX = null, containerposX = null,
-            timestart = null;
+            timestart = null,
             viewLocked = false,
             too_fast = false;
         
@@ -281,7 +284,7 @@ var ViewHandler = {
         this.settings.location_categories_outer.removeClass('normalize');
     },
 
-};
+}; module.exports = ViewHandler;
 
 
 

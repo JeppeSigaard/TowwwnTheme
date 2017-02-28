@@ -126,4 +126,4 @@ var HelpFunctions = {
         return response;
     },
     
-}
+}; module.exports = HelpFunctions;

@@ -122,4 +122,4 @@ var HeaderModule = {
         }
     },
     
-}
+}; module.exports = HeaderModule;

@@ -69,4 +69,4 @@ var LocationCategoryModule = {
     
     },
     
-}
+}; module.exports = LocationCategoryModule;

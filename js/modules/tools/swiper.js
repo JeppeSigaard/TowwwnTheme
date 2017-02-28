@@ -4,7 +4,7 @@ jQuery.prototype.smamo_slider = function( params ) {
     // Params
     var prevButton = typeof params.prevButton !== 'undefined' ? $(params.prevButton, this) : null,
         nextButton = typeof params.nextButton !== 'undefined' ? $(params.nextButton, this) : null,
-        wrapAround = typeof params.wrapAround !== 'undefined' ? params.wrapAround : false;
+        wrapAround = typeof params.wrapAround !== 'undefined' ? params.wrapAround : false,
         
         outer = $(this),
         inner = $('.inner', this).length > 0 ? $('.inner', this) : null,

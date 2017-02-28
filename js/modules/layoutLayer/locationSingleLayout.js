@@ -6,6 +6,7 @@ var LocationSingleViewModule = {
     
     // Init
     init: function() {
+        let ViewHandler = require( './../view_handler.js' );
 
         // Closes single view
         $(document).on('click', '.location-singleview-bar .close-button', function () {
@@ -21,6 +22,9 @@ var LocationSingleViewModule = {
     
     // Render location single view
     renderSingleView: function( obj ) {
+        let ViewHandler = require( './../view_handler.js' );
+        let EventCalenderModule = require( './eventCalenderLayout.js' );
+        let HelpFunctions = require( './../tools/help_functions.js' );
         
         $.get( rest_api+'events?parent='+obj.id, {}, function( data ) {
             
@@ -134,4 +138,4 @@ var LocationSingleViewModule = {
         // Do stuff
     },
     
-};
+}; module.exports = LocationSingleViewModule;

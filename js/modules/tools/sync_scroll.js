@@ -242,6 +242,8 @@ var syncScroll = {
     },
 
     releaseView : function(){
+        let EventCalenderModule = require( './../layoutLayer/eventCalenderLayout.js' );
+
         this.settings.canFixedScroll = true;
         $('.sync-outer').removeAttr('style');
         $('body').removeClass('no-scroll').removeAttr('style');
@@ -273,7 +275,7 @@ var syncScroll = {
             }
         });
     }
-}
+}; module.exports = syncScroll;
 
 
 

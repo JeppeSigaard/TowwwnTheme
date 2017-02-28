@@ -17,6 +17,7 @@ var SearchModule = {
     
     // Bind UI Actions
     bindUIActions: function() {
+        let HeaderModule = require( './layoutLayer/headerLayout.js' );
         
         $('#searchcontainer').on('submit', function(e) {
             e.preventDefault();
@@ -66,6 +67,17 @@ var SearchModule = {
     
     // Search function
     search : function( term ) {
+        let LocationCategoryModule = require( './contentLayer/locationCategoryContent.js' );
+        let FrontPageModule = require( './layoutLayer/frontpageLayout.js' );
+        let LocationModule = require( './contentLayer/locationContent.js' );
+        let EventContentModule = require( './contentLayer/eventContent.js' );
+        let HelpFunctions = require( './tools/help_functions.js' );
+        let ViewHandler = require( './view_handler.js' );
+        let ImageController = require( './handlers/imageController.js' );
+        let syncScroll = require( './tools/sync_scroll.js' );
+        let LocationListModule = require( './layoutLayer/locationListLayout.js' );
+        let EventCalenderModule = require( './layoutLayer/eventCalenderLayout.js' );
+
         if ( typeof term === 'undefined' ) { term = this.settings.keyword; }
 
         if ( term === '' ) {
@@ -191,7 +203,7 @@ var SearchModule = {
         
     },
     
-}
+}; module.exports = SearchModule;
 
 
 

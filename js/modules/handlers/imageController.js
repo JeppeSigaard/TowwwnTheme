@@ -1,7 +1,7 @@
 
 // Image Controller Module
 var ImageController = {
-    
+
     // Settings
     settings: {
         backImages: true,
@@ -14,59 +14,59 @@ var ImageController = {
         size_medium: 950,
         size_small: 500,
     },
-    
+
     // Init
     init: function() {
-        
+
         // Loads loader gif
         var xhr = new XMLHttpRequest();
         xhr.onload = function() {
             ImageController.settings.loaderReady = true;
         }
-        
+
         xhr.open( 'GET', template_uri+'/style/assets/icons/loading.svg' );
         xhr.send();
-        
+
         // Loads in image at correct size to header
         this.headerImgControl();
-        
+
         // Loads rest of header image
         $('.slide-img').each(function( iter, elem ) {
-            
+
             // Gets large img
             var xhr = new XMLHttpRequest();
             xhr.open( 'GET', $(this).attr('data-src-large') );
             xhr.send();
-            
+
             // Gets medium img
             xhr = new XMLHttpRequest();
             xhr.open( 'GET', $(this).attr('data-src-medium') );
             xhr.send();
-            
+
             // Gets small img
             xhr = new XMLHttpRequest();
             xhr.open( 'GET', $(this).attr('data-src-small') )
             xhr.send();
-            
+
         });
-            
+
         // Loads other images
         $(window).trigger('scroll');
-        
+
         // Binds ui actions
         this.bindUIActions();
-        
+
     },
-    
+
     // Bind ui actions
     bindUIActions: function() {
-        
+
         // Checks if header image needs changing
         $(window).on('resize', function() {
             this.headerImgControl();
             this.lazyLoad();
         }.bind(this));
-        
+
         // Lazy load
         $(window).on('scroll', function() {
             this.lazyLoad();
@@ -94,7 +94,7 @@ var ImageController = {
             // If element is in view load image
             if ( ImageController.isInView(elem) && !elem.hasClass('loading') ) {
 
-                
+
                 elem.addClass('imgloaded');
 
                 // Puts loading gif in
@@ -122,7 +122,7 @@ var ImageController = {
             }
         });
     },
-    
+
     // Header img control
     headerImgControl: function() {
         var s = this.settings,
@@ -139,5 +139,5 @@ var ImageController = {
             }
         });
     },
-    
-}
+
+}; module.exports = ImageController;

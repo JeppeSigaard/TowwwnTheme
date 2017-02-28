@@ -1,4 +1,4 @@
-var navigationHandler = {
+var NavigationHandler = {
 
     settings : {},
 
@@ -32,6 +32,10 @@ var navigationHandler = {
     },
 
     dataTypeId : function(elem,type,id){
+        let ViewHandler = require( './../view_handler.js' );
+        let EventSingleModule = require( './../layoutLayer/eventSingleLayout.js' );
+        let LocationListModule = require( './../layoutLayer/locationListLayout.js' );
+        let LocationSingleViewModule = require( './../layoutLayer/locationSingleLayout.js' );
 
         // home
         if('home' === type){
@@ -52,7 +56,7 @@ var navigationHandler = {
         if ('event' === type){
 
             $('.imgcontainer', elem).addClass('loadingsv');
-            navigationHandler.spoopy(ViewHandler.settings.event_singleview_outer);
+            this.spoopy(ViewHandler.settings.event_singleview_outer);
 
             ViewHandler.change_view_focus( 0 );
             ViewHandler.settings.event_calender_outer.addClass('normalize');
@@ -61,16 +65,13 @@ var navigationHandler = {
 
                 if(typeof data[0] === 'undefined'){ return; }
 
-                 history.pushState({type : 'event', id : data[0].id}, data[0].name, main_path + '/begivenhed/' + data[0].slug);
+                history.pushState({type : 'event', id : data[0].id}, data[0].name, main_path + '/begivenhed/' + data[0].slug);
 
                 EventSingleModule.render_sv_event(data[0], function(){
                     $('.imgcontainer', elem).removeClass('loadingsv');
-                    navigationHandler.spoopy(ViewHandler.settings.event_singleview_outer, false);
-                });
-
-
-
-            });
+                    this.spoopy(ViewHandler.settings.event_singleview_outer, false);
+                }.bind(this));
+            }.bind(this));
 
         }
 
@@ -83,7 +84,7 @@ var navigationHandler = {
             ViewHandler.change_view_focus( 3 );
             ViewHandler.settings.event_calender_outer.addClass('normalize');
             ViewHandler.settings.location_categories_outer.addClass('normalize');
-            navigationHandler.spoopy(ViewHandler.settings.location_listview_outer);
+            this.spoopy(ViewHandler.settings.location_listview_outer);
 
             $.get(rest_api + 'categories/' + id, function( data ){
 
@@ -91,17 +92,15 @@ var navigationHandler = {
 
                 if(typeof data === 'undefined'){ return; }
 
-                navigationHandler.spoopy(ViewHandler.settings.location_listview_outer, false);
+                this.spoopy(ViewHandler.settings.location_listview_outer, false);
                 history.pushState({type : 'category', id : data.category_id}, data.category_name, main_path + '/kategori/' + data.category_slug);
 
                 LocationListModule.renderLocationList(data,function(){
                     elem.removeClass('loadingsv');
-
-
                 });
 
 
-            });
+            }.bind(this));
         }
 
         // Location
@@ -110,14 +109,14 @@ var navigationHandler = {
             elem.addClass('loading');
 
             ViewHandler.change_view_focus( 4 );
-            navigationHandler.spoopy(ViewHandler.settings.location_singleview_outer);
+            this.spoopy(ViewHandler.settings.location_singleview_outer);
             $.get(rest_api + 'locations/' + id, function( data ){
 
                 if(typeof data[0] === 'undefined'){ return; }
 
                 var location = data[0];
 
-                navigationHandler.spoopy(ViewHandler.settings.location_singleview_outer, false);
+                this.spoopy(ViewHandler.settings.location_singleview_outer, false);
                 history.pushState({type : 'location', id : location.id}, location.name, main_path + '/sted/' + location.slug);
 
                 LocationSingleViewModule.renderSingleView( location );
@@ -125,9 +124,9 @@ var navigationHandler = {
 
                 elem.removeClass('loading');
 
-            });
+            }.bind(this));
         }
 
-    }
+    },
 
-};
+}; module.exports = NavigationHandler;

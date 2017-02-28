@@ -1,4 +1,4 @@
-var cookie = {
+var CookieHandler = {
     settings : {},
 
     bindUIActions : function(){
@@ -43,4 +43,5 @@ var cookie = {
 
         $('body').append(html);
     },
-};
+
+}; module.exports = CookieHandler;
