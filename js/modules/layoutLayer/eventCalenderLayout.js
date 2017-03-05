@@ -149,49 +149,7 @@ var EventCalenderModule = {
 
     // Generate Event HTML
     generateEventHtml: function( elem, outerClass ) {
-        let HelpFunctions = require( './../tools/help_functions.js' );
-        
-        // Sets up vars
-        var response = '',
-            time_formatted = HelpFunctions.formatDate( elem.start_time, false, true, true, false, true),
-            name = String(elem.name).substr(0, 36) + ( String(elem.name).substr(36,99).split( ' ' )[0] );
-        
-        // Adds length formatting to name
-        if ( name.length !== String(elem.name).length ) name += ' ...';
-        var words = name.split(' ');
-        for ( var i = 0; i < words.length; i++ ) {
-            if ( words[i].length > 14 ) {
-                words[i] = words[i].substr(0,14)+'-<br />'+words[i].substr(12,999999999);
-            } 
-        } name = words.join(' ');
-        
-        // Generates the html itself
-        var outerClass = typeof outerClass !== 'undefined' ? outerClass : 'event';
-        var response = '<div class="'+outerClass+'" id="calendar-event-'+elem.id+'" data-type="event" data-id="'+elem.id+'">';
-        
-        if ( typeof elem.images !== 'undefined' &&
-            elem.images[130] !== null &&
-            typeof elem.images[130] !== 'undefined' ) {
-            response += '<div class="imgcontainer" data-image-src="'+elem.images[130]+'" >';
-            response += '<div class="loader"><img src="'+template_uri+'/style/assets/icons/loading-white.svg" /></div></div>';
-        } else if ( elem.imgurl !== '' &&
-                   elem.imgurl !== null &&
-                   typeof elem.imgurl !== 'undefined' ) {
-            response += '<div class="imgcontainer" data-image-src="'+elem.imgurl+'" >';
-            response += '<div class="loader"><img src="'+template_uri+'/style/assets/icons/loading-white.svg" /></div></div>';
-        } else {
-            response += '<div class="imgcontainer imgloaded" style="background-image:url(http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png)" >';
-            response += '<div class="loader"><img src="'+template_uri+'/style/assets/icons/loading-white.svg" /></div></div>';
-        }
 
-        response += '<div class="eventtext">';
-        response += '<div class="ripple"></div>';
-        response += '<div class="title">'+name+'</div>';
-        response += '<div class="start_time">'+time_formatted+'</div></div>';
-        response += '<div class="eventlocation-container">';
-        response += '<div class="eventblackbar"></div>';
-        response += '<div class="eventlocation">'+elem.parentname+'</div></div></div>';
-        return response;
         
     },
 

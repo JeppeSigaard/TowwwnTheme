@@ -9,6 +9,7 @@
     <body <?php body_class() ?>>
         <?php get_template_part('svg'); ?>
         <div class="main-container">
+
             <header id="site-header" class="site-header">
                 <div class="header-container">
                     <div id="header">

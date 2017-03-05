@@ -144,7 +144,7 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
     }
     
     // Location categories
-    #section2{ 
+    #location-category-view{
         background-color: white;
         width: calc( 100% / #{$views} );
         transition: width 400ms;
@@ -166,7 +166,7 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
     }
     
     // Event Calender
-    #section1{
+    #event-calendar-view{
         background-color: #f0f0f0;
         transition: width 400ms;
         transition-timing-function: $horizontal-bezier;

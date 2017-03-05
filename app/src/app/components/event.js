@@ -1,16 +1,13 @@
 
 // Single Event Layout
-class Event extends React.component {
+let React = require( 'react' );
+class Event extends React.Component {
 
-    // Render function
-    render( ) {
+    // Format title
+    formatTitle( elem ) {
 
-        // Fields
-        let helpFunctions = require( './../../tools/help_functions.js' ),
-            elem = this.props.elem,
-            semanticTime = helpFunctions.formatDate( elem.start_time, false, true, true, false, true ),
-            title = String(elem.name).substr(0, 36) + ( String(elem.name).substr(36,99).split( ' ' )[0] ),
-            image = '';
+        // Splits the title at space nearest char 36
+        let title = String(elem.name).substr(0, 36) + ( String(elem.name).substr(36,99).split( ' ' )[0] );
 
         // Title length formatting
         if ( title.length !== String( elem.name ).length ) title+=' ...';
@@ -21,18 +18,44 @@ class Event extends React.component {
                     '-<br />' + words[ index ].substr(12,9999); }
         }); title = words.join(' ');
 
-        // Image
+        // Returns
+        return title;
+
+    }
+
+    // Extract image url
+    extractImageUrl( elem ) {
+        let response;
+
+        // Prioritizes 130px wide images first
         if ( typeof elem.images !== 'undefined' && elem.images[130] !== null && typeof elem.images[130] !== 'undefined' ) {
-            image = elem.images[130];
-        } else if ( elem.imgurl !== '' && elem.imgurl !== null && typeof elem.imgurl !== 'undefined' ) {
-            image = elem.imgurl;
-        } else {
-            image = 'http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png';
-        }
+            response = elem.images[130]; }
+
+        // Then large image
+        else if ( elem.imgurl !== '' && elem.imgurl !== null && typeof elem.imgurl !== 'undefined' ) {
+            response = elem.imgurl; }
+
+        // If none found, use placeholder
+        else { response = 'http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png'; }
+
+        return response;
+
+    }
+
+    // Render function
+    render( ) {
+
+        // Fields
+        let helpFunctions = require( '../../../../js/modules/tools/help_functions.js' ),
+            elem = this.props.elem,
+            semanticTime = helpFunctions.formatDate( elem.start_time, false, true, true, false, true ),
+
+            title = this.formatTitle( this.props.elem ),
+            image = this.extractImageUrl( this.props.elem );
 
         // Html
         return (
-            <div className="event" id={ 'event-' elem.id } data-type="event" data-id={ elem.id } >
+            <div className="event" id={ 'event-' + elem.id } data-type="event" data-id={ elem.id } >
                 <div className="imgcontainer" data-image-src={ image } >
                     <div className="loader">
                         <img src={ template_uri + '/style/assets/icons/loading-white.svg' } />
