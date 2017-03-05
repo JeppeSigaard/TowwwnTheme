@@ -29,15 +29,15 @@ class SyncScrollHandler {
     bindEventListeners() {
 
         // Activates internal scroll function
-        window.onscroll = this.onscroll.bind(this);
+        window.addEventListener( 'scroll', this.onscroll.bind(this) );
 
         // Activates internal resize function
-        window.onresize = function() {
+        window.addEventListener( 'resize', function() {
             if ( this.settings.canFixedScroll ) {
                 this.rescaleContainer();
                 this.setHorizontalPosition();
             }
-        };
+        });
 
         // Sets class to ready state
         this.ready = true;

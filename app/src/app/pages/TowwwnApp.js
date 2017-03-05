@@ -13,7 +13,8 @@ const React = require( 'react' ),
     LocationCategory = require( '../components/locationCategory.js' ),
 
     // Plugins
-    SyncScrollHandler = require( '../../modules/plugins/syncScrollHandler.js' );
+    SyncScrollHandler = require( '../../modules/plugins/syncScrollHandler.js' ),
+    ImageHandler = require( '../../modules/handlers/imageHandler.js' );
 
 class TowwwnApp extends React.Component {
 
@@ -21,6 +22,8 @@ class TowwwnApp extends React.Component {
     constructor() {
         super();
         this.state = { };
+        this.imageHandler = new ImageHandler();
+        this.hasMounted = false;
 
         // Gets event data
         let eventData = new EventDataHandler();
@@ -51,6 +54,7 @@ class TowwwnApp extends React.Component {
     onrender() {
         setTimeout(() => {
             this.syncScroll = new SyncScrollHandler( document.getElementById('page-content'), 'container-section' );
+            this.imageHandler.lazyLoad();
         }, 200);
     }
 
