@@ -5,7 +5,7 @@ const TowwwnApp = require( '../../app/pages/TowwwnApp.js' );
 class SyncScrollHandler {
 
     // Ctor
-    constructor( parentSelector, elementSelector ) {
+    constructor() {
 
         // Sets fields
         this.canFixedScroll = true;
@@ -19,12 +19,9 @@ class SyncScrollHandler {
         this.ready = false;
 
         // Runs internal functions
-        this.wrapElems( parentSelector, elementSelector );
-        window.addEventListener('resize', () => {
-            this.rescaleContainer(); });
-
-        // this.rescaleContainer();
-        // this.bindEventListeners();
+        this.wrapElems();
+        this.rescaleContainer();
+        this.bindEventListeners();
 
     }
 
@@ -35,12 +32,10 @@ class SyncScrollHandler {
         window.addEventListener( 'scroll', this.onscroll.bind(this) );
 
         // Activates internal resize function
-        window.addEventListener( 'resize', function() {
-            if ( this.settings.canFixedScroll ) {
-                this.rescaleContainer();
-                this.setHorizontalPosition();
-            }
-        });
+        window.onresize = function() {
+            this.rescaleContainer();
+            this.setHorizontalPosition();
+        }.bind(this);
 
         // Sets class to ready state
         this.ready = true;
@@ -48,8 +43,8 @@ class SyncScrollHandler {
     }
 
     // Wraps elems
-    wrapElems( parentSelector, elementSelector ) {
-        this.container = parentSelector;
+    wrapElems() {
+        this.container = document.getElementById( 'page-content' );
         this.elem = document.getElementsByClassName( 'sync-outer' );
         this.inner = document.getElementsByClassName( 'sync-inner' );
     }
@@ -102,7 +97,7 @@ class SyncScrollHandler {
 
                 let syncInners = document.getElementsByClassName('sync-inner');
                 for ( var item of syncInners ) {
-                    console.log( item );
+                    // console.log( item );
 
                     if ( item.clientHeight > this.containerHeight && this.isInView( item ) ) {
                         this.containerHeight = item.clientHeight;
@@ -124,117 +119,42 @@ class SyncScrollHandler {
 
     // Scroll Event Handler
     onscroll() {
-
+        if ( this.container === null ) return;
         let forceRepaint = false;
 
         // Fields
-        let ct = this.container.offsetTop,
-            ch = this.container.clientHeigth,
-            st = window.pageYOffset,
-            wh = window.height,
-            delta = st - this.lastScrollTop;
+        let containerTop = this.container.offsetTop,
+            containerHeight = this.container.clientHeigth,
+            winScrollTop = window.pageYOffset,
+            winHeight = window.height,
+            delta = winScrollTop - this.lastScrollTop;
 
-        // Run if sync scroll is ready and a new cycle is allowed
-        if ( this.ready && this.canPosition && this.canFixedScroll ) {
-
-            // Dissallows new cycle ( Until completion )
-            this.canPosition = false;
-
-            // Check if above sync scroll area
-            if ( st + 60 < ct ) {
-                for ( var item of this.elem ) {
-                    if ( item.classList.contains( 'high' ) ) {
-                        item.classList.remove( 'fixed' );
-                        item.classList.remove( 'top' );
-                        item.classList.remove( 'bottom' );
-                    } else if ( !item.classList.contains( 'top' ) ) {
-                        item.classList.add( 'top' );
-                        item.classList.remove( 'bottom' );
-                        item.classList.remove( 'fixed' );
-                        item.removeAttribute( 'style' );
-                    }
-                }
-
-                forceRepaint = true;
-            }
-
-            // Checks if below sync scroll area
-            else if ( st + wh > ct + ch ) {
-                for ( let item of this.elem ) {
-
-                    // Cleans high
-                    if ( item.classList.contains( 'high' ) ) {
-                        item.classList.remove( 'fixed' );
-                        item.classList.remove( 'top' );
-                        item.classList.remove( 'bottom' );
-                    }
-
-                    // Or sets it to the bottom and forces repaint
-                    else if ( !item.classList.contains('bottom') ) {
-                        item.classList.add( 'bottom' );
-                        item.classList.remove( 'top' );
-                        item.classList.remove( 'fixed' );
-                        item.removeAtrribute( 'style' );
-                        forceRepaint = true;
-                    }
-
-                }
-            }
-
-            // In sync scroll area
-            else {
-                for ( let item of this.elem ) {
-                    let syncinner = false;
-
-                    // Sets the sync inner field
-                    for ( let child of item.childNodes ) {
-                        if ( child.classList.contains('sync-inner') ) syncinner = child; }
-
-                    // Cleans the highs sync
-                    if ( item.classList.contains( 'high' ) ) {
-                        item.classList.remove( 'fixed' );
-                        item.classList.remove( 'top' );
-                        item.classList.remove( 'bottom' );
-                    }
-
-                    // Coming from top; add fixed and set the internal scroll
-                    else if ( item.classList.contains( 'top' ) ) {
-                        if ( syncinner.offsetTop <= st + wh ) {
-                            item.classList.add( 'fixed' );
-                            item.classList.remove( 'top' );
-                            item.classList.remove( 'bottom' );
-                            item.scrollTop = syncinner.offsetTop;
-                            forceRepaint = true;
-                        }
-                    }
-
-                    // Coming from bottom; go fixed and sync scroll top on inner
-                    else if ( item.classList.contains( 'bottom' ) && syncinner.offsetTop >= st ) {
-                        item.classList.add( 'fixed' );
-                        item.classList.remove( 'top' );
-                        item.classList.remove( 'bottom' );
-                        item.scrollTop = 60;
-                        forceRepaint = true;
-                    }
-
-                    if ( item.classList.contains( 'fixed' ) ) {
-                        item.scrollTop = item.scrollTop + delta;
-                        this.setHorizontalPosition( item );
-                    }
-
-                }
-            }
-
-            if ( forceRepaint ) {
-                this.container.style.transform = 'translateZ(1)';
-                this.container.style.transform = 'none';
-            }
-
+        // Check if above sync scroll area
+        if ( winScrollTop + 60 < containerTop ) {
         }
 
-        this.lastScrollTop = st;
-        this.canPosition = true;
+        // Checks if below sync scroll area
+        else if ( winScrollTop + winHeight > containerTop + containerHeight ) {
+        }
 
+        // In sync scroll area
+        else {
+            for ( let item of this.elem ) {
+                let syncinner = false;
+
+                // Sets the sync inner field
+                for ( let child of item.childNodes ) {
+                    if ( child.classList.contains('sync-inner') ) syncinner = child; }
+
+                if ( !item.classList.contains( 'high' ) ) {
+                    item.scrollTop = item.scrollTop + delta;
+
+                }
+
+            }
+        }
+
+        this.lastScrollTop = winScrollTop;
     }
 
     // Locks view and removes scroll capabilities

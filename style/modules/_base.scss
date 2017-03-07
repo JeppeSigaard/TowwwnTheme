@@ -77,7 +77,6 @@ p a{
     z-index: 20;
     border-top: none;
     border-bottom: none;
-    //overflow: hidden;
 }
 
 $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
@@ -87,7 +86,6 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
     height: auto;
     background-color: white;
     z-index: 1;
-    overflow: hidden;
     min-height: 100vh;
     
     .content-container-inner{
@@ -97,7 +95,6 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
         font-size: 0;
         transition: 400ms;
         transition-timing-function: $horizontal-bezier;
-        //transform: translateZ(0);
         
         &.notrans{
             transition: 0ms!important;

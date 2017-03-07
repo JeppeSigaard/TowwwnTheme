@@ -24,6 +24,7 @@ class TowwwnApp extends React.Component {
         super();
         this.state = { };
         this.imageHandler = new ImageHandler();
+        this.syncScroll = new SyncScrollHandler();
         this.hasMounted = false;
 
         // Gets event data
@@ -51,18 +52,13 @@ class TowwwnApp extends React.Component {
         });
     }
 
-    // On render
-    onrender() {
-        setTimeout(() => {
-            this.syncScroll = new SyncScrollHandler( document.getElementById('page-content'), 'container-section' );
-            this.syncScroll.rescaleContainer();
-            this.imageHandler.lazyLoad();
-        }, 200);
-    }
-
     // Render
     render() {
-        this.onrender();
+        setTimeout(function() {
+            this.syncScroll.wrapElems();
+            this.syncScroll.rescaleContainer();
+        }.bind(this), 200);
+
         return (
             <div className="content-container" id="page-content">
                 <div className="content-container-inner">

@@ -33,7 +33,7 @@ add_action( 'wp_enqueue_scripts', function() {
     wp_enqueue_style( 'montserrat', 'https://fonts.googleapis.com/css?family=Montserrat' );
     wp_enqueue_style( 'lato', 'https://fonts.googleapis.com/css?family=Lato' );
     wp_enqueue_style( 'flickityStyle', 'https://unpkg.com/flickity@2/dist/flickity.min.css' );
-    wp_enqueue_style( 'mainStyle', get_template_directory_uri() . '/style/index.css');
+    // wp_enqueue_style( 'mainStyle', get_template_directory_uri() . '/style/index.css');
     
 });
 
