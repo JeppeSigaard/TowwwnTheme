@@ -20,8 +20,11 @@ class SyncScrollHandler {
 
         // Runs internal functions
         this.wrapElems( parentSelector, elementSelector );
-        this.rescaleContainer();
-        this.bindEventListeners();
+        window.addEventListener('resize', () => {
+            this.rescaleContainer(); });
+
+        // this.rescaleContainer();
+        // this.bindEventListeners();
 
     }
 

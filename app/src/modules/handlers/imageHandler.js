@@ -8,15 +8,9 @@ class ImageHandler {
         window.addEventListener( 'scroll', this.lazyLoad.bind(this) );
     }
 
-    // Is in view
-    isInView( elem ) {
-        var docViewTop = window.pageYOffset;
-        var docViewBottom = docViewTop + window.innerHeight;
-
-        var elemTop = elem.offsetTop;
-        var elemBottom = elemTop + elem.clientHeight;
-
-        return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+    // Checks if an elem is in view
+    isInView( element ) {
+        return element.offsetLeft >= 0 && element.offsetLeft < window.innerWidth - 200;
     }
 
     // Lazy load

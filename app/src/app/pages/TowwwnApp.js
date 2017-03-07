@@ -1,5 +1,6 @@
 
 // Main page for the towwwn app
+require( '../../modules/tools/textPreproccesors.js' );
 const React = require( 'react' ),
     EventDataHandler = require( '../../modules/handlers/dataHandlers/eventDataHandler.js' ),
     CategoryDataHandler = require( '../../modules/handlers/dataHandlers/categoryDataHandler.js' ),
@@ -54,6 +55,7 @@ class TowwwnApp extends React.Component {
     onrender() {
         setTimeout(() => {
             this.syncScroll = new SyncScrollHandler( document.getElementById('page-content'), 'container-section' );
+            this.syncScroll.rescaleContainer();
             this.imageHandler.lazyLoad();
         }, 200);
     }
