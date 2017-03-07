@@ -119,18 +119,18 @@ class SyncScrollHandler {
 
     // Scroll Event Handler
     onscroll() {
+
         if ( this.container === null ) return;
-        let forceRepaint = false;
 
         // Fields
         let containerTop = this.container.offsetTop,
-            containerHeight = this.container.clientHeigth,
+            containerHeight = this.container.clientHeight,
             winScrollTop = window.pageYOffset,
-            winHeight = window.height,
+            winHeight = window.innerHeight,
             delta = winScrollTop - this.lastScrollTop;
 
         // Check if above sync scroll area
-        if ( winScrollTop + 60 < containerTop ) {
+        if ( winScrollTop  < containerTop ) {
         }
 
         // Checks if below sync scroll area
@@ -148,9 +148,7 @@ class SyncScrollHandler {
 
                 if ( !item.classList.contains( 'high' ) ) {
                     item.scrollTop = item.scrollTop + delta;
-
                 }
-
             }
         }
 
