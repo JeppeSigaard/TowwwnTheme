@@ -17,6 +17,9 @@ const React = require( 'react' ),
     SyncScrollHandler = require( '../../modules/plugins/syncScrollHandler.js' ),
     ImageHandler = require( '../../modules/handlers/imageHandler.js' );
 
+// Polyfills
+require ('sticky-position');
+
 class TowwwnApp extends React.Component {
 
     // Ctor
