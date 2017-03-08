@@ -10,7 +10,7 @@ class EventSingleView extends React.Component {
     // Render
     render() {
         return (
-            <section className="container-section" id="event-calendar-view">
+            <section className="container-section" id="event-single-view">
                 <div className="sync-outer">
                     <div className="sync-inner">
                         <div className="content">

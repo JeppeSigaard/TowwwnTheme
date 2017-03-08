@@ -72,7 +72,7 @@ class SingleEvent extends React.Component {
                                         <use xlinkHref="#icon-facebook"></use>
                                     </svg>
                                 </div>
-                                <div className="text"></div>
+                                <div className="text">Del</div>
                             </div>
 
                             { event.ticket_uri !== '' && event.ticket_uri !== null &&

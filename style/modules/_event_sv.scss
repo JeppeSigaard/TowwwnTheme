@@ -52,11 +52,10 @@
         height: auto;
 
         @media (min-width: 640px){
-            padding: 16px;
+            padding: 48px;
         }
 
         @media screen and (min-width: 1280px) {
-
             padding: 32px 64px 32px 64px;
         }
 
@@ -196,91 +195,6 @@
 
     .event-sv-info-placeholder{
         width: 100%;
-    }
-
-
-    .event-sv-info{
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: auto;
-        min-height: 64px;
-        color: white;
-        
-        .event-footer-block{
-            position: relative;
-            width: 100%;
-            height: auto;
-            background-color: darken($color-blue-2, 10%);
-            font-family: 'Avenir';
-            transition: 120ms;
-            
-            &.clickable{
-                cursor: pointer;
-
-                &:hover{
-                    background-color: darken($color-blue-2, 20%);
-                }
-            }
-            
-            &.title{
-                background-color: darken($color-blue-2, 5%);
-
-                &.clickable{
-                    &:hover{
-                        background-color: darken($color-blue-2, 18%);
-                    }
-                }
-
-                .value{
-                    text-transform: uppercase;
-                    font-size: 16px;
-                    font-family: 'Montserrat', sans-serif;
-                    padding: 32px 32px 28px 100px;
-                }
-            }
-
-            &:nth-child(2n){
-                background-color: darken($color-blue-2, 15%);
-
-                &.clickable{
-                    &:hover{
-                        background-color: darken($color-blue-2, 22%);
-                    }
-                }
-            }
-
-            .icon{
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 75px;
-                height: 100%;
-                background-color: rgba(0,0,0,.13);
-                background-size: 50px;
-                background-position: center;
-                background-repeat: no-repeat;
-
-                svg{
-                    position: absolute;
-                    fill: #eee;
-                    width: 27px;
-                    height: 27px;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                }
-            }
-
-            .value{
-                padding: 24px 32px 22px 100px;
-                color: white;
-                font-size: 13px;
-                font-family: 'Avenir';
-                border-top: 1px solid rgba(40, 40, 40,0.2);
-            }
-        }
     }
 }
 

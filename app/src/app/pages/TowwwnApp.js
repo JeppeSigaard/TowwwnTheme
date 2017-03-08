@@ -87,7 +87,7 @@ class TowwwnApp extends React.Component {
                         ( <SingleEvent elem={ this.state.eventsData[0] } /> )} />
 
                     <EventCalendarView events={ this.state.jsxEvents } />
-                    <LocationCategoryView categories={ this.state.jsxCategories } />
+                    {/*<LocationCategoryView categories={ this.state.jsxCategories } />*/}
                 </div>
             </div>
         );

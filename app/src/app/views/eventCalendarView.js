@@ -40,13 +40,16 @@ class EventCalendarView extends React.Component {
                            </div>
                            <div className="selector"></div>
 
-                            <div className={ this.state.containerClasses }>
 
-                                {/* Renders events */}
-                                { typeof this.props.events !== 'undefined' &&
-                                  this.props.events !== null &&
-                                  this.props.events }
+                            <div className={ this.state.containerClasses + '-outer' } >
+                                <div className={ this.state.containerClasses }>
 
+                                    {/* Renders events */}
+                                    { typeof this.props.events !== 'undefined' &&
+                                      this.props.events !== null &&
+                                      this.props.events }
+
+                                </div>
                             </div>
                         </div>
                     </div>
