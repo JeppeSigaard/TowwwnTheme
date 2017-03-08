@@ -21,6 +21,9 @@ const React = require( 'react' ),
     // TMP
     SingleEvent = require( '../components/singleEvent.js' );
 
+// Polyfills
+require ('sticky-position');
+
 class TowwwnApp extends React.Component {
 
     // Ctor

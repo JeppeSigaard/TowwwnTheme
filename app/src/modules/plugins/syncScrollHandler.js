@@ -34,7 +34,6 @@ class SyncScrollHandler {
         // Activates internal resize function
         window.onresize = function() {
             this.rescaleContainer();
-            this.setHorizontalPosition();
         }.bind(this);
 
         // Sets class to ready state
@@ -49,35 +48,7 @@ class SyncScrollHandler {
         this.inner = document.getElementsByClassName( 'sync-inner' );
     }
 
-    // Sets the horizontal position of elem
-    setHorizontalPosition( element ) {
 
-        // Checks if elem is set, and uses it if it is
-        if ( typeof element === 'object' &&
-             element.classList.contains( 'fixed' ) ) {
-            for( let item of element ) {
-                item.style.left = item.parentNode.offsetLeft + 'px';
-                item.style.width = item.parentNode.clientWidth + 'px';
-            } return;
-        } else if ( typeof element !== 'undefined' &&
-                    element.classList.container( 'fixed' ) ) {
-            element.style.left = element.parentNode.offsetTop + 'px';
-            element.style.width = element.parentNode.clientWidth + 'px';
-            return;
-        } else if ( typeof element !== 'undefined' ) {
-            element.removeAttribute('style');
-            return;
-        }
-
-        // Else use the preset element
-        for( let item of this.elem ) {
-            if ( item.classList.contains( 'fixed' ) ) {
-                item.style.left = item.parentNode.offsetLeft + 'px';
-                item.style.width = item.parentNode.clientWidth + 'px';
-            } else item.removeAttribute( 'style' );
-        }
-
-    }
 
     // Checks if an elem is in view
     isInView( element ) {
@@ -119,18 +90,18 @@ class SyncScrollHandler {
 
     // Scroll Event Handler
     onscroll() {
+
         if ( this.container === null ) return;
-        let forceRepaint = false;
 
         // Fields
         let containerTop = this.container.offsetTop,
-            containerHeight = this.container.clientHeigth,
+            containerHeight = this.container.clientHeight,
             winScrollTop = window.pageYOffset,
-            winHeight = window.height,
+            winHeight = window.innerHeight,
             delta = winScrollTop - this.lastScrollTop;
 
         // Check if above sync scroll area
-        if ( winScrollTop + 60 < containerTop ) {
+        if ( winScrollTop  < containerTop ) {
         }
 
         // Checks if below sync scroll area
@@ -148,9 +119,7 @@ class SyncScrollHandler {
 
                 if ( !item.classList.contains( 'high' ) ) {
                     item.scrollTop = item.scrollTop + delta;
-
                 }
-
             }
         }
 
@@ -194,7 +163,6 @@ class SyncScrollHandler {
         body.classList.remove( 'no-scroll' );
         body.removeAttribute( 'style' );
 
-        this.setHorizontalPosition();
         this.onscroll();
         this.rescaleContainer().then((resp) => {
             let goTopSide = false;
