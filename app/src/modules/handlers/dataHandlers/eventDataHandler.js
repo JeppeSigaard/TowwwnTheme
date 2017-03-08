@@ -32,7 +32,7 @@ class EventDataHandler{
                 }.bind(this);
 
                 // Sends request
-                xhr.open( 'GET', 'http://towwwn.dk/api/svendborg/events?per_page=50&page=1&after=now' );
+                xhr.open( 'GET', 'http://towwwn.dk/api/svendborg/events?per_page=10000&page=1&after=now' );
                 xhr.send();
 
             }

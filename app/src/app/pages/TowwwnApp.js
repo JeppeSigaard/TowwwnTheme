@@ -6,6 +6,7 @@ const React = require( 'react' ),
     CategoryDataHandler = require( '../../modules/handlers/dataHandlers/categoryDataHandler.js' ),
 
     // Views
+    EventSingleView = require( '../views/eventSingleView.js' ),
     EventCalendarView = require( '../views/eventCalendarView.js' ),
     LocationCategoryView = require( '../views/locationCategoryView.js' ),
 
@@ -15,17 +16,21 @@ const React = require( 'react' ),
 
     // Plugins
     SyncScrollHandler = require( '../../modules/plugins/syncScrollHandler.js' ),
-    ImageHandler = require( '../../modules/handlers/imageHandler.js' );
+    ImageHandler = require( '../../modules/handlers/imageHandler.js' ),
+
+    // TMP
+    SingleEvent = require( '../components/singleEvent.js' );
 
 class TowwwnApp extends React.Component {
 
     // Ctor
     constructor() {
         super();
-        this.state = { };
         this.imageHandler = new ImageHandler();
         this.syncScroll = new SyncScrollHandler();
         this.hasMounted = false;
+
+        this.state = { };
 
         // Gets event data
         let eventData = new EventDataHandler();
@@ -35,7 +40,12 @@ class TowwwnApp extends React.Component {
             let events = [];
             resp.splice( 0, 50 ).forEach(( item, index ) => {
                 events.push( <Event elem={ item } key={ item.fbid } /> )
-            }); this.setState({ 'events' : events });
+            });
+
+            this.setState({
+                'eventsData' : resp,
+                'jsxEvents' : events,
+            });
 
         });
 
@@ -47,9 +57,16 @@ class TowwwnApp extends React.Component {
             let categories = [];
             resp.forEach(( item, index ) => {
                 categories.push( <LocationCategory elem={ item } key={ item.fbid } /> );
-            }); this.setState({ 'categories' : categories });
+            });
+
+            this.setState({
+                'categoriesData' : resp,
+                'jsxCategories' : categories,
+            });
 
         });
+
+
     }
 
     // Render
@@ -62,8 +79,12 @@ class TowwwnApp extends React.Component {
         return (
             <div className="content-container" id="page-content">
                 <div className="content-container-inner">
-                    <EventCalendarView events={ this.state.events } />
-                    <LocationCategoryView categories={ this.state.categories } />
+                    <EventSingleView event={ typeof this.state.eventsData !== 'undefined' &&
+                                             this.state.eventsData !== null &&
+                        ( <SingleEvent elem={ this.state.eventsData[0] } /> )} />
+
+                    <EventCalendarView events={ this.state.jsxEvents } />
+                    <LocationCategoryView categories={ this.state.jsxCategories } />
                 </div>
             </div>
         );

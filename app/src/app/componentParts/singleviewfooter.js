@@ -6,10 +6,10 @@ const React = require( 'react' );
 class SingleViewFooter extends React.Component {
 
     // Ctor
-    constuctor() { super(); }
+    constructor() { super(); }
 
     // Render
-    render(  ) {
+    render() {
         let elem = this.props.elem,
             type = this.props.type,
             picture = null,
@@ -24,7 +24,7 @@ class SingleViewFooter extends React.Component {
             // Event data
             picture = elem.parentpicture;
             name = elem.parentname;
-            id = elem.parentid;
+            id = elem.parentfbid;
 
             if ( elem.website !== null &&
                  typeof elem.website !== 'undefined' ) {
@@ -41,30 +41,74 @@ class SingleViewFooter extends React.Component {
                 adress = elem.adress;
             }
 
-        } else {
-
-            // Location data
-
-        }
+        } else { /* Location data */ }
 
         return (
-            <div className="sv-footer">
+
+            <div className="sv-footer" >
+
+                {/* Title */}
                 <div className="sv-footer-block title">
-                    <div className="icon" style={ picture !== null && { 'background-image' : 'url('+ picture +')' }} ></div>
+                    <div className="icon" style={ picture !== null && { 'backgroundImage' : 'url('+ picture +')' }} ></div>
                     <div className="value" >{ name }</div>
                 </div>
 
+                {/* Facebook */}
                 <div className="sv-footer-block clickable" data-link={ 'http://fb.com/' + id } >
                     <div className="icon">
-                        <svg viewbox="0 0 32 32">
+                        <svg viewBox="0 0 32 32">
                             <use xlinkHref="#icon-facebook"></use>
                         </svg>
                     </div>
-                    <div class="value">
+                    <div className="value">
                         { name }
                     </div>
                 </div>
+
+                {/* Website */}
+                { website !== null &&
+                    <div className="sv-footer-block clickable" data-link={ website } >
+                        <div className="icon">
+                            <svg viewBox="0 0 32 32">
+                                <use xlinkHref="#icon-web"></use>
+                            </svg>
+                        </div>
+                        <div className="value">
+                            { website }
+                        </div>
+                    </div>
+                }
+
+                {/* Phone */}
+                { phone !== null &&
+                    <div className="sv-footer-block clickable" data-link-type="redirect" data-link={ 'tel://' + phone } >
+                        <div className="icon">
+                            <svg viewBox="0 0 32 32">
+                                <use xlinkHref="#icon-phone"></use>
+                            </svg>
+                        </div>
+                        <div className="value">
+                            { phone }
+                        </div>
+                    </div>
+                }
+
+                {/* Adress */}
+                { phone !== null &&
+                    <div className="sv-footer-block clickable" data-link={ 'https://google.dk/maps/search/'+adress+',svendborg' } >
+                        <div className="icon">
+                            <svg viewBox="0 0 32 32">
+                                <use xlinkHref="#icon-adress"></use>
+                            </svg>
+                        </div>
+                        <div className="value">
+                            { adress }
+                        </div>
+                    </div>
+                }
+
             </div>
+
         );
     }
 

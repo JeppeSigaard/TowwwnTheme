@@ -3,15 +3,19 @@
 
 // Single Event
 const React = require( 'react' ),
-      Linkify = require( 'react-linkify' ),
-      DataFormatters = require( '../../modules/tools/dataFormatter.js' ),
-      TextPreproccesors = require( '../../modules/tools/textPreproccesors.js' );
+      Linkify = require( 'react-linkify' ).default,
+      DataFormatters = require( '../../modules/tools/dataFormatters.js' ),
+      TextPreproccesors = require( '../../modules/tools/textPreproccesors.js' ),
+
+      // Component parts
+      SingleViewFooter = require('../componentParts/singleviewfooter.js');
 
 class SingleEvent extends React.Component {
 
     // Ctor
     constructor( props ) {
         super( props );
+        console.log( Linkify );
 
         // Extracts img url
         let imgurl = null;
@@ -49,7 +53,7 @@ class SingleEvent extends React.Component {
                     <div className="event-singleview">
 
                         {/* Image */}
-                        <div className="event-sv-img" style={{ 'background-image' : 'url(' + this.state.imgurl + ')' }} ></div>
+                        <div className="event-sv-img" style={{ 'backgroundImage' : 'url(' + this.state.imgurl + ')' }} ></div>
                         <div className="event-sv-title" >
                             { elem.name }
                         </div>
@@ -62,9 +66,9 @@ class SingleEvent extends React.Component {
 
                         {/* CTA Btns */}
                         <div className="es-btns" >
-                            <div class="status-btn share" data-link={ 'https://www.facebook.com/events/' + elem.fbid } >
-                                <div class="icon">
-                                    <svg viewbox="0 0 32 32" >
+                            <div className="status-btn share" data-link={ 'https://www.facebook.com/events/' + elem.fbid } >
+                                <div className="icon">
+                                    <svg viewBox="0 0 32 32" >
                                         <use xlinkHref="#icon-facebook"></use>
                                     </svg>
                                 </div>
@@ -74,7 +78,7 @@ class SingleEvent extends React.Component {
                             { event.ticket_uri !== '' && event.ticket_uri !== null &&
                                 <div className="status-btn ticket" data-link={ event.ticket_uri } >
                                     <div className="icon">
-                                        <svg viewbox="0 0 32 32">
+                                        <svg viewBox="0 0 32 32">
                                             <use xlinkHref="#icon-ticket"></use>
                                         </svg>
                                     </div>
@@ -91,9 +95,11 @@ class SingleEvent extends React.Component {
                             </Linkify>
                         </div>
 
-                        {/* Footer */}
-
                     </div>
+
+                    {/* Footer */}
+                    <SingleViewFooter type="event" elem={ elem } />
+
                 </div>
             </div>
         );

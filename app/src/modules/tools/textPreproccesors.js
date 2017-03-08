@@ -1,6 +1,7 @@
 
 
 // Text Processor
+const React = require( 'react' );
 class TextPreprocessor {
 
     // NL2P
