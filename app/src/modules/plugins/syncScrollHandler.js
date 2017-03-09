@@ -90,9 +90,7 @@ class SyncScrollHandler {
 
     // Scroll Event Handler
     onscroll() {
-
         if ( this.container === null ) return;
-
         // Fields
         let containerTop = this.container.offsetTop,
             containerHeight = this.container.clientHeight,
@@ -101,12 +99,10 @@ class SyncScrollHandler {
             delta = winScrollTop - this.lastScrollTop;
 
         // Check if above sync scroll area
-        if ( winScrollTop  < containerTop ) {
-        }
+        if ( winScrollTop  < containerTop ) {}
 
         // Checks if below sync scroll area
-        else if ( winScrollTop + winHeight > containerTop + containerHeight ) {
-        }
+        else if ( winScrollTop + winHeight > containerTop + containerHeight ) {}
 
         // In sync scroll area
         else {
