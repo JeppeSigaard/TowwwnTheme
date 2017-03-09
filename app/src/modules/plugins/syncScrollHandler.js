@@ -111,12 +111,6 @@ class SyncScrollHandler {
         // In sync scroll area
         else {
             for ( let item of this.elem ) {
-                let syncinner = false;
-
-                // Sets the sync inner field
-                for ( let child of item.childNodes ) {
-                    if ( child.classList.contains('sync-inner') ) syncinner = child; }
-
                 if ( !item.classList.contains( 'high' ) ) {
                     item.scrollTop = item.scrollTop + delta;
                 }

@@ -137,36 +137,11 @@ var syncScroll = {
 
             // Above sync scroll area (syncs should either be high or top)
             if(ct >= st + 60){
-
-                this.settings.elem.each(function(){
-                    var elem = $(this);
-
-                    // Clean high
-                    if(elem.hasClass('high')){ elem.removeClass('fixed top bottom'); }
-
-                    // Or set to top and force repaint
-                    else if(!elem.hasClass('top')){
-                        elem.addClass('top').removeClass('bottom fixed').removeAttr('style');
-                        forceRepaint = true;
-                    }
-                });
             }
 
 
             // Below sync scroll area (syncs should either be high or bottom)
             else if(ct + ch <= st + wh){
-                this.settings.elem.each(function(){
-                    var elem = $(this);
-
-                    // Clean high
-                    if(elem.hasClass('high')){ elem.removeClass('fixed top bottom'); }
-
-                    // Or set to bottom and force repaint
-                    else if(!elem.hasClass('bottom')){
-                        elem.addClass('bottom').removeClass('top fixed').removeAttr('style');
-                        forceRepaint = true;
-                    }
-                });
             }
 
 
@@ -174,26 +149,6 @@ var syncScroll = {
             else{
                 this.settings.elem.each(function(){
                     var elem = $(this);
-
-                    // Clean high sync
-                    if(elem.hasClass('high')){elem.removeClass('fixed top bottom');}
-
-                    // Coming from the top, mby go fixed and set scrollTop on inner
-                    else if(elem.hasClass('top')){
-                        var inner = $('.sync-inner', elem),
-                            innerHeight = inner.offset().top + inner.innerHeight();
-                        if(innerHeight <= st + wh){
-                            elem.addClass('fixed').removeClass('top bottom').scrollTop(innerHeight);
-                            forceRepaint = true;
-                        }
-                    }
-
-                    // Coming from the bottom, mby go fixed and set scrollTop on inner
-                    else if(elem.hasClass('bottom') && $('.sync-inner', elem).offset().top >= st){
-                        elem.addClass('fixed').removeClass('top bottom').scrollTop(60);
-                        forceRepaint = true;
-                    }
-
 
                     // set fixed scrollTop accordingly
                     if(elem.hasClass('fixed')){
