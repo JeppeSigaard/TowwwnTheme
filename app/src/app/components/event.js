@@ -1,7 +1,25 @@
 
 // Single Event Layout
-let React = require( 'react' );
+const React = require( 'react' ),
+      Globals = require( '../globals.js' ),
+      SingleEvent = require( './singleEvent.js' );
+
 class Event extends React.Component {
+    
+    // Click Handler
+    handleClick( e ) {
+        e.preventDefault();
+        this.props.setMainState( 
+            'singleevent', 
+            <SingleEvent elem={ this.props.elem } />
+        );
+        
+        Globals.viewHandler.changeViewFocus(  
+            'event-single-view',
+            'event-calendar-view',
+            true, false, false
+        ); 
+    }
 
     // Format title
     formatTitle( elem ) {
@@ -55,7 +73,7 @@ class Event extends React.Component {
 
         // Html
         return (
-            <div className="event" id={ 'event-' + elem.id } data-type="event" data-id={ elem.id } >
+            <a className="event" onClick={ this.handleClick.bind(this) } >
                 <div className="imgcontainer" data-image-src={ image } >
                     <div className="loader">
                         <img src={ template_uri + '/style/assets/icons/loading-white.svg' } />
@@ -70,9 +88,9 @@ class Event extends React.Component {
 
                 <div className="eventlocation-container">
                     <div className="eventblackbar"></div>
-                    <div className="eventlocation">{ elem.parentName }</div>
+                    <div className="eventlocation">{ elem.parentname }</div>
                 </div>
-            </div>
+            </a>
         );
 
     }

@@ -2,6 +2,9 @@
 // Main page for the towwwn app
 require( '../../modules/tools/textPreproccesors.js' );
 const React = require( 'react' ),
+    Globals = require( '../globals.js' ),
+      
+    // Data Handlers
     EventDataHandler = require( '../../modules/handlers/dataHandlers/eventDataHandler.js' ),
     CategoryDataHandler = require( '../../modules/handlers/dataHandlers/categoryDataHandler.js' ),
 
@@ -16,6 +19,7 @@ const React = require( 'react' ),
 
     // Plugins
     SyncScrollHandler = require( '../../modules/plugins/syncScrollHandler.js' ),
+    ViewHandler = require( '../../modules/handlers/viewHandler.js' ),
     ImageHandler = require( '../../modules/handlers/imageHandler.js' ),
 
     // TMP
@@ -29,10 +33,13 @@ class TowwwnApp extends React.Component {
     // Ctor
     constructor() {
         super();
+        
+        // Instances
         this.imageHandler = new ImageHandler();
         this.syncScroll = new SyncScrollHandler();
+        Globals.viewHandler = null;
+        
         this.hasMounted = false;
-
         this.state = { };
 
         // Gets event data
@@ -42,7 +49,7 @@ class TowwwnApp extends React.Component {
             // Converts to jsx elements
             let events = [];
             resp.splice( 0, 50 ).forEach(( item, index ) => {
-                events.push( <Event elem={ item } key={ item.fbid } /> )
+                events.push( <Event elem={ item } key={ item.fbid } setMainState={ this.parsedSetState.bind(this) } /> )
             });
 
             this.setState({
@@ -59,7 +66,7 @@ class TowwwnApp extends React.Component {
             // Converts to JSX elements
             let categories = [];
             resp.forEach(( item, index ) => {
-                categories.push( <LocationCategory elem={ item } key={ item.fbid } /> );
+                categories.push( <LocationCategory elem={ item } key={ item.fbid } setMainState={ this.parsedSetState.bind(this) } /> );
             });
 
             this.setState({
@@ -71,23 +78,29 @@ class TowwwnApp extends React.Component {
 
 
     }
+    
+    // ParsedSetState
+    parsedSetState( key, value ) {
+        this.state[ key ] = value;
+        this.forceUpdate();
+    }
+    
+    // After render
+    componentDidUpdate() {
+        if ( Globals.viewHandler === null ) Globals.viewHandler = new ViewHandler( this.syncScroll );
+        this.syncScroll.wrapElems();
+        this.syncScroll.rescaleContainer( Globals.viewHandler.focusedViews );
+        console.log( this.state.singleeevent );
+    }
 
     // Render
     render() {
-        setTimeout(function() {
-            this.syncScroll.wrapElems();
-            this.syncScroll.rescaleContainer();
-        }.bind(this), 200);
-
         return (
             <div className="content-container" id="page-content">
                 <div className="content-container-inner">
-                    <EventSingleView event={ typeof this.state.eventsData !== 'undefined' &&
-                                             this.state.eventsData !== null &&
-                        ( <SingleEvent elem={ this.state.eventsData[0] } /> )} />
-
-                    <EventCalendarView events={ this.state.jsxEvents } />
-                    {/*<LocationCategoryView categories={ this.state.jsxCategories } />*/}
+                    <EventSingleView event={ this.state.singleevent } setMainState={ this.parsedSetState.bind(this) } />
+                    <EventCalendarView events={ this.state.jsxEvents } setMainState={ this.parsedSetState.bind(this) } />
+                    <LocationCategoryView categories={ this.state.jsxCategories } setMainState={ this.parsedSetState.bind(this) } />
                 </div>
             </div>
         );

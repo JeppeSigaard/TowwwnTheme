@@ -1,7 +1,9 @@
 
 
 // Event single view layout
-const React = require( 'react' );
+const React = require( 'react' ),
+      Globals = require( '../globals.js' );
+
 class EventSingleView extends React.Component {
 
     // Ctor

@@ -47,7 +47,7 @@ class SingleViewFooter extends React.Component {
 
             <div>
                 <div className="event-sv-info-placeholder"></div>
-                <div className="sv-footer" >
+                <footer className="sv-footer" >
 
                     {/* Title */}
                     <div className="sv-footer-block title">
@@ -109,7 +109,7 @@ class SingleViewFooter extends React.Component {
                         </div>
                     }
 
-                </div>
+                </footer>
             </div>
 
         );

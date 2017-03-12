@@ -56,23 +56,36 @@ class SyncScrollHandler {
     }
 
     // Rescales the container
-    rescaleContainer() {
+    rescaleContainer( focusedViews ) {
         return new Promise((resolve, reject) => {
             if ( this.container !== null ) {
 
-                let high = document.getElementsByClassName('high'),
-                    highHeight = high.length ? high[0].clientHeigth : 0;
-
+                let high = document.getElementsByClassName('high');
                 for( let item of high ) { item.classList.remove('high') }
                 this.containerHeight = 0; let highestElem = null;
-
-                let syncInners = document.getElementsByClassName('sync-inner');
-                for ( var item of syncInners ) {
-                    // console.log( item );
-
-                    if ( item.clientHeight > this.containerHeight && this.isInView( item ) ) {
-                        this.containerHeight = item.clientHeight;
-                        highestElem = item;
+                
+                if ( focusedViews != null ) {
+                    for ( let view of focusedViews ) {
+                        for ( let outer of view.childNodes ) {
+                            if ( outer.classList.contains('sync-outer') ) {
+                                for ( let inner of outer.childNodes ) {
+                                    if ( inner.classList.contains( 'sync-inner' ) ) {
+                                        if ( inner.clientHeight > this.containerHeight && this.isInView( inner ) ) {
+                                            this.containerHeight = inner.clientHeight;
+                                            highestElem = inner;
+                                        } break;
+                                    }
+                                } break;
+                            }
+                        } 
+                    }  
+                } else {
+                    let syncInners = document.getElementsByClassName('sync-inner');
+                    for ( let item of syncInners ) {
+                        if ( item.clientHeight > this.containerHeight && this.isInView( item ) ) {
+                            this.containerHeight = item.clientHeight;
+                            highestElem = item;
+                        }
                     }
                 }
 
