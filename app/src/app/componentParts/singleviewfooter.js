@@ -7,7 +7,18 @@ class SingleViewFooter extends React.Component {
 
     // Ctor
     constructor() { super(); }
-
+    
+    // Component did update
+    componentDidUpdate() {
+        let placeholders = document.getElementsByClassName('sv-footer-placeholder'),
+            footers = document.getElementsByClassName('sv-footer');
+        
+        for ( let i = 0; i < footers.length; i++ ) {
+            placeholders[i].style.width = '100%';
+            placeholders[i].style.height = window.getComputedStyle( footers[i] ).height;
+        }
+    }
+    
     // Render
     render() {
         let elem = this.props.elem,
@@ -46,7 +57,7 @@ class SingleViewFooter extends React.Component {
         return (
 
             <div>
-                <div className="event-sv-info-placeholder"></div>
+                <div className="sv-footer-placeholder"></div>
                 <footer className="sv-footer" >
 
                     {/* Title */}

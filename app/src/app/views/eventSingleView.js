@@ -16,14 +16,12 @@ class EventSingleView extends React.Component {
                 <div className="sync-outer">
                     <div className="sync-inner">
                         <div className="content">
-                            <div className="eventscontainer">
-
-                                {/* Renders events */}
-                                { typeof this.props.event !== 'undefined' &&
-                                  this.props.event !== null &&
-                                  this.props.event }
-
-                            </div>
+                               
+                            {/* Renders events */}
+                            { typeof this.props.event !== 'undefined' &&
+                              this.props.event !== null &&
+                              this.props.event }
+                              
                         </div>
                     </div>
                 </div>
