@@ -129,19 +129,18 @@
                 .title{
                     width: auto;
                     font-size: 12px;
-                    margin-left: 110px;
+                    margin-left: 0px!important;
                 }
 
                 .start_time{
                     margin-top: 0px;
-                    margin-left: 110px;
+                    margin-left: 0px!important;
                 }
 
                 .eventlocation-container {
-                    width: calc( 100% - 135px );
-                    right: 16px;
-                    left: auto;
-                    bottom: 5px;
+                    width: calc( 100% - 190px )!important;
+                    left: 175px!important;
+                    bottom: 5px!important;
                     
                     .eventblackbar{
                         height: 2px;
@@ -163,17 +162,12 @@
 
                     .title{
                         font-size: 14px;
-                        margin-left: 160px;
-                    }
-
-                    .start_time{
-                        margin-left: 160px;
                     }
 
                     .eventlocation-container {
-                        width: calc( 100% - 192px );
-                        right: 16px;
-                        bottom: 10px;
+                        width: calc( 100% - 190px )!important;
+                        right: 15px!important;
+                        bottom: 5px!important;
 
                         .eventblackbar{
                             height: 2px;
@@ -387,7 +381,7 @@
     }
 }
 
-.load-more{
+#eventcv-load-more{
     position: absolute;
     bottom: 0;
     width: 100%;

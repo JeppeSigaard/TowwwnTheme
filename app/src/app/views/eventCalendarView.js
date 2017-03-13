@@ -2,7 +2,8 @@
 
 // Event Calendar View
 const React = require( 'react' ),
-      Event = require( '../components/event.js' );
+      Event = require( '../components/event.js' ),
+      Globals = require( '../globals.js' );
 
 class EventCalendarView extends React.Component {
 
@@ -10,6 +11,8 @@ class EventCalendarView extends React.Component {
     constructor() {
         super();
         this.state = { containerClasses : 'eventscontainer' };
+        this.eventsLength = 0;
+        this.allLoaded = false;
     }
 
     // Set event layout
@@ -18,6 +21,33 @@ class EventCalendarView extends React.Component {
             this.setState({ containerClasses : 'eventscontainer' });
         else if ( !this.state.containerClasses.includes('lineLayout') )
             this.setState({ containerClasses : 'eventscontainer lineLayout' });
+    }
+    
+    // Load more
+    loadMore() {
+        if ( this.allLoaded ) return;
+        
+        document.getElementById( 'eventcv-load-more' ).innerHTML = 'Indlæser...';
+        Globals.eventDataHandler.getFutureEvents( 25, true ).then((resp) => {
+            
+            if ( resp.length > this.eventsLength && resp.length % 25 === 0 ) {
+                document.getElementById( 'eventcv-load-more' ).innerHTML = 'Indlæs 25 mere'; 
+            } else {
+                document.getElementById( 'eventcv-load-more' ).innerHTML = 'Alt indhold indlæst';
+                this.allLoaded = true;
+            } this.eventsLength = resp.length;
+            
+            let events = [];
+            resp.forEach(( item, index ) => {
+                events.push( <Event elem={ item } key={ 'event-' + item.fbid } setMainState={ this.props.setMainState } /> )
+            });
+
+            this.props.setMainState({
+                'eventsData' : resp,
+                'jsxEvents' : events,
+            });
+        });
+        
     }
 
     // Render
@@ -51,6 +81,7 @@ class EventCalendarView extends React.Component {
 
                                 </div>
                             </div>
+                            <div id="eventcv-load-more" onClick={ this.loadMore.bind(this) } >Indlæs 25 mere</div>
                         </div>
                     </div>
                 </div>

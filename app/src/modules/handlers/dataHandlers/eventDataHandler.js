@@ -29,7 +29,7 @@ class EventDataHandler{
                         this.futureEvents.push( elem );
                     } resolve( this.futureEvents );
                 } else {
-                    this.futureEvents = tmp;
+                    resolve( tmp );
                 }
 
             }.bind(this);

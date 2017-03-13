@@ -45,8 +45,8 @@ class TowwwnApp extends React.Component {
         this.state = { };
 
         // Gets event data
-        let eventData = new EventDataHandler();
-        eventData.getFutureEvents( 50, true ).then((resp) => {
+        Globals.eventDataHandler = new EventDataHandler();
+        Globals.eventDataHandler.getFutureEvents( 25, true ).then((resp) => {
 
             // Converts to jsx elements
             let events = [];
@@ -88,8 +88,12 @@ class TowwwnApp extends React.Component {
     
     // ParsedSetState
     parsedSetState( key, value ) {
-        this.state[ key ] = value;
-        this.forceUpdate();
+        if ( typeof key !== 'object' ) { 
+            this.state[ key ] = value;
+            this.forceUpdate();
+        } else {
+            this.setState(key);
+        }
     }
     
     // After render
