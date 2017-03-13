@@ -1,7 +1,9 @@
 
 
 // Location Category view
-const React = require( 'react' );
+const React = require( 'react' ),
+      SubCategories = require( '../components/subcategories.js' );
+
 class LocationCategoryView extends React.Component {
 
     // Ctor
@@ -28,28 +30,11 @@ class LocationCategoryView extends React.Component {
                                 Svendborg i udvalg
                                 <div className="sub-categories-title" onClick={ this.toggleSubCategories.bind(this) } ></div>
                             </div>
-
-                            <div className="sub-category-outer" style={{ 'height' : this.state.subCatHeight }} >
-                                <div className="sub-category-inner">
-                                    <div className="sub-category"><div className="elem-counter">16</div>Test Kategori 1</div>
-                                    <div className="sub-category"><div className="elem-counter">12</div>Test Kategori 2</div>
-                                    <div className="sub-category"><div className="elem-counter">11</div>Test Kategori 3</div>
-                                    <div className="sub-category"><div className="elem-counter">9</div>Test Kategori 4</div>
-                                    <div className="sub-category"><div className="elem-counter">5</div>Test Kategori 5</div>
-                                    <div className="sub-category"><div className="elem-counter">5</div>Test Kategori 6</div>
-                                    <div className="sub-category"><div className="elem-counter">4</div>Test Kategori 7</div>
-                                    <div className="sub-category"><div className="elem-counter">2</div>Test Kategori 8</div>
-                                    <div className="sub-category"><div className="elem-counter">1</div>Test Kategori 9</div>
-                                </div>
-                            </div>
-
+                            <SubCategories subCategories={ this.props.allCategories } outerHeight={ this.state.subCatHeight } />
                             <div className="category-container">
-
-                                {/* Renders categories */}
                                 { typeof this.props.categories !== 'undefined' &&
                                   this.props.categories !== null &&
                                   this.props.categories }
-
                             </div>
                         </div>
                     </div>

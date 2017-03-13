@@ -15,12 +15,16 @@
     margin: 0;
     top: 0;
     overflow: hidden;
-    height: 100vh;
+    height: calc( 100vh - 60px );
 
     &.high{
         position: relative;
         height: auto;
         overflow: auto;
+    }
+    
+    &:not(.high) {
+        top: 60px;
     }
 
     &:after{

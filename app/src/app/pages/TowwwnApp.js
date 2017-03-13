@@ -20,6 +20,7 @@ const React = require( 'react' ),
     // Plugins
     SyncScrollHandler = require( '../../modules/plugins/syncScrollHandler.js' ),
     ViewHandler = require( '../../modules/handlers/viewHandler.js' ),
+    EventHandlers = require( '../../modules/handlers/eventHandlers.js' ),
     ImageHandler = require( '../../modules/handlers/imageHandler.js' ),
 
     // TMP
@@ -37,6 +38,7 @@ class TowwwnApp extends React.Component {
         // Instances
         this.imageHandler = new ImageHandler();
         this.syncScroll = new SyncScrollHandler();
+        this.eventHandlers = new EventHandlers();
         Globals.viewHandler = null;
         
         this.hasMounted = false;
@@ -44,12 +46,12 @@ class TowwwnApp extends React.Component {
 
         // Gets event data
         let eventData = new EventDataHandler();
-        eventData.getFutureEvents().then((resp) => {
+        eventData.getFutureEvents( 50, true ).then((resp) => {
 
             // Converts to jsx elements
             let events = [];
-            resp.splice( 0, 50 ).forEach(( item, index ) => {
-                events.push( <Event elem={ item } key={ item.fbid } setMainState={ this.parsedSetState.bind(this) } /> )
+            resp.forEach(( item, index ) => {
+                events.push( <Event elem={ item } key={ 'event-' + item.fbid } setMainState={ this.parsedSetState.bind(this) } /> )
             });
 
             this.setState({
@@ -66,16 +68,21 @@ class TowwwnApp extends React.Component {
             // Converts to JSX elements
             let categories = [];
             resp.forEach(( item, index ) => {
-                categories.push( <LocationCategory elem={ item } key={ item.fbid } setMainState={ this.parsedSetState.bind(this) } /> );
+                categories.push( <LocationCategory elem={ item } key={ 'category-' + item.category_id } setMainState={ this.parsedSetState.bind(this) } /> );
             });
 
             this.setState({
-                'categoriesData' : resp,
+                'futureCategoriesData' : resp,
                 'jsxCategories' : categories,
             });
 
         });
-
+        
+        categoryData.getAllCategories().then(( resp ) => {
+            this.setState({
+                'categoriesData' : resp,
+            });
+        });
 
     }
     
@@ -90,7 +97,6 @@ class TowwwnApp extends React.Component {
         if ( Globals.viewHandler === null ) Globals.viewHandler = new ViewHandler( this.syncScroll );
         this.syncScroll.wrapElems();
         this.syncScroll.rescaleContainer( Globals.viewHandler.focusedViews );
-        console.log( this.state.singleeevent );
     }
 
     // Render
@@ -100,7 +106,7 @@ class TowwwnApp extends React.Component {
                 <div className="content-container-inner">
                     <EventSingleView event={ this.state.singleevent } setMainState={ this.parsedSetState.bind(this) } />
                     <EventCalendarView events={ this.state.jsxEvents } setMainState={ this.parsedSetState.bind(this) } />
-                    <LocationCategoryView categories={ this.state.jsxCategories } setMainState={ this.parsedSetState.bind(this) } />
+                    <LocationCategoryView categories={ this.state.jsxCategories } allCategories={ this.state.categoriesData } setMainState={ this.parsedSetState.bind(this) } />
                 </div>
             </div>
         );

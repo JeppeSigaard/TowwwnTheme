@@ -44,7 +44,7 @@
                             <svg class="logo" viewBox="0 0 200 70"><use xlink:href="#towwwn-logo"></use></svg>
                             <div class="city"><?php echo get_theme_mod('city'); ?></div>
                         </a>
-                        <div class="menu-show-btns">
+                        <div id="menu-show-btns">
                             <svg class="menu-show-img" viewBox="0 0 32 32"><use xlink:href="#icon-search-circle" ></use></svg>
                             <svg class="menu-hide-img" viewBox="0 0 32 32"><use xlink:href="#icon-show-menu" ></use></svg>
                         </div>
