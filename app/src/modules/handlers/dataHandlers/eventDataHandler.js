@@ -34,7 +34,7 @@ class EventDataHandler{
 
             }.bind(this);
 
-            // Sends request
+            // Sends request 
             if ( cont ) {
                 xhr.open( 'GET', 'http://towwwn.dk/api/svendborg/events?per_page='+getNum+'&page='+this.futurePage+'&after=now' );
                 this.futurePage ++;
