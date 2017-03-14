@@ -26,7 +26,7 @@ class ViewTopBar extends React.Component {
     // Render
     render() {
         return ( 
-            <div className="viewbar">
+            <div className={ this.props.darken === true ? "viewbar dark" : "viewbar" }>
                 { this.props.standard &&
                     <a href={ this.props.href } data-type={ this.props.datatype } data-id={ this.props.id } >
                         { this.props.title }

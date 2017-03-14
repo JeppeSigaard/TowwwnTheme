@@ -170,4 +170,10 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
             min-height: calc(100vh - #{$menu-bar-height});
         }
     }
+
+    // Location List View
+    #location-list-view{
+        background-color: #f0f0f0;
+    }
+
 }

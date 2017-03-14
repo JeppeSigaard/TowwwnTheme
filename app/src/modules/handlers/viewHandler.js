@@ -43,8 +43,8 @@ class ViewHandler {
                         setTimeout(() => {
                             prevFocus.classList.add('notrans');
                             prevFocus.style.transform = 'translate(-100%, 0px)';
-                            setTimeout(() => { prevFocus.classList.remove('notrans'); }, 10);
-                        }, parseFloat( window.getComputedStyle( this.focusedViews[0], null ).transitionDuration ) * 1000 );
+                            setTimeout(() => { prevFocus.classList.remove('notrans'); }, 15);
+                        }, parseFloat( window.getComputedStyle( this.focusedViews[0], null ).transitionDuration ) * 1000 + 10 );
                     }
                     
                     if ( this.focusedViews[1].id !== leftView.id && this.focusedViews[1].id !== rightView.id ) {
@@ -52,18 +52,18 @@ class ViewHandler {
                         setTimeout(() => {
                             prevFocus.classList.add('notrans');
                             prevFocus.style.transform = 'translate(-100%, 0px)';
-                            setTimeout(() => { prevFocus.classList.remove('notrans'); }, 10);
-                        }, parseFloat( window.getComputedStyle( this.focusedViews[1], null ).transitionDuration ) * 1000 );
+                            setTimeout(() => { prevFocus.classList.remove('notrans'); }, 15);
+                        }, parseFloat( window.getComputedStyle( this.focusedViews[1], null ).transitionDuration ) * 1000 + 10 );
                     }
                     
-                }, 1);
+                }, 0);
             }
 
             if ( fromRight ) {
                 setTimeout(() => {
                     this.focusedViews[0].style.transform = 'translate(-200%, 0)';
                     this.focusedViews[1].style.transform = 'translate(-100%, 0)';
-                }, 1);
+                }, 0);
             }
             
             // Adds notrans classes, if param is set
@@ -96,8 +96,8 @@ class ViewHandler {
                     setTimeout(() => {
                         prevFocus.classList.add('notrans');
                         prevFocus.style.transform = 'translate(-100%, 0px)';
-                        setTimeout(() => { prevFocus.classList.remove('notrans'); }, 10);
-                    }, parseFloat( window.getComputedStyle( this.focusedViews[1], null ).transitionDuration ) * 1000 );
+                        setTimeout(() => { prevFocus.classList.remove('notrans'); }, 15);
+                    }, parseFloat( window.getComputedStyle( this.focusedViews[1], null ).transitionDuration ) * 1000 + 10 );
                 }
                 
             } else if ( this.focusedViews[1] == leftView ) {

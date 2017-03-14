@@ -9,6 +9,10 @@
     font-size: 12px;
     background-color: $color-blue-2;
     
+    &.dark{
+        background-color: darken( $color-blue-2, 5% );
+    }
+    
     a{
        color: white;
         text-decoration: none;

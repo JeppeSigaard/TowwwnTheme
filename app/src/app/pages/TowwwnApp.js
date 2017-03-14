@@ -7,11 +7,13 @@ const React = require( 'react' ),
     // Data Handlers
     EventDataHandler = require( '../../modules/handlers/dataHandlers/eventDataHandler.js' ),
     CategoryDataHandler = require( '../../modules/handlers/dataHandlers/categoryDataHandler.js' ),
+    LocationDataHandler = require( '../../modules/handlers/dataHandlers/locationDataHandler.js' ),
 
     // Views
     EventSingleView = require( '../views/eventSingleView.js' ),
     EventCalendarView = require( '../views/eventCalendarView.js' ),
     LocationCategoryView = require( '../views/locationCategoryView.js' ),
+    LocationListView = require( '../views/locationListView.js' ),
 
     // Components
     Event = require( '../components/event.js' ),
@@ -39,7 +41,10 @@ class TowwwnApp extends React.Component {
         this.imageHandler = new ImageHandler();
         this.syncScroll = new SyncScrollHandler();
         this.eventHandlers = new EventHandlers();
+        
+        // Globals
         Globals.viewHandler = null;
+        Globals.locationDataHandler = new LocationDataHandler();
         
         this.hasMounted = false;
         this.state = { };
@@ -111,6 +116,7 @@ class TowwwnApp extends React.Component {
                     <EventSingleView event={ this.state.singleevent } setMainState={ this.parsedSetState.bind(this) } />
                     <EventCalendarView events={ this.state.jsxEvents } setMainState={ this.parsedSetState.bind(this) } />
                     <LocationCategoryView categories={ this.state.jsxCategories } allCategories={ this.state.categoriesData } setMainState={ this.parsedSetState.bind(this) } />
+                    <LocationListView elems={ this.state.currentLocations } category={ this.state.currentLocationsCategory } />
                 </div>
             </div>
         );
