@@ -3,7 +3,8 @@
 // Location List View
 const React = require( 'react' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
-      Location = require( '../components/location.js' );
+      Location = require( '../components/location.js' ),
+      Loader = require( '../componentParts/loader.js' );
 
 class LocationListView extends React.Component {
     
@@ -27,6 +28,8 @@ class LocationListView extends React.Component {
             for ( let elem of nextProps.elems ) {
                 jsxElems.push( <Location elem={ elem } /> );
             } this.setState({ 'jsxLocations' : jsxElems });
+        } else {
+            this.setState({ 'jsxLocations' : null });
         }
     }
     
@@ -43,6 +46,7 @@ class LocationListView extends React.Component {
                             
                             <div className="location-list" >
                                 { this.state.jsxLocations != null && this.state.jsxLocations }
+                                { this.state.jsxLocations == null && <Loader /> }
                             </div>
                         </div>
                     </div>

@@ -15,7 +15,8 @@ class LocationCategory extends React.Component {
     handleClick( e ) {
         e.preventDefault();
         this.props.setMainState({
-            'currentLocationsCategory' : this.props.elem
+            'currentLocationsCategory' : this.props.elem,
+            'currentLocations' : null,
         });
         
         Globals.viewHandler.changeViewFocus(
