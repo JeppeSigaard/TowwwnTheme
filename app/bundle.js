@@ -4727,32 +4727,40 @@ var SingleEvent = function (_React$Component) {
     function SingleEvent(props) {
         _classCallCheck(this, SingleEvent);
 
-        // Extracts img url
         var _this = _possibleConstructorReturn(this, (SingleEvent.__proto__ || Object.getPrototypeOf(SingleEvent)).call(this, props));
 
-        var imgurl = null;
-        if (props.elem.imgurl !== '' && props.elem.imgurl !== null && typeof props.elem.imgurl !== 'undefined') {
-            imgurl = props.elem.imgurl;
-        } else {
-            imgurl = 'http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png';
-        }
-
-        // Sets state
         _this.state = {
-            'imgurl': imgurl
+            imgurl: props.elem.imgurl != null ? props.elem.imgurl : 'http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png'
         };
-
         return _this;
     }
 
-    // Render
+    // Component will receive props
 
 
     _createClass(SingleEvent, [{
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(nextProps) {
+
+            // Extracts img url
+            var imgurl = null;
+            if (nextProps.elem.imgurl !== '' && nextProps.elem.imgurl !== null && typeof nextProps.elem.imgurl !== 'undefined') {
+                imgurl = nextProps.elem.imgurl;
+            } else {
+                imgurl = 'http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png';
+            }
+
+            // Sets state
+            this.setState({ imgurl: imgurl });
+        }
+
+        // Render
+
+    }, {
         key: 'render',
         value: function render() {
             var elem = this.props.elem;
-            return React.createElement('div', { className: 'eventsingleview-container' }, React.createElement('div', { className: 'event-sv-content-container' }, React.createElement('div', { className: 'event-singleview' }, React.createElement('div', { className: 'event-sv-img', style: { 'backgroundImage': 'url(' + this.state.imgurl + ')' } }), React.createElement('div', { className: 'event-sv-title' }, elem.name), React.createElement('div', { className: 'event-sv-start-time' }, DataFormatters.formatDate(elem.start_time, true, true)), React.createElement('hr', { className: 'linebreak' }), React.createElement('div', { className: 'es-btns' }, React.createElement('div', { className: 'status-btn share', 'data-link': 'https://www.facebook.com/events/' + elem.fbid }, React.createElement('div', { className: 'icon' }, React.createElement('svg', { viewBox: '0 0 32 32' }, React.createElement('use', { xlinkHref: '#icon-facebook' }))), React.createElement('div', { className: 'text' }, 'Del')), event.ticket_uri !== '' && event.ticket_uri !== null && React.createElement('div', { className: 'status-btn ticket', 'data-link': event.ticket_uri }, React.createElement('div', { className: 'icon' }, React.createElement('svg', { viewBox: '0 0 32 32' }, React.createElement('use', { xlinkHref: '#icon-ticket' }))), React.createElement('div', { className: 'text' }, 'K\xF8b billet'))), React.createElement('hr', { className: 'lineBreak' }), React.createElement('div', { className: 'event-sv-desc' }, React.createElement(Linkify, null, TextPreproccesors.nl2p(elem.description)))), React.createElement(SingleViewFooter, { type: 'event', elem: elem })));
+            return React.createElement('div', { className: 'eventsingleview-container' }, React.createElement('div', { className: 'event-sv-content-container' }, React.createElement('div', { className: 'event-singleview' }, React.createElement('div', { className: 'event-sv-img', style: { 'backgroundImage': 'url(' + this.state.imgurl } }), React.createElement('div', { className: 'event-sv-title' }, elem.name), React.createElement('div', { className: 'event-sv-start-time' }, DataFormatters.formatDate(elem.start_time, true, true)), React.createElement('hr', { className: 'linebreak' }), React.createElement('div', { className: 'es-btns' }, React.createElement('div', { className: 'status-btn share', 'data-link': 'https://www.facebook.com/events/' + elem.fbid }, React.createElement('div', { className: 'icon' }, React.createElement('svg', { viewBox: '0 0 32 32' }, React.createElement('use', { xlinkHref: '#icon-facebook' }))), React.createElement('div', { className: 'text' }, 'Del')), event.ticket_uri !== '' && event.ticket_uri !== null && React.createElement('div', { className: 'status-btn ticket', 'data-link': event.ticket_uri }, React.createElement('div', { className: 'icon' }, React.createElement('svg', { viewBox: '0 0 32 32' }, React.createElement('use', { xlinkHref: '#icon-ticket' }))), React.createElement('div', { className: 'text' }, 'K\xF8b billet'))), React.createElement('hr', { className: 'lineBreak' }), React.createElement('div', { className: 'event-sv-desc' }, React.createElement(Linkify, null, TextPreproccesors.nl2p(elem.description)))), React.createElement(SingleViewFooter, { type: 'event', elem: elem })));
         }
     }]);
 
@@ -10946,7 +10954,8 @@ var EventSingleView = function (_React$Component) {
                 'fromLeft': true,
                 'fromRight': false,
                 'notrans': false
-            }
+            },
+            jsxEvent: null
         };
         return _this;
     }
@@ -10957,10 +10966,9 @@ var EventSingleView = function (_React$Component) {
     _createClass(EventSingleView, [{
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps) {
-            if (this.props.event != null) {
-                this.state.jsxEvent = null;
+            if (nextProps.event != null) {
                 this.setState({
-                    'jsxEvent': React.createElement(SingleEvent, { elem: this.props.event })
+                    'jsxEvent': React.createElement(SingleEvent, { elem: nextProps.event })
                 });
             }
         }

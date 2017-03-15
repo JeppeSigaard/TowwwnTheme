@@ -27,15 +27,15 @@ class EventSingleView extends React.Component {
                 'fromRight' : false,
                 'notrans': false,
             },
+            jsxEvent : null,
         };
     }
     
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
-        if ( this.props.event != null ) {
-            this.state.jsxEvent = null;
+        if ( nextProps.event != null ) {
             this.setState({
-                'jsxEvent' : <SingleEvent elem={ this.props.event } />
+                'jsxEvent' : <SingleEvent elem={ nextProps.event } />,
             });
         }
     }
@@ -49,8 +49,7 @@ class EventSingleView extends React.Component {
                     <div className="sync-inner">
                         <div className="content">
                             <ViewTopBar standard={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } name={ this.props.name } />
-                               
-                            {/* Renders events */}
+                            
                             { this.state.jsxEvent != null &&
                               this.state.jsxEvent }
                               

@@ -13,24 +13,30 @@ const React = require( 'react' ),
 class SingleEvent extends React.Component {
 
     // Ctor
-    constructor( props ) {
-        super( props );
-
+    constructor( props ) { 
+        super( props ); 
+        this.state = {
+            imgurl : ( props.elem.imgurl != null ? props.elem.imgurl : 
+                      'http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png' ),
+        };
+    }
+    
+    // Component will receive props
+    componentWillReceiveProps( nextProps ) {
+        
         // Extracts img url
         let imgurl = null;
-        if ( props.elem.imgurl !== '' &&
-             props.elem.imgurl !== null &&
-             typeof props.elem.imgurl !== 'undefined' ) {
-            imgurl = props.elem.imgurl;
+        if ( nextProps.elem.imgurl !== '' &&
+             nextProps.elem.imgurl !== null &&
+             typeof nextProps.elem.imgurl !== 'undefined' ) {
+            imgurl = nextProps.elem.imgurl;
         } else {
             imgurl = 'http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png';
         }
 
         // Sets state
-        this.state = {
-            'imgurl' : imgurl,
-        };
-
+        this.setState({ imgurl : imgurl });
+        
     }
 
     // Render
@@ -44,7 +50,7 @@ class SingleEvent extends React.Component {
                     <div className="event-singleview">
 
                         {/* Image */}
-                        <div className="event-sv-img" style={{ 'backgroundImage' : 'url(' + this.state.imgurl + ')' }} ></div>
+                        <div className="event-sv-img" style={{ 'backgroundImage' : 'url(' + this.state.imgurl }} ></div>
                         <div className="event-sv-title" >
                             { elem.name }
                         </div>
