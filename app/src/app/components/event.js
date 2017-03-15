@@ -11,9 +11,10 @@ class Event extends React.Component {
         e.preventDefault();
         this.props.setMainState( 
             'singleevent', 
-            <SingleEvent elem={ this.props.elem } />
+            this.props.elem
         );
         
+        Globals.setMainState({ from : this.props.name });
         Globals.viewHandler.changeViewFocus(  
             'event-single-view',
             'event-calendar-view',

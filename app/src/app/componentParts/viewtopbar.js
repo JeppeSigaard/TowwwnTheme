@@ -23,14 +23,24 @@ class ViewTopBar extends React.Component {
         );
     }
     
+    // Change view
+    changeView() {
+        Globals.setMainState({ from : this.props.name });
+        Globals.viewHandler.changeViewFocus(
+            this.props.vref.leftview,
+            this.props.vref.rightview,
+            this.props.vref.fromLeft, 
+            this.props.vref.fromRight, 
+            false
+        );
+    }
+    
     // Render
     render() {
         return ( 
             <div className={ this.props.darken === true ? "viewbar dark" : "viewbar" }>
                 { this.props.standard &&
-                    <a href={ this.props.href } data-type={ this.props.datatype } data-id={ this.props.id } >
-                        { this.props.title }
-                    </a>
+                    <a onClick={ this.props.vref != null ? this.changeView.bind(this) : function() {} }>{ this.props.title }</a>
                 }
                 
                 { this.props.other }
