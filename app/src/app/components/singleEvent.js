@@ -8,7 +8,6 @@ const React = require( 'react' ),
       TextPreproccesors = require( '../../modules/tools/textPreproccesors.js' ),
 
       // Component parts
-      ViewTopBar = require( '../componentParts/viewtopbar.js' ),
       SingleViewFooter = require('../componentParts/singleviewfooter.js');
 
 class SingleEvent extends React.Component {
@@ -30,13 +29,6 @@ class SingleEvent extends React.Component {
         // Sets state
         this.state = {
             'imgurl' : imgurl,
-            'closeviewstate' : {
-                'leftview' : 'event-calendar-view',
-                'rightview' : 'location-category-view',
-                'fromLeft' : false,
-                'fromRight' : true,
-                'notrans': false,
-            },
         };
 
     }
@@ -46,9 +38,6 @@ class SingleEvent extends React.Component {
         let elem = this.props.elem;
         return (
             <div className="eventsingleview-container">
-
-                {/* Event bar */}
-                <ViewTopBar standard={ true } href="#" data-type="location" data-id={ elem.parentid } title={ elem.parentname } other="" closeviewstate={ this.state.closeviewstate } />
 
                 {/* Container */}
                 <div className="event-sv-content-container">

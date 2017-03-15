@@ -1,7 +1,9 @@
 
 
 // Location
-const React = require( 'react' );
+const React = require( 'react' ),
+      Globals = require( '../globals.js' );
+
 class Location extends React.Component {
     
     // Ctor
@@ -10,6 +12,16 @@ class Location extends React.Component {
     // Handle Click
     handleClick( e ) {
         e.preventDefault();
+        this.props.setMainState({
+            'singleLocation' : this.props.elem,
+        });
+        
+        Globals.setMainState({ from : this.props.name });
+        Globals.viewHandler.changeViewFocus(
+            'location-list-view',
+            'location-single-view',
+            false, true, false
+        );
     }
     
     // Render

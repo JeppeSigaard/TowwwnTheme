@@ -14,6 +14,7 @@ const React = require( 'react' ),
     EventCalendarView = require( '../views/eventCalendarView.js' ),
     LocationCategoryView = require( '../views/locationCategoryView.js' ),
     LocationListView = require( '../views/locationListView.js' ),
+    LocationSingleView = require( '../views/locationSingleView.js' ),
 
     // Components
     Event = require( '../components/event.js' ),
@@ -47,7 +48,7 @@ class TowwwnApp extends React.Component {
         Globals.locationDataHandler = new LocationDataHandler();
         
         this.hasMounted = false;
-        this.state = { };
+        this.state = { from: null };
 
         // Gets event data
         Globals.eventDataHandler = new EventDataHandler();
@@ -88,6 +89,9 @@ class TowwwnApp extends React.Component {
                 'categoriesData' : resp,
             });
         });
+        
+        // Set main state
+        Globals.setMainState = this.parsedSetState.bind(this);
 
     }
     
@@ -113,10 +117,11 @@ class TowwwnApp extends React.Component {
         return (
             <div className="content-container" id="page-content">
                 <div className="content-container-inner">
-                    <EventSingleView event={ this.state.singleevent } setMainState={ this.parsedSetState.bind(this) } />
-                    <EventCalendarView events={ this.state.jsxEvents } setMainState={ this.parsedSetState.bind(this) } />
-                    <LocationCategoryView categories={ this.state.jsxCategories } allCategories={ this.state.categoriesData } setMainState={ this.parsedSetState.bind(this) } />
-                    <LocationListView elems={ this.state.currentLocations } category={ this.state.currentLocationsCategory } />
+                    <EventSingleView name="event-single-view" from={ this.state.from } event={ this.state.singleevent } setMainState={ this.parsedSetState.bind(this) } />
+                    <EventCalendarView name="event-calendar-view" from={ this.state.from } events={ this.state.jsxEvents } setMainState={ this.parsedSetState.bind(this) } />
+                    <LocationCategoryView name="location-category-view" from={ this.state.from } categories={ this.state.jsxCategories } allCategories={ this.state.categoriesData } setMainState={ this.parsedSetState.bind(this) } />
+                    <LocationListView name="location-list-view" from={ this.state.from } elems={ this.state.currentLocations } category={ this.state.currentLocationsCategory } setMainState={ this.parsedSetState.bind(this) } />
+                    <LocationSingleView name="location-single-view" from={ this.state.from } elem={ this.state.singleLocation } setMainState={ this.parsedSetState.bind(this) } />
                 </div>
             </div>
         );

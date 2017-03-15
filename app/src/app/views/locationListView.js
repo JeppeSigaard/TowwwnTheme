@@ -26,7 +26,7 @@ class LocationListView extends React.Component {
         if ( nextProps.elems != null ) {
             let jsxElems = [];
             for ( let elem of nextProps.elems ) {
-                jsxElems.push( <Location elem={ elem } /> );
+                jsxElems.push( <Location elem={ elem } setMainState={ nextProps.setMainState } /> );
             } this.setState({ 'jsxLocations' : jsxElems });
         } else {
             this.setState({ 'jsxLocations' : null });
@@ -41,7 +41,7 @@ class LocationListView extends React.Component {
                     <div className="sync-inner">
                         <div className="content">
                             { this.props.category != null && 
-                                <ViewTopBar closeviewstate={ this.state.closeviewstate } title={ this.props.category.category_name } darken={ true } standard={ true } />
+                                <ViewTopBar closeviewstate={ this.state.closeviewstate } title={ this.props.category.category_name } darken={ true } standard={ true } name={ this.props.name } />
                             }
                             
                             <div className="location-list" >

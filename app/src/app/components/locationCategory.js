@@ -19,6 +19,7 @@ class LocationCategory extends React.Component {
             'currentLocations' : null,
         });
         
+        Globals.setMainState({ from : this.props.name });
         Globals.viewHandler.changeViewFocus(
             'location-category-view',
             'location-list-view',
