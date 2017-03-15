@@ -82,7 +82,7 @@ class SingleEvent extends React.Component {
                         {/* Description */}
                         <div className="event-sv-desc" >
                             <Linkify>
-                                { TextPreproccesors.nl2p( elem.description ) }
+                                { TextPreproccesors.nl2p( TextPreproccesors.ripRep( elem.description ) ) }
                             </Linkify>
                         </div>
 

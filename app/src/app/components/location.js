@@ -30,7 +30,7 @@ class Location extends React.Component {
         if ( elem != null ) {
             return (
                 <a className="location-container" onClick={ this.handleClick.bind(this) } >
-                    <span className="location-picture" style={{ 'backgroundImage' : elem.picture }} ></span>
+                    <span className="location-picture" style={{ 'backgroundImage' : 'url(' + elem.picture + ')' }} ></span>
                     <span className="location-description">
                         <h2 className="location-title">{ elem.name }</h2>
                         <p className="location-about">{ elem.about }</p>

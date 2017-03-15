@@ -17,6 +17,7 @@ class SyncScrollHandler {
         this.highestElem = null;
         this.lastScrollTop = 0;
         this.ready = false;
+        this.is_at = 'top',
 
         // Runs internal functions
         this.wrapElems();
@@ -112,13 +113,35 @@ class SyncScrollHandler {
             delta = winScrollTop - this.lastScrollTop;
 
         // Check if above sync scroll area
-        if ( winScrollTop  < containerTop ) {}
+        if ( winScrollTop  < containerTop - 60) {
+            if(this.is_at !== 'top'){
+                for ( let item of this.elem ) {
+                    if ( !item.classList.contains( 'high' ) ) {
+                        item.scrollTop = 0;
+                    }
+                }
+
+                this.is_at = 'top';
+            }
+        }
 
         // Checks if below sync scroll area
-        else if ( winScrollTop + winHeight > containerTop + containerHeight ) {}
+        else if ( winScrollTop + winHeight > containerTop + containerHeight ) {
+            if(this.is_at !== 'bottom'){
+                for ( let item of this.elem ) {
+                    if ( !item.classList.contains( 'high' ) ) {
+                        item.scrollTop = 500000;
+                    }
+                }
+                this.is_at = 'bottom';
+            }
+
+        }
 
         // In sync scroll area
         else {
+            if(this.is_at !== 'middle'){this.is_at = 'middle';}
+
             for ( let item of this.elem ) {
                 if ( !item.classList.contains( 'high' ) ) {
                     item.scrollTop = item.scrollTop + delta;

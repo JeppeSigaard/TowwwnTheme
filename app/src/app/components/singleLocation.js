@@ -54,10 +54,10 @@ class SingleLocation extends React.Component {
                 <div className="breakline"></div>
                 
                 <div className="description-container">
-                    <div className="title">Om { elem.name }</div>
+                    <div className="title">{ elem.name }</div>
                     <div className="description">
                         <Linkify>
-                            { TextPreproccesors.nl2p( elem.description ) }
+                            { TextPreproccesors.nl2p( TextPreproccesors.ripRep( elem.description ) ) }
                         </Linkify>
                     </div>
                 </div>
