@@ -37,7 +37,6 @@ class ExtraEventHandlers {
                 container.classList.remove('fixed');
                 container.classList.remove('active');
             }
-            
         }
         
         // HEADER STUFF END

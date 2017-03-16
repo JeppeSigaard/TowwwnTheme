@@ -85,7 +85,7 @@ class TowwwnApp extends React.Component {
 
         });
         
-        categoryData.getAllCategories().then(( resp ) => {
+        categoryData.getAllCategories(false, true).then(( resp ) => {
             this.setState({
                 'categoriesData' : resp,
             });
@@ -112,6 +112,8 @@ class TowwwnApp extends React.Component {
         Globals.syncScroll.wrapElems();
         Globals.syncScroll.rescaleContainer( Globals.viewHandler.focusedViews );
     }
+
+    componentDidMount(){document.body.classList.remove('loading');}
 
     // Render
     render() {

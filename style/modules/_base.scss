@@ -1,3 +1,9 @@
+@keyframes fadeOutBodyAfter{
+    0%{opacity: 1; visibility: visible;}
+    99%{opacity: 0; visibility: visible;}
+    100%{opacity: 0; visibility: hidden;}
+}
+
 body {
     margin: 0;
     background-color: #e0e0e0;
@@ -12,6 +18,20 @@ body {
         // overflow: hidden;
         height: 100%;
         //margin-right: 14px;
+    }
+
+    &:after{
+        content: '';
+        display: block;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background-color: #f0f0f0;
+        z-index: 1000;
+        background-image: url(assets/icons/loading.svg);
+        background-position: center;
+        background-size: 62px;
+        background-repeat: no-repeat;
+        animation: fadeOutBodyAfter 200ms forwards;
     }
 
     @media(min-width:#{$bp-1}){
