@@ -29,23 +29,31 @@
     text-transform: uppercase;
     padding-left: 20px;
     color: white;
+    cursor: pointer;
 
     .sub-categories-title{
         position: absolute;
-        top: 50%; right: 42px;
-        transform: translate( 0, -50% );
-        font-size: 12px;
-        color: white;
-        cursor: pointer;
-        text-transform: uppercase;
+        right: 0;
+        top: 0;
+        height: 60px;
+        min-width: 65px;
+        border-left: 1px solid rgba(white,.5);
+        background: transparent;
+        transition: background 120ms;
+
+        &:hover{
+            background: rgba(white,.1);
+        }
 
         &:after{
             content: '';
             position: absolute;
-            top: -6px; right: -12px;
+            top: 50%; right: 32.5px;
+            transform: translate(50%,-50%);
             width: 0; height: 0;
-            border: 10px solid transparent;
-            border-top: 12px solid white;
+            margin-top: 4px;
+            border: 6px solid transparent;
+            border-top: 8px solid white;
         }
     }
 }

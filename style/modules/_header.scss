@@ -1,7 +1,22 @@
 #site-header{
-    position: relative;
+    position: sticky;
+    top: -$top-area-height;
+    z-index: 10;
     background-color: $color-grey-1;
     height: $menu-bar-height + $top-area-height;
+    background-image: url(assets/images/header-bg.jpg);
+    background-size: cover;
+    background-position: center;
+    transform: translateY(0px);
+    transition: transform 200ms;
+
+    &.fixed{
+
+        &.active{
+            transform: translateY($top-area-height);
+            // #header{ background-size: calc(cover + 25%); }
+        }
+    }
 }
 
 @media screen and (max-width: $bp-1) {
@@ -52,37 +67,12 @@
     transition: 200ms;
     height: auto;
     z-index: 100000;
-    
-    &.fixed{
-        position: fixed;
-        top: -$top-area-height;
-        transition: 200ms;
-        
-        &.active{
-            top: 0;
-            // #header{ background-size: calc(cover + 25%); }
-        }
-    }
-}
-
-.header-placeholder{
-    width: 100%;
-    max-width: $main-container-width;
-    height: calc(#{$top-area-height} + #{$menu-bar-height});
-    display: none;
-    
-    &.fixed{
-        display: block;
-    }
 }
 
 #header{
     position: relative;
     width: 100%;
     height: $top-area-height;
-    background-image: url(assets/images/header-bg.jpg);
-    background-size: cover;
-    background-position: center;
     transition: 200ms;
     overflow: hidden;
     border-bottom: 1px solid #333;
