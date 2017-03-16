@@ -20,7 +20,7 @@ class ExtraEventHandlers {
         
         if ( window.pageYOffset >= bp ) {
             
-            let headerContainers = document.getElementsByClassName( 'header-container' );
+            let headerContainers = document.getElementsByClassName( 'site-header' );
             document.getElementById( 'menu-show-btns' ).classList.add('show');
             document.getElementById( 'menu-show-btns' ).classList.remove('active');
             for ( let container of headerContainers ) {
@@ -30,7 +30,7 @@ class ExtraEventHandlers {
 
         } else {
             
-            let headerContainers = document.getElementsByClassName( 'header-container' );
+            let headerContainers = document.getElementsByClassName( 'site-header' );
             document.getElementById( 'menu-show-btns' ).classList.remove( 'show' );
             document.getElementById( 'menu-show-btns' ).classList.remove( 'active' );
             for ( let container of headerContainers ) {
@@ -48,7 +48,7 @@ class ExtraEventHandlers {
     // Handle show btn click
     handleShowBtnClick() {
         let showbtn = document.getElementById( 'menu-show-btns' ),
-            headerContainers = document.getElementsByClassName( 'header-container' );
+            headerContainers = document.getElementsByClassName( 'site-header' );
         if ( showbtn.classList.contains( 'active' ) ) {
             document.getElementById( 'menu-show-btns' ).classList.remove( 'active' );
             for ( let container of headerContainers ) {
