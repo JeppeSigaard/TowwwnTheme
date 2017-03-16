@@ -4943,11 +4943,18 @@ function TowwwnSelector(selector, elem) {
 var tselem = function () {
 
     // Ctor
-    function tselem(selector) {
+    function tselem(selector, elems) {
         _classCallCheck(this, tselem);
 
-        this.domElem = document.querySelectorAll(selector);
-        this.selector = selector;
+        if (selector != null) {
+            if (elems != null) this.domElem = elems;else this.domElem = document.querySelectorAll(selector);
+            this.selector = selector;
+        } else {
+            this.domElem = elems;
+            this.selector = null;
+        }
+
+        if (_typeof(this.domElem) !== 'object') this.domElem = [this.domElem];
     }
 
     // One liners
@@ -4955,13 +4962,18 @@ var tselem = function () {
 
     _createClass(tselem, [{
         key: 'get',
-        value: function get() {
-            return this.domElem;
+        value: function get(index) {
+            return new tselem(this.selector, new tselem(null, this.domElem[index]));
         }
     }, {
         key: 'find',
         value: function find(selector) {
             return new tselem(this.selector + ' ' + selector);
+        }
+    }, {
+        key: 'children',
+        value: function children() {
+            return new tselem(null, this.domElem.childNodes);
         }
 
         // Foreach
@@ -4969,6 +4981,7 @@ var tselem = function () {
     }, {
         key: 'foreach',
         value: function foreach(func) {
+            console.log(this.domElem);
             if (_typeof(this.domElem) === 'object') {
                 var _iteratorNormalCompletion = true;
                 var _didIteratorError = false;
@@ -4977,7 +4990,7 @@ var tselem = function () {
                 try {
                     for (var _iterator = this.domElem[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                         var _elem = _step.value;
-                        func(_elem);
+                        func(new tselem(this.selector, _elem));
                     }
                 } catch (err) {
                     _didIteratorError = true;
@@ -4993,7 +5006,7 @@ var tselem = function () {
                         }
                     }
                 }
-            } else func(elem);
+            } else func(new tselem(this.selector, this.domElem));
         }
 
         // Add Class
@@ -5070,40 +5083,72 @@ var tselem = function () {
             }
         }
 
+        // Event
+
+    }, {
+        key: 'on',
+        value: function on(event, func) {
+            console.log(this);
+            if (_typeof(this.domElem) === 'object') {
+                var _iteratorNormalCompletion4 = true;
+                var _didIteratorError4 = false;
+                var _iteratorError4 = undefined;
+
+                try {
+                    for (var _iterator4 = this.domElem[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                        var _elem4 = _step4.value;
+
+                        _elem4.addEventListener(event, func);
+                    }
+                } catch (err) {
+                    _didIteratorError4 = true;
+                    _iteratorError4 = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion4 && _iterator4.return) {
+                            _iterator4.return();
+                        }
+                    } finally {
+                        if (_didIteratorError4) {
+                            throw _iteratorError4;
+                        }
+                    }
+                }
+            } else {
+                this.domElem.addEventListener(event, func);
+            }
+        }
+
         // Style
 
     }, {
         key: 'css',
         value: function css(styling) {
             if ((typeof styling === 'undefined' ? 'undefined' : _typeof(styling)) === 'object') {
-
-                // Class Elems
                 if (_typeof(this.domElem) === 'object') {
-                    var _iteratorNormalCompletion4 = true;
-                    var _didIteratorError4 = false;
-                    var _iteratorError4 = undefined;
+                    var _iteratorNormalCompletion5 = true;
+                    var _didIteratorError5 = false;
+                    var _iteratorError5 = undefined;
 
                     try {
-                        for (var _iterator4 = this.domElem[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-                            var _elem4 = _step4.value;
+                        for (var _iterator5 = this.domElem[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                            var _elem5 = _step5.value;
 
                             for (var styleKey in styling) {
-                                _elem4.style[styleKey] = styling[styling];
+                                _elem5.style[styleKey] = styling[styling];
                             }
                         }
-
-                        // Id elems
                     } catch (err) {
-                        _didIteratorError4 = true;
-                        _iteratorError4 = err;
+                        _didIteratorError5 = true;
+                        _iteratorError5 = err;
                     } finally {
                         try {
-                            if (!_iteratorNormalCompletion4 && _iterator4.return) {
-                                _iterator4.return();
+                            if (!_iteratorNormalCompletion5 && _iterator5.return) {
+                                _iterator5.return();
                             }
                         } finally {
-                            if (_didIteratorError4) {
-                                throw _iteratorError4;
+                            if (_didIteratorError5) {
+                                throw _iteratorError5;
                             }
                         }
                     }
@@ -5111,8 +5156,24 @@ var tselem = function () {
                     for (var _styleKey in styling) {
                         this.domElem[_styleKey] = styling[_styleKey];
                     }
-                }
-            } else throw 'Unsupported styling param type: ' + (typeof styling === 'undefined' ? 'undefined' : _typeof(styling));
+                }return;
+            } else if (typeof styling === 'string') {
+                if (_typeof(this.domElem) === 'object') return this.domElem[0].style[styling];else return this.domElem.style[styling];
+            }throw 'Unsupported styling param type: ' + (typeof styling === 'undefined' ? 'undefined' : _typeof(styling));
+        }
+
+        // Position
+
+    }, {
+        key: 'position',
+        value: function position() {
+            var elem = null;
+            if (_typeof(this.domElem) === 'object') elem = this.domElem[0];else elem = this.domElem;
+
+            var resp = {
+                left: elem.offsetLeft - elem.parentNode.offsetLeft,
+                top: elem.offsetTop - elem.parentNode.offsetTop
+            };return resp;
         }
     }]);
 
@@ -7708,17 +7769,41 @@ tselem.prototype.initSlider = function (params) {
     return new Promise(function (resolve, reject) {
         var prevButton = typeof params.prevButton === 'string' ? params.prevButton : null,
             nextButton = typeof params.nextButton === 'string' ? params.nextButton : null,
-            inner = params.inner != null ? params.inner : null;
+            inner = typeof params.inner === 'string' ? params.inner : null;
 
         _this.foreach(function (elem) {
 
             // Fields
             var prevButtonElem = ts(prevButton, elem),
                 nextButtonElem = ts(nextButton, elem),
-                inner = ts(inner, elem);
+                innerElem = ts(inner, elem),
+                slides = innerElem.children(),
+                currentIndex = 0;
 
             // Event Handlers
-            console.log(prevButtonElem.get(), nextButton.get());
+            prevButtonElem.foreach(function (elem) {
+                elem.on('click', function (e) {
+                    innerElem.changeSlide(currentIndex - 1);
+                });
+            });
+            nextButtonElem.foreach(function (elem) {
+                elem.on('click', function (e) {
+                    innerElem.changeSlide(currentIndex + 1);
+                });
+            });
+
+            // Change slide
+            innerElem.__proto__.changeSlide = function (index) {
+
+                // Wrap around
+                console.log(slides);
+                if (index < 0) index = slides.length - 1;
+                if (index > slides.length - 1) index = 0;
+
+                // Changes slide
+                this.currentIndex = index;
+                innerElem.css({ 'left': slides.get(index).position().left });
+            }.bind(_this);
         });
     });
 };
@@ -10989,7 +11074,13 @@ var SingleLocation = function (_React$Component) {
     }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate() {
-            console.log(ts('.location-singleview-content .event-slider'), '.');
+
+            // Inits slider
+            ts('.location-singleview-content .event-slider').initSlider({
+                prevButton: '.prevButton',
+                nextButton: '.nextButton',
+                inner: '.inner'
+            });
         }
 
         // Render
