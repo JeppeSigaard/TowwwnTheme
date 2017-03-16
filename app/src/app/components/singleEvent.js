@@ -72,8 +72,8 @@ class SingleEvent extends React.Component {
                                 <div className="text">Del</div>
                             </div>
 
-                            { event.ticket_uri !== '' && event.ticket_uri !== null &&
-                                <div className="status-btn ticket" data-link={ event.ticket_uri } >
+                            { elem.ticket_uri !== '' && elem.ticket_uri !== null &&
+                                <div className="status-btn ticket" data-link={ elem.ticket_uri } >
                                     <div className="icon">
                                         <svg viewBox="0 0 32 32">
                                             <use xlinkHref="#icon-ticket"></use>
