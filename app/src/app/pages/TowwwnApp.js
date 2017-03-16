@@ -22,6 +22,7 @@ const React = require( 'react' ),
 
     // Plugins
     SyncScrollHandler = require( '../../modules/plugins/syncScrollHandler.js' ),
+    Slider = require( '../../modules/plugins/slider.js' ),
     ViewHandler = require( '../../modules/handlers/viewHandler.js' ),
     EventHandlers = require( '../../modules/handlers/eventHandlers.js' ),
     ImageHandler = require( '../../modules/handlers/imageHandler.js' ),
@@ -40,10 +41,10 @@ class TowwwnApp extends React.Component {
         
         // Instances
         this.imageHandler = new ImageHandler();
-        this.syncScroll = new SyncScrollHandler();
         this.eventHandlers = new EventHandlers();
         
         // Globals
+        Globals.syncScroll = new SyncScrollHandler();
         Globals.viewHandler = null;
         Globals.locationDataHandler = new LocationDataHandler();
         
@@ -108,8 +109,8 @@ class TowwwnApp extends React.Component {
     // After render
     componentDidUpdate() {
         if ( Globals.viewHandler === null ) Globals.viewHandler = new ViewHandler( this.syncScroll );
-        this.syncScroll.wrapElems();
-        this.syncScroll.rescaleContainer( Globals.viewHandler.focusedViews );
+        Globals.syncScroll.wrapElems();
+        Globals.syncScroll.rescaleContainer( Globals.viewHandler.focusedViews );
     }
 
     // Render

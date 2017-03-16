@@ -34,7 +34,7 @@ class SyncScrollHandler {
 
         // Activates internal resize function
         window.onresize = function() {
-            this.rescaleContainer();
+            this.rescaleContainer( this.focusedViews != null ? this.focusedViews : null );
         }.bind(this);
 
         // Sets class to ready state
@@ -57,7 +57,13 @@ class SyncScrollHandler {
     }
 
     // Rescales the container
-    rescaleContainer( focusedViews ) {
+    rescaleContainer( fv ) {
+        let focusedViews = null;
+        if ( fv != null ) { 
+            this.focusedViews = fv;
+            focusedViews = fv;
+        } else focusedViews = this.focusedViews;
+        
         return new Promise((resolve, reject) => {
             if ( this.container !== null ) {
 

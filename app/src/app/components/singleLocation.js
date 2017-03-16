@@ -2,11 +2,15 @@
 
 // Single Location
 const React = require( 'react' ),
+      ts = require( '../../modules/plugins/towwwnSelector.js' ).default,
       Globals = require( '../globals.js' ),
       Event = require( './event.js' ),
+      SingleViewFooter = require( '../componentParts/singleviewfooter.js' ),
       
       Linkify = require( 'react-linkify' ).default,
       TextPreproccesors = require( '../../modules/tools/textPreproccesors.js' );
+      
+require( '../../modules/plugins/slider.js' );
 
 class SingleLocation extends React.Component {
     
@@ -23,12 +27,25 @@ class SingleLocation extends React.Component {
             Globals.eventDataHandler.getEvents({
                 'parent' : nextProps.elem.id
             }).then(( resp ) => {
+                
+                // Generates elems
                 let jsxEvents = [];
                 for ( let eventData of resp ) {
                     jsxEvents.push( <Event elem={ eventData } style={{ width : (100/resp.length) + '%' }} /> );
-                } this.setState({ 'jsxEvents' : jsxEvents });
+                }
+                
+                // Sets state
+                if ( jsxEvents <= 0 ) jsxEvents = null;
+                this.setState({ 'jsxEvents' : jsxEvents });
+                Globals.syncScroll.rescaleContainer();
+                
             });
         }
+    }
+    
+    // Component did update
+    componentDidUpdate() {
+        console.log( ts('.location-singleview-content .event-slider'), '.' );
     }
     
     // Render
@@ -102,6 +119,8 @@ class SingleLocation extends React.Component {
                         </div>
                     </div>
                 }
+                
+                <SingleViewFooter elem={ elem } type="location" />
             </div>
         );
     }

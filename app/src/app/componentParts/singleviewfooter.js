@@ -32,28 +32,33 @@ class SingleViewFooter extends React.Component {
 
         if ( type === 'event' ) {
 
-            // Event data
             picture = elem.parentpicture;
             name = elem.parentname;
             id = elem.parentfbid;
 
-            if ( elem.website !== null &&
-                 typeof elem.website !== 'undefined' ) {
-                website = elem.website;
-            }
+        } else if ( type === 'location' ) { 
+            
+            picture = elem.picture;
+            name = elem.name;
+            id = elem.fbid;
+            
+        }
+        
+        if ( elem.website != null &&
+             typeof elem.website !== 'undefined' ) {
+            website = elem.website;
+        }
 
-            if ( elem.phone !== null &&
-                 typeof elem.phone !== 'undefined' ) {
-                phone = elem.phone;
-            }
+        if ( elem.phone != null &&
+             typeof elem.phone !== 'undefined' ) {
+            phone = elem.phone;
+        }
 
-            if ( elem.adress !== null &&
-                 typeof elem.adress !== 'undefined' ) {
-                adress = elem.adress;
-            }
-
-        } else { /* Location data */ }
-
+        if ( elem.adress != null &&
+             typeof elem.adress !== 'undefined' ) {
+            adress = elem.adress;
+        }
+        
         return (
 
             <div>
@@ -62,7 +67,7 @@ class SingleViewFooter extends React.Component {
 
                     {/* Title */}
                     <div className="sv-footer-block title">
-                        <div className="icon" style={ picture !== null && { 'backgroundImage' : 'url('+ picture +')' }} ></div>
+                        <div className="icon" style={ picture != null ? { 'backgroundImage' : 'url('+ picture +')' } : {} } ></div>
                         <div className="value" >{ name }</div>
                     </div>
 
