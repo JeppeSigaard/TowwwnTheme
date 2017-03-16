@@ -46,5 +46,44 @@ class EventDataHandler{
 
         });
     }
+    
+    // Get events
+    getEvents( properties ) {
+        return new Promise(( resolve, reject ) => {
+            
+            // Sets get params using properties
+            if ( typeof properties === 'object' ||
+                 properties.length < 1 ) {
+                
+                let str = [];
+                for ( let key in properties ) {
+                    str.push( key+'='+properties[key] ); } 
+
+                if ( str.length > 0 ) {
+                    str.join(':');
+                } else reject();
+                
+                // Opens new request
+                let request = new XMLHttpRequest();
+                request.addEventListener( 'load', ( data ) => {
+                    let json = JSON.parse( data.target.response ),
+                        resp = json.sort(( a,b ) => {
+                            if ( a.start_time < b.start_time ) return -1;
+                            if ( a.start_time > b.start_time ) return 1;
+                            return 0;
+                        });
+                    resolve ( resp );
+                });
+                
+                // Sends request
+                request.open( 'GET', 'http://towwwn.dk/api/svendborg/events?' + str );
+                request.send();
+                
+            } else {
+                reject( 'When no propeties needed, use other event data handler method' );    
+            }
+            
+        });
+    }
 
 } module.exports = EventDataHandler;

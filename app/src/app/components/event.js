@@ -9,7 +9,7 @@ class Event extends React.Component {
     // Click Handler
     handleClick( e ) {
         e.preventDefault();
-        this.props.setMainState( 
+        Globals.setMainState( 
             'singleevent', 
             this.props.elem
         );
@@ -74,7 +74,8 @@ class Event extends React.Component {
 
         // Html
         return (
-            <a className="event" onClick={ this.handleClick.bind(this) } >
+            <a className="event" onClick={ this.handleClick.bind(this) }
+               style={ this.props.style != null ? this.props.style : {} } >
                 <div className="imgcontainer" data-image-src={ image } >
                     <div className="loader">
                         <img src={ template_uri + '/style/assets/icons/loading-white.svg' } />

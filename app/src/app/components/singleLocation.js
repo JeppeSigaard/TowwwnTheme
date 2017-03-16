@@ -2,13 +2,34 @@
 
 // Single Location
 const React = require( 'react' ),
+      Globals = require( '../globals.js' ),
+      Event = require( './event.js' ),
+      
       Linkify = require( 'react-linkify' ).default,
       TextPreproccesors = require( '../../modules/tools/textPreproccesors.js' );
 
 class SingleLocation extends React.Component {
     
     // Ctor
-    constructor() { super(); }
+    constructor() { 
+        super(); 
+        this.state = { 'jsxEvents' : null };
+    }
+    
+    // Component will receive props
+    componentWillReceiveProps( nextProps ) {
+        if ( nextProps.elem !== this.props.elem ) {
+            this.setState({ 'jsxEvents' : null });
+            Globals.eventDataHandler.getEvents({
+                'parent' : nextProps.elem.id
+            }).then(( resp ) => {
+                let jsxEvents = [];
+                for ( let eventData of resp ) {
+                    jsxEvents.push( <Event elem={ eventData } style={{ width : (100/resp.length) + '%' }} /> );
+                } this.setState({ 'jsxEvents' : jsxEvents });
+            });
+        }
+    }
     
     // Render
     render() {
@@ -63,7 +84,24 @@ class SingleLocation extends React.Component {
                 </div>
                 <div className="breakline"></div>
                 
-                
+                { this.state.jsxEvents != null &&
+                    <div className="event-slider">
+                        <div className="prevButton button">
+                            <svg viewBox="0 0 20 20">
+                                <use xlinkHref="#chevron-left"></use>
+                            </svg>
+                        </div>
+                        <div className="nextButton button">
+                            <svg viewBox="0 0 20 20">
+                                <use xlinkHref="#chevron-right"></use>
+                            </svg>
+                        </div>
+                        
+                        <div className="inner" style={{ width : (this.state.jsxEvents.length/3*100) +'%' }} >
+                            { this.state.jsxEvents }
+                        </div>
+                    </div>
+                }
             </div>
         );
     }
