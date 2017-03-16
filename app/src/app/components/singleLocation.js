@@ -45,7 +45,14 @@ class SingleLocation extends React.Component {
     
     // Component did update
     componentDidUpdate() {
-        console.log( ts('.location-singleview-content .event-slider'), '.' );
+        
+        // Inits slider
+        ts('.location-singleview-content .event-slider').initSlider({
+            prevButton : '.prevButton',
+            nextButton : '.nextButton',
+            inner : '.inner',
+        });
+        
     }
     
     // Render
