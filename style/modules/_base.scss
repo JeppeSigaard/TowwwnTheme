@@ -96,6 +96,14 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
         transition: 400ms;
         transition-timing-function: $horizontal-bezier;
         
+        &:before{
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 60px;
+            background: $color-blue-2;
+        }
+
         &.notrans{
             transition: 0ms!important;
         }
@@ -135,13 +143,25 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
             background-color: #f0f0f0;
         }
     
-        &.notrans{
+        &:nth-child(5n) {
+            background-color: #f9f9f9;
+
+            .viewbar{
+                background-color: darken($color-blue-2, 2.5%);
+            }
+        }
+
+         &.notrans{
             transition: 0ms!important;
         }
     
         .content{
             min-height: calc( 100vh - #{$menu-bar-height} );
         }
+    }
+
+    &.slowtrans .container-section{
+        transition: 50000000ms!important;
     }
 
     // Event single view

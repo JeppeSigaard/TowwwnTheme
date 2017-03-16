@@ -47,16 +47,12 @@
     z-index: 10;
 
     .event-singleview{
-        padding: 21px 12px 21px 12px;
+        padding: 12px;
         width: 100%;
         height: auto;
 
         @media (min-width: 640px){
-            padding: 48px;
-        }
-
-        @media screen and (min-width: 1280px) {
-            padding: 32px 64px 32px 64px;
+            padding: 24px;
         }
 
         .event-sv-parentname{
