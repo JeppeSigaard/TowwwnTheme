@@ -25,16 +25,16 @@ class Event extends React.Component {
     // Format title
     formatTitle( elem ) {
 
-        // Splits the title at space nearest char 36
-        let title = String(elem.name).substr(0, 36) + ( String(elem.name).substr(36,99).split( ' ' )[0] );
+        // Splits the title at space nearest char 48
+        let title = String(elem.name).substr(0, 48) + ( String(elem.name).substr(48,99).split( ' ' )[0] );
 
         // Title length formatting
         if ( title.length !== String( elem.name ).length ) title+=' ...';
         let words = title.split( ' ' );
         words.forEach( function( item, index ) {
-            if ( item.length > 14 ) {
-                words[index ] = words[ index ].substr(0,14) +
-                    '-<br />' + words[ index ].substr(12,9999); }
+            if ( item.length > 16 ) {
+                words[index ] = words[ index ].substr(0,16) +
+                    '- ' + words[ index ].substr(16,9999); }
         }); title = words.join(' ');
 
         // Returns

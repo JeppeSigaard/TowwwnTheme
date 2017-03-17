@@ -548,7 +548,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 var _prodInvariant = __webpack_require__(3);
 
 var DOMProperty = __webpack_require__(15);
-var ReactDOMComponentFlags = __webpack_require__(69);
+var ReactDOMComponentFlags = __webpack_require__(70);
 
 var invariant = __webpack_require__(1);
 
@@ -1214,9 +1214,9 @@ module.exports = emptyFunction;
 var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(4);
 
-var CallbackQueue = __webpack_require__(67);
+var CallbackQueue = __webpack_require__(68);
 var PooledClass = __webpack_require__(16);
-var ReactFeatureFlags = __webpack_require__(72);
+var ReactFeatureFlags = __webpack_require__(73);
 var ReactReconciler = __webpack_require__(20);
 var Transaction = __webpack_require__(30);
 
@@ -2132,7 +2132,7 @@ var warning = __webpack_require__(2);
 var canDefineProperty = __webpack_require__(57);
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
-var REACT_ELEMENT_TYPE = __webpack_require__(88);
+var REACT_ELEMENT_TYPE = __webpack_require__(89);
 
 var RESERVED_PROPS = {
   key: true,
@@ -2519,7 +2519,7 @@ var DOMNamespaces = __webpack_require__(40);
 var setInnerHTML = __webpack_require__(32);
 
 var createMicrosoftUnsafeLocalFunction = __webpack_require__(47);
-var setTextContent = __webpack_require__(85);
+var setTextContent = __webpack_require__(86);
 
 var ELEMENT_NODE_TYPE = 1;
 var DOCUMENT_FRAGMENT_NODE_TYPE = 11;
@@ -2831,7 +2831,7 @@ var createFactory = ReactElement.createFactory;
 var cloneElement = ReactElement.cloneElement;
 
 if (process.env.NODE_ENV !== 'production') {
-  var ReactElementValidator = __webpack_require__(89);
+  var ReactElementValidator = __webpack_require__(90);
   createElement = ReactElementValidator.createElement;
   createFactory = ReactElementValidator.createFactory;
   cloneElement = ReactElementValidator.cloneElement;
@@ -2939,8 +2939,8 @@ var EventPluginRegistry = __webpack_require__(27);
 var EventPluginUtils = __webpack_require__(41);
 var ReactErrorUtils = __webpack_require__(45);
 
-var accumulateInto = __webpack_require__(79);
-var forEachAccumulated = __webpack_require__(80);
+var accumulateInto = __webpack_require__(80);
+var forEachAccumulated = __webpack_require__(81);
 var invariant = __webpack_require__(1);
 
 /**
@@ -3220,8 +3220,8 @@ module.exports = EventPluginHub;
 var EventPluginHub = __webpack_require__(23);
 var EventPluginUtils = __webpack_require__(41);
 
-var accumulateInto = __webpack_require__(79);
-var forEachAccumulated = __webpack_require__(80);
+var accumulateInto = __webpack_require__(80);
+var forEachAccumulated = __webpack_require__(81);
 var warning = __webpack_require__(2);
 
 var getListener = EventPluginHub.getListener;
@@ -3739,7 +3739,7 @@ var _assign = __webpack_require__(4);
 
 var EventPluginRegistry = __webpack_require__(27);
 var ReactEventEmitterMixin = __webpack_require__(164);
-var ViewportMetrics = __webpack_require__(78);
+var ViewportMetrics = __webpack_require__(79);
 
 var getVendorPrefixedEventName = __webpack_require__(200);
 var isEventSupported = __webpack_require__(51);
@@ -4069,7 +4069,7 @@ module.exports = ReactBrowserEventEmitter;
 
 
 var SyntheticUIEvent = __webpack_require__(26);
-var ViewportMetrics = __webpack_require__(78);
+var ViewportMetrics = __webpack_require__(79);
 
 var getEventModifierState = __webpack_require__(49);
 
@@ -4742,15 +4742,15 @@ var Event = function (_React$Component) {
         key: 'formatTitle',
         value: function formatTitle(elem) {
 
-            // Splits the title at space nearest char 36
-            var title = String(elem.name).substr(0, 36) + String(elem.name).substr(36, 99).split(' ')[0];
+            // Splits the title at space nearest char 48
+            var title = String(elem.name).substr(0, 48) + String(elem.name).substr(48, 99).split(' ')[0];
 
             // Title length formatting
             if (title.length !== String(elem.name).length) title += ' ...';
             var words = title.split(' ');
             words.forEach(function (item, index) {
-                if (item.length > 14) {
-                    words[index] = words[index].substr(0, 14) + '-<br />' + words[index].substr(12, 9999);
+                if (item.length > 16) {
+                    words[index] = words[index].substr(0, 16) + '- ' + words[index].substr(16, 9999);
                 }
             });title = words.join(' ');
 
@@ -4846,13 +4846,13 @@ function _inherits(subClass, superClass) {
 
 // Single Event
 var React = __webpack_require__(6),
-    Linkify = __webpack_require__(87).default,
+    Linkify = __webpack_require__(88).default,
     DataFormatters = __webpack_require__(112),
     TextPreproccesors = __webpack_require__(37),
 
 
 // Component parts
-SingleViewFooter = __webpack_require__(61);
+SingleViewFooter = __webpack_require__(62);
 
 var SingleEvent = function (_React$Component) {
     _inherits(SingleEvent, _React$Component);
@@ -5083,12 +5083,23 @@ var tselem = function () {
             }
         }
 
+        // Has Class
+
+    }, {
+        key: 'hasClass',
+        value: function hasClass(className) {
+            try {
+                return this.domElem.classList.contains(className);
+            } catch (error) {
+                throw 'Unsupported elem type: ' + _typeof(this.domElem);
+            }
+        }
+
         // Event
 
     }, {
         key: 'on',
         value: function on(event, func) {
-            console.log(this);
             if (_typeof(this.domElem) === 'object') {
                 var _iteratorNormalCompletion4 = true;
                 var _didIteratorError4 = false;
@@ -5119,6 +5130,41 @@ var tselem = function () {
             }
         }
 
+        // Event off
+
+    }, {
+        key: 'off',
+        value: function off(event) {
+            if (_typeof(this.domElem) === 'object') {
+                var _iteratorNormalCompletion5 = true;
+                var _didIteratorError5 = false;
+                var _iteratorError5 = undefined;
+
+                try {
+                    for (var _iterator5 = this.domElem[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                        var _elem5 = _step5.value;
+
+                        _elem5.removeEventListener(event);
+                    }
+                } catch (err) {
+                    _didIteratorError5 = true;
+                    _iteratorError5 = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion5 && _iterator5.return) {
+                            _iterator5.return();
+                        }
+                    } finally {
+                        if (_didIteratorError5) {
+                            throw _iteratorError5;
+                        }
+                    }
+                }
+            } else {
+                this.domElem.removeEventListener(event);
+            }
+        }
+
         // Style
 
     }, {
@@ -5126,29 +5172,29 @@ var tselem = function () {
         value: function css(styling) {
             if ((typeof styling === 'undefined' ? 'undefined' : _typeof(styling)) === 'object') {
                 if (_typeof(this.domElem) === 'object') {
-                    var _iteratorNormalCompletion5 = true;
-                    var _didIteratorError5 = false;
-                    var _iteratorError5 = undefined;
+                    var _iteratorNormalCompletion6 = true;
+                    var _didIteratorError6 = false;
+                    var _iteratorError6 = undefined;
 
                     try {
-                        for (var _iterator5 = this.domElem[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-                            var _elem5 = _step5.value;
+                        for (var _iterator6 = this.domElem[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+                            var _elem6 = _step6.value;
 
                             for (var styleKey in styling) {
-                                _elem5.style[styleKey] = styling[styling];
+                                _elem6.style[styleKey] = styling[styling];
                             }
                         }
                     } catch (err) {
-                        _didIteratorError5 = true;
-                        _iteratorError5 = err;
+                        _didIteratorError6 = true;
+                        _iteratorError6 = err;
                     } finally {
                         try {
-                            if (!_iteratorNormalCompletion5 && _iterator5.return) {
-                                _iterator5.return();
+                            if (!_iteratorNormalCompletion6 && _iterator6.return) {
+                                _iterator6.return();
                             }
                         } finally {
-                            if (_didIteratorError5) {
-                                throw _iteratorError5;
+                            if (_didIteratorError6) {
+                                throw _iteratorError6;
                             }
                         }
                     }
@@ -5338,7 +5384,7 @@ var ReactInstrumentation = __webpack_require__(9);
 
 var createMicrosoftUnsafeLocalFunction = __webpack_require__(47);
 var setInnerHTML = __webpack_require__(32);
-var setTextContent = __webpack_require__(85);
+var setTextContent = __webpack_require__(86);
 
 function getNodeAfter(parentNode, node) {
   // Special case for text components, which return [open, close] comments
@@ -5886,7 +5932,7 @@ module.exports = KeyEscapeUtils;
 var _prodInvariant = __webpack_require__(3);
 
 var React = __webpack_require__(21);
-var ReactPropTypesSecret = __webpack_require__(77);
+var ReactPropTypesSecret = __webpack_require__(78);
 
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
@@ -7391,6 +7437,12 @@ module.exports = getIteratorFn;
 
 /***/ }),
 /* 59 */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjMwIiB3aWR0aD0iMzAiIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMjQgMzAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUwIDUwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxyZWN0IHg9IjAiIHk9IjEwIiB3aWR0aD0iNCIgaGVpZ2h0PSIxMCIgZmlsbD0iIzY4OWE5YSIgb3BhY2l0eT0iMC4yIj4KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiBhdHRyaWJ1dGVUeXBlPSJYTUwiIHZhbHVlcz0iMC4yOyAxOyAuMiIgYmVnaW49IjBzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CiAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0iaGVpZ2h0IiBhdHRyaWJ1dGVUeXBlPSJYTUwiIHZhbHVlcz0iMTA7IDIwOyAxMCIgYmVnaW49IjBzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CiAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ieSIgYXR0cmlidXRlVHlwZT0iWE1MIiB2YWx1ZXM9IjEwOyA1OyAxMCIgYmVnaW49IjBzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CjwvcmVjdD4KPHJlY3QgeD0iOCIgeT0iMTAiIHdpZHRoPSI0IiBoZWlnaHQ9IjEwIiBmaWxsPSIjNjg5YTlhIiAgb3BhY2l0eT0iMC4yIj4KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiBhdHRyaWJ1dGVUeXBlPSJYTUwiIHZhbHVlcz0iMC4yOyAxOyAuMiIgYmVnaW49IjAuM3MiIGR1cj0iLjlzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgLz4KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJoZWlnaHQiIGF0dHJpYnV0ZVR5cGU9IlhNTCIgdmFsdWVzPSIxMDsgMjA7IDEwIiBiZWdpbj0iMC4zcyIgZHVyPSIuOXMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiAvPgogIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9InkiIGF0dHJpYnV0ZVR5cGU9IlhNTCIgdmFsdWVzPSIxMDsgNTsgMTAiIGJlZ2luPSIwLjNzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CjwvcmVjdD4KPHJlY3QgeD0iMTYiIHk9IjEwIiB3aWR0aD0iNCIgaGVpZ2h0PSIxMCIgZmlsbD0iIzY4OWE5YSIgIG9wYWNpdHk9IjAuMiI+CiAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgYXR0cmlidXRlVHlwZT0iWE1MIiB2YWx1ZXM9IjAuMjsgMTsgLjIiIGJlZ2luPSIuNnMiIGR1cj0iLjlzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgLz4KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJoZWlnaHQiIGF0dHJpYnV0ZVR5cGU9IlhNTCIgdmFsdWVzPSIxMDsgMjA7IDEwIiBiZWdpbj0iLjZzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CiAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ieSIgYXR0cmlidXRlVHlwZT0iWE1MIiB2YWx1ZXM9IjEwOyA1OyAxMCIgYmVnaW49Ii42cyIgZHVyPSIuOXMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiAvPgo8L3JlY3Q+Cjwvc3ZnPgo="
+
+/***/ }),
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7459,7 +7511,7 @@ Event = __webpack_require__(34),
 
 // Plugins
 SyncScrollHandler = __webpack_require__(111),
-    Slider = __webpack_require__(62),
+    Slider = __webpack_require__(63),
     ViewHandler = __webpack_require__(110),
     EventHandlers = __webpack_require__(108),
     ImageHandler = __webpack_require__(109),
@@ -7494,7 +7546,7 @@ var TowwwnApp = function (_React$Component) {
 
         // Gets event data
         Globals.eventDataHandler = new EventDataHandler();
-        Globals.eventDataHandler.getFutureEvents(25, true).then(function (resp) {
+        Globals.eventDataHandler.getFutureEvents(24, true).then(function (resp) {
 
             // Converts to jsx elements
             var events = [];
@@ -7524,7 +7576,7 @@ var TowwwnApp = function (_React$Component) {
             });
         });
 
-        categoryData.getAllCategories().then(function (resp) {
+        categoryData.getAllCategories(false, true).then(function (resp) {
             _this.setState({
                 'categoriesData': resp
             });
@@ -7558,6 +7610,12 @@ var TowwwnApp = function (_React$Component) {
             if (Globals.viewHandler === null) Globals.viewHandler = new ViewHandler(this.syncScroll);
             Globals.syncScroll.wrapElems();
             Globals.syncScroll.rescaleContainer(Globals.viewHandler.focusedViews);
+            this.imageHandler.lazyLoad();
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            document.body.classList.remove('loading');
         }
 
         // Render
@@ -7575,7 +7633,7 @@ var TowwwnApp = function (_React$Component) {
 module.exports = TowwwnApp;
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7640,7 +7698,7 @@ var Loader = function (_React$Component) {
 module.exports = Loader;
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7752,7 +7810,7 @@ var SingleViewFooter = function (_React$Component) {
 module.exports = SingleViewFooter;
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7811,7 +7869,7 @@ tselem.prototype.initSlider = function (params) {
 module.exports = ts;
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7901,7 +7959,7 @@ module.exports = EventListener;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7933,7 +7991,7 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7973,7 +8031,7 @@ function getActiveElement() /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8126,7 +8184,7 @@ var CSSProperty = {
 module.exports = CSSProperty;
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8251,7 +8309,7 @@ module.exports = PooledClass.addPoolingTo(CallbackQueue);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8494,7 +8552,7 @@ module.exports = DOMPropertyOperations;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8517,7 +8575,7 @@ var ReactDOMComponentFlags = {
 module.exports = ReactDOMComponentFlags;
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8723,7 +8781,7 @@ module.exports = ReactDOMSelect;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8758,7 +8816,7 @@ ReactEmptyComponent.injection = ReactEmptyComponentInjection;
 module.exports = ReactEmptyComponent;
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8785,7 +8843,7 @@ var ReactFeatureFlags = {
 module.exports = ReactFeatureFlags;
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8859,7 +8917,7 @@ module.exports = ReactHostComponent;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8878,8 +8936,8 @@ module.exports = ReactHostComponent;
 var ReactDOMSelection = __webpack_require__(155);
 
 var containsNode = __webpack_require__(118);
-var focusNode = __webpack_require__(64);
-var getActiveElement = __webpack_require__(65);
+var focusNode = __webpack_require__(65);
+var getActiveElement = __webpack_require__(66);
 
 function isInDocument(node) {
   return containsNode(document.documentElement, node);
@@ -8988,7 +9046,7 @@ var ReactInputSelection = {
 module.exports = ReactInputSelection;
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9014,7 +9072,7 @@ var ReactCurrentOwner = __webpack_require__(12);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactDOMContainerInfo = __webpack_require__(147);
 var ReactDOMFeatureFlags = __webpack_require__(149);
-var ReactFeatureFlags = __webpack_require__(72);
+var ReactFeatureFlags = __webpack_require__(73);
 var ReactInstanceMap = __webpack_require__(25);
 var ReactInstrumentation = __webpack_require__(9);
 var ReactMarkupChecksum = __webpack_require__(169);
@@ -9023,7 +9081,7 @@ var ReactUpdateQueue = __webpack_require__(46);
 var ReactUpdates = __webpack_require__(11);
 
 var emptyObject = __webpack_require__(22);
-var instantiateReactComponent = __webpack_require__(83);
+var instantiateReactComponent = __webpack_require__(84);
 var invariant = __webpack_require__(1);
 var setInnerHTML = __webpack_require__(32);
 var shouldUpdateReactComponent = __webpack_require__(52);
@@ -9532,7 +9590,7 @@ module.exports = ReactMount;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9578,7 +9636,7 @@ module.exports = ReactNodeTypes;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9600,7 +9658,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 module.exports = ReactPropTypesSecret;
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9632,7 +9690,7 @@ var ViewportMetrics = {
 module.exports = ViewportMetrics;
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9696,7 +9754,7 @@ module.exports = accumulateInto;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9732,7 +9790,7 @@ function forEachAccumulated(arr, cb, scope) {
 module.exports = forEachAccumulated;
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9748,7 +9806,7 @@ module.exports = forEachAccumulated;
 
 
 
-var ReactNodeTypes = __webpack_require__(76);
+var ReactNodeTypes = __webpack_require__(77);
 
 function getHostComponentFromComposite(inst) {
   var type;
@@ -9767,7 +9825,7 @@ function getHostComponentFromComposite(inst) {
 module.exports = getHostComponentFromComposite;
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9805,7 +9863,7 @@ function getTextContentAccessor() {
 module.exports = getTextContentAccessor;
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9825,8 +9883,8 @@ var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(4);
 
 var ReactCompositeComponent = __webpack_require__(144);
-var ReactEmptyComponent = __webpack_require__(71);
-var ReactHostComponent = __webpack_require__(73);
+var ReactEmptyComponent = __webpack_require__(72);
+var ReactHostComponent = __webpack_require__(74);
 
 var getNextDebugID = __webpack_require__(198);
 var invariant = __webpack_require__(1);
@@ -9939,7 +9997,7 @@ module.exports = instantiateReactComponent;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9995,7 +10053,7 @@ function isTextInputElement(elem) {
 module.exports = isTextInputElement;
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10052,7 +10110,7 @@ if (ExecutionEnvironment.canUseDOM) {
 module.exports = setTextContent;
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10234,7 +10292,7 @@ module.exports = traverseAllChildren;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10386,7 +10444,7 @@ exports.default = Linkify;
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10411,7 +10469,7 @@ var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol['for'] && Symbol
 module.exports = REACT_ELEMENT_TYPE;
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10651,7 +10709,7 @@ module.exports = ReactElementValidator;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10673,16 +10731,10 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 module.exports = ReactPropTypesSecret;
 
 /***/ }),
-/* 91 */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjMwIiB3aWR0aD0iMzAiIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMjQgMzAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUwIDUwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxyZWN0IHg9IjAiIHk9IjEwIiB3aWR0aD0iNCIgaGVpZ2h0PSIxMCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC4yIj4KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiBhdHRyaWJ1dGVUeXBlPSJYTUwiIHZhbHVlcz0iMC4yOyAxOyAuMiIgYmVnaW49IjBzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CiAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0iaGVpZ2h0IiBhdHRyaWJ1dGVUeXBlPSJYTUwiIHZhbHVlcz0iMTA7IDIwOyAxMCIgYmVnaW49IjBzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CiAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ieSIgYXR0cmlidXRlVHlwZT0iWE1MIiB2YWx1ZXM9IjEwOyA1OyAxMCIgYmVnaW49IjBzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CjwvcmVjdD4KPHJlY3QgeD0iOCIgeT0iMTAiIHdpZHRoPSI0IiBoZWlnaHQ9IjEwIiBmaWxsPSIjZmZmIiAgb3BhY2l0eT0iMC4yIj4KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiBhdHRyaWJ1dGVUeXBlPSJYTUwiIHZhbHVlcz0iMC4yOyAxOyAuMiIgYmVnaW49IjAuM3MiIGR1cj0iLjlzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgLz4KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJoZWlnaHQiIGF0dHJpYnV0ZVR5cGU9IlhNTCIgdmFsdWVzPSIxMDsgMjA7IDEwIiBiZWdpbj0iMC4zcyIgZHVyPSIuOXMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiAvPgogIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9InkiIGF0dHJpYnV0ZVR5cGU9IlhNTCIgdmFsdWVzPSIxMDsgNTsgMTAiIGJlZ2luPSIwLjNzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CjwvcmVjdD4KPHJlY3QgeD0iMTYiIHk9IjEwIiB3aWR0aD0iNCIgaGVpZ2h0PSIxMCIgZmlsbD0iI2ZmZiIgIG9wYWNpdHk9IjAuMiI+CiAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgYXR0cmlidXRlVHlwZT0iWE1MIiB2YWx1ZXM9IjAuMjsgMTsgLjIiIGJlZ2luPSIuNnMiIGR1cj0iLjlzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgLz4KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJoZWlnaHQiIGF0dHJpYnV0ZVR5cGU9IlhNTCIgdmFsdWVzPSIxMDsgMjA7IDEwIiBiZWdpbj0iLjZzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CiAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ieSIgYXR0cmlidXRlVHlwZT0iWE1MIiB2YWx1ZXM9IjEwOyA1OyAxMCIgYmVnaW49Ii42cyIgZHVyPSIuOXMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiAvPgo8L3JlY3Q+Cjwvc3ZnPgo="
-
-/***/ }),
 /* 92 */
 /***/ (function(module, exports) {
 
-module.exports = "data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjMwIiB3aWR0aD0iMzAiIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMjQgMzAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUwIDUwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxyZWN0IHg9IjAiIHk9IjEwIiB3aWR0aD0iNCIgaGVpZ2h0PSIxMCIgZmlsbD0iIzY4OWE5YSIgb3BhY2l0eT0iMC4yIj4KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiBhdHRyaWJ1dGVUeXBlPSJYTUwiIHZhbHVlcz0iMC4yOyAxOyAuMiIgYmVnaW49IjBzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CiAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0iaGVpZ2h0IiBhdHRyaWJ1dGVUeXBlPSJYTUwiIHZhbHVlcz0iMTA7IDIwOyAxMCIgYmVnaW49IjBzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CiAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ieSIgYXR0cmlidXRlVHlwZT0iWE1MIiB2YWx1ZXM9IjEwOyA1OyAxMCIgYmVnaW49IjBzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CjwvcmVjdD4KPHJlY3QgeD0iOCIgeT0iMTAiIHdpZHRoPSI0IiBoZWlnaHQ9IjEwIiBmaWxsPSIjNjg5YTlhIiAgb3BhY2l0eT0iMC4yIj4KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiBhdHRyaWJ1dGVUeXBlPSJYTUwiIHZhbHVlcz0iMC4yOyAxOyAuMiIgYmVnaW49IjAuM3MiIGR1cj0iLjlzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgLz4KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJoZWlnaHQiIGF0dHJpYnV0ZVR5cGU9IlhNTCIgdmFsdWVzPSIxMDsgMjA7IDEwIiBiZWdpbj0iMC4zcyIgZHVyPSIuOXMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiAvPgogIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9InkiIGF0dHJpYnV0ZVR5cGU9IlhNTCIgdmFsdWVzPSIxMDsgNTsgMTAiIGJlZ2luPSIwLjNzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CjwvcmVjdD4KPHJlY3QgeD0iMTYiIHk9IjEwIiB3aWR0aD0iNCIgaGVpZ2h0PSIxMCIgZmlsbD0iIzY4OWE5YSIgIG9wYWNpdHk9IjAuMiI+CiAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgYXR0cmlidXRlVHlwZT0iWE1MIiB2YWx1ZXM9IjAuMjsgMTsgLjIiIGJlZ2luPSIuNnMiIGR1cj0iLjlzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgLz4KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJoZWlnaHQiIGF0dHJpYnV0ZVR5cGU9IlhNTCIgdmFsdWVzPSIxMDsgMjA7IDEwIiBiZWdpbj0iLjZzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CiAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ieSIgYXR0cmlidXRlVHlwZT0iWE1MIiB2YWx1ZXM9IjEwOyA1OyAxMCIgYmVnaW49Ii42cyIgZHVyPSIuOXMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiAvPgo8L3JlY3Q+Cjwvc3ZnPgo="
+module.exports = "data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjMwIiB3aWR0aD0iMzAiIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMjQgMzAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUwIDUwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxyZWN0IHg9IjAiIHk9IjEwIiB3aWR0aD0iNCIgaGVpZ2h0PSIxMCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC4yIj4KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiBhdHRyaWJ1dGVUeXBlPSJYTUwiIHZhbHVlcz0iMC4yOyAxOyAuMiIgYmVnaW49IjBzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CiAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0iaGVpZ2h0IiBhdHRyaWJ1dGVUeXBlPSJYTUwiIHZhbHVlcz0iMTA7IDIwOyAxMCIgYmVnaW49IjBzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CiAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ieSIgYXR0cmlidXRlVHlwZT0iWE1MIiB2YWx1ZXM9IjEwOyA1OyAxMCIgYmVnaW49IjBzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CjwvcmVjdD4KPHJlY3QgeD0iOCIgeT0iMTAiIHdpZHRoPSI0IiBoZWlnaHQ9IjEwIiBmaWxsPSIjZmZmIiAgb3BhY2l0eT0iMC4yIj4KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiBhdHRyaWJ1dGVUeXBlPSJYTUwiIHZhbHVlcz0iMC4yOyAxOyAuMiIgYmVnaW49IjAuM3MiIGR1cj0iLjlzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgLz4KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJoZWlnaHQiIGF0dHJpYnV0ZVR5cGU9IlhNTCIgdmFsdWVzPSIxMDsgMjA7IDEwIiBiZWdpbj0iMC4zcyIgZHVyPSIuOXMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiAvPgogIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9InkiIGF0dHJpYnV0ZVR5cGU9IlhNTCIgdmFsdWVzPSIxMDsgNTsgMTAiIGJlZ2luPSIwLjNzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CjwvcmVjdD4KPHJlY3QgeD0iMTYiIHk9IjEwIiB3aWR0aD0iNCIgaGVpZ2h0PSIxMCIgZmlsbD0iI2ZmZiIgIG9wYWNpdHk9IjAuMiI+CiAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgYXR0cmlidXRlVHlwZT0iWE1MIiB2YWx1ZXM9IjAuMjsgMTsgLjIiIGJlZ2luPSIuNnMiIGR1cj0iLjlzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgLz4KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJoZWlnaHQiIGF0dHJpYnV0ZVR5cGU9IlhNTCIgdmFsdWVzPSIxMDsgMjA7IDEwIiBiZWdpbj0iLjZzIiBkdXI9Ii45cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+CiAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ieSIgYXR0cmlidXRlVHlwZT0iWE1MIiB2YWx1ZXM9IjEwOyA1OyAxMCIgYmVnaW49Ii42cyIgZHVyPSIuOXMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiAvPgo8L3JlY3Q+Cjwvc3ZnPgo="
 
 /***/ }),
 /* 93 */
@@ -11000,11 +11052,11 @@ var React = __webpack_require__(6),
     ts = __webpack_require__(36).default,
     Globals = __webpack_require__(14),
     Event = __webpack_require__(34),
-    SingleViewFooter = __webpack_require__(61),
-    Linkify = __webpack_require__(87).default,
+    SingleViewFooter = __webpack_require__(62),
+    Linkify = __webpack_require__(88).default,
     TextPreproccesors = __webpack_require__(37);
 
-__webpack_require__(62);
+__webpack_require__(63);
 
 var SingleLocation = function (_React$Component) {
     _inherits(SingleLocation, _React$Component);
@@ -11089,7 +11141,7 @@ var SingleLocation = function (_React$Component) {
         key: 'render',
         value: function render() {
             var elem = this.props.elem;
-            return React.createElement('div', { className: 'location-singleview-content' }, React.createElement('div', { className: 'photo-container' }, React.createElement('div', { className: 'coverphoto cta-icon', style: { 'backgroundImage': 'url(' + elem.coverphoto + ')' } }), React.createElement('div', { className: 'picture', style: { 'backgroundImage': 'url(' + elem.picture + ')' } })), React.createElement('div', { className: 'cta-icons' }, elem.phone != null && React.createElement('div', { className: 'cta-phone cta-icon', 'data-link': 'tel://' + elem.phone }, React.createElement('div', { className: 'icon' }, React.createElement('svg', { viewBox: '0 0 32 32' }, React.createElement('use', { xlinkHref: '#icon-phone' })))), elem.website != null && React.createElement('div', { className: 'cta-website cta-icon', 'data-link': elem.website }, React.createElement('div', { className: 'icon' }, React.createElement('svg', { viewBox: '0 0 32 32' }, React.createElement('use', { xlinkHref: '#icon-web' })))), elem.fbid != null && React.createElement('div', { className: 'cta-fb cta-icon', 'data-link': 'http://fb.com/' + elem.fbid }, React.createElement('div', { className: 'icon' }, React.createElement('svg', { viewBox: '0 0 32 32' }, React.createElement('use', { xlinkHref: '#icon-facebook' }))))), React.createElement('div', { className: 'breakline' }), React.createElement('div', { className: 'description-container' }, React.createElement('div', { className: 'title' }, elem.name), React.createElement('div', { className: 'description' }, React.createElement(Linkify, null, TextPreproccesors.nl2p(TextPreproccesors.ripRep(elem.description))))), React.createElement('div', { className: 'breakline' }), this.state.jsxEvents != null && React.createElement('div', { className: 'event-slider' }, React.createElement('div', { className: 'prevButton button' }, React.createElement('svg', { viewBox: '0 0 20 20' }, React.createElement('use', { xlinkHref: '#chevron-left' }))), React.createElement('div', { className: 'nextButton button' }, React.createElement('svg', { viewBox: '0 0 20 20' }, React.createElement('use', { xlinkHref: '#chevron-right' }))), React.createElement('div', { className: 'inner', style: { width: this.state.jsxEvents.length / 3 * 100 + '%' } }, this.state.jsxEvents)), React.createElement(SingleViewFooter, { elem: elem, type: 'location' }));
+            return React.createElement('div', { className: 'location-singleview-content' }, React.createElement('div', { className: 'photo-container' }, React.createElement('div', { className: 'coverphoto cta-icon', style: { 'backgroundImage': 'url(' + elem.coverphoto + ')' } }), React.createElement('div', { className: 'picture', style: { 'backgroundImage': 'url(' + elem.picture + ')' } })), React.createElement('div', { className: 'cta-icons' }, elem.phone != null && React.createElement('div', { className: 'cta-phone cta-icon', 'data-link': 'tel://' + elem.phone }, React.createElement('div', { className: 'icon' }, React.createElement('svg', { viewBox: '0 0 32 32' }, React.createElement('use', { xlinkHref: '#icon-phone' })))), elem.website != null && React.createElement('div', { className: 'cta-website cta-icon', 'data-link': elem.website }, React.createElement('div', { className: 'icon' }, React.createElement('svg', { viewBox: '0 0 32 32' }, React.createElement('use', { xlinkHref: '#icon-web' })))), elem.fbid != null && React.createElement('div', { className: 'cta-fb cta-icon', 'data-link': 'http://fb.com/' + elem.fbid }, React.createElement('div', { className: 'icon' }, React.createElement('svg', { viewBox: '0 0 32 32' }, React.createElement('use', { xlinkHref: '#icon-facebook' }))))), React.createElement('div', { className: 'breakline' }), elem.description != null && React.createElement('div', { className: 'description-container' }, React.createElement('div', { className: 'title' }, elem.name), React.createElement('div', { className: 'description' }, React.createElement(Linkify, null, TextPreproccesors.nl2p(TextPreproccesors.ripRep(elem.description))))), React.createElement('div', { className: 'breakline' }), this.state.jsxEvents != null && React.createElement('div', { className: 'event-slider' }, React.createElement('div', { className: 'prevButton button' }, React.createElement('svg', { viewBox: '0 0 20 20' }, React.createElement('use', { xlinkHref: '#chevron-left' }))), React.createElement('div', { className: 'nextButton button' }, React.createElement('svg', { viewBox: '0 0 20 20' }, React.createElement('use', { xlinkHref: '#chevron-right' }))), React.createElement('div', { className: 'inner', style: { width: this.state.jsxEvents.length / 3 * 100 + '%' } }, this.state.jsxEvents)), React.createElement(SingleViewFooter, { elem: elem, type: 'location' }));
         }
     }]);
 
@@ -11257,13 +11309,51 @@ var EventCalendarView = function (_React$Component) {
         _this.state = { containerClasses: 'eventscontainer' };
         _this.eventsLength = 0;
         _this.allLoaded = false;
+        _this.loadReturned = true;
+
+        _this.bindEventListeners();
         return _this;
     }
 
-    // Set event layout
+    // Add Event Listeners
 
 
     _createClass(EventCalendarView, [{
+        key: 'bindEventListeners',
+        value: function bindEventListeners() {
+
+            // Activates internal scroll function
+            window.addEventListener('scroll', this.onscroll.bind(this));
+        }
+
+        // In view 
+
+    }, {
+        key: 'isInView',
+        value: function isInView(element) {
+            var elemTop = element.getBoundingClientRect().top,
+                elemBottom = element.getBoundingClientRect().bottom,
+                isVisibleY = elemTop >= 0 && elemBottom <= window.innerHeight,
+                isVisibleX = element.offsetLeft >= 0 && element.offsetLeft < window.innerWidth - 200;
+            return isVisibleY && isVisibleX;
+        }
+
+        // Scroll event
+
+    }, {
+        key: 'onscroll',
+        value: function onscroll() {
+            var _this2 = this;
+
+            var loadMoreBtn = document.getElementById('eventcv-load-more');
+            if (this.isInView(loadMoreBtn) && this.loadReturned) setTimeout(function () {
+                _this2.loadMore();
+            }, 1000);
+        }
+
+        // Set event layout
+
+    }, {
         key: 'setEventLayout',
         value: function setEventLayout() {
             if (this.state.containerClasses.includes('lineLayout')) this.setState({ containerClasses: 'eventscontainer' });else if (!this.state.containerClasses.includes('lineLayout')) this.setState({ containerClasses: 'eventscontainer lineLayout' });
@@ -11274,29 +11364,35 @@ var EventCalendarView = function (_React$Component) {
     }, {
         key: 'loadMore',
         value: function loadMore() {
-            var _this2 = this;
+            var _this3 = this;
 
             if (this.allLoaded) return;
 
-            document.getElementById('eventcv-load-more').innerHTML = 'Indlæser...';
-            Globals.eventDataHandler.getFutureEvents(25, true).then(function (resp) {
+            if (!this.loadReturned) return;
 
-                if (resp.length > _this2.eventsLength && resp.length % 25 === 0) {
-                    document.getElementById('eventcv-load-more').innerHTML = 'Indlæs 25 mere';
+            this.loadReturned = false;
+
+            // document.getElementById( 'eventcv-load-more' ).innerHTML = 'Indlæser...';
+            Globals.eventDataHandler.getFutureEvents(24, true).then(function (resp) {
+
+                if (resp.length > _this3.eventsLength && resp.length % 24 === 0) {
+                    document.getElementById('eventcv-load-more').classList.add('loading');
                 } else {
-                    document.getElementById('eventcv-load-more').innerHTML = 'Alt indhold indlæst';
-                    _this2.allLoaded = true;
-                }_this2.eventsLength = resp.length;
+                    document.getElementById('eventcv-load-more').classList.remove('loading');
+                    _this3.allLoaded = true;
+                }_this3.eventsLength = resp.length;
 
                 var events = [];
                 resp.forEach(function (item, index) {
-                    events.push(React.createElement(Event, { elem: item, key: 'event-' + item.fbid, setMainState: _this2.props.setMainState }));
+                    events.push(React.createElement(Event, { elem: item, key: 'event-' + item.fbid, setMainState: _this3.props.setMainState }));
                 });
 
-                _this2.props.setMainState({
+                _this3.props.setMainState({
                     'eventsData': resp,
                     'jsxEvents': events
                 });
+
+                _this3.loadReturned = true;
             });
         }
 
@@ -11305,7 +11401,7 @@ var EventCalendarView = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            return React.createElement('section', { className: 'container-section', id: 'event-calendar-view' }, React.createElement('div', { className: 'sync-outer' }, React.createElement('div', { className: 'sync-inner' }, React.createElement('div', { className: 'content' }, React.createElement('div', { id: 'eventsbar' }, React.createElement('div', { id: 'eventslayoutbtns' }, React.createElement('svg', { viewBox: '0 0 32 32', className: 'blocklayoutbtn', onClick: this.setEventLayout.bind(this) }, React.createElement('use', { xlinkHref: '#icon-block-layout' })), React.createElement('svg', { viewBox: '0 0 32 32', className: 'linelayoutbtn', onClick: this.setEventLayout.bind(this) }, React.createElement('use', { xlinkHref: '#icon-list-layout' }))), React.createElement('div', { className: 'monthSelector' })), React.createElement('div', { className: 'selector' }), React.createElement('div', { className: this.state.containerClasses + '-outer' }, React.createElement('div', { className: this.state.containerClasses }, typeof this.props.events !== 'undefined' && this.props.events !== null && this.props.events)), React.createElement('div', { id: 'eventcv-load-more', onClick: this.loadMore.bind(this) }, 'Indl\xE6s 25 mere')))));
+            return React.createElement('section', { className: 'container-section', id: 'event-calendar-view' }, React.createElement('div', { className: 'sync-outer' }, React.createElement('div', { className: 'sync-inner' }, React.createElement('div', { className: 'content' }, React.createElement('div', { id: 'eventsbar' }, React.createElement('div', { id: 'eventslayoutbtns' }, React.createElement('svg', { viewBox: '0 0 32 32', className: 'blocklayoutbtn', onClick: this.setEventLayout.bind(this) }, React.createElement('use', { xlinkHref: '#icon-block-layout' })), React.createElement('svg', { viewBox: '0 0 32 32', className: 'linelayoutbtn', onClick: this.setEventLayout.bind(this) }, React.createElement('use', { xlinkHref: '#icon-list-layout' }))), React.createElement('div', { className: 'monthSelector' })), React.createElement('div', { className: 'selector' }), React.createElement('div', { className: this.state.containerClasses + '-outer' }, React.createElement('div', { className: this.state.containerClasses }, typeof this.props.events !== 'undefined' && this.props.events !== null && this.props.events)), React.createElement('div', { id: 'eventcv-load-more', className: 'loading', onClick: this.loadMore.bind(this) })))));
         }
     }]);
 
@@ -11533,7 +11629,7 @@ function _inherits(subClass, superClass) {
 var React = __webpack_require__(6),
     ViewTopBar = __webpack_require__(33),
     Location = __webpack_require__(96),
-    Loader = __webpack_require__(60);
+    Loader = __webpack_require__(61);
 
 var LocationListView = function (_React$Component) {
     _inherits(LocationListView, _React$Component);
@@ -11649,7 +11745,7 @@ function _inherits(subClass, superClass) {
 var React = __webpack_require__(6),
     SingleLocation = __webpack_require__(98),
     ViewTopBar = __webpack_require__(33),
-    Loader = __webpack_require__(60);
+    Loader = __webpack_require__(61);
 
 var LocationSingleView = function (_React$Component) {
     _inherits(LocationSingleView, _React$Component);
@@ -11787,7 +11883,7 @@ var CategoryDataHandler = function () {
 
     }, {
         key: 'getAllCategories',
-        value: function getAllCategories(include_empty) {
+        value: function getAllCategories(include_empty, parent_only) {
             var _this2 = this;
 
             return new Promise(function (resolve, reject) {
@@ -11797,18 +11893,15 @@ var CategoryDataHandler = function () {
                 request.onload = function (response) {
 
                     // Sets featured category field and resolves
-                    var json = void 0;
-                    if (!include_empty) {
-                        var fson = JSON.parse(response.target.response);
-                        json = [];
+                    var json = [],
+                        fson = JSON.parse(response.target.response);
 
-                        for (var cat in fson) {
-                            if (fson[cat].location_count !== 0) {
+                    for (var cat in fson) {
+                        if (include_empty || fson[cat].location_count !== 0) {
+                            if (!parent_only || fson[cat].category_parent == 0) {
                                 json.push(fson[cat]);
                             }
                         }
-                    } else {
-                        json = JSON.parse(response.target.response);
                     }
 
                     this.allCategories = json.sort(function (a, b) {
@@ -12283,13 +12376,14 @@ var ImageHandler = function () {
         window.addEventListener('scroll', this.lazyLoad.bind(this));
     }
 
-    // Checks if an elem is in view
-
-
     _createClass(ImageHandler, [{
         key: 'isInView',
         value: function isInView(element) {
-            return element.offsetLeft >= 0 && element.offsetLeft < window.innerWidth - 200;
+            var elemTop = element.getBoundingClientRect().top,
+                elemBottom = element.getBoundingClientRect().bottom,
+                isVisibleY = elemTop >= 0 && elemBottom <= window.innerHeight,
+                isVisibleX = element.offsetLeft >= 0 && element.offsetLeft < window.innerWidth - 200;
+            return isVisibleY && isVisibleX;
         }
 
         // Lazy load
@@ -12549,7 +12643,7 @@ function _classCallCheck(instance, Constructor) {
 }
 
 // Sync Scroll
-var TowwwnApp = __webpack_require__(59);
+var TowwwnApp = __webpack_require__(60);
 
 var SyncScrollHandler = function () {
 
@@ -12893,128 +12987,6 @@ var SyncScrollHandler = function () {
 
             this.lastScrollTop = winScrollTop;
         }
-
-        // Locks view and removes scroll capabilities
-
-    }, {
-        key: 'lockView',
-        value: function lockView() {
-
-            this.canFixedScroll = false;
-            var body = document.getElementsByTagName('body')[0];
-            body.classList.add('no-scroll');
-            body.style.height = '100%';
-            body.style.overflow = 'hidden;';
-
-            if (this.container !== null) {
-                this.container.style.height = window.height - this.container.offsetTop + 'px';
-                this.container.style.overflow = 'hidden';
-            }
-
-            var syncOuters = document.getElementsByClassName('sync-outer');
-            var _iteratorNormalCompletion9 = true;
-            var _didIteratorError9 = false;
-            var _iteratorError9 = undefined;
-
-            try {
-                for (var _iterator9 = syncOuters[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
-                    var item = _step9.value;
-
-                    item.removeAttribute('style');
-                    item.style.position = 'absolute';
-                    item.style.width = '100%';
-                    item.style.top = item.offsetTop - item.parentNode.offsetTop;
-                    item.style.left = '0';
-                }
-            } catch (err) {
-                _didIteratorError9 = true;
-                _iteratorError9 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion9 && _iterator9.return) {
-                        _iterator9.return();
-                    }
-                } finally {
-                    if (_didIteratorError9) {
-                        throw _iteratorError9;
-                    }
-                }
-            }
-
-            ;
-        }
-
-        // Releases view again
-
-    }, {
-        key: 'releaseView',
-        value: function releaseView() {
-            var _this2 = this;
-
-            this.canFixedScroll = true;
-            var syncOuters = document.getElementsByClassName('sync-outer');
-            var _iteratorNormalCompletion10 = true;
-            var _didIteratorError10 = false;
-            var _iteratorError10 = undefined;
-
-            try {
-                for (var _iterator10 = syncOuters[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
-                    var item = _step10.value;
-
-                    item.removeAttribute('style');
-                }
-            } catch (err) {
-                _didIteratorError10 = true;
-                _iteratorError10 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion10 && _iterator10.return) {
-                        _iterator10.return();
-                    }
-                } finally {
-                    if (_didIteratorError10) {
-                        throw _iteratorError10;
-                    }
-                }
-            }
-
-            var body = document.getElementsByTagName('body')[0];
-            body.classList.remove('no-scroll');
-            body.removeAttribute('style');
-
-            this.onscroll();
-            this.rescaleContainer().then(function (resp) {
-                var goTopSide = false;
-                if (window.width <= 640) goTopSide = true;
-                var _iteratorNormalCompletion11 = true;
-                var _didIteratorError11 = false;
-                var _iteratorError11 = undefined;
-
-                try {
-                    for (var _iterator11 = _this2.elem[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
-                        var item = _step11.value;
-
-                        // Add logic to change scroll to bookmark mode elem her
-                        if (_this2.isInView(item) && !item.classList.contains('high')) goTopSide = false;
-                    }
-                } catch (err) {
-                    _didIteratorError11 = true;
-                    _iteratorError11 = err;
-                } finally {
-                    try {
-                        if (!_iteratorNormalCompletion11 && _iterator11.return) {
-                            _iterator11.return();
-                        }
-                    } finally {
-                        if (_didIteratorError11) {
-                            throw _iteratorError11;
-                        }
-                    }
-                }
-
-                if (goTopSide) window.scrollTop = _this2.container.offsetTop - 60;
-            });
-        }
     }]);
 
     return SyncScrollHandler;
@@ -13266,7 +13238,7 @@ exports = module.exports = __webpack_require__(115)();
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n@font-face {\n  font-family: 'Avenir';\n  font-style: normal;\n  font-weight: normal;\n  src: local(\"assets/font-faces/AvenirNextLTPro-Regular.woff\"), url(" + __webpack_require__(222) + ") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Avenir Bold';\n  font-style: normal;\n  font-weight: normal;\n  src: local(\"assets/font-faces/AvenirNextLTPro-Bold.woff\"), url(" + __webpack_require__(221) + ") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Avenir  Italic';\n  font-style: normal;\n  font-weight: normal;\n  src: local(\"assets/font-faces/AvenirNextLTPro-It.woff\"), url(\"/assets/font-faces/AvenirNextLTPro-It.woff\") format(\"woff\"); }\n\nbody {\n  margin: 0;\n  background-color: #e0e0e0;\n  font-family: 'Montserrat', 'Avenir Bold', sans-serif; }\n  body * {\n    font-family: inherit;\n    box-sizing: border-box; }\n  body.no-scroll {\n    height: 100%; }\n  @media (min-width: 1600px) {\n    body:before, body:after {\n      content: '';\n      position: fixed;\n      top: 0;\n      bottom: 0;\n      left: 0;\n      background-color: inherit;\n      width: calc((100% - 1600px) / 2);\n      z-index: 100; }\n    body:after {\n      left: auto;\n      right: 0; } }\n  @media (min-width: 1600px) {\n    body:before, body:after {\n      width: calc((100% - 1600px) / 2); } }\n\np a {\n  position: relative;\n  color: #68a297;\n  text-decoration: none;\n  transition: 400ms;\n  transition-timing-function: cubic-bezier(0.54, 0, 0.18, 1.5); }\n  p a:hover {\n    color: #588f84; }\n    p a:hover:before {\n      width: 100%;\n      background-color: #588f84; }\n  p a:before {\n    content: '';\n    position: absolute;\n    left: 50%;\n    bottom: -2px;\n    transform: translate(-50%, 0);\n    width: 0;\n    height: 1px;\n    background-color: #68a297;\n    transition: 400ms;\n    transition-timing-function: cubic-bezier(0.54, 0, 0.18, 1.5); }\n\n.main-container {\n  position: relative;\n  margin: 0 auto;\n  width: 100%;\n  height: auto;\n  max-width: 1600px;\n  transition: 200ms;\n  z-index: 20;\n  border-top: none;\n  border-bottom: none; }\n\n.content-container {\n  position: relative;\n  width: 100%;\n  height: auto;\n  background-color: white;\n  z-index: 1;\n  min-height: 100vh; }\n  .content-container .content-container-inner {\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    top: 0;\n    left: 0%;\n    font-size: 0;\n    transition: 400ms;\n    transition-timing-function: cubic-bezier(0.73, 0.01, 0.61, 1.03); }\n    .content-container .content-container-inner:before {\n      content: '';\n      position: absolute;\n      top: 0;\n      left: 0;\n      right: 0;\n      height: 60px;\n      background: #689a95; }\n    .content-container .content-container-inner.notrans {\n      transition: 0ms !important; }\n    .content-container .content-container-inner.transition {\n      transition: 250ms; }\n  .content-container.poly-view .content {\n    height: auto !important; }\n  .content-container .loader {\n    position: absolute;\n    top: 45%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    width: 60px;\n    height: 60px; }\n  .content-container .container-section {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 50%;\n    height: 100%;\n    min-height: calc(100vh - 250px - 60px);\n    transition: 500ms;\n    font-size: 16px;\n    display: inline-block;\n    vertical-align: top;\n    transform: translate(-100%, 0);\n    transition-timing-function: cubic-bezier(0.73, 0.01, 0.61, 1.03); }\n    .content-container .container-section:nth-child(2n) {\n      background-color: #f0f0f0; }\n    .content-container .container-section:nth-child(5n) {\n      background-color: #f9f9f9; }\n      .content-container .container-section:nth-child(5n) .viewbar {\n        background-color: #62938e; }\n    .content-container .container-section.notrans {\n      transition: 0ms !important; }\n    .content-container .container-section .content {\n      min-height: calc( 100vh - 60px); }\n  .content-container.slowtrans .container-section {\n    transition: 50000000ms !important; }\n  .content-container #location-category-view {\n    background-color: white;\n    transition: 500ms, width 400ms;\n    transition-timing-function: cubic-bezier(0.73, 0.01, 0.61, 1.03); }\n    .content-container #location-category-view.normalize {\n      width: 50%; }\n  .content-container #event-calendar-view {\n    transition: 500ms, width 400ms;\n    transition-timing-function: cubic-bezier(0.73, 0.01, 0.61, 1.03); }\n    .content-container #event-calendar-view.normalize {\n      width: 50%; }\n    .content-container #event-calendar-view .content {\n      min-height: calc(100vh - 60px); }\n\n#site-header {\n  position: sticky;\n  top: -250px;\n  z-index: 10;\n  background-color: #494950;\n  height: 310px;\n  background-image: url(" + __webpack_require__(223) + ");\n  background-size: cover;\n  background-position: center;\n  transform: translateY(0px);\n  transition: transform 200ms; }\n  #site-header.fixed.active {\n    transform: translateY(250px); }\n\n@media screen and (max-width: 1600px) {\n  .header-container {\n    max-width: 1600px !important; } }\n\n@media screen and (max-width: 640px) {\n  #site-header {\n    height: 60px; }\n  .header-container {\n    position: fixed;\n    top: -250px;\n    transition: 200ms; }\n    .header-container.active {\n      top: 0; }\n  .header-placeholder {\n    height: 60px !important;\n    display: block !important; }\n  #header .prevButton {\n    left: calc(50% - 135px) !important; }\n  #header .nextButton {\n    left: calc(50% + 135px) !important; }\n  #header #searchfield {\n    width: 250px !important; } }\n\n.header-container {\n  width: 100%;\n  max-width: 1600px;\n  transition: 200ms;\n  height: auto;\n  z-index: 100000; }\n\n#header {\n  position: relative;\n  width: 100%;\n  height: 250px;\n  transition: 200ms;\n  overflow: hidden;\n  border-bottom: 1px solid #333; }\n  #header .header-commercials {\n    width: 100%;\n    height: 250px; }\n    #header .header-commercials .header-commercial-bullets {\n      position: absolute;\n      z-index: 10;\n      top: 5px;\n      right: 10px;\n      left: auto;\n      bottom: auto;\n      width: auto; }\n      #header .header-commercials .header-commercial-bullets .swiper-pagination-bullet-active {\n        background: white;\n        opacity: .8; }\n    #header .header-commercials .swiper-wrapper {\n      width: 100%;\n      height: 250px; }\n      #header .header-commercials .swiper-wrapper .swiper-slide {\n        width: 100%;\n        height: 250px; }\n        #header .header-commercials .swiper-wrapper .swiper-slide .slide-img {\n          width: 100%;\n          height: 100%;\n          background-size: cover;\n          background-position: center 20%; }\n    #header .header-commercials .prevButton {\n      box-sizing: border-box;\n      position: absolute;\n      top: 50%;\n      left: calc(50% - 160px);\n      transform: translate(-100%, -50%);\n      width: 0;\n      height: 0;\n      border: 12px solid transparent;\n      border-right: 12px solid white;\n      border-left: none;\n      opacity: .8;\n      transition: 150ms;\n      z-index: 10; }\n      #header .header-commercials .prevButton:hover {\n        opacity: 1; }\n    #header .header-commercials .nextButton {\n      box-sizing: border-box;\n      position: absolute;\n      top: 50%;\n      left: calc(50% + 160px);\n      transform: translate(0, -50%);\n      width: 0;\n      height: 0;\n      border: 12px solid transparent;\n      border-right: none;\n      border-left: 12px solid white;\n      opacity: .8;\n      transition: 150ms;\n      z-index: 10; }\n      #header .header-commercials .nextButton:hover {\n        opacity: 1; }\n  #header .commercial-container {\n    position: relative;\n    width: 100%;\n    height: 100%;\n    overflow: hidden; }\n    #header .commercial-container .swiper-slide {\n      width: 100%;\n      height: 100%; }\n      #header .commercial-container .swiper-slide .img-container {\n        width: 100%;\n        height: 100%;\n        background-size: cover;\n        background-position: center; }\n  #header #searchcontainer {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    z-index: 10; }\n    #header #searchcontainer #searchlabel {\n      position: absolute;\n      top: 50%;\n      left: 12px;\n      transform: translate(0, -50%);\n      font-weight: 100;\n      text-transform: uppercase;\n      font-size: 14px; }\n      #header #searchcontainer #searchlabel.not-visible {\n        display: none; }\n    #header #searchcontainer #searchicon {\n      position: absolute;\n      top: 50%;\n      right: 0px;\n      transform: translate(0, -50%);\n      width: 40px;\n      height: 40px;\n      padding: 12px;\n      cursor: pointer;\n      fill: #333; }\n      #header #searchcontainer #searchicon:hover {\n        fill: black; }\n    #header #searchcontainer #searchfield {\n      box-sizing: border-box;\n      width: 300px;\n      height: 42px;\n      border-radius: 4px;\n      border: 0;\n      padding-left: 12px;\n      padding-right: 40px;\n      outline: none;\n      background-color: rgba(255, 255, 255, 0.8);\n      box-shadow: 0px 0px 0px 10px rgba(0, 0, 0, 0.2);\n      transition: 120ms; }\n      #header #searchcontainer #searchfield:hover, #header #searchcontainer #searchfield:focus {\n        background-color: rgba(255, 255, 255, 0.98) !important;\n        box-shadow: 0px 0px 0px 10px rgba(0, 0, 0, 0.4); }\n    #header #searchcontainer ul.menu {\n      position: absolute;\n      padding: 0;\n      text-align: center;\n      width: 100%;\n      font-size: 0;\n      margin-top: 20px; }\n      #header #searchcontainer ul.menu li {\n        display: inline-block; }\n        #header #searchcontainer ul.menu li:first-child:before {\n          content: '';\n          width: 0px; }\n        #header #searchcontainer ul.menu li:before {\n          color: rgba(255, 255, 255, 0.8);\n          font-size: 11px;\n          height: 11px;\n          line-height: 11px;\n          display: inline-block;\n          content: '\\B7';\n          width: 20px;\n          text-align: center;\n          vertical-align: top; }\n      #header #searchcontainer ul.menu a {\n        color: rgba(255, 255, 255, 0.8);\n        transition: color 120ms;\n        text-decoration: none;\n        font-size: 11px;\n        height: 11px;\n        line-height: 11px;\n        display: inline-block;\n        vertical-align: top; }\n        #header #searchcontainer ul.menu a:hover {\n          color: white; }\n\n#headerbar {\n  position: relative;\n  width: 100%;\n  height: 60px;\n  background-color: #494950;\n  border-bottom: 1px solid #151515;\n  z-index: 20;\n  overflow: hidden; }\n  #headerbar .logo-container {\n    position: absolute;\n    left: 0;\n    width: 112px;\n    height: 100%;\n    z-index: 30;\n    cursor: pointer;\n    background-color: #313135; }\n    #headerbar .logo-container::before {\n      content: '';\n      position: absolute;\n      right: -18px;\n      border-top: 30px solid transparent;\n      border-bottom: 30px solid #313135;\n      border-left: 9px solid #313135;\n      border-right: 9px solid transparent; }\n    #headerbar .logo-container .logo {\n      position: absolute;\n      width: 66px;\n      height: auto;\n      top: 12px;\n      left: 50%;\n      fill: rgba(255, 255, 255, 0.9);\n      transform: translate(-50%, 0); }\n    #headerbar .logo-container .city {\n      color: white;\n      position: absolute;\n      left: 50%;\n      bottom: 10px;\n      transform: translate(-50%, 0);\n      width: auto;\n      text-align: center;\n      font-size: 10px;\n      text-transform: uppercase; }\n  #headerbar #menu-show-btns {\n    position: absolute;\n    left: 50%;\n    top: 50%;\n    transform: translate(-50%, -50%);\n    width: 38px;\n    height: 38px;\n    opacity: .4; }\n    #headerbar #menu-show-btns .menu-show-img {\n      fill: white;\n      position: absolute;\n      top: 60px;\n      width: 37px;\n      height: 37px;\n      transition: all 300ms, rotate 500ms, top 300ms;\n      cursor: pointer; }\n    #headerbar #menu-show-btns .menu-hide-img {\n      fill: white;\n      position: absolute;\n      top: 60px;\n      width: 37px;\n      height: 37px;\n      transition: all 300ms, rotate 500ms, top 300ms;\n      cursor: pointer; }\n    #headerbar #menu-show-btns.active .menu-show-img {\n      top: 60px !important; }\n    #headerbar #menu-show-btns.active .menu-hide-img {\n      top: 0 !important; }\n    #headerbar #menu-show-btns.show .menu-show-img {\n      top: 0; }\n  #headerbar .back-button {\n    position: absolute;\n    background-color: #313135;\n    top: 0;\n    right: -140px;\n    bottom: 0;\n    width: 112px;\n    transition: 300ms;\n    z-index: 10; }\n    #headerbar .back-button.active {\n      right: 0; }\n    #headerbar .back-button::before {\n      content: '';\n      position: absolute;\n      left: -16px;\n      border-top: 30px solid #313135;\n      border-bottom: 30px solid transparent;\n      border-left: 8px solid transparent;\n      border-right: 8px solid #313135; }\n    #headerbar .back-button.mobile .back-img {\n      transform: translate(-50%, -50%) rotate(0deg); }\n    #headerbar .back-button .back-img {\n      fill: white;\n      opacity: .8;\n      position: absolute;\n      width: 36px;\n      height: 36px;\n      top: 50%;\n      left: 46%;\n      transform: translate(-50%, -50%) rotate(180deg); }\n  #headerbar .beta-warning {\n    position: absolute;\n    top: 50%;\n    right: -128px;\n    transform: translate(0, -50%);\n    color: white;\n    text-align: right;\n    line-height: 18px;\n    transition: 300ms;\n    z-index: 9;\n    cursor: pointer; }\n    #headerbar .beta-warning.active {\n      right: 22px; }\n    #headerbar .beta-warning .info {\n      text-transform: uppercase;\n      font-size: 14px; }\n      #headerbar .beta-warning .info .info-arrow-img {\n        fill: white;\n        width: 10px;\n        height: 10px;\n        margin-left: 4px; }\n    #headerbar .beta-warning .version {\n      text-transform: capitalize;\n      font-size: 12px; }\n  #headerbar .socialmedia {\n    display: none;\n    position: absolute;\n    width: auto;\n    height: auto;\n    right: 15px;\n    top: 50%;\n    transform: translate(0, -50%); }\n    #headerbar .socialmedia .fb_link {\n      width: auto;\n      height: auto;\n      opacity: .5;\n      transition: 200ms; }\n      #headerbar .socialmedia .fb_link:hover {\n        opacity: .85; }\n      #headerbar .socialmedia .fb_link .fb_img {\n        width: 36px;\n        height: 36px; }\n\n@media screen and (max-width: 640px) {\n  #eventsbar .monthSelector {\n    right: 20px !important; } }\n\n#eventsbar {\n  position: relative;\n  width: 100%;\n  height: 60px;\n  background-color: #5d8b87;\n  z-index: 10; }\n  #eventsbar #eventslayoutbtns {\n    position: relative;\n    width: 128px;\n    height: 100%;\n    border-right: 1px solid #CDCDCD;\n    transition: 300ms;\n    display: inline-block; }\n    #eventsbar #eventslayoutbtns:hover {\n      background-color: #639490; }\n    #eventsbar #eventslayoutbtns svg {\n      position: absolute;\n      top: 50%;\n      transform: translate(-50%, -50%);\n      width: auto;\n      height: 22px;\n      width: 22px;\n      cursor: pointer;\n      fill: rgba(255, 255, 255, 0.9);\n      transition: fill 120ms; }\n      #eventsbar #eventslayoutbtns svg:hover {\n        fill: white; }\n    #eventsbar #eventslayoutbtns .blocklayoutbtn {\n      left: 30%; }\n    #eventsbar #eventslayoutbtns .linelayoutbtn {\n      left: 66%; }\n  #eventsbar .monthSelector {\n    position: absolute;\n    display: inline-block;\n    top: 50%;\n    right: 32px;\n    transform: translate(0, -50%);\n    color: white;\n    cursor: pointer;\n    padding-right: 22px;\n    text-transform: uppercase;\n    transition: 120ms;\n    font-size: 12px; }\n\n.events-sync-container {\n  position: absolute;\n  width: 100%;\n  min-height: calc( 100vh - 60px);\n  height: auto; }\n\n.eventscontainer-outer {\n  padding: 10px; }\n\n.eventscontainer {\n  position: relative;\n  box-sizing: border-box;\n  width: 100%;\n  height: auto;\n  padding: 0;\n  padding-bottom: 128px;\n  display: flex;\n  flex-wrap: wrap; }\n  @media (min-width: 640px) {\n    .eventscontainer {\n      padding: 0;\n      padding-bottom: 134px; } }\n  .eventscontainer * {\n    font-family: 'Montserrat', 'Avenir Bold', sans-serif; }\n  .eventscontainer .error {\n    position: absolute;\n    top: 48px;\n    left: 50%;\n    transform: translate(-50%, 0);\n    text-transform: uppercase;\n    font-size: 19px;\n    width: 100%;\n    text-align: center; }\n  .eventscontainer.lineLayout .event {\n    width: 100%;\n    min-height: 110px;\n    height: auto; }\n    .eventscontainer.lineLayout .event .imgcontainer {\n      float: left;\n      width: 110px;\n      height: 100%;\n      border-bottom: none;\n      border-right: 1px solid rgba(104, 162, 151, 0.6);\n      padding-bottom: 0; }\n    .eventscontainer.lineLayout .event .eventtext {\n      width: auto;\n      height: auto;\n      padding: 8px;\n      margin-bottom: 36px; }\n      .eventscontainer.lineLayout .event .eventtext .title {\n        width: auto;\n        font-size: 12px;\n        margin-left: 0px !important; }\n      .eventscontainer.lineLayout .event .eventtext .start_time {\n        margin-top: 0px;\n        margin-left: 0px !important; }\n      .eventscontainer.lineLayout .event .eventtext .eventlocation-container {\n        width: calc( 100% - 190px) !important;\n        left: 175px !important;\n        bottom: 5px !important; }\n        .eventscontainer.lineLayout .event .eventtext .eventlocation-container .eventblackbar {\n          height: 2px; }\n    @media (min-width: 640px) {\n      .eventscontainer.lineLayout .event {\n        min-height: 110px; }\n        .eventscontainer.lineLayout .event .imgcontainer {\n          width: 160px;\n          border-right: 1px solid #68a297; }\n        .eventscontainer.lineLayout .event .eventtext {\n          padding: 16px;\n          margin-bottom: 36px; }\n          .eventscontainer.lineLayout .event .eventtext .title {\n            font-size: 14px; }\n          .eventscontainer.lineLayout .event .eventtext .eventlocation-container {\n            width: calc( 100% - 190px) !important;\n            right: 15px !important;\n            bottom: 5px !important; }\n            .eventscontainer.lineLayout .event .eventtext .eventlocation-container .eventblackbar {\n              height: 2px; } }\n\n.event {\n  box-sizing: border-box;\n  position: relative;\n  display: inline-block;\n  width: 145px;\n  margin: 4px;\n  border: 1px solid rgba(104, 162, 151, 0.6);\n  background-color: #f9f9f9;\n  transition: background-color 120ms;\n  flex-grow: 1;\n  cursor: pointer; }\n  .event:hover {\n    background-color: #fff; }\n  @media (min-width: 640px) {\n    .event {\n      width: 160px;\n      margin: 6px;\n      border: 1px solid #68a297; } }\n  .event .imgcontainer {\n    position: relative;\n    width: 100%;\n    padding-bottom: 50%;\n    background-size: cover;\n    background-position: center 20%;\n    border-bottom: 1px solid rgba(104, 162, 151, 0.6); }\n    .event .imgcontainer .loader {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      width: 100%;\n      height: 100%;\n      background-color: rgba(0, 0, 0, 0.75);\n      opacity: 0;\n      transition: 250ms;\n      z-index: 19; }\n      .event .imgcontainer .loader img {\n        position: absolute;\n        top: 50%;\n        left: 50%;\n        width: 30px;\n        height: auto;\n        transform: translate(-50%, -50%); }\n    .event .imgcontainer.loading {\n      background-repeat: no-repeat;\n      background-size: 30px;\n      background-position: center; }\n    .event .imgcontainer.loadingsv .loader {\n      opacity: 1; }\n    @media (min-width: 640px) {\n      .event .imgcontainer {\n        padding-bottom: 90px;\n        border-bottom: 1px solid #68a297; } }\n  .event .eventtext {\n    position: relative;\n    overflow: hidden;\n    padding: 10px;\n    padding-top: 10px;\n    width: 100%;\n    height: 140px;\n    text-transform: uppercase;\n    transition: 500ms; }\n    .event .eventtext * {\n      z-index: 10;\n      transition: 200ms;\n      position: relative; }\n    .event .eventtext.bookmark-mode {\n      background-color: #c7dcd8 !important; }\n    .event .eventtext .ripple {\n      border-radius: 100%;\n      background-color: #77a4a0;\n      position: absolute;\n      width: 700px;\n      height: 700px;\n      transform: scale(0);\n      opacity: .9;\n      z-index: 0; }\n\n@keyframes ripple {\n  100% {\n    transform: scale(1);\n    opacity: 0; } }\n\n@keyframes rippleBack {\n  100% {\n    transform: scale(0);\n    opacity: 1; } }\n      .event .eventtext .ripple.animate {\n        animation: ripple 300ms ease-in forwards; }\n      .event .eventtext .ripple.animateBack {\n        transform: scale(1);\n        opacity: 1;\n        animation: rippleBack 300ms ease-in forwards; }\n    .event .eventtext .title {\n      font-size: 11px; }\n    .event .eventtext .start_time {\n      font-size: 10px;\n      text-align: justify;\n      color: #999;\n      margin-top: 5px; }\n    @media (min-width: 640px) {\n      .event .eventtext {\n        height: 160px;\n        padding: 15px;\n        padding-top: 15px; }\n        .event .eventtext .title {\n          font-size: 13px; }\n        .event .eventtext .start_time {\n          font-size: 12px; }\n        .event .eventtext .eventlocation-container {\n          left: 15px;\n          bottom: 15px;\n          width: calc(100% - 30px); }\n          .event .eventtext .eventlocation-container .eventlocation {\n            font-size: 9px; }\n        .event .eventtext .eventblackbar {\n          height: 3px; } }\n  .event .eventlocation-container {\n    width: calc(100% - 20px);\n    position: absolute;\n    bottom: 15px;\n    left: 10px;\n    height: 2em;\n    text-transform: uppercase; }\n    .event .eventlocation-container .eventblackbar {\n      height: 2px;\n      width: 100%;\n      background-color: #68a297;\n      margin-top: 6px;\n      margin-bottom: 5px; }\n    .event .eventlocation-container .eventlocation {\n      font-size: 9px;\n      color: #68a297;\n      line-height: 11px; }\n\n.left-container.all-loaded {\n  padding-bottom: 0; }\n  .left-container.all-loaded .load-more {\n    display: none; }\n\n#eventcv-load-more {\n  position: absolute;\n  bottom: 0;\n  width: 100%;\n  height: 124px;\n  line-height: 124px;\n  text-align: center;\n  color: white;\n  font-size: 16px;\n  background-color: #689a95;\n  cursor: pointer; }\n\n.event-bar {\n  position: relative;\n  width: 100%;\n  height: 60px;\n  padding-left: 20px;\n  line-height: 60px;\n  color: white;\n  text-transform: uppercase;\n  font-size: 12px;\n  background-color: #689a95; }\n  .event-bar a {\n    color: white;\n    text-decoration: none;\n    height: inherit;\n    line-height: inherit;\n    display: inline-block; }\n  .event-bar .close-button {\n    position: absolute;\n    top: 50%;\n    right: 0px;\n    width: 65px;\n    text-align: center;\n    transform: translate(0, -50%);\n    color: white;\n    font-size: 37px;\n    cursor: pointer;\n    background-color: transparent;\n    transition: background-color 120ms;\n    border-left: 1px solid rgba(255, 255, 255, 0.6); }\n    .event-bar .close-button:hover {\n      background-color: #6e9e99; }\n\n.event-sv-content-container {\n  position: relative;\n  min-height: calc( 100vh - 60px - 60px);\n  background-color: white;\n  z-index: 10; }\n  .event-sv-content-container .event-singleview {\n    padding: 12px;\n    width: 100%;\n    height: auto; }\n    @media (min-width: 640px) {\n      .event-sv-content-container .event-singleview {\n        padding: 24px; } }\n    .event-sv-content-container .event-singleview .event-sv-parentname {\n      font-size: 16px;\n      margin-bottom: 15px;\n      text-transform: uppercase; }\n    .event-sv-content-container .event-singleview .event-sv-img {\n      width: 100%;\n      padding-bottom: 56.25%;\n      border: 1px solid #68a297;\n      margin-bottom: 16px;\n      background-size: cover;\n      background-position: center 20%;\n      margin: 0; }\n    .event-sv-content-container .event-singleview .event-sv-title {\n      line-height: 1.4;\n      font-size: 16px;\n      text-transform: uppercase;\n      margin-top: 19px; }\n    .event-sv-content-container .event-singleview .event-sv-start-time {\n      font-size: 13px;\n      margin-bottom: 19px;\n      color: #68a297; }\n    .event-sv-content-container .event-singleview .lineBreak {\n      border: 0px;\n      height: 2px;\n      background-color: #444;\n      border-bottom: 1px solid #ddd; }\n    .event-sv-content-container .event-singleview .es-btns {\n      padding: 1px 0px;\n      display: flex; }\n      .event-sv-content-container .event-singleview .es-btns .status-btn {\n        margin: 11px 0px;\n        position: relative;\n        height: 32px;\n        margin-right: 20px;\n        display: flex;\n        cursor: pointer; }\n        .event-sv-content-container .event-singleview .es-btns .status-btn .icon {\n          position: relative;\n          left: 2px;\n          width: 27px;\n          height: 27px;\n          margin-right: 8px; }\n          .event-sv-content-container .event-singleview .es-btns .status-btn .icon svg {\n            width: 29px;\n            height: 29px;\n            fill: #444; }\n        .event-sv-content-container .event-singleview .es-btns .status-btn .text {\n          position: relative;\n          width: auto;\n          height: 32px;\n          line-height: 32px;\n          padding: 0px 10px;\n          background-color: #537c78;\n          box-shadow: inset 0px 0px 1px rgba(0, 0, 0, 0.3);\n          margin-left: 8px;\n          color: white;\n          font-family: 'Avenir';\n          font-size: 14px;\n          text-transform: uppercase; }\n        .event-sv-content-container .event-singleview .es-btns .status-btn:hover .icon svg {\n          fill: #484848; }\n        .event-sv-content-container .event-singleview .es-btns .status-btn:hover .text {\n          background-color: #57827e; }\n    .event-sv-content-container .event-singleview .event-sv-desc * {\n      font-family: 'Avenir';\n      font-size: 14px;\n      line-height: 1.5; }\n    .event-sv-content-container .event-singleview .text {\n      display: inline-block; }\n    .event-sv-content-container .event-singleview .event-sv-desc {\n      padding-bottom: 30px; }\n      .event-sv-content-container .event-singleview .event-sv-desc * {\n        font-family: 'Avenir';\n        font-size: 14px; }\n        @media (min-width: 480px) {\n          .event-sv-content-container .event-singleview .event-sv-desc * {\n            font-size: 14px; } }\n        @media (min-width: 1280px) {\n          .event-sv-content-container .event-singleview .event-sv-desc * {\n            font-size: 15px; } }\n    .event-sv-content-container .event-singleview.fixed-bottom {\n      position: fixed;\n      top: auto;\n      bottom: 32px;\n      left: calc( 50% + 32px);\n      right: 32px; }\n    .event-sv-content-container .event-singleview.fixed-top {\n      position: fixed;\n      top: 32px;\n      bottom: auto;\n      left: calc( 50% + 32px);\n      right: 32px; }\n  .event-sv-content-container .event-sv-info-placeholder {\n    width: 100%; }\n\n@media screen and (max-width: 1600px) {\n  .commercial-img {\n    max-width: calc(1600px / 2 - 64px) !important; } }\n\n.commercial-img {\n  margin: 32px;\n  padding-bottom: 56.25%;\n  opacity: .65;\n  transition: 350ms;\n  cursor: pointer;\n  background-size: cover;\n  background-position: center; }\n  .commercial-img:hover {\n    opacity: 1; }\n\n.sv-footer {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: auto;\n  min-height: 64px;\n  color: white; }\n  .sv-footer .sv-footer-block {\n    position: relative;\n    width: 100%;\n    height: auto;\n    background-color: #537c78;\n    font-family: 'Avenir';\n    transition: 120ms; }\n    .sv-footer .sv-footer-block.clickable {\n      cursor: pointer; }\n      .sv-footer .sv-footer-block.clickable:hover {\n        background-color: #3f5d5a; }\n    .sv-footer .sv-footer-block.title {\n      background-color: #5d8b87; }\n      .sv-footer .sv-footer-block.title.clickable:hover {\n        background-color: #436460; }\n      .sv-footer .sv-footer-block.title .value {\n        text-transform: uppercase;\n        font-size: 16px;\n        font-family: 'Montserrat', sans-serif;\n        padding: 32px 32px 28px 100px; }\n    .sv-footer .sv-footer-block:nth-child(2n) {\n      background-color: #496d69; }\n      .sv-footer .sv-footer-block:nth-child(2n).clickable:hover {\n        background-color: #3a5754; }\n    .sv-footer .sv-footer-block .icon {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 75px;\n      height: 100%;\n      background-color: rgba(0, 0, 0, 0.13);\n      background-size: 50px;\n      background-position: center;\n      background-repeat: no-repeat; }\n      .sv-footer .sv-footer-block .icon svg {\n        position: absolute;\n        fill: #eee;\n        width: 27px;\n        height: 27px;\n        top: 50%;\n        left: 50%;\n        transform: translate(-50%, -50%); }\n    .sv-footer .sv-footer-block .value {\n      padding: 24px 32px 22px 100px;\n      color: white;\n      font-size: 13px;\n      font-family: 'Avenir';\n      border-top: 1px solid rgba(40, 40, 40, 0.2); }\n\n.locations-bar {\n  position: relative;\n  width: 100%;\n  height: 60px; }\n  .locations-bar .locationscategories-title {\n    position: absolute;\n    left: 16px;\n    top: 50%;\n    transform: translate(0, -50%);\n    text-transform: uppercase;\n    color: #494950; }\n\n.locationcategories-container {\n  position: relative;\n  width: 100%;\n  height: auto; }\n\n.category-bar {\n  position: relative;\n  width: 100%;\n  height: 60px;\n  background-color: #689a95;\n  line-height: 60px;\n  font-size: 12px;\n  text-transform: uppercase;\n  padding-left: 20px;\n  color: white;\n  cursor: pointer; }\n  .category-bar .sub-categories-title {\n    position: absolute;\n    right: 0;\n    top: 0;\n    height: 60px;\n    min-width: 65px;\n    border-left: 1px solid rgba(255, 255, 255, 0.5);\n    background: transparent;\n    transition: background 120ms; }\n    .category-bar .sub-categories-title:hover {\n      background: rgba(255, 255, 255, 0.1); }\n    .category-bar .sub-categories-title:after {\n      content: '';\n      position: absolute;\n      top: 50%;\n      right: 32.5px;\n      transform: translate(50%, -50%);\n      width: 0;\n      height: 0;\n      margin-top: 4px;\n      border: 6px solid transparent;\n      border-top: 8px solid white; }\n\n.sub-category-outer {\n  position: relative;\n  width: 100%;\n  height: 0;\n  overflow: hidden;\n  transition: 500ms; }\n  .sub-category-outer .sub-category-inner {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: auto;\n    background-color: #494950; }\n    .sub-category-outer .sub-category-inner .sub-category {\n      position: relative;\n      width: 100%;\n      height: 50px;\n      color: white;\n      font-size: 12px;\n      line-height: 50px;\n      padding-left: calc( 32px + 24px);\n      text-transform: uppercase;\n      border-bottom: 1px solid #eee;\n      cursor: pointer; }\n      .sub-category-outer .sub-category-inner .sub-category .elem-counter {\n        position: absolute;\n        top: 50%;\n        left: 9px;\n        transform: translate(0, -50%);\n        width: 32px;\n        height: 32px;\n        background-color: #eee;\n        color: #494950;\n        text-align: center;\n        line-height: 32px; }\n\n.category-container {\n  padding: 16px;\n  padding-bottom: 2px;\n  width: 100%;\n  height: auto;\n  box-sizing: border-box; }\n  .category-container * {\n    box-sizing: border-box; }\n\n.category {\n  position: relative;\n  width: 100%;\n  min-width: 200px;\n  height: 125px;\n  background-repeat: no-repeat;\n  border: 1px solid #68a297;\n  background-color: #689a95;\n  background-image: url(" + __webpack_require__(91) + ");\n  background-size: 32px;\n  background-position: center;\n  padding-right: 175px;\n  background-origin: content-box;\n  margin-bottom: 16px;\n  cursor: pointer;\n  /*&::before{\n            content: '';\n            opacity: 0;\n            position: absolute;\n            top: 0; left: 0;\n            width: 100%;\n            height: 100%;\n            background-color: rgba(lighten($color-blue-2, 15%), .2);\n            transition: 120ms;\n        }*/ }\n  @media (min-width: 480px) {\n    .category {\n      height: 175px; } }\n  @media (min-width: 640px) {\n    .category {\n      height: 125px; } }\n  @media (min-width: 900px) {\n    .category {\n      height: 175px; } }\n  .category.imgloaded {\n    background-size: cover;\n    background-origin: padding-box; }\n  .category:hover .category-content-container {\n    background-color: rgba(83, 135, 125, 0.9); }\n  .category.loadingsv .category-content-container {\n    background-color: rgba(59, 95, 88, 0.9); }\n    .category.loadingsv .category-content-container .category-count {\n      display: none; }\n    .category.loadingsv .category-content-container:after {\n      content: '';\n      background-image: url(" + __webpack_require__(92) + ");\n      background-position: center;\n      background-repeat: no-repeat;\n      background-size: 32px;\n      position: absolute;\n      top: 60%;\n      left: 50% !important;\n      transform: translate(-50%, -50%);\n      width: 40px;\n      height: 40px;\n      background-color: white; }\n      @media (min-width: 640px) {\n        .category.loadingsv .category-content-container:after {\n          left: calc( 145px / 2); } }\n      @media (min-width: 900px) {\n        .category.loadingsv .category-content-container:after {\n          left: calc( 175px / 2); } }\n  .category.selected .category-content-container {\n    width: 100%; }\n  .category .category-content-container {\n    position: absolute;\n    right: 0;\n    width: 145px;\n    height: 100%;\n    background-color: rgba(78, 127, 118, 0.9);\n    transition: width 650ms; }\n    @media (min-width: 480px) {\n      .category .category-content-container {\n        width: 175px; } }\n    @media (min-width: 640px) {\n      .category .category-content-container {\n        width: 145px; } }\n    @media (min-width: 900px) {\n      .category .category-content-container {\n        width: 175px; } }\n    .category .category-content-container .category-title {\n      position: absolute;\n      top: 25px;\n      left: 50% !important;\n      transform: translate(-50%, 0);\n      width: 100%;\n      color: white;\n      text-transform: uppercase;\n      text-align: center;\n      font-size: 11px; }\n      @media (min-width: 480px) {\n        .category .category-content-container .category-title {\n          top: 45px;\n          font-size: 14px;\n          left: calc( 175px / 2); } }\n      @media (min-width: 640px) {\n        .category .category-content-container .category-title {\n          top: 25px;\n          font-size: 11px;\n          left: calc( 145px / 2); } }\n      @media (min-width: 900px) {\n        .category .category-content-container .category-title {\n          top: 45px;\n          font-size: 14px;\n          left: calc( 175px / 2); } }\n    .category .category-content-container .category-count {\n      position: absolute;\n      top: 60%;\n      left: 50% !important;\n      transform: translate(-50%, -50%);\n      width: 40px;\n      height: 40px;\n      background-color: white;\n      color: #68a297;\n      text-align: center;\n      line-height: 40px;\n      font-size: 16px; }\n      @media (min-width: 640px) {\n        .category .category-content-container .category-count {\n          left: calc( 145px / 2); } }\n      @media (min-width: 900px) {\n        .category .category-content-container .category-count {\n          left: calc( 175px / 2); } }\n\n.locationlist-bar {\n  position: relative;\n  width: 100%;\n  height: 60px;\n  background-color: #5d8b87;\n  color: white;\n  font-size: 12px;\n  line-height: 60px;\n  padding-left: 20px;\n  text-transform: uppercase; }\n  .locationlist-bar .close-button {\n    position: absolute;\n    top: 50%;\n    right: 0px;\n    width: 65px;\n    text-align: center;\n    transform: translate(0, -50%);\n    color: white;\n    font-size: 37px;\n    cursor: pointer;\n    background-color: transparent;\n    transition: background-color 120ms;\n    border-left: 1px solid rgba(255, 255, 255, 0.6); }\n    .locationlist-bar .close-button:hover {\n      background-color: #61918d; }\n\n.location-list {\n  list-style: none;\n  padding: 0; }\n\n.location-container {\n  position: relative;\n  display: flex;\n  padding: 16px 16px 30px;\n  overflow: hidden;\n  color: #494950;\n  text-decoration: none;\n  transition: 400ms; }\n  .location-container * {\n    transition: 200ms;\n    position: relative; }\n  .location-container.bookmark-mode {\n    background-color: #b4cdcb !important; }\n  .location-container .ripple {\n    position: absolute;\n    display: block;\n    top: 0;\n    left: 0;\n    width: 1600px;\n    height: 1600px;\n    opacity: 1;\n    background-color: #689a95;\n    transform: scale(0);\n    transition: 300ms; }\n\n@keyframes ripple {\n  100% {\n    transform: scale(1);\n    opacity: 0; } }\n\n@keyframes rippleBack {\n  100% {\n    transform: scale(0);\n    opacity: 0; } }\n    .location-container .ripple.animate {\n      animation: ripple 300ms ease-in forwards; }\n    .location-container .ripple.animateBack {\n      animation: rippleBack 300ms ease-in forwards; }\n  .location-container:nth-child(2n) {\n    background-color: rgba(255, 255, 255, 0.6); }\n  .location-container.loading .location-picture:after {\n    position: absolute;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-color: white;\n    background-image: url(" + __webpack_require__(92) + ");\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 20px;\n    content: ''; }\n  .location-container .location-picture {\n    position: relative;\n    height: 50px;\n    min-width: 50px;\n    margin-right: 16px;\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-position: center;\n    border: 1px solid #689a95; }\n  .location-container .location-description {\n    flex-grow: 1; }\n    .location-container .location-description .location-title {\n      display: block;\n      font-size: 14px;\n      padding: 0 0 5px;\n      margin: 0;\n      border-bottom: 1px solid #68a297;\n      text-transform: uppercase; }\n    .location-container .location-description .location-about {\n      display: block;\n      margin-bottom: 0;\n      margin-top: 5px;\n      line-height: 1.5;\n      font-size: 80%;\n      font-family: 'Avenir', sans-serif; }\n\n.location-singleview-bar {\n  position: relative;\n  width: 100%;\n  height: 60px;\n  background-color: #689a95;\n  color: white;\n  text-transform: uppercase;\n  font-size: 12px;\n  line-height: 60px;\n  padding-left: 20px; }\n  .location-singleview-bar .close-button {\n    position: absolute;\n    top: 50%;\n    right: 0px;\n    width: 65px;\n    text-align: center;\n    transform: translate(0, -50%);\n    color: white;\n    font-size: 37px;\n    cursor: pointer;\n    background-color: transparent;\n    transition: background-color 120ms;\n    border-left: 1px solid rgba(255, 255, 255, 0.6); }\n    .location-singleview-bar .close-button:hover {\n      background-color: #6e9e99; }\n\n.location-singleview-content {\n  width: 100%;\n  padding: 24px;\n  height: auto;\n  overflow: auto; }\n  .location-singleview-content .breakline {\n    width: 100%;\n    border-bottom: 1px solid #689a95; }\n  .location-singleview-content .photo-container {\n    position: relative;\n    width: 100%;\n    height: auto; }\n    .location-singleview-content .photo-container .coverphoto {\n      position: relative;\n      width: 100%;\n      padding-bottom: 56.25%;\n      background-size: cover;\n      background-position: 20% center;\n      border: 1px solid #689a95; }\n    .location-singleview-content .photo-container .picture {\n      position: absolute;\n      bottom: 0;\n      left: 16px;\n      transform: translate(0, 75%);\n      width: 64px;\n      height: 64px;\n      border: 1px solid #689a95;\n      background-size: cover;\n      background-position: center; }\n  .location-singleview-content .cta-icons {\n    position: relative;\n    width: auto;\n    height: auto;\n    padding: 25px 16px;\n    overflow: auto; }\n    .location-singleview-content .cta-icons .cta-icon {\n      flex-grow: 1;\n      cursor: pointer;\n      margin-left: 24px;\n      display: inline-block;\n      float: right; }\n      .location-singleview-content .cta-icons .cta-icon svg {\n        width: 28px;\n        height: 28px; }\n  .location-singleview-content .description-container {\n    padding: 8px;\n    padding-top: 32px;\n    font-family: 'Avenir';\n    line-height: 1.5; }\n    .location-singleview-content .description-container .title {\n      font-size: 16px;\n      font-family: 'Avenir bold'; }\n    .location-singleview-content .description-container .description {\n      padding: 8px 0px;\n      font-size: 15px; }\n  .location-singleview-content .event-slider {\n    position: relative;\n    width: 100%;\n    height: 260px;\n    overflow: hidden;\n    margin-top: 32px; }\n    .location-singleview-content .event-slider .button {\n      position: absolute;\n      bottom: 16px;\n      width: 48px;\n      height: 48px;\n      background-color: #52857b;\n      z-index: 10;\n      cursor: pointer;\n      border: 1px solid #48756d;\n      color: white;\n      line-height: 48px;\n      text-align: center;\n      font-family: 'Lato';\n      font-size: 22px; }\n      .location-singleview-content .event-slider .button svg {\n        fill: white;\n        position: absolute;\n        top: 50%;\n        left: 50%;\n        transform: translate(-50%, -50%);\n        width: 14px;\n        height: 14px; }\n    .location-singleview-content .event-slider .prevButton {\n      left: 0; }\n    .location-singleview-content .event-slider .nextButton {\n      right: 0; }\n    .location-singleview-content .event-slider .inner {\n      position: absolute;\n      height: 100%;\n      top: 0;\n      left: 0;\n      display: flex;\n      transition: 280ms;\n      z-index: 1;\n      cursor: grab; }\n      .location-singleview-content .event-slider .inner.notrans {\n        transition: 0ms;\n        cursor: grabbing; }\n      .location-singleview-content .event-slider .inner .item {\n        margin: 0 8px;\n        height: 100%; }\n        .location-singleview-content .event-slider .inner .item .event {\n          width: 100% !important;\n          height: 100% !important;\n          margin: 0 !important; }\n      .location-singleview-content .event-slider .inner .item-something {\n        position: relative;\n        height: 100%;\n        margin: 0 16px;\n        z-index: 1; }\n        .location-singleview-content .event-slider .inner .item-something .imgcontainer {\n          position: relative;\n          width: 100%;\n          height: 96px;\n          background-size: cover;\n          background-position: 20% center;\n          border: none;\n          border-bottom: 1px solid #689a95; }\n        .location-singleview-content .event-slider .inner .item-something .textcontainer {\n          width: 100%;\n          height: auto;\n          padding: 16px; }\n          .location-singleview-content .event-slider .inner .item-something .textcontainer .location-sv-title {\n            margin: 0;\n            color: #292929;\n            font-size: 14px;\n            text-transform: uppercase; }\n  .location-singleview-content .imgcontainer {\n    box-sizing: border-box;\n    width: 100%;\n    padding-bottom: 56.25%;\n    border: 1px solid #68a297;\n    background-size: cover;\n    background-position: 20% center; }\n\n.sv-info-placeholder {\n  width: 100%;\n  margin-top: 16px; }\n\n.sv-info {\n  position: absolute;\n  left: 0px;\n  bottom: 0px;\n  width: 100%;\n  height: auto;\n  min-height: 64px;\n  color: white; }\n  .sv-info .footer-block {\n    position: relative;\n    width: 100%;\n    height: auto;\n    background-color: #537c78;\n    font-family: 'Avenir';\n    transition: 120ms; }\n    .sv-info .footer-block.clickable {\n      cursor: pointer; }\n      .sv-info .footer-block.clickable:hover {\n        background-color: #3f5d5a; }\n    .sv-info .footer-block.title {\n      background-color: #5d8b87; }\n      .sv-info .footer-block.title.clickable:hover {\n        background-color: #436460; }\n      .sv-info .footer-block.title .value {\n        text-transform: uppercase;\n        font-size: 16px;\n        font-family: 'Montserrat', sans-serif;\n        padding: 32px 32px 28px 100px; }\n    .sv-info .footer-block:nth-child(2n) {\n      background-color: #496d69; }\n      .sv-info .footer-block:nth-child(2n).clickable:hover {\n        background-color: #3a5754; }\n    .sv-info .footer-block .icon {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 75px;\n      height: 100%;\n      background-color: rgba(0, 0, 0, 0.13);\n      background-size: 50px;\n      background-position: center;\n      background-repeat: no-repeat; }\n      .sv-info .footer-block .icon svg {\n        position: absolute;\n        fill: #eee;\n        width: 27px;\n        height: 27px;\n        top: 50%;\n        left: 50%;\n        transform: translate(-50%, -50%); }\n    .sv-info .footer-block .value {\n      padding: 24px 32px 22px 100px;\n      color: white;\n      font-size: 13px;\n      font-family: 'Avenir';\n      border-top: 1px solid rgba(40, 40, 40, 0.2); }\n\n.viewbar {\n  position: relative;\n  width: 100%;\n  height: 60px;\n  padding-left: 20px;\n  line-height: 60px;\n  color: white;\n  text-transform: uppercase;\n  font-size: 12px;\n  background-color: #689a95; }\n  .viewbar.dark {\n    background-color: #5d8b87; }\n  .viewbar a {\n    color: white;\n    text-decoration: none;\n    height: inherit;\n    line-height: inherit;\n    display: inline-block; }\n  .viewbar .close-button {\n    position: absolute;\n    top: 50%;\n    right: 0px;\n    width: 65px;\n    text-align: center;\n    transform: translate(0, -50%);\n    color: white;\n    font-size: 32px;\n    cursor: pointer;\n    background-color: transparent;\n    transition: background-color 120ms;\n    border-left: 1px solid rgba(255, 255, 255, 0.6); }\n    .viewbar .close-button:hover {\n      background-color: #6e9e99; }\n\n@media screen and (max-width: 640px) {\n  .footer .copyright {\n    position: relative !important;\n    right: 0 !important;\n    text-align: center; } }\n\n.footer {\n  position: relative;\n  width: 100%; }\n  .footer .copyright {\n    position: relative;\n    color: #e0e0e0;\n    padding: 30px 20px;\n    text-align: center;\n    font-size: 12px;\n    background-color: #494950; }\n    .footer .copyright a {\n      color: inherit;\n      text-decoration: none; }\n      .footer .copyright a:hover {\n        text-decoration: underline; }\n\n.search-container {\n  max-width: none !important;\n  width: 100%; }\n  .search-container:nth-child(2n) {\n    background-color: white !important; }\n\n.search-category-container {\n  max-width: none !important;\n  width: 100%;\n  padding: 16px 0;\n  margin-bottom: 2px !important; }\n  .search-category-container.white {\n    background-color: white;\n    margin: -10px;\n    width: calc( 100% + 20px);\n    padding: 16px 12px; }\n  .search-category-container .breakline {\n    width: 100%;\n    height: 1px;\n    background-color: #689a95;\n    margin: 10px 0 5px 0px; }\n  .search-category-container .unflex {\n    padding: 16px; }\n  .search-category-container .flex {\n    display: flex;\n    flex-wrap: wrap; }\n    .search-category-container .flex .category {\n      flex-grow: 1;\n      width: 33%;\n      margin: 10px; }\n      .search-category-container .flex .category .category-content-container {\n        width: 100% !important; }\n\n.pickerArrow {\n  box-sizing: content-box;\n  width: 0;\n  height: 0;\n  border: 6px solid transparent;\n  border-top: 8px solid white;\n  position: absolute;\n  right: 0;\n  top: 4px; }\n\n.monthPicker_selector {\n  border-right: 1px solid rgba(0, 0, 0, 0.2);\n  background-color: #494950;\n  width: calc(100% - 1px);\n  height: 60px;\n  margin-top: -60px;\n  transition: 150ms;\n  border-left: none;\n  box-sizing: content-box; }\n  .monthPicker_selector.active {\n    margin-top: 0; }\n  .monthPicker_selector .month {\n    position: relative;\n    box-sizing: border-box;\n    color: white;\n    display: inline-block;\n    cursor: pointer;\n    text-align: center;\n    border-radius: 50%;\n    width: 42px;\n    height: 42px;\n    margin: 9px 0px 9px 0px;\n    line-height: 31px;\n    transition: border-radius 150ms, background-color 150ms;\n    font-size: 11px;\n    text-transform: uppercase; }\n    .monthPicker_selector .month.active {\n      background-color: #689a95;\n      color: white; }\n      .monthPicker_selector .month.active .yearTitle {\n        color: #ddd; }\n    .monthPicker_selector .month.active-left {\n      background-color: #689a95;\n      color: white;\n      border-radius: 50% 0 0 50%;\n      height: 36px;\n      line-height: 25px;\n      margin: 12px 0px 12px 0px; }\n      .monthPicker_selector .month.active-left .yearTitle {\n        color: #ddd; }\n    .monthPicker_selector .month.active-middle {\n      background-color: #689a95;\n      color: white;\n      border-radius: 0 !important;\n      height: 36px;\n      line-height: 25px;\n      margin: 12px 0px 12px 0px; }\n      .monthPicker_selector .month.active-middle .yearTitle {\n        color: #ddd; }\n    .monthPicker_selector .month.active-right {\n      background-color: #689a95;\n      color: white;\n      border-radius: 0 50% 50% 0;\n      height: 36px;\n      line-height: 25px;\n      margin: 12px 0px 12px 0px; }\n      .monthPicker_selector .month.active-right .yearTitle {\n        color: #ddd; }\n    .monthPicker_selector .month .yearTitle {\n      position: absolute;\n      top: 11px;\n      left: 50%;\n      transform: translate(-50%, 0);\n      color: #9d9d9d; }\n\n@keyframes repaint {\n  0% {\n    transform: translateY(1px); }\n  100% {\n    transform: translateY(0px); } }\n\n.repaint {\n  animation: repaint 1 linear forwards 50ms; }\n\n.sync-outer {\n  position: sticky;\n  width: 100%;\n  padding: 0;\n  margin: 0;\n  top: 0;\n  overflow: hidden;\n  height: calc( 100vh - 60px); }\n  .sync-outer.high {\n    position: relative;\n    height: auto;\n    overflow: auto; }\n  .sync-outer:not(.high) {\n    top: 60px; }\n  .sync-outer:after {\n    opacity: 0;\n    transition: opacity 200ms;\n    display: block;\n    content: '';\n    position: inherit;\n    top: 0px;\n    left: inherit;\n    width: inherit;\n    bottom: 0px;\n    background-color: rgba(0, 0, 0, 0.4);\n    z-index: -1;\n    background-image: url(" + __webpack_require__(91) + ");\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 64px; }\n\n.sync-outer .sync-inner {\n  position: relative;\n  min-height: auto;\n  overflow: auto;\n  padding: 0;\n  margin: 0;\n  clear: both; }\n\n.spoopy.spoopy-out .sync-outer:after {\n  opacity: 0; }\n\n.spoopy .sync-outer.top:after {\n  position: absolute; }\n\n.spoopy .sync-outer:after {\n  opacity: 1;\n  transition-delay: 100ms;\n  z-index: 10; }\n\n.sub-page-article {\n  max-width: 640px;\n  padding: 10px;\n  min-height: 100vh;\n  line-height: 1.5;\n  font-size: 13px; }\n  @media (min-width: 480px) {\n    .sub-page-article {\n      padding: 20px;\n      font-size: 14px;\n      max-width: 680px; } }\n  @media (min-width: 640px) {\n    .sub-page-article {\n      padding: 20px;\n      font-size: 15px; } }\n  @media (min-width: 960px) {\n    .sub-page-article {\n      padding: 20px 40px;\n      font-size: 16px;\n      max-width: 720px; } }\n  @media (min-width: 1200px) {\n    .sub-page-article {\n      padding: 40px 60px;\n      font-size: 16px;\n      max-width: 760px; } }\n\n.sub-page-header h1 {\n  margin: 0; }\n\n.sub-page-content {\n  font-family: 'Avenir', sans-serif; }\n\nbody.sub-page .poly-view .content {\n  height: auto !important; }\n\nbody.sub-page .poly-view .left-container {\n  width: 0%; }\n\nbody.sub-page .poly-view .right-container {\n  width: 100%; }\n\n@media (min-width: 480px) {\n  body.sub-page .poly-view .left-container {\n    width: 240px; }\n  body.sub-page .poly-view .right-container {\n    width: calc(100% - 240px); } }\n\n@media (min-width: 640px) {\n  body.sub-page .poly-view .left-container {\n    width: 320px; }\n  body.sub-page .poly-view .right-container {\n    width: calc(100% - 320px); } }\n\n@media (min-width: 768px) {\n  body.sub-page .poly-view .left-container {\n    width: 320px; }\n  body.sub-page .poly-view .right-container {\n    width: calc(100% - 320px); } }\n\n.sub-page-menu {\n  font-size: 115%;\n  max-width: 320px;\n  margin-left: auto;\n  margin-right: 0px;\n  line-height: 2;\n  padding: 20px; }\n  @media (min-width: 1200px) {\n    .sub-page-menu {\n      padding: 40px 60px;\n      max-width: 400px; } }\n  .sub-page-menu ul {\n    padding: 0;\n    margin: 0;\n    list-style: none; }\n  .sub-page-menu .menu-item-description {\n    display: block;\n    font-size: 75%;\n    margin-top: 5px;\n    font-family: 'Avenir', sans-serif;\n    line-height: 1.5; }\n  .sub-page-menu .sub-menu {\n    margin: 5px 0px 0px;\n    font-family: 'Avenir', sans-serif;\n    font-size: 75%; }\n    .sub-page-menu .sub-menu li {\n      margin-bottom: 5px; }\n  .sub-page-menu li {\n    margin-bottom: 20px; }\n  .sub-page-menu a {\n    text-decoration: none;\n    color: #494950; }\n\n@media only screen and (min-width: 1080px) {\n  body.sub-page .content-container.poly-view .left-container {\n    width: 40%; }\n  body.sub-page .content-container.poly-view .right-container {\n    width: 60%; } }\n\n@media only screen and (min-width: 1400px) {\n  body.sub-page .content-container.poly-view .left-container {\n    width: 40%; }\n  body.sub-page .content-container.poly-view .right-container {\n    width: 60%; } }\n\n.location-list ul {\n  list-style: none;\n  padding: 0; }\n\n.location-list .letter-list {\n  margin-bottom: 20px; }\n\n.location-list li {\n  line-height: 2; }\n\n.location-list .letter {\n  text-transform: uppercase;\n  font-size: 140%;\n  font-weight: bold; }\n\n.content-404 {\n  min-height: calc(100vh - 100px); }\n  .content-404 h1 {\n    text-align: center;\n    display: block;\n    flex-grow: 1;\n    font-size: 100px;\n    color: #689a95; }\n\n@keyframes cookieUp {\n  from {\n    transform: translateY(-100%); }\n  to {\n    transform: translateY(0%); } }\n\n.cookie-ok {\n  font-size: 18px;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  transform: translateY(-100%);\n  background: rgba(51, 51, 51, 0.97);\n  padding: 20px 10px;\n  z-index: 100;\n  animation: cookieUp linear 1 forwards 150ms;\n  animation-delay: 200ms;\n  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);\n  text-align: center; }\n  @media (min-width: 480px) {\n    .cookie-ok {\n      padding: 30px 20px;\n      font-size: 24px; } }\n  @media (min-width: 640px) {\n    .cookie-ok {\n      font-size: 32px; } }\n  @media (min-width: 960px) {\n    .cookie-ok {\n      font-size: 52px; } }\n  .cookie-ok span, .cookie-ok a {\n    font-family: 'Avenir', sans-serif;\n    position: relative;\n    display: inline-block;\n    vertical-align: top;\n    color: white;\n    padding: 3px 14px 0px;\n    text-decoration: none; }\n    @media (min-width: 480px) {\n      .cookie-ok span, .cookie-ok a {\n        padding: 5px 20px 0px; } }\n  .cookie-ok span {\n    font-weight: bold; }\n  .cookie-ok a:after {\n    position: absolute;\n    left: 10px;\n    right: 10px;\n    bottom: -3px;\n    height: 1px;\n    background: white;\n    content: '';\n    opacity: 0;\n    transition: opacity 120ms; }\n    @media (min-width: 480px) {\n      .cookie-ok a:after {\n        left: 20px;\n        right: 20px; } }\n  .cookie-ok a:hover:after {\n    opacity: 1; }\n  .cookie-ok a.cookie-accept {\n    border-right: 1px solid white; }\n\n.fixedsticky {\n  position: -webkit-sticky;\n  position: -moz-sticky;\n  position: -ms-sticky;\n  position: -o-sticky;\n  position: sticky; }\n\n/* When position: sticky is supported but native behavior is ignored */\n.fixedsticky-withoutfixedfixed .fixedsticky-off,\n.fixed-supported .fixedsticky-off {\n  position: static; }\n\n.fixedsticky-withoutfixedfixed .fixedsticky-on,\n.fixed-supported .fixedsticky-on {\n  position: fixed; }\n\n.fixedsticky-dummy {\n  display: none; }\n\n.fixedsticky-on + .fixedsticky-dummy {\n  display: block; }\n\n.loader-outer {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  width: calc(8px * 3 + 14px * 2);\n  height: auto; }\n  .loader-outer .loader-line {\n    position: absolute;\n    top: 0;\n    box-sizing: content-box;\n    width: 8px;\n    height: 32px;\n    background-color: #97bfb8;\n    border: 1px solid #68a297; }\n  .loader-outer .loader-line-1 {\n    left: 0;\n    animation-duration: 1.2s;\n    animation-name: ll1;\n    animation-iteration-count: infinite; }\n  .loader-outer .loader-line-2 {\n    left: 50%;\n    transform: translate(-50%, 0);\n    animation-duration: 1.2s;\n    animation-name: ll2;\n    animation-iteration-count: infinite; }\n  .loader-outer .loader-line-3 {\n    right: 0;\n    animation-duration: 1.2s;\n    animation-name: ll3;\n    animation-iteration-count: infinite; }\n\n@keyframes ll1 {\n  0% {\n    width: 8px;\n    height: 32px;\n    background-color: #97bfb8;\n    top: 0;\n    left: 0; }\n  10% {\n    width: 10px;\n    height: 42px;\n    background-color: #78aca2;\n    top: -5px;\n    left: -1px; }\n  80% {\n    width: 8px;\n    height: 32px;\n    background-color: #97bfb8;\n    top: 0;\n    left: 0; } }\n\n@keyframes ll2 {\n  5% {\n    width: 8px;\n    height: 32px;\n    background-color: #97bfb8;\n    top: 0; }\n  15% {\n    width: 10px;\n    height: 42px;\n    background-color: #78aca2;\n    top: -5px; }\n  80% {\n    width: 8px;\n    height: 32px;\n    background-color: #97bfb8;\n    top: 0; } }\n\n@keyframes ll3 {\n  10% {\n    width: 8px;\n    height: 32px;\n    background-color: #97bfb8;\n    top: 0;\n    right: 0; }\n  20% {\n    width: 10px;\n    height: 42px;\n    background-color: #78aca2;\n    top: -5px;\n    right: -1px; }\n  80% {\n    width: 8px;\n    height: 32px;\n    background-color: #97bfb8;\n    top: 0;\n    right: 0; } }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n@font-face {\n  font-family: 'Avenir';\n  font-style: normal;\n  font-weight: normal;\n  src: local(\"assets/font-faces/AvenirNextLTPro-Regular.woff\"), url(" + __webpack_require__(222) + ") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Avenir Bold';\n  font-style: normal;\n  font-weight: normal;\n  src: local(\"assets/font-faces/AvenirNextLTPro-Bold.woff\"), url(" + __webpack_require__(221) + ") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Avenir  Italic';\n  font-style: normal;\n  font-weight: normal;\n  src: local(\"assets/font-faces/AvenirNextLTPro-It.woff\"), url(\"/assets/font-faces/AvenirNextLTPro-It.woff\") format(\"woff\"); }\n\n@keyframes fadeOutBodyAfter {\n  0% {\n    opacity: 1;\n    visibility: visible; }\n  99% {\n    opacity: 0;\n    visibility: visible; }\n  100% {\n    opacity: 0;\n    visibility: hidden; } }\n\nbody {\n  margin: 0;\n  background-color: #e0e0e0;\n  font-family: 'Montserrat', 'Avenir Bold', sans-serif; }\n  body * {\n    font-family: inherit;\n    box-sizing: border-box; }\n  body.no-scroll {\n    height: 100%; }\n  body:after {\n    content: '';\n    display: block;\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-color: #f0f0f0;\n    z-index: 1000;\n    background-image: url(" + __webpack_require__(59) + ");\n    background-position: center;\n    background-size: 62px;\n    background-repeat: no-repeat;\n    animation: fadeOutBodyAfter 200ms forwards; }\n  @media (min-width: 1600px) {\n    body:before, body:after {\n      content: '';\n      position: fixed;\n      top: 0;\n      bottom: 0;\n      left: 0;\n      background-color: inherit;\n      width: calc((100% - 1600px) / 2);\n      z-index: 100; }\n    body:after {\n      left: auto;\n      right: 0; } }\n  @media (min-width: 1600px) {\n    body:before, body:after {\n      width: calc((100% - 1600px) / 2); } }\n\np a {\n  position: relative;\n  color: #68a297;\n  text-decoration: none;\n  transition: 400ms;\n  transition-timing-function: cubic-bezier(0.54, 0, 0.18, 1.5); }\n  p a:hover {\n    color: #588f84; }\n    p a:hover:before {\n      width: 100%;\n      background-color: #588f84; }\n  p a:before {\n    content: '';\n    position: absolute;\n    left: 50%;\n    bottom: -2px;\n    transform: translate(-50%, 0);\n    width: 0;\n    height: 1px;\n    background-color: #68a297;\n    transition: 400ms;\n    transition-timing-function: cubic-bezier(0.54, 0, 0.18, 1.5); }\n\n.main-container {\n  position: relative;\n  margin: 0 auto;\n  width: 100%;\n  height: auto;\n  max-width: 1600px;\n  transition: 200ms;\n  z-index: 20;\n  border-top: none;\n  border-bottom: none; }\n\n.content-container {\n  position: relative;\n  width: 100%;\n  height: auto;\n  background-color: white;\n  z-index: 1;\n  min-height: 100vh; }\n  .content-container .content-container-inner {\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    top: 0;\n    left: 0%;\n    font-size: 0;\n    transition: 400ms;\n    transition-timing-function: cubic-bezier(0.73, 0.01, 0.61, 1.03); }\n    .content-container .content-container-inner:before {\n      content: '';\n      position: absolute;\n      top: 0;\n      left: 0;\n      right: 0;\n      height: 60px;\n      background: #689a95; }\n    .content-container .content-container-inner.notrans {\n      transition: 0ms !important; }\n    .content-container .content-container-inner.transition {\n      transition: 250ms; }\n  .content-container.poly-view .content {\n    height: auto !important; }\n  .content-container .loader {\n    position: absolute;\n    top: 45%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    width: 60px;\n    height: 60px; }\n  .content-container .container-section {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 50%;\n    height: 100%;\n    min-height: calc(100vh - 250px - 60px);\n    transition: 500ms;\n    font-size: 16px;\n    display: inline-block;\n    vertical-align: top;\n    transform: translate(-100%, 0);\n    transition-timing-function: cubic-bezier(0.73, 0.01, 0.61, 1.03); }\n    .content-container .container-section:nth-child(2n) {\n      background-color: #f0f0f0; }\n    .content-container .container-section:nth-child(5n) {\n      background-color: #f9f9f9; }\n      .content-container .container-section:nth-child(5n) .viewbar {\n        background-color: #62938e; }\n    .content-container .container-section.notrans {\n      transition: 0ms !important; }\n    .content-container .container-section .content {\n      min-height: calc( 100vh - 60px); }\n  .content-container.slowtrans .container-section {\n    transition: 50000000ms !important; }\n  .content-container #location-category-view {\n    background-color: white;\n    transition: 500ms, width 400ms;\n    transition-timing-function: cubic-bezier(0.73, 0.01, 0.61, 1.03); }\n    .content-container #location-category-view.normalize {\n      width: 50%; }\n  .content-container #event-calendar-view {\n    transition: 500ms, width 400ms;\n    transition-timing-function: cubic-bezier(0.73, 0.01, 0.61, 1.03); }\n    .content-container #event-calendar-view.normalize {\n      width: 50%; }\n    .content-container #event-calendar-view .content {\n      min-height: calc(100vh - 60px); }\n\n#site-header {\n  position: sticky;\n  top: -250px;\n  z-index: 10;\n  background-color: #494950;\n  height: 310px;\n  background-image: url(" + __webpack_require__(223) + ");\n  background-size: 100%;\n  background-position: center;\n  transform: translateY(0px);\n  transition: transform 200ms;\n  border-bottom: 60px solid #494950; }\n  #site-header.fixed.active {\n    transform: translateY(250px); }\n\n@media screen and (max-width: 1600px) {\n  .header-container {\n    max-width: 1600px !important; } }\n\n@media screen and (max-width: 640px) {\n  #site-header {\n    height: 60px; }\n  .header-container {\n    position: fixed;\n    top: -250px;\n    transition: 200ms; }\n    .header-container.active {\n      top: 0; }\n  .header-placeholder {\n    height: 60px !important;\n    display: block !important; }\n  #header .prevButton {\n    left: calc(50% - 135px) !important; }\n  #header .nextButton {\n    left: calc(50% + 135px) !important; }\n  #header #searchfield {\n    width: 250px !important; } }\n\n.header-container {\n  width: 100%;\n  max-width: 1600px;\n  transition: 200ms;\n  height: auto;\n  z-index: 100000; }\n\n#header {\n  position: relative;\n  width: 100%;\n  height: 250px;\n  transition: 200ms;\n  overflow: hidden;\n  border-bottom: 1px solid #333; }\n  #header .header-commercials {\n    width: 100%;\n    height: 250px; }\n    #header .header-commercials .header-commercial-bullets {\n      position: absolute;\n      z-index: 10;\n      top: 5px;\n      right: 10px;\n      left: auto;\n      bottom: auto;\n      width: auto; }\n      #header .header-commercials .header-commercial-bullets .swiper-pagination-bullet-active {\n        background: white;\n        opacity: .8; }\n    #header .header-commercials .swiper-wrapper {\n      width: 100%;\n      height: 250px; }\n      #header .header-commercials .swiper-wrapper .swiper-slide {\n        width: 100%;\n        height: 250px; }\n        #header .header-commercials .swiper-wrapper .swiper-slide .slide-img {\n          width: 100%;\n          height: 100%;\n          background-size: cover;\n          background-position: center 20%; }\n    #header .header-commercials .prevButton {\n      box-sizing: border-box;\n      position: absolute;\n      top: 50%;\n      left: calc(50% - 160px);\n      transform: translate(-100%, -50%);\n      width: 0;\n      height: 0;\n      border: 12px solid transparent;\n      border-right: 12px solid white;\n      border-left: none;\n      opacity: .8;\n      transition: 150ms;\n      z-index: 10; }\n      #header .header-commercials .prevButton:hover {\n        opacity: 1; }\n    #header .header-commercials .nextButton {\n      box-sizing: border-box;\n      position: absolute;\n      top: 50%;\n      left: calc(50% + 160px);\n      transform: translate(0, -50%);\n      width: 0;\n      height: 0;\n      border: 12px solid transparent;\n      border-right: none;\n      border-left: 12px solid white;\n      opacity: .8;\n      transition: 150ms;\n      z-index: 10; }\n      #header .header-commercials .nextButton:hover {\n        opacity: 1; }\n  #header .commercial-container {\n    position: relative;\n    width: 100%;\n    height: 100%;\n    overflow: hidden; }\n    #header .commercial-container .swiper-slide {\n      width: 100%;\n      height: 100%; }\n      #header .commercial-container .swiper-slide .img-container {\n        width: 100%;\n        height: 100%;\n        background-size: cover;\n        background-position: center; }\n  #header #searchcontainer {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    z-index: 10; }\n    #header #searchcontainer #searchlabel {\n      position: absolute;\n      top: 50%;\n      left: 12px;\n      transform: translate(0, -50%);\n      font-weight: 100;\n      text-transform: uppercase;\n      font-size: 14px; }\n      #header #searchcontainer #searchlabel.not-visible {\n        display: none; }\n    #header #searchcontainer #searchicon {\n      position: absolute;\n      top: 50%;\n      right: 0px;\n      transform: translate(0, -50%);\n      width: 40px;\n      height: 40px;\n      padding: 12px;\n      cursor: pointer;\n      fill: #333; }\n      #header #searchcontainer #searchicon:hover {\n        fill: black; }\n    #header #searchcontainer #searchfield {\n      box-sizing: border-box;\n      width: 300px;\n      height: 42px;\n      border-radius: 4px;\n      border: 0;\n      padding-left: 12px;\n      padding-right: 40px;\n      outline: none;\n      background-color: rgba(255, 255, 255, 0.8);\n      box-shadow: 0px 0px 0px 10px rgba(0, 0, 0, 0.2);\n      transition: 120ms; }\n      #header #searchcontainer #searchfield:hover, #header #searchcontainer #searchfield:focus {\n        background-color: rgba(255, 255, 255, 0.98) !important;\n        box-shadow: 0px 0px 0px 10px rgba(0, 0, 0, 0.4); }\n    #header #searchcontainer ul.menu {\n      position: absolute;\n      padding: 0;\n      text-align: center;\n      width: 100%;\n      font-size: 0;\n      margin-top: 20px; }\n      #header #searchcontainer ul.menu li {\n        display: inline-block; }\n        #header #searchcontainer ul.menu li:first-child:before {\n          content: '';\n          width: 0px; }\n        #header #searchcontainer ul.menu li:before {\n          color: rgba(255, 255, 255, 0.8);\n          font-size: 11px;\n          height: 11px;\n          line-height: 11px;\n          display: inline-block;\n          content: '\\B7';\n          width: 20px;\n          text-align: center;\n          vertical-align: top; }\n      #header #searchcontainer ul.menu a {\n        color: rgba(255, 255, 255, 0.8);\n        transition: color 120ms;\n        text-decoration: none;\n        font-size: 11px;\n        height: 11px;\n        line-height: 11px;\n        display: inline-block;\n        vertical-align: top; }\n        #header #searchcontainer ul.menu a:hover {\n          color: white; }\n\n#headerbar {\n  position: relative;\n  width: 100%;\n  height: 60px;\n  border-bottom: 1px solid #151515;\n  z-index: 20;\n  overflow: hidden; }\n  #headerbar .logo-container {\n    position: absolute;\n    left: 0;\n    width: 112px;\n    height: 100%;\n    z-index: 30;\n    cursor: pointer;\n    background-color: #313135; }\n    #headerbar .logo-container::before {\n      content: '';\n      position: absolute;\n      right: -18px;\n      border-top: 30px solid transparent;\n      border-bottom: 30px solid #313135;\n      border-left: 9px solid #313135;\n      border-right: 9px solid transparent; }\n    #headerbar .logo-container .logo {\n      position: absolute;\n      width: 66px;\n      height: auto;\n      top: 12px;\n      left: 50%;\n      fill: rgba(255, 255, 255, 0.9);\n      transform: translate(-50%, 0); }\n    #headerbar .logo-container .city {\n      color: white;\n      position: absolute;\n      left: 50%;\n      bottom: 10px;\n      transform: translate(-50%, 0);\n      width: auto;\n      text-align: center;\n      font-size: 10px;\n      text-transform: uppercase; }\n  #headerbar #menu-show-btns {\n    position: absolute;\n    left: 50%;\n    top: 50%;\n    transform: translate(-50%, -50%);\n    width: 38px;\n    height: 38px;\n    opacity: .4; }\n    #headerbar #menu-show-btns .menu-show-img {\n      fill: white;\n      position: absolute;\n      top: 60px;\n      width: 37px;\n      height: 37px;\n      transition: all 300ms, rotate 500ms, top 300ms;\n      cursor: pointer; }\n    #headerbar #menu-show-btns .menu-hide-img {\n      fill: white;\n      position: absolute;\n      top: 60px;\n      width: 37px;\n      height: 37px;\n      transition: all 300ms, rotate 500ms, top 300ms;\n      cursor: pointer; }\n    #headerbar #menu-show-btns.active .menu-show-img {\n      top: 60px !important; }\n    #headerbar #menu-show-btns.active .menu-hide-img {\n      top: 0 !important; }\n    #headerbar #menu-show-btns.show .menu-show-img {\n      top: 0; }\n  #headerbar .back-button {\n    position: absolute;\n    background-color: #313135;\n    top: 0;\n    right: -140px;\n    bottom: 0;\n    width: 112px;\n    transition: 300ms;\n    z-index: 10; }\n    #headerbar .back-button.active {\n      right: 0; }\n    #headerbar .back-button::before {\n      content: '';\n      position: absolute;\n      left: -16px;\n      border-top: 30px solid #313135;\n      border-bottom: 30px solid transparent;\n      border-left: 8px solid transparent;\n      border-right: 8px solid #313135; }\n    #headerbar .back-button.mobile .back-img {\n      transform: translate(-50%, -50%) rotate(0deg); }\n    #headerbar .back-button .back-img {\n      fill: white;\n      opacity: .8;\n      position: absolute;\n      width: 36px;\n      height: 36px;\n      top: 50%;\n      left: 46%;\n      transform: translate(-50%, -50%) rotate(180deg); }\n  #headerbar .beta-warning {\n    position: absolute;\n    top: 50%;\n    right: -128px;\n    transform: translate(0, -50%);\n    color: white;\n    text-align: right;\n    line-height: 18px;\n    transition: 300ms;\n    z-index: 9;\n    cursor: pointer; }\n    #headerbar .beta-warning.active {\n      right: 22px; }\n    #headerbar .beta-warning .info {\n      text-transform: uppercase;\n      font-size: 14px; }\n      #headerbar .beta-warning .info .info-arrow-img {\n        fill: white;\n        width: 10px;\n        height: 10px;\n        margin-left: 4px; }\n    #headerbar .beta-warning .version {\n      text-transform: capitalize;\n      font-size: 12px; }\n  #headerbar .socialmedia {\n    display: none;\n    position: absolute;\n    width: auto;\n    height: auto;\n    right: 15px;\n    top: 50%;\n    transform: translate(0, -50%); }\n    #headerbar .socialmedia .fb_link {\n      width: auto;\n      height: auto;\n      opacity: .5;\n      transition: 200ms; }\n      #headerbar .socialmedia .fb_link:hover {\n        opacity: .85; }\n      #headerbar .socialmedia .fb_link .fb_img {\n        width: 36px;\n        height: 36px; }\n\n@media screen and (max-width: 640px) {\n  #eventsbar .monthSelector {\n    right: 20px !important; } }\n\n#eventsbar {\n  position: relative;\n  width: 100%;\n  height: 60px;\n  background-color: #5d8b87;\n  z-index: 10; }\n  #eventsbar #eventslayoutbtns {\n    position: relative;\n    width: 128px;\n    height: 100%;\n    border-right: 1px solid #CDCDCD;\n    transition: 300ms;\n    display: inline-block; }\n    #eventsbar #eventslayoutbtns:hover {\n      background-color: #639490; }\n    #eventsbar #eventslayoutbtns svg {\n      position: absolute;\n      top: 50%;\n      transform: translate(-50%, -50%);\n      width: auto;\n      height: 22px;\n      width: 22px;\n      cursor: pointer;\n      fill: rgba(255, 255, 255, 0.9);\n      transition: fill 120ms; }\n      #eventsbar #eventslayoutbtns svg:hover {\n        fill: white; }\n    #eventsbar #eventslayoutbtns .blocklayoutbtn {\n      left: 30%; }\n    #eventsbar #eventslayoutbtns .linelayoutbtn {\n      left: 66%; }\n  #eventsbar .monthSelector {\n    position: absolute;\n    display: inline-block;\n    top: 50%;\n    right: 32px;\n    transform: translate(0, -50%);\n    color: white;\n    cursor: pointer;\n    padding-right: 22px;\n    text-transform: uppercase;\n    transition: 120ms;\n    font-size: 12px; }\n\n.events-sync-container {\n  position: absolute;\n  width: 100%;\n  min-height: calc( 100vh - 60px);\n  height: auto; }\n\n.eventscontainer-outer {\n  padding: 10px; }\n\n.eventscontainer {\n  position: relative;\n  box-sizing: border-box;\n  width: 100%;\n  height: auto;\n  padding: 0;\n  padding-bottom: 60px;\n  display: flex;\n  flex-wrap: wrap; }\n  @media (min-width: 640px) {\n    .eventscontainer {\n      padding: 0;\n      padding-bottom: 60px; } }\n  .eventscontainer * {\n    font-family: 'Montserrat', 'Avenir Bold', sans-serif; }\n  .eventscontainer .error {\n    position: absolute;\n    top: 48px;\n    left: 50%;\n    transform: translate(-50%, 0);\n    text-transform: uppercase;\n    font-size: 19px;\n    width: 100%;\n    text-align: center; }\n  .eventscontainer.lineLayout .event {\n    width: 100%;\n    min-height: 110px;\n    height: auto; }\n    .eventscontainer.lineLayout .event .imgcontainer {\n      float: left;\n      width: 110px;\n      height: 100%;\n      border-bottom: none;\n      border-right: 1px solid rgba(104, 162, 151, 0.6);\n      padding-bottom: 0; }\n    .eventscontainer.lineLayout .event .eventtext {\n      width: auto;\n      height: auto;\n      padding: 8px;\n      margin-bottom: 36px; }\n      .eventscontainer.lineLayout .event .eventtext .title {\n        width: auto;\n        font-size: 12px;\n        margin-left: 0px !important; }\n      .eventscontainer.lineLayout .event .eventtext .start_time {\n        margin-top: 0px;\n        margin-left: 0px !important; }\n    .eventscontainer.lineLayout .event .eventlocation-container {\n      width: calc(100% - 130px);\n      position: absolute;\n      bottom: 10px;\n      left: 120px;\n      height: 2em;\n      text-transform: uppercase; }\n      .eventscontainer.lineLayout .event .eventlocation-container .eventblackbar {\n        height: 2px; }\n    @media (min-width: 640px) {\n      .eventscontainer.lineLayout .event {\n        min-height: 110px; }\n        .eventscontainer.lineLayout .event .imgcontainer {\n          width: 160px;\n          border-right: 1px solid #68a297; }\n        .eventscontainer.lineLayout .event .eventtext {\n          padding: 16px;\n          margin-bottom: 36px; }\n          .eventscontainer.lineLayout .event .eventtext .title {\n            font-size: 14px; }\n        .eventscontainer.lineLayout .event .eventlocation-container {\n          width: calc(100% - 190px);\n          bottom: 5px;\n          left: 175px; }\n          .eventscontainer.lineLayout .event .eventlocation-container .eventblackbar {\n            height: 2px; } }\n\n.event {\n  box-sizing: border-box;\n  position: relative;\n  display: inline-block;\n  width: 145px;\n  margin: 4px;\n  border: 1px solid rgba(104, 162, 151, 0.6);\n  background-color: #f9f9f9;\n  transition: background-color 120ms;\n  flex-grow: 1;\n  cursor: pointer; }\n  .event:hover {\n    background-color: #fff; }\n  @media (min-width: 640px) {\n    .event {\n      width: 165px;\n      margin: 6px;\n      border: 1px solid #68a297; } }\n  .event .imgcontainer {\n    position: relative;\n    width: 100%;\n    padding-bottom: 50%;\n    background-size: cover;\n    background-position: center 20%;\n    border-bottom: 1px solid rgba(104, 162, 151, 0.6); }\n    .event .imgcontainer .loader {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      width: 100%;\n      height: 100%;\n      background-color: rgba(0, 0, 0, 0.75);\n      opacity: 0;\n      transition: 250ms;\n      z-index: 19; }\n      .event .imgcontainer .loader img {\n        position: absolute;\n        top: 50%;\n        left: 50%;\n        width: 30px;\n        height: auto;\n        transform: translate(-50%, -50%); }\n    .event .imgcontainer.loading {\n      background-repeat: no-repeat;\n      background-size: 30px;\n      background-position: center; }\n    .event .imgcontainer.loadingsv .loader {\n      opacity: 1; }\n    @media (min-width: 640px) {\n      .event .imgcontainer {\n        padding-bottom: 90px;\n        border-bottom: 1px solid #68a297; } }\n  .event .eventtext {\n    position: relative;\n    overflow: hidden;\n    padding: 10px;\n    padding-top: 10px;\n    width: 100%;\n    height: 140px;\n    text-transform: uppercase;\n    transition: 500ms; }\n    .event .eventtext * {\n      z-index: 10;\n      transition: 200ms;\n      position: relative; }\n    .event .eventtext.bookmark-mode {\n      background-color: #c7dcd8 !important; }\n    .event .eventtext .ripple {\n      border-radius: 100%;\n      background-color: #77a4a0;\n      position: absolute;\n      width: 700px;\n      height: 700px;\n      transform: scale(0);\n      opacity: .9;\n      z-index: 0; }\n\n@keyframes ripple {\n  100% {\n    transform: scale(1);\n    opacity: 0; } }\n\n@keyframes rippleBack {\n  100% {\n    transform: scale(0);\n    opacity: 1; } }\n      .event .eventtext .ripple.animate {\n        animation: ripple 300ms ease-in forwards; }\n      .event .eventtext .ripple.animateBack {\n        transform: scale(1);\n        opacity: 1;\n        animation: rippleBack 300ms ease-in forwards; }\n    .event .eventtext .title {\n      font-size: 11px; }\n    .event .eventtext .start_time {\n      font-size: 10px;\n      text-align: justify;\n      color: #999;\n      margin-top: 5px; }\n    @media (min-width: 640px) {\n      .event .eventtext {\n        height: 160px;\n        padding: 10px;\n        padding-top: 15px; }\n        .event .eventtext .title {\n          font-size: 12px; }\n        .event .eventtext .start_time {\n          font-size: 10px; }\n        .event .eventtext .eventlocation-container {\n          left: 15px;\n          bottom: 15px;\n          width: calc(100% - 30px); }\n          .event .eventtext .eventlocation-container .eventlocation {\n            font-size: 9px; }\n        .event .eventtext .eventblackbar {\n          height: 3px; } }\n  .event .eventlocation-container {\n    width: calc(100% - 20px);\n    position: absolute;\n    bottom: 15px;\n    left: 10px;\n    height: 2em;\n    text-transform: uppercase; }\n    .event .eventlocation-container .eventblackbar {\n      height: 2px;\n      width: 100%;\n      background-color: #68a297;\n      margin-top: 6px;\n      margin-bottom: 5px; }\n    .event .eventlocation-container .eventlocation {\n      font-size: 9px;\n      color: #68a297;\n      line-height: 11px; }\n      .event .eventlocation-container .eventlocation:hover {\n        text-decoration: underline; }\n\n.left-container.all-loaded {\n  padding-bottom: 0; }\n  .left-container.all-loaded .load-more {\n    display: none; }\n\n#eventcv-load-more {\n  position: absolute;\n  bottom: 0;\n  width: 100%;\n  height: 80px;\n  text-align: center;\n  color: white;\n  font-size: 16px;\n  cursor: pointer; }\n  #eventcv-load-more:before {\n    content: '';\n    display: block;\n    height: 10px;\n    width: 3px;\n    margin-top: -4px;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    background: rgba(104, 154, 149, 0.3); }\n  #eventcv-load-more:after {\n    content: '';\n    display: block;\n    height: 5px;\n    width: 32px;\n    margin-top: 3px;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    background: rgba(104, 154, 149, 0.3); }\n  #eventcv-load-more.loading {\n    background: url(" + __webpack_require__(59) + ") center no-repeat;\n    background-size: 32px; }\n    #eventcv-load-more.loading:after, #eventcv-load-more.loading:before {\n      display: none; }\n\n.event-bar {\n  position: relative;\n  width: 100%;\n  height: 60px;\n  padding-left: 20px;\n  line-height: 60px;\n  color: white;\n  text-transform: uppercase;\n  font-size: 12px;\n  background-color: #689a95; }\n  .event-bar a {\n    color: white;\n    text-decoration: none;\n    height: inherit;\n    line-height: inherit;\n    display: inline-block; }\n  .event-bar .close-button {\n    position: absolute;\n    top: 50%;\n    right: 0px;\n    width: 65px;\n    text-align: center;\n    transform: translate(0, -50%);\n    color: white;\n    font-size: 37px;\n    cursor: pointer;\n    background-color: transparent;\n    transition: background-color 120ms;\n    border-left: 1px solid rgba(255, 255, 255, 0.6); }\n    .event-bar .close-button:hover {\n      background-color: #6e9e99; }\n\n.event-sv-content-container {\n  position: relative;\n  min-height: calc( 100vh - 60px - 60px);\n  background-color: white;\n  z-index: 10; }\n  .event-sv-content-container .event-singleview {\n    padding: 12px;\n    width: 100%;\n    height: auto; }\n    @media (min-width: 640px) {\n      .event-sv-content-container .event-singleview {\n        padding: 24px; } }\n    .event-sv-content-container .event-singleview .event-sv-parentname {\n      font-size: 16px;\n      margin-bottom: 15px;\n      text-transform: uppercase; }\n    .event-sv-content-container .event-singleview .event-sv-img {\n      width: 100%;\n      padding-bottom: 56.25%;\n      border: 1px solid #68a297;\n      margin-bottom: 16px;\n      background-size: cover;\n      background-position: center 20%;\n      margin: 0; }\n    .event-sv-content-container .event-singleview .event-sv-title {\n      line-height: 1.4;\n      font-size: 16px;\n      text-transform: uppercase;\n      margin-top: 19px; }\n    .event-sv-content-container .event-singleview .event-sv-start-time {\n      font-size: 13px;\n      margin-bottom: 19px;\n      color: #68a297; }\n    .event-sv-content-container .event-singleview .lineBreak {\n      border: 0px;\n      height: 2px;\n      background-color: #444;\n      border-bottom: 1px solid #ddd; }\n    .event-sv-content-container .event-singleview .es-btns {\n      padding: 1px 0px;\n      display: flex; }\n      .event-sv-content-container .event-singleview .es-btns .status-btn {\n        margin: 11px 0px;\n        position: relative;\n        height: 32px;\n        margin-right: 20px;\n        display: flex;\n        cursor: pointer; }\n        .event-sv-content-container .event-singleview .es-btns .status-btn .icon {\n          position: relative;\n          left: 2px;\n          width: 27px;\n          height: 27px;\n          margin-right: 8px; }\n          .event-sv-content-container .event-singleview .es-btns .status-btn .icon svg {\n            width: 29px;\n            height: 29px;\n            fill: #444; }\n        .event-sv-content-container .event-singleview .es-btns .status-btn .text {\n          position: relative;\n          width: auto;\n          height: 32px;\n          line-height: 32px;\n          padding: 0px 10px;\n          background-color: #537c78;\n          box-shadow: inset 0px 0px 1px rgba(0, 0, 0, 0.3);\n          margin-left: 8px;\n          color: white;\n          font-family: 'Avenir';\n          font-size: 14px;\n          text-transform: uppercase; }\n        .event-sv-content-container .event-singleview .es-btns .status-btn:hover .icon svg {\n          fill: #484848; }\n        .event-sv-content-container .event-singleview .es-btns .status-btn:hover .text {\n          background-color: #57827e; }\n    .event-sv-content-container .event-singleview .event-sv-desc * {\n      font-family: 'Avenir';\n      font-size: 14px;\n      line-height: 1.5; }\n    .event-sv-content-container .event-singleview .text {\n      display: inline-block; }\n    .event-sv-content-container .event-singleview .event-sv-desc {\n      padding-bottom: 30px; }\n      .event-sv-content-container .event-singleview .event-sv-desc * {\n        font-family: 'Avenir';\n        font-size: 14px; }\n        @media (min-width: 480px) {\n          .event-sv-content-container .event-singleview .event-sv-desc * {\n            font-size: 14px; } }\n        @media (min-width: 1280px) {\n          .event-sv-content-container .event-singleview .event-sv-desc * {\n            font-size: 15px; } }\n    .event-sv-content-container .event-singleview.fixed-bottom {\n      position: fixed;\n      top: auto;\n      bottom: 32px;\n      left: calc( 50% + 32px);\n      right: 32px; }\n    .event-sv-content-container .event-singleview.fixed-top {\n      position: fixed;\n      top: 32px;\n      bottom: auto;\n      left: calc( 50% + 32px);\n      right: 32px; }\n  .event-sv-content-container .event-sv-info-placeholder {\n    width: 100%; }\n\n@media screen and (max-width: 1600px) {\n  .commercial-img {\n    max-width: calc(1600px / 2 - 64px) !important; } }\n\n.commercial-img {\n  margin: 32px;\n  padding-bottom: 56.25%;\n  opacity: .65;\n  transition: 350ms;\n  cursor: pointer;\n  background-size: cover;\n  background-position: center; }\n  .commercial-img:hover {\n    opacity: 1; }\n\n.sv-footer {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: auto;\n  min-height: 64px;\n  color: white; }\n  .sv-footer .sv-footer-block {\n    position: relative;\n    width: 100%;\n    height: auto;\n    background-color: #537c78;\n    font-family: 'Avenir';\n    transition: 120ms; }\n    .sv-footer .sv-footer-block.clickable {\n      cursor: pointer; }\n      .sv-footer .sv-footer-block.clickable:hover {\n        background-color: #3f5d5a; }\n    .sv-footer .sv-footer-block.title {\n      background-color: #5d8b87; }\n      .sv-footer .sv-footer-block.title.clickable:hover {\n        background-color: #436460; }\n      .sv-footer .sv-footer-block.title .value {\n        text-transform: uppercase;\n        font-size: 16px;\n        font-family: 'Montserrat', sans-serif;\n        padding: 32px 32px 28px 100px; }\n    .sv-footer .sv-footer-block:nth-child(2n) {\n      background-color: #496d69; }\n      .sv-footer .sv-footer-block:nth-child(2n).clickable:hover {\n        background-color: #3a5754; }\n    .sv-footer .sv-footer-block .icon {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 75px;\n      height: 100%;\n      background-color: rgba(0, 0, 0, 0.13);\n      background-size: 50px;\n      background-position: center;\n      background-repeat: no-repeat; }\n      .sv-footer .sv-footer-block .icon svg {\n        position: absolute;\n        fill: #eee;\n        width: 27px;\n        height: 27px;\n        top: 50%;\n        left: 50%;\n        transform: translate(-50%, -50%); }\n    .sv-footer .sv-footer-block .value {\n      padding: 24px 32px 22px 100px;\n      color: white;\n      font-size: 13px;\n      font-family: 'Avenir';\n      border-top: 1px solid rgba(40, 40, 40, 0.2); }\n\n.locations-bar {\n  position: relative;\n  width: 100%;\n  height: 60px; }\n  .locations-bar .locationscategories-title {\n    position: absolute;\n    left: 16px;\n    top: 50%;\n    transform: translate(0, -50%);\n    text-transform: uppercase;\n    color: #494950; }\n\n.locationcategories-container {\n  position: relative;\n  width: 100%;\n  height: auto; }\n\n.category-bar {\n  position: relative;\n  width: 100%;\n  height: 60px;\n  background-color: #689a95;\n  line-height: 60px;\n  font-size: 12px;\n  text-transform: uppercase;\n  padding-left: 20px;\n  color: white;\n  cursor: pointer; }\n  .category-bar .sub-categories-title {\n    position: absolute;\n    right: 0;\n    top: 0;\n    height: 60px;\n    min-width: 65px;\n    border-left: 1px solid rgba(255, 255, 255, 0.5);\n    background: transparent;\n    transition: background 120ms; }\n    .category-bar .sub-categories-title:hover {\n      background: rgba(255, 255, 255, 0.1); }\n    .category-bar .sub-categories-title:after {\n      content: '';\n      position: absolute;\n      top: 50%;\n      right: 32.5px;\n      transform: translate(50%, -50%);\n      width: 0;\n      height: 0;\n      margin-top: 4px;\n      border: 6px solid transparent;\n      border-top: 8px solid white; }\n\n.sub-category-outer {\n  position: relative;\n  width: 100%;\n  height: 0;\n  overflow: hidden;\n  transition: 500ms; }\n  .sub-category-outer .sub-category-inner {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: auto;\n    background-color: #494950; }\n    .sub-category-outer .sub-category-inner .sub-category {\n      position: relative;\n      width: 100%;\n      height: 50px;\n      color: white;\n      font-size: 12px;\n      line-height: 50px;\n      padding-left: calc( 32px + 24px);\n      text-transform: uppercase;\n      border-bottom: 1px solid #eee;\n      cursor: pointer; }\n      .sub-category-outer .sub-category-inner .sub-category .elem-counter {\n        position: absolute;\n        top: 50%;\n        left: 9px;\n        transform: translate(0, -50%);\n        width: 32px;\n        height: 32px;\n        background-color: #eee;\n        color: #494950;\n        text-align: center;\n        line-height: 32px; }\n\n.category-container {\n  padding: 16px;\n  padding-bottom: 2px;\n  width: 100%;\n  height: auto;\n  box-sizing: border-box; }\n  .category-container * {\n    box-sizing: border-box; }\n\n.category {\n  position: relative;\n  width: 100%;\n  min-width: 200px;\n  height: 125px;\n  background-repeat: no-repeat;\n  border: 1px solid #68a297;\n  background-color: #689a95;\n  background-image: url(" + __webpack_require__(92) + ");\n  background-size: 32px;\n  background-position: center;\n  padding-right: 175px;\n  background-origin: content-box;\n  margin-bottom: 16px;\n  cursor: pointer;\n  /*&::before{\n            content: '';\n            opacity: 0;\n            position: absolute;\n            top: 0; left: 0;\n            width: 100%;\n            height: 100%;\n            background-color: rgba(lighten($color-blue-2, 15%), .2);\n            transition: 120ms;\n        }*/ }\n  @media (min-width: 480px) {\n    .category {\n      height: 175px; } }\n  @media (min-width: 640px) {\n    .category {\n      height: 125px; } }\n  @media (min-width: 900px) {\n    .category {\n      height: 175px; } }\n  .category.imgloaded {\n    background-size: cover;\n    background-origin: padding-box; }\n  .category:hover .category-content-container {\n    background-color: rgba(83, 135, 125, 0.9); }\n  .category.loadingsv .category-content-container {\n    background-color: rgba(59, 95, 88, 0.9); }\n    .category.loadingsv .category-content-container .category-count {\n      display: none; }\n    .category.loadingsv .category-content-container:after {\n      content: '';\n      background-image: url(" + __webpack_require__(59) + ");\n      background-position: center;\n      background-repeat: no-repeat;\n      background-size: 32px;\n      position: absolute;\n      top: 60%;\n      left: 50% !important;\n      transform: translate(-50%, -50%);\n      width: 40px;\n      height: 40px;\n      background-color: white; }\n      @media (min-width: 640px) {\n        .category.loadingsv .category-content-container:after {\n          left: calc( 145px / 2); } }\n      @media (min-width: 900px) {\n        .category.loadingsv .category-content-container:after {\n          left: calc( 175px / 2); } }\n  .category.selected .category-content-container {\n    width: 100%; }\n  .category .category-content-container {\n    position: absolute;\n    right: 0;\n    width: 145px;\n    height: 100%;\n    background-color: rgba(78, 127, 118, 0.9);\n    transition: width 650ms; }\n    @media (min-width: 480px) {\n      .category .category-content-container {\n        width: 175px; } }\n    @media (min-width: 640px) {\n      .category .category-content-container {\n        width: 145px; } }\n    @media (min-width: 900px) {\n      .category .category-content-container {\n        width: 175px; } }\n    .category .category-content-container .category-title {\n      position: absolute;\n      top: 25px;\n      left: 50% !important;\n      transform: translate(-50%, 0);\n      width: 100%;\n      color: white;\n      text-transform: uppercase;\n      text-align: center;\n      font-size: 11px; }\n      @media (min-width: 480px) {\n        .category .category-content-container .category-title {\n          top: 45px;\n          font-size: 14px;\n          left: calc( 175px / 2); } }\n      @media (min-width: 640px) {\n        .category .category-content-container .category-title {\n          top: 25px;\n          font-size: 11px;\n          left: calc( 145px / 2); } }\n      @media (min-width: 900px) {\n        .category .category-content-container .category-title {\n          top: 45px;\n          font-size: 14px;\n          left: calc( 175px / 2); } }\n    .category .category-content-container .category-count {\n      position: absolute;\n      top: 60%;\n      left: 50% !important;\n      transform: translate(-50%, -50%);\n      width: 40px;\n      height: 40px;\n      background-color: white;\n      color: #68a297;\n      text-align: center;\n      line-height: 40px;\n      font-size: 16px; }\n      @media (min-width: 640px) {\n        .category .category-content-container .category-count {\n          left: calc( 145px / 2); } }\n      @media (min-width: 900px) {\n        .category .category-content-container .category-count {\n          left: calc( 175px / 2); } }\n\n.locationlist-bar {\n  position: relative;\n  width: 100%;\n  height: 60px;\n  background-color: #5d8b87;\n  color: white;\n  font-size: 12px;\n  line-height: 60px;\n  padding-left: 20px;\n  text-transform: uppercase; }\n  .locationlist-bar .close-button {\n    position: absolute;\n    top: 50%;\n    right: 0px;\n    width: 65px;\n    text-align: center;\n    transform: translate(0, -50%);\n    color: white;\n    font-size: 37px;\n    cursor: pointer;\n    background-color: transparent;\n    transition: background-color 120ms;\n    border-left: 1px solid rgba(255, 255, 255, 0.6); }\n    .locationlist-bar .close-button:hover {\n      background-color: #61918d; }\n\n.location-list {\n  list-style: none;\n  padding: 0; }\n\n.location-container {\n  position: relative;\n  display: flex;\n  padding: 16px 16px 30px;\n  overflow: hidden;\n  color: #494950;\n  text-decoration: none;\n  transition: 400ms;\n  cursor: pointer;\n  transition: background-color 120ms; }\n  .location-container:nth-child(2n) {\n    background-color: rgba(255, 255, 255, 0.6); }\n  .location-container:hover {\n    background: #f2f6f6; }\n  .location-container * {\n    transition: 200ms;\n    position: relative; }\n  .location-container.bookmark-mode {\n    background-color: #b4cdcb !important; }\n  .location-container .ripple {\n    position: absolute;\n    display: block;\n    top: 0;\n    left: 0;\n    width: 1600px;\n    height: 1600px;\n    opacity: 1;\n    background-color: #689a95;\n    transform: scale(0);\n    transition: 300ms; }\n\n@keyframes ripple {\n  100% {\n    transform: scale(1);\n    opacity: 0; } }\n\n@keyframes rippleBack {\n  100% {\n    transform: scale(0);\n    opacity: 0; } }\n    .location-container .ripple.animate {\n      animation: ripple 300ms ease-in forwards; }\n    .location-container .ripple.animateBack {\n      animation: rippleBack 300ms ease-in forwards; }\n  .location-container.loading .location-picture:after {\n    position: absolute;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-color: white;\n    background-image: url(" + __webpack_require__(59) + ");\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 20px;\n    content: ''; }\n  .location-container .location-picture {\n    position: relative;\n    height: 50px;\n    min-width: 50px;\n    margin-right: 16px;\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-position: center;\n    border: 1px solid #689a95; }\n  .location-container .location-description {\n    flex-grow: 1; }\n    .location-container .location-description .location-title {\n      display: block;\n      font-size: 14px;\n      padding: 0 0 5px;\n      margin: 0;\n      border-bottom: 1px solid #68a297;\n      text-transform: uppercase; }\n    .location-container .location-description .location-about {\n      display: block;\n      margin-bottom: 0;\n      margin-top: 5px;\n      line-height: 1.5;\n      font-size: 80%;\n      font-family: 'Avenir', sans-serif; }\n\n.location-singleview-bar {\n  position: relative;\n  width: 100%;\n  height: 60px;\n  background-color: #689a95;\n  color: white;\n  text-transform: uppercase;\n  font-size: 12px;\n  line-height: 60px;\n  padding-left: 20px; }\n  .location-singleview-bar .close-button {\n    position: absolute;\n    top: 50%;\n    right: 0px;\n    width: 65px;\n    text-align: center;\n    transform: translate(0, -50%);\n    color: white;\n    font-size: 37px;\n    cursor: pointer;\n    background-color: transparent;\n    transition: background-color 120ms;\n    border-left: 1px solid rgba(255, 255, 255, 0.6); }\n    .location-singleview-bar .close-button:hover {\n      background-color: #6e9e99; }\n\n.location-singleview-content {\n  width: 100%;\n  padding: 24px;\n  height: auto;\n  overflow: auto; }\n  .location-singleview-content .breakline {\n    width: 100%;\n    border-bottom: 1px solid #689a95; }\n  .location-singleview-content .photo-container {\n    position: relative;\n    width: 100%;\n    height: auto; }\n    .location-singleview-content .photo-container .coverphoto {\n      position: relative;\n      width: 100%;\n      padding-bottom: 56.25%;\n      background-size: cover;\n      background-position: 20% center;\n      border: 1px solid #689a95; }\n    .location-singleview-content .photo-container .picture {\n      position: absolute;\n      bottom: 0;\n      left: 16px;\n      transform: translate(0, 75%);\n      width: 64px;\n      height: 64px;\n      border: 1px solid #689a95;\n      background-size: cover;\n      background-position: center; }\n  .location-singleview-content .cta-icons {\n    position: relative;\n    width: auto;\n    height: auto;\n    padding: 25px 16px;\n    overflow: auto; }\n    .location-singleview-content .cta-icons .cta-icon {\n      flex-grow: 1;\n      cursor: pointer;\n      margin-left: 24px;\n      display: inline-block;\n      float: right; }\n      .location-singleview-content .cta-icons .cta-icon svg {\n        width: 28px;\n        height: 28px; }\n  .location-singleview-content .description-container {\n    padding: 8px;\n    padding-top: 32px;\n    font-family: 'Avenir';\n    line-height: 1.5; }\n    .location-singleview-content .description-container .title {\n      font-size: 16px;\n      font-family: 'Avenir bold'; }\n    .location-singleview-content .description-container .description {\n      padding: 8px 0px;\n      font-size: 15px; }\n  .location-singleview-content .event-slider {\n    position: relative;\n    width: 100%;\n    height: 260px;\n    overflow: hidden;\n    margin-top: 32px; }\n    .location-singleview-content .event-slider .button {\n      position: absolute;\n      bottom: 16px;\n      width: 48px;\n      height: 48px;\n      background-color: #52857b;\n      z-index: 10;\n      cursor: pointer;\n      border: 1px solid #48756d;\n      color: white;\n      line-height: 48px;\n      text-align: center;\n      font-family: 'Lato';\n      font-size: 22px; }\n      .location-singleview-content .event-slider .button svg {\n        fill: white;\n        position: absolute;\n        top: 50%;\n        left: 50%;\n        transform: translate(-50%, -50%);\n        width: 14px;\n        height: 14px; }\n    .location-singleview-content .event-slider .prevButton {\n      left: 0; }\n    .location-singleview-content .event-slider .nextButton {\n      right: 0; }\n    .location-singleview-content .event-slider .inner {\n      position: absolute;\n      height: 100%;\n      top: 0;\n      left: 0;\n      display: flex;\n      transition: 280ms;\n      z-index: 1;\n      cursor: grab; }\n      .location-singleview-content .event-slider .inner.notrans {\n        transition: 0ms;\n        cursor: grabbing; }\n      .location-singleview-content .event-slider .inner .item {\n        margin: 0 8px;\n        height: 100%; }\n        .location-singleview-content .event-slider .inner .item .event {\n          width: 100% !important;\n          height: 100% !important;\n          margin: 0 !important; }\n      .location-singleview-content .event-slider .inner .item-something {\n        position: relative;\n        height: 100%;\n        margin: 0 16px;\n        z-index: 1; }\n        .location-singleview-content .event-slider .inner .item-something .imgcontainer {\n          position: relative;\n          width: 100%;\n          height: 96px;\n          background-size: cover;\n          background-position: 20% center;\n          border: none;\n          border-bottom: 1px solid #689a95; }\n        .location-singleview-content .event-slider .inner .item-something .textcontainer {\n          width: 100%;\n          height: auto;\n          padding: 16px; }\n          .location-singleview-content .event-slider .inner .item-something .textcontainer .location-sv-title {\n            margin: 0;\n            color: #292929;\n            font-size: 14px;\n            text-transform: uppercase; }\n  .location-singleview-content .imgcontainer {\n    box-sizing: border-box;\n    width: 100%;\n    padding-bottom: 56.25%;\n    border: 1px solid #68a297;\n    background-size: cover;\n    background-position: 20% center; }\n\n.sv-info-placeholder {\n  width: 100%;\n  margin-top: 16px; }\n\n.sv-info {\n  position: absolute;\n  left: 0px;\n  bottom: 0px;\n  width: 100%;\n  height: auto;\n  min-height: 64px;\n  color: white; }\n  .sv-info .footer-block {\n    position: relative;\n    width: 100%;\n    height: auto;\n    background-color: #537c78;\n    font-family: 'Avenir';\n    transition: 120ms; }\n    .sv-info .footer-block.clickable {\n      cursor: pointer; }\n      .sv-info .footer-block.clickable:hover {\n        background-color: #3f5d5a; }\n    .sv-info .footer-block.title {\n      background-color: #5d8b87; }\n      .sv-info .footer-block.title.clickable:hover {\n        background-color: #436460; }\n      .sv-info .footer-block.title .value {\n        text-transform: uppercase;\n        font-size: 16px;\n        font-family: 'Montserrat', sans-serif;\n        padding: 32px 32px 28px 100px; }\n    .sv-info .footer-block:nth-child(2n) {\n      background-color: #496d69; }\n      .sv-info .footer-block:nth-child(2n).clickable:hover {\n        background-color: #3a5754; }\n    .sv-info .footer-block .icon {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 75px;\n      height: 100%;\n      background-color: rgba(0, 0, 0, 0.13);\n      background-size: 50px;\n      background-position: center;\n      background-repeat: no-repeat; }\n      .sv-info .footer-block .icon svg {\n        position: absolute;\n        fill: #eee;\n        width: 27px;\n        height: 27px;\n        top: 50%;\n        left: 50%;\n        transform: translate(-50%, -50%); }\n    .sv-info .footer-block .value {\n      padding: 24px 32px 22px 100px;\n      color: white;\n      font-size: 13px;\n      font-family: 'Avenir';\n      border-top: 1px solid rgba(40, 40, 40, 0.2); }\n\n.viewbar {\n  position: relative;\n  width: 100%;\n  height: 60px;\n  padding-left: 20px;\n  line-height: 60px;\n  color: white;\n  text-transform: uppercase;\n  font-size: 12px;\n  background-color: #689a95; }\n  .viewbar.dark {\n    background-color: #5d8b87; }\n  .viewbar a {\n    color: white;\n    text-decoration: none;\n    height: inherit;\n    line-height: inherit;\n    display: inline-block; }\n  .viewbar .close-button {\n    position: absolute;\n    top: 50%;\n    right: 0px;\n    width: 65px;\n    text-align: center;\n    transform: translate(0, -50%);\n    color: white;\n    font-size: 32px;\n    cursor: pointer;\n    background-color: transparent;\n    transition: background-color 120ms;\n    border-left: 1px solid rgba(255, 255, 255, 0.6); }\n    .viewbar .close-button:hover {\n      background-color: #6e9e99; }\n\n@media screen and (max-width: 640px) {\n  .footer .copyright {\n    position: relative !important;\n    right: 0 !important;\n    text-align: center; } }\n\n.footer {\n  position: relative;\n  width: 100%; }\n  .footer .copyright {\n    position: relative;\n    color: #e0e0e0;\n    padding: 30px 20px;\n    text-align: center;\n    font-size: 12px;\n    background-color: #494950; }\n    .footer .copyright a {\n      color: inherit;\n      text-decoration: none; }\n      .footer .copyright a:hover {\n        text-decoration: underline; }\n\n.search-container {\n  max-width: none !important;\n  width: 100%; }\n  .search-container:nth-child(2n) {\n    background-color: white !important; }\n\n.search-category-container {\n  max-width: none !important;\n  width: 100%;\n  padding: 16px 0;\n  margin-bottom: 2px !important; }\n  .search-category-container.white {\n    background-color: white;\n    margin: -10px;\n    width: calc( 100% + 20px);\n    padding: 16px 12px; }\n  .search-category-container .breakline {\n    width: 100%;\n    height: 1px;\n    background-color: #689a95;\n    margin: 10px 0 5px 0px; }\n  .search-category-container .unflex {\n    padding: 16px; }\n  .search-category-container .flex {\n    display: flex;\n    flex-wrap: wrap; }\n    .search-category-container .flex .category {\n      flex-grow: 1;\n      width: 33%;\n      margin: 10px; }\n      .search-category-container .flex .category .category-content-container {\n        width: 100% !important; }\n\n.pickerArrow {\n  box-sizing: content-box;\n  width: 0;\n  height: 0;\n  border: 6px solid transparent;\n  border-top: 8px solid white;\n  position: absolute;\n  right: 0;\n  top: 4px; }\n\n.monthPicker_selector {\n  border-right: 1px solid rgba(0, 0, 0, 0.2);\n  background-color: #494950;\n  width: calc(100% - 1px);\n  height: 60px;\n  margin-top: -60px;\n  transition: 150ms;\n  border-left: none;\n  box-sizing: content-box; }\n  .monthPicker_selector.active {\n    margin-top: 0; }\n  .monthPicker_selector .month {\n    position: relative;\n    box-sizing: border-box;\n    color: white;\n    display: inline-block;\n    cursor: pointer;\n    text-align: center;\n    border-radius: 50%;\n    width: 42px;\n    height: 42px;\n    margin: 9px 0px 9px 0px;\n    line-height: 31px;\n    transition: border-radius 150ms, background-color 150ms;\n    font-size: 11px;\n    text-transform: uppercase; }\n    .monthPicker_selector .month.active {\n      background-color: #689a95;\n      color: white; }\n      .monthPicker_selector .month.active .yearTitle {\n        color: #ddd; }\n    .monthPicker_selector .month.active-left {\n      background-color: #689a95;\n      color: white;\n      border-radius: 50% 0 0 50%;\n      height: 36px;\n      line-height: 25px;\n      margin: 12px 0px 12px 0px; }\n      .monthPicker_selector .month.active-left .yearTitle {\n        color: #ddd; }\n    .monthPicker_selector .month.active-middle {\n      background-color: #689a95;\n      color: white;\n      border-radius: 0 !important;\n      height: 36px;\n      line-height: 25px;\n      margin: 12px 0px 12px 0px; }\n      .monthPicker_selector .month.active-middle .yearTitle {\n        color: #ddd; }\n    .monthPicker_selector .month.active-right {\n      background-color: #689a95;\n      color: white;\n      border-radius: 0 50% 50% 0;\n      height: 36px;\n      line-height: 25px;\n      margin: 12px 0px 12px 0px; }\n      .monthPicker_selector .month.active-right .yearTitle {\n        color: #ddd; }\n    .monthPicker_selector .month .yearTitle {\n      position: absolute;\n      top: 11px;\n      left: 50%;\n      transform: translate(-50%, 0);\n      color: #9d9d9d; }\n\n@keyframes repaint {\n  0% {\n    transform: translateY(1px); }\n  100% {\n    transform: translateY(0px); } }\n\n.repaint {\n  animation: repaint 1 linear forwards 50ms; }\n\n.sync-outer {\n  position: sticky;\n  width: 100%;\n  padding: 0;\n  margin: 0;\n  top: 0;\n  overflow: hidden;\n  height: calc( 100vh - 60px); }\n  .sync-outer.high {\n    position: relative;\n    height: auto;\n    overflow: auto; }\n  .sync-outer:not(.high) {\n    top: 60px; }\n  .sync-outer:after {\n    opacity: 0;\n    transition: opacity 200ms;\n    display: block;\n    content: '';\n    position: inherit;\n    top: 0px;\n    left: inherit;\n    width: inherit;\n    bottom: 0px;\n    background-color: rgba(0, 0, 0, 0.4);\n    z-index: -1;\n    background-image: url(" + __webpack_require__(92) + ");\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 64px; }\n\n.sync-outer .sync-inner {\n  position: relative;\n  min-height: auto;\n  overflow: auto;\n  padding: 0;\n  margin: 0;\n  clear: both; }\n\n.spoopy.spoopy-out .sync-outer:after {\n  opacity: 0; }\n\n.spoopy .sync-outer.top:after {\n  position: absolute; }\n\n.spoopy .sync-outer:after {\n  opacity: 1;\n  transition-delay: 100ms;\n  z-index: 10; }\n\n.sub-page-article {\n  max-width: 640px;\n  padding: 10px;\n  min-height: 100vh;\n  line-height: 1.5;\n  font-size: 13px; }\n  @media (min-width: 480px) {\n    .sub-page-article {\n      padding: 20px;\n      font-size: 14px;\n      max-width: 680px; } }\n  @media (min-width: 640px) {\n    .sub-page-article {\n      padding: 20px;\n      font-size: 15px; } }\n  @media (min-width: 960px) {\n    .sub-page-article {\n      padding: 20px 40px;\n      font-size: 16px;\n      max-width: 720px; } }\n  @media (min-width: 1200px) {\n    .sub-page-article {\n      padding: 40px 60px;\n      font-size: 16px;\n      max-width: 760px; } }\n\n.sub-page-header h1 {\n  margin: 0; }\n\n.sub-page-content {\n  font-family: 'Avenir', sans-serif; }\n\nbody.sub-page .poly-view .content {\n  height: auto !important; }\n\nbody.sub-page .poly-view .left-container {\n  width: 0%; }\n\nbody.sub-page .poly-view .right-container {\n  width: 100%; }\n\n@media (min-width: 480px) {\n  body.sub-page .poly-view .left-container {\n    width: 240px; }\n  body.sub-page .poly-view .right-container {\n    width: calc(100% - 240px); } }\n\n@media (min-width: 640px) {\n  body.sub-page .poly-view .left-container {\n    width: 320px; }\n  body.sub-page .poly-view .right-container {\n    width: calc(100% - 320px); } }\n\n@media (min-width: 768px) {\n  body.sub-page .poly-view .left-container {\n    width: 320px; }\n  body.sub-page .poly-view .right-container {\n    width: calc(100% - 320px); } }\n\n.sub-page-menu {\n  font-size: 115%;\n  max-width: 320px;\n  margin-left: auto;\n  margin-right: 0px;\n  line-height: 2;\n  padding: 20px; }\n  @media (min-width: 1200px) {\n    .sub-page-menu {\n      padding: 40px 60px;\n      max-width: 400px; } }\n  .sub-page-menu ul {\n    padding: 0;\n    margin: 0;\n    list-style: none; }\n  .sub-page-menu .menu-item-description {\n    display: block;\n    font-size: 75%;\n    margin-top: 5px;\n    font-family: 'Avenir', sans-serif;\n    line-height: 1.5; }\n  .sub-page-menu .sub-menu {\n    margin: 5px 0px 0px;\n    font-family: 'Avenir', sans-serif;\n    font-size: 75%; }\n    .sub-page-menu .sub-menu li {\n      margin-bottom: 5px; }\n  .sub-page-menu li {\n    margin-bottom: 20px; }\n  .sub-page-menu a {\n    text-decoration: none;\n    color: #494950; }\n\n@media only screen and (min-width: 1080px) {\n  body.sub-page .content-container.poly-view .left-container {\n    width: 40%; }\n  body.sub-page .content-container.poly-view .right-container {\n    width: 60%; } }\n\n@media only screen and (min-width: 1400px) {\n  body.sub-page .content-container.poly-view .left-container {\n    width: 40%; }\n  body.sub-page .content-container.poly-view .right-container {\n    width: 60%; } }\n\n.location-list ul {\n  list-style: none;\n  padding: 0; }\n\n.location-list .letter-list {\n  margin-bottom: 20px; }\n\n.location-list li {\n  line-height: 2; }\n\n.location-list .letter {\n  text-transform: uppercase;\n  font-size: 140%;\n  font-weight: bold; }\n\n.content-404 {\n  min-height: calc(100vh - 100px); }\n  .content-404 h1 {\n    text-align: center;\n    display: block;\n    flex-grow: 1;\n    font-size: 100px;\n    color: #689a95; }\n\n@keyframes cookieUp {\n  from {\n    transform: translateY(-100%); }\n  to {\n    transform: translateY(0%); } }\n\n.cookie-ok {\n  font-size: 18px;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  transform: translateY(-100%);\n  background: rgba(51, 51, 51, 0.97);\n  padding: 20px 10px;\n  z-index: 100;\n  animation: cookieUp linear 1 forwards 150ms;\n  animation-delay: 200ms;\n  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);\n  text-align: center; }\n  @media (min-width: 480px) {\n    .cookie-ok {\n      padding: 30px 20px;\n      font-size: 24px; } }\n  @media (min-width: 640px) {\n    .cookie-ok {\n      font-size: 32px; } }\n  @media (min-width: 960px) {\n    .cookie-ok {\n      font-size: 52px; } }\n  .cookie-ok span, .cookie-ok a {\n    font-family: 'Avenir', sans-serif;\n    position: relative;\n    display: inline-block;\n    vertical-align: top;\n    color: white;\n    padding: 3px 14px 0px;\n    text-decoration: none; }\n    @media (min-width: 480px) {\n      .cookie-ok span, .cookie-ok a {\n        padding: 5px 20px 0px; } }\n  .cookie-ok span {\n    font-weight: bold; }\n  .cookie-ok a:after {\n    position: absolute;\n    left: 10px;\n    right: 10px;\n    bottom: -3px;\n    height: 1px;\n    background: white;\n    content: '';\n    opacity: 0;\n    transition: opacity 120ms; }\n    @media (min-width: 480px) {\n      .cookie-ok a:after {\n        left: 20px;\n        right: 20px; } }\n  .cookie-ok a:hover:after {\n    opacity: 1; }\n  .cookie-ok a.cookie-accept {\n    border-right: 1px solid white; }\n\n.fixedsticky {\n  position: -webkit-sticky;\n  position: -moz-sticky;\n  position: -ms-sticky;\n  position: -o-sticky;\n  position: sticky; }\n\n/* When position: sticky is supported but native behavior is ignored */\n.fixedsticky-withoutfixedfixed .fixedsticky-off,\n.fixed-supported .fixedsticky-off {\n  position: static; }\n\n.fixedsticky-withoutfixedfixed .fixedsticky-on,\n.fixed-supported .fixedsticky-on {\n  position: fixed; }\n\n.fixedsticky-dummy {\n  display: none; }\n\n.fixedsticky-on + .fixedsticky-dummy {\n  display: block; }\n\n.loader-outer {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  width: calc(8px * 3 + 14px * 2);\n  height: auto; }\n  .loader-outer .loader-line {\n    position: absolute;\n    top: 0;\n    box-sizing: content-box;\n    width: 8px;\n    height: 32px;\n    background-color: #97bfb8;\n    border: 1px solid #68a297; }\n  .loader-outer .loader-line-1 {\n    left: 0;\n    animation-duration: 1.2s;\n    animation-name: ll1;\n    animation-iteration-count: infinite; }\n  .loader-outer .loader-line-2 {\n    left: 50%;\n    transform: translate(-50%, 0);\n    animation-duration: 1.2s;\n    animation-name: ll2;\n    animation-iteration-count: infinite; }\n  .loader-outer .loader-line-3 {\n    right: 0;\n    animation-duration: 1.2s;\n    animation-name: ll3;\n    animation-iteration-count: infinite; }\n\n@keyframes ll1 {\n  0% {\n    width: 8px;\n    height: 32px;\n    background-color: #97bfb8;\n    top: 0;\n    left: 0; }\n  10% {\n    width: 10px;\n    height: 42px;\n    background-color: #78aca2;\n    top: -5px;\n    left: -1px; }\n  80% {\n    width: 8px;\n    height: 32px;\n    background-color: #97bfb8;\n    top: 0;\n    left: 0; } }\n\n@keyframes ll2 {\n  5% {\n    width: 8px;\n    height: 32px;\n    background-color: #97bfb8;\n    top: 0; }\n  15% {\n    width: 10px;\n    height: 42px;\n    background-color: #78aca2;\n    top: -5px; }\n  80% {\n    width: 8px;\n    height: 32px;\n    background-color: #97bfb8;\n    top: 0; } }\n\n@keyframes ll3 {\n  10% {\n    width: 8px;\n    height: 32px;\n    background-color: #97bfb8;\n    top: 0;\n    right: 0; }\n  20% {\n    width: 10px;\n    height: 42px;\n    background-color: #78aca2;\n    top: -5px;\n    right: -1px; }\n  80% {\n    width: 8px;\n    height: 32px;\n    background-color: #97bfb8;\n    top: 0;\n    right: 0; } }\n", ""]);
 
 // exports
 
@@ -14964,7 +14936,7 @@ module.exports = ARIADOMPropertyConfig;
 
 var ReactDOMComponentTree = __webpack_require__(5);
 
-var focusNode = __webpack_require__(64);
+var focusNode = __webpack_require__(65);
 
 var AutoFocusUtils = {
   focusDOMComponent: function () {
@@ -15381,7 +15353,7 @@ module.exports = BeforeInputEventPlugin;
 
 
 
-var CSSProperty = __webpack_require__(66);
+var CSSProperty = __webpack_require__(67);
 var ExecutionEnvironment = __webpack_require__(7);
 var ReactInstrumentation = __webpack_require__(9);
 
@@ -15605,7 +15577,7 @@ var SyntheticEvent = __webpack_require__(13);
 
 var getEventTarget = __webpack_require__(50);
 var isEventSupported = __webpack_require__(51);
-var isTextInputElement = __webpack_require__(84);
+var isTextInputElement = __webpack_require__(85);
 
 var eventTypes = {
   change: {
@@ -16116,7 +16088,7 @@ var _assign = __webpack_require__(4);
 
 var PooledClass = __webpack_require__(16);
 
-var getTextContentAccessor = __webpack_require__(82);
+var getTextContentAccessor = __webpack_require__(83);
 
 /**
  * This helper class stores information about text content of a target node,
@@ -16431,10 +16403,10 @@ module.exports = HTMLDOMPropertyConfig;
 
 var ReactReconciler = __webpack_require__(20);
 
-var instantiateReactComponent = __webpack_require__(83);
+var instantiateReactComponent = __webpack_require__(84);
 var KeyEscapeUtils = __webpack_require__(42);
 var shouldUpdateReactComponent = __webpack_require__(52);
-var traverseAllChildren = __webpack_require__(86);
+var traverseAllChildren = __webpack_require__(87);
 var warning = __webpack_require__(2);
 
 var ReactComponentTreeHook;
@@ -16633,7 +16605,7 @@ var ReactCurrentOwner = __webpack_require__(12);
 var ReactErrorUtils = __webpack_require__(45);
 var ReactInstanceMap = __webpack_require__(25);
 var ReactInstrumentation = __webpack_require__(9);
-var ReactNodeTypes = __webpack_require__(76);
+var ReactNodeTypes = __webpack_require__(77);
 var ReactReconciler = __webpack_require__(20);
 
 if (process.env.NODE_ENV !== 'production') {
@@ -17536,13 +17508,13 @@ module.exports = ReactCompositeComponent;
 
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactDefaultInjection = __webpack_require__(162);
-var ReactMount = __webpack_require__(75);
+var ReactMount = __webpack_require__(76);
 var ReactReconciler = __webpack_require__(20);
 var ReactUpdates = __webpack_require__(11);
 var ReactVersion = __webpack_require__(177);
 
 var findDOMNode = __webpack_require__(194);
-var getHostComponentFromComposite = __webpack_require__(81);
+var getHostComponentFromComposite = __webpack_require__(82);
 var renderSubtreeIntoContainer = __webpack_require__(202);
 var warning = __webpack_require__(2);
 
@@ -17659,15 +17631,15 @@ var CSSPropertyOperations = __webpack_require__(135);
 var DOMLazyTree = __webpack_require__(19);
 var DOMNamespaces = __webpack_require__(40);
 var DOMProperty = __webpack_require__(15);
-var DOMPropertyOperations = __webpack_require__(68);
+var DOMPropertyOperations = __webpack_require__(69);
 var EventPluginHub = __webpack_require__(23);
 var EventPluginRegistry = __webpack_require__(27);
 var ReactBrowserEventEmitter = __webpack_require__(28);
-var ReactDOMComponentFlags = __webpack_require__(69);
+var ReactDOMComponentFlags = __webpack_require__(70);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactDOMInput = __webpack_require__(151);
 var ReactDOMOption = __webpack_require__(154);
-var ReactDOMSelect = __webpack_require__(70);
+var ReactDOMSelect = __webpack_require__(71);
 var ReactDOMTextarea = __webpack_require__(157);
 var ReactInstrumentation = __webpack_require__(9);
 var ReactMultiChild = __webpack_require__(170);
@@ -18826,7 +18798,7 @@ module.exports = ReactDOMIDOperations;
 var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(4);
 
-var DOMPropertyOperations = __webpack_require__(68);
+var DOMPropertyOperations = __webpack_require__(69);
 var LinkedValueUtils = __webpack_require__(43);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactUpdates = __webpack_require__(11);
@@ -19259,7 +19231,7 @@ var _assign = __webpack_require__(4);
 
 var React = __webpack_require__(21);
 var ReactDOMComponentTree = __webpack_require__(5);
-var ReactDOMSelect = __webpack_require__(70);
+var ReactDOMSelect = __webpack_require__(71);
 
 var warning = __webpack_require__(2);
 var didWarnInvalidOptionChildren = false;
@@ -19387,7 +19359,7 @@ module.exports = ReactDOMOption;
 var ExecutionEnvironment = __webpack_require__(7);
 
 var getNodeForCharacterOffset = __webpack_require__(199);
-var getTextContentAccessor = __webpack_require__(82);
+var getTextContentAccessor = __webpack_require__(83);
 
 /**
  * While `isCollapsed` is available on the Selection object and `collapsed`
@@ -20793,7 +20765,7 @@ module.exports = ReactEventEmitterMixin;
 
 var _assign = __webpack_require__(4);
 
-var EventListener = __webpack_require__(63);
+var EventListener = __webpack_require__(64);
 var ExecutionEnvironment = __webpack_require__(7);
 var PooledClass = __webpack_require__(16);
 var ReactDOMComponentTree = __webpack_require__(5);
@@ -20994,9 +20966,9 @@ var DOMProperty = __webpack_require__(15);
 var EventPluginHub = __webpack_require__(23);
 var EventPluginUtils = __webpack_require__(41);
 var ReactComponentEnvironment = __webpack_require__(44);
-var ReactEmptyComponent = __webpack_require__(71);
+var ReactEmptyComponent = __webpack_require__(72);
 var ReactBrowserEventEmitter = __webpack_require__(28);
-var ReactHostComponent = __webpack_require__(73);
+var ReactHostComponent = __webpack_require__(74);
 var ReactUpdates = __webpack_require__(11);
 
 var ReactInjection = {
@@ -21716,10 +21688,10 @@ module.exports = ReactPropTypeLocationNames;
 
 var _assign = __webpack_require__(4);
 
-var CallbackQueue = __webpack_require__(67);
+var CallbackQueue = __webpack_require__(68);
 var PooledClass = __webpack_require__(16);
 var ReactBrowserEventEmitter = __webpack_require__(28);
-var ReactInputSelection = __webpack_require__(74);
+var ReactInputSelection = __webpack_require__(75);
 var ReactInstrumentation = __webpack_require__(9);
 var Transaction = __webpack_require__(30);
 var ReactUpdateQueue = __webpack_require__(46);
@@ -22562,11 +22534,11 @@ module.exports = SVGDOMPropertyConfig;
 var EventPropagators = __webpack_require__(24);
 var ExecutionEnvironment = __webpack_require__(7);
 var ReactDOMComponentTree = __webpack_require__(5);
-var ReactInputSelection = __webpack_require__(74);
+var ReactInputSelection = __webpack_require__(75);
 var SyntheticEvent = __webpack_require__(13);
 
-var getActiveElement = __webpack_require__(65);
-var isTextInputElement = __webpack_require__(84);
+var getActiveElement = __webpack_require__(66);
+var isTextInputElement = __webpack_require__(85);
 var shallowEqual = __webpack_require__(38);
 
 var skipSelectionChangeEvent = ExecutionEnvironment.canUseDOM && 'documentMode' in document && document.documentMode <= 11;
@@ -22758,7 +22730,7 @@ module.exports = SelectEventPlugin;
 
 var _prodInvariant = __webpack_require__(3);
 
-var EventListener = __webpack_require__(63);
+var EventListener = __webpack_require__(64);
 var EventPropagators = __webpack_require__(24);
 var ReactDOMComponentTree = __webpack_require__(5);
 var SyntheticAnimationEvent = __webpack_require__(181);
@@ -23535,7 +23507,7 @@ module.exports = adler32;
 var _prodInvariant = __webpack_require__(3);
 
 var ReactPropTypeLocationNames = __webpack_require__(172);
-var ReactPropTypesSecret = __webpack_require__(77);
+var ReactPropTypesSecret = __webpack_require__(78);
 
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
@@ -23625,7 +23597,7 @@ module.exports = checkReactTypeSpec;
 
 
 
-var CSSProperty = __webpack_require__(66);
+var CSSProperty = __webpack_require__(67);
 var warning = __webpack_require__(2);
 
 var isUnitlessNumber = CSSProperty.isUnitlessNumber;
@@ -23716,7 +23688,7 @@ var ReactCurrentOwner = __webpack_require__(12);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactInstanceMap = __webpack_require__(25);
 
-var getHostComponentFromComposite = __webpack_require__(81);
+var getHostComponentFromComposite = __webpack_require__(82);
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
 
@@ -23778,7 +23750,7 @@ module.exports = findDOMNode;
 
 
 var KeyEscapeUtils = __webpack_require__(42);
-var traverseAllChildren = __webpack_require__(86);
+var traverseAllChildren = __webpack_require__(87);
 var warning = __webpack_require__(2);
 
 var ReactComponentTreeHook;
@@ -24253,7 +24225,7 @@ module.exports = quoteAttributeValueForBrowser;
 
 
 
-var ReactMount = __webpack_require__(75);
+var ReactMount = __webpack_require__(76);
 
 module.exports = ReactMount.renderSubtreeIntoContainer;
 
@@ -25384,7 +25356,7 @@ var ReactElement = __webpack_require__(17);
  */
 var createDOMFactory = ReactElement.createFactory;
 if (process.env.NODE_ENV !== 'production') {
-  var ReactElementValidator = __webpack_require__(89);
+  var ReactElementValidator = __webpack_require__(90);
   createDOMFactory = ReactElementValidator.createFactory;
 }
 
@@ -25553,7 +25525,7 @@ module.exports = ReactDOMFactories;
 
 var ReactElement = __webpack_require__(17);
 var ReactPropTypeLocationNames = __webpack_require__(56);
-var ReactPropTypesSecret = __webpack_require__(90);
+var ReactPropTypesSecret = __webpack_require__(91);
 
 var emptyFunction = __webpack_require__(10);
 var getIteratorFn = __webpack_require__(58);
@@ -26060,7 +26032,7 @@ module.exports = '15.4.2';
 var _prodInvariant = __webpack_require__(18);
 
 var ReactPropTypeLocationNames = __webpack_require__(56);
-var ReactPropTypesSecret = __webpack_require__(90);
+var ReactPropTypesSecret = __webpack_require__(91);
 
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
@@ -26197,7 +26169,7 @@ module.exports = onlyChild;
 var _prodInvariant = __webpack_require__(18);
 
 var ReactCurrentOwner = __webpack_require__(12);
-var REACT_ELEMENT_TYPE = __webpack_require__(88);
+var REACT_ELEMENT_TYPE = __webpack_require__(89);
 
 var getIteratorFn = __webpack_require__(58);
 var invariant = __webpack_require__(1);
@@ -28349,7 +28321,7 @@ module.exports = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAA4KCgo
 
 var React = __webpack_require__(6),
     ReactDOM = __webpack_require__(93),
-    TowwwnApp = __webpack_require__(59);
+    TowwwnApp = __webpack_require__(60);
 
 // Styling
 __webpack_require__(94);

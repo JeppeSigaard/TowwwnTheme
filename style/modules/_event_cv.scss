@@ -83,11 +83,11 @@
     width: 100%;
     height: auto;
     padding: 0;
-    padding-bottom: 128px;
+    padding-bottom: 60px;
 
     @media(min-width: 640px){
        padding: 0;
-        padding-bottom: 134px;
+        padding-bottom: 60px;
     }
 
     display: flex;
@@ -202,7 +202,7 @@
     }
 
     @media(min-width:640px){
-        width: 160px;
+        width: 165px;
         margin: 6px;
         border: 1px solid $color-blue-1;
     }
@@ -325,15 +325,15 @@
 
         @media(min-width:640px){
             height: 160px;
-            padding: 15px;
+            padding: 10px;
             padding-top: 15px;
 
             .title{
-                font-size: 13px;
+                font-size: 12px;
             }
 
             .start_time{
-                font-size: 12px;
+                font-size: 10px;
             }
 
             .eventlocation-container {
@@ -395,13 +395,49 @@
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 124px;
-    line-height: 124px;
+    height: 80px; //124px;
+    //line-height: 124px;
     text-align: center;
     color: white;
     font-size: 16px;
-    background-color: $color-blue-2;
+    //background-color: $color-blue-2;
     cursor: pointer;
     // border-right: 1px solid rgba(0, 0, 0, 0.2);
     // border-top: 1px solid rgba(40, 40, 40, 0.2);
+    
+    &:before{
+        content: '';
+        display: block;
+        height: 10px;
+        width: 3px;
+        margin-top: -4px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        background: rgba($color-blue-2,.3);
+    }
+    
+     &:after{
+        content: '';
+        display: block;
+        height: 5px;
+        width: 32px;
+        margin-top: 3px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        background: rgba($color-blue-2,.3);
+    }
+    
+    &.loading{
+        
+        &:after,&:before{
+            display: none;
+        }
+        
+        background: url(assets/icons/loading.svg) center no-repeat;
+        background-size: 32px;
+    }
 }

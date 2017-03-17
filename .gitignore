@@ -58,4 +58,3 @@ Temporary Items
 /.config.codekit3
 /node_modules/
 /app/bundle.js
-/app/src/app/views/eventCalendarView.js

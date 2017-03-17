@@ -53,7 +53,7 @@ class TowwwnApp extends React.Component {
 
         // Gets event data
         Globals.eventDataHandler = new EventDataHandler();
-        Globals.eventDataHandler.getFutureEvents( 25, true ).then((resp) => {
+        Globals.eventDataHandler.getFutureEvents( 24, true ).then((resp) => {
 
             // Converts to jsx elements
             let events = [];

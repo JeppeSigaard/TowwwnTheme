@@ -13,6 +13,34 @@ class EventCalendarView extends React.Component {
         this.state = { containerClasses : 'eventscontainer' };
         this.eventsLength = 0;
         this.allLoaded = false;
+        this.loadReturned = true;
+        
+        this.bindEventListeners();
+    }
+    
+    // Add Event Listeners
+    bindEventListeners() {
+
+        // Activates internal scroll function
+        window.addEventListener( 'scroll', this.onscroll.bind(this) );
+    }
+    
+    // In view 
+    isInView(element) {
+        let elemTop = element.getBoundingClientRect().top,
+            elemBottom = element.getBoundingClientRect().bottom,
+            isVisibleY = (elemTop >= 0) && (elemBottom <= window.innerHeight),
+            isVisibleX = element.offsetLeft >= 0 && element.offsetLeft < window.innerWidth - 200;
+        return isVisibleY && isVisibleX;
+    }
+    
+    // Scroll event
+    onscroll(){
+        let loadMoreBtn = document.getElementById('eventcv-load-more');
+        if( this.isInView( loadMoreBtn ) && this.loadReturned ) 
+            setTimeout(() => {
+                this.loadMore();
+            }, 1000);
     }
 
     // Set event layout
@@ -25,15 +53,20 @@ class EventCalendarView extends React.Component {
     
     // Load more
     loadMore() {
+        
         if ( this.allLoaded ) return;
         
-        document.getElementById( 'eventcv-load-more' ).innerHTML = 'Indlæser...';
-        Globals.eventDataHandler.getFutureEvents( 25, true ).then((resp) => {
+        if( !this.loadReturned ) return;
+        
+        this.loadReturned = false;
+        
+        // document.getElementById( 'eventcv-load-more' ).innerHTML = 'Indlæser...';
+        Globals.eventDataHandler.getFutureEvents( 24, true ).then((resp) => {
             
-            if ( resp.length > this.eventsLength && resp.length % 25 === 0 ) {
-                document.getElementById( 'eventcv-load-more' ).innerHTML = 'Indlæs 25 mere'; 
+            if ( resp.length > this.eventsLength && resp.length % 24 === 0 ) {
+                document.getElementById( 'eventcv-load-more' ).classList.add('loading');
             } else {
-                document.getElementById( 'eventcv-load-more' ).innerHTML = 'Alt indhold indlæst';
+                document.getElementById( 'eventcv-load-more' ).classList.remove('loading');
                 this.allLoaded = true;
             } this.eventsLength = resp.length;
             
@@ -46,6 +79,8 @@ class EventCalendarView extends React.Component {
                 'eventsData' : resp,
                 'jsxEvents' : events,
             });
+            
+            this.loadReturned = true;
         });
         
     }
@@ -81,7 +116,7 @@ class EventCalendarView extends React.Component {
 
                                 </div>
                             </div>
-                            <div id="eventcv-load-more" onClick={ this.loadMore.bind(this) } >Indlæs 25 mere</div>
+                            <div id="eventcv-load-more" className="loading" onClick={ this.loadMore.bind(this) } ></div>
                         </div>
                     </div>
                 </div>
