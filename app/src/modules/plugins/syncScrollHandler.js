@@ -69,6 +69,7 @@ class SyncScrollHandler {
 
                 let high = document.getElementsByClassName('high');
                 for( let item of high ) { item.classList.remove('high') }
+
                 this.containerHeight = 0; let highestElem = null;
                 
                 if ( focusedViews != null ) {
@@ -156,57 +157,6 @@ class SyncScrollHandler {
         }
 
         this.lastScrollTop = winScrollTop;
-    }
-
-    // Locks view and removes scroll capabilities
-    lockView() {
-
-        this.canFixedScroll = false;
-        let body = document.getElementsByTagName('body')[0];
-        body.classList.add( 'no-scroll' );
-        body.style.height = '100%';
-        body.style.overflow = 'hidden;'
-
-        if ( this.container !== null ) {
-            this.container.style.height = window.height - this.container.offsetTop + 'px';
-            this.container.style.overflow = 'hidden';
-        }
-
-        let syncOuters = document.getElementsByClassName('sync-outer');
-        for ( let item of syncOuters ) {
-            item.removeAttribute('style');
-            item.style.position = 'absolute';
-            item.style.width = '100%';
-            item.style.top = item.offsetTop - item.parentNode.offsetTop;
-            item.style.left = '0';
-        };
-
-    }
-
-    // Releases view again
-    releaseView() {
-
-        this.canFixedScroll = true;
-        let syncOuters = document.getElementsByClassName('sync-outer');
-        for ( let item of syncOuters ) {
-            item.removeAttribute( 'style' ); }
-
-        let body = document.getElementsByTagName('body')[0];
-        body.classList.remove( 'no-scroll' );
-        body.removeAttribute( 'style' );
-
-        this.onscroll();
-        this.rescaleContainer().then((resp) => {
-            let goTopSide = false;
-            if ( window.width <= 640 ) goTopSide = true;
-            for ( let item of this.elem ) {
-                // Add logic to change scroll to bookmark mode elem her
-                if ( this.isInView( item ) && !item.classList.contains('high') ) goTopSide = false;
-            }
-
-            if ( goTopSide ) window.scrollTop = this.container.offsetTop - 60;
-        });
-
     }
 
 } module.exports = SyncScrollHandler;

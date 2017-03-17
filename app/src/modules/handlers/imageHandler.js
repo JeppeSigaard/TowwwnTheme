@@ -8,9 +8,12 @@ class ImageHandler {
         window.addEventListener( 'scroll', this.lazyLoad.bind(this) );
     }
 
-    // Checks if an elem is in view
-    isInView( element ) {
-        return element.offsetLeft >= 0 && element.offsetLeft < window.innerWidth - 200;
+    isInView(element) {
+        let elemTop = element.getBoundingClientRect().top,
+            elemBottom = element.getBoundingClientRect().bottom,
+            isVisibleY = (elemTop >= 0) && (elemBottom <= window.innerHeight),
+            isVisibleX = element.offsetLeft >= 0 && element.offsetLeft < window.innerWidth - 200;
+        return isVisibleY && isVisibleX;
     }
 
     // Lazy load

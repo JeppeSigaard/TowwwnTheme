@@ -137,14 +137,20 @@
                     margin-left: 0px!important;
                 }
 
-                .eventlocation-container {
-                    width: calc( 100% - 190px )!important;
-                    left: 175px!important;
-                    bottom: 5px!important;
-                    
-                    .eventblackbar{
-                        height: 2px;
-                    }
+
+            }
+
+
+            .eventlocation-container {
+                width: calc(100% - 130px);
+                position: absolute;
+                bottom: 10px;
+                left: 120px;
+                height: 2em;
+                text-transform: uppercase;
+
+                .eventblackbar{
+                    height: 2px;
                 }
             }
 
@@ -163,17 +169,16 @@
                     .title{
                         font-size: 14px;
                     }
+                }
 
-                    .eventlocation-container {
-                        width: calc( 100% - 190px )!important;
-                        right: 15px!important;
-                        bottom: 5px!important;
+                .eventlocation-container {
+                    width: calc(100% - 190px);
+                    bottom: 5px;
+                    left: 175px;
 
-                        .eventblackbar{
-                            height: 2px;
-                        }
+                    .eventblackbar{
+                        height: 2px;
                     }
-
                 }
             }
         }
@@ -335,6 +340,7 @@
                 left: 15px;
                 bottom: 15px;
                 width: calc(100% - 30px);
+
                 .eventlocation{
                     font-size: 9px;
                 }
@@ -367,6 +373,10 @@
             font-size: 9px;
             color: $color-blue-1;
             line-height: 11px;
+
+            &:hover{
+                text-decoration: underline;
+            }
         }
     }
 }

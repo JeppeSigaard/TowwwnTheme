@@ -43,7 +43,16 @@
     color: $color-grey-1;
     text-decoration: none;
     transition: 400ms;
-    // transition: background-color 120ms;
+    cursor: pointer;
+    transition: background-color 120ms;
+
+    &:nth-child(2n){
+        background-color: rgba(white,.6);
+    }
+
+    &:hover{
+        background: lighten($color-blue-2,45);
+    }
     
     *{ transition: 200ms; position: relative; }
     &.bookmark-mode{
@@ -87,10 +96,6 @@
         &.animateBack{
             animation: rippleBack 300ms ease-in forwards;
         }
-    }
-
-    &:nth-child(2n){
-        background-color: rgba(white,.6);
     }
 
     &.loading{

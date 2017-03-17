@@ -98,6 +98,7 @@ class SingleLocation extends React.Component {
                 </div>
                 <div className="breakline"></div>
                 
+                { elem.description != null &&
                 <div className="description-container">
                     <div className="title">{ elem.name }</div>
                     <div className="description">
@@ -106,6 +107,7 @@ class SingleLocation extends React.Component {
                         </Linkify>
                     </div>
                 </div>
+                }
                 <div className="breakline"></div>
                 
                 { this.state.jsxEvents != null &&

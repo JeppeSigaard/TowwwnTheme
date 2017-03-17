@@ -55,9 +55,15 @@ class tselem {
         } catch ( error ) { throw 'Unsupported elem type: ' + typeof this.domElem; }
     }
     
+    // Has Class
+    hasClass( className ) {
+        try {
+            return this.domElem.classList.contains( className );
+        } catch ( error ) { throw 'Unsupported elem type: ' + typeof this.domElem; }
+    }
+
     // Event
     on( event, func ) {
-        console.log( this );
         if ( typeof this.domElem === 'object' ) {
             for ( let elem of this.domElem ) {
                 elem.addEventListener( event, func ); }
@@ -66,6 +72,16 @@ class tselem {
         }
     } 
     
+    // Event off
+    off( event ) {
+        if ( typeof this.domElem === 'object' ) {
+            for ( let elem of this.domElem ) {
+                elem.removeEventListener( event ); }
+        } else {
+            this.domElem.removeEventListener( event );
+        }
+    }
+
     // Style
     css ( styling ) {
         if ( typeof styling === 'object' ) {

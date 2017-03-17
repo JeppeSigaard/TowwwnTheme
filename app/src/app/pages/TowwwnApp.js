@@ -111,9 +111,12 @@ class TowwwnApp extends React.Component {
         if ( Globals.viewHandler === null ) Globals.viewHandler = new ViewHandler( this.syncScroll );
         Globals.syncScroll.wrapElems();
         Globals.syncScroll.rescaleContainer( Globals.viewHandler.focusedViews );
+        this.imageHandler.lazyLoad();
     }
 
-    componentDidMount(){document.body.classList.remove('loading');}
+    componentDidMount(){
+        document.body.classList.remove('loading');
+    }
 
     // Render
     render() {
