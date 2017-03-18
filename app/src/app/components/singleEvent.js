@@ -39,6 +39,13 @@ class SingleEvent extends React.Component {
         
     }
 
+    componentDidUpdate (obj){
+        const singleSync = document.querySelectorAll('#event-single-view .sync-outer')[0];
+        if(singleSync.scrollTop > 60){
+            singleSync.scrollTop = 60;
+        }
+    }
+
     // Render
     render() {
         let elem = this.props.elem;

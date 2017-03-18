@@ -6,8 +6,8 @@ const React = require( 'react' ),
 
 class Event extends React.Component {
     
-    // Click Handler
-    handleClick( e ) {
+    // Click Handlers
+    eventRefClick( e ) {
         e.preventDefault();
         Globals.setMainState( 
             'singleevent', 
@@ -20,6 +20,34 @@ class Event extends React.Component {
             'event-calendar-view',
             true, false, false
         ); 
+    }
+
+    locationRefClick( e ) {
+        e.preventDefault();
+        console.log(this.props.elem.parentid);
+
+
+        let xhr = new XMLHttpRequest();
+            xhr.onload = function ( data ) {
+
+                // Resolves all locations
+                let location = JSON.parse( data.target.response )[0];
+                this.props.setMainState({
+                    'singleLocation' : location,
+                });
+
+                Globals.setMainState({ from : this.props.name });
+                Globals.viewHandler.changeViewFocus(
+                    'location-single-view',
+                    'event-calendar-view',
+                    true, false, false
+                );
+
+            }.bind(this);
+
+            // Sends request
+            xhr.open( 'GET', 'http://towwwn.dk/api/svendborg/locations/' + this.props.elem.parentid );
+            xhr.send();
     }
 
     // Format title
@@ -74,21 +102,20 @@ class Event extends React.Component {
 
         // Html
         return (
-            <a className="event" onClick={ this.handleClick.bind(this) }
-               style={ this.props.style != null ? this.props.style : {} } >
-                <div className="imgcontainer" data-image-src={ image } >
+            <a className="event" style={ this.props.style != null ? this.props.style : {} } >
+                <div className="imgcontainer" data-image-src={ image } onClick={ this.eventRefClick.bind(this) } >
                     <div className="loader">
                         <img src={ template_uri + '/style/assets/icons/loading-white.svg' } />
                     </div>
                 </div>
 
-                <div className="eventtext">
+                <div className="eventtext" onClick={ this.eventRefClick.bind(this) } >
                     <div className="ripple"></div>
                     <div className="title">{ title }</div>
                     <div className="start_time">{ semanticTime }</div>
                 </div>
 
-                <div className="eventlocation-container">
+                <div className="eventlocation-container" onClick={ this.locationRefClick.bind(this) } >
                     <div className="eventblackbar"></div>
                     <div className="eventlocation">{ elem.parentname }</div>
                 </div>
