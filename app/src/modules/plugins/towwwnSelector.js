@@ -1,26 +1,31 @@
 
 
 // Towwwn Selector
-function TowwwnSelector( selector, elem ) {
-    if ( elem != null ) return elem.find( selector );
-    return new tselem( selector );
+function TowwwnSelector( selector, elems ) {
+    if ( selector != null && elems == null ) {
+        let elem = new tselem();
+        elem.domElem = document.querySelectorAll( selector );
+        elem.selector = selector;
+
+        if ( typeof elem.domElem !== 'object' ) elem.domElem = [ elem.domElem ];
+        return elem;
+    }
+    
+    if ( selector == null && elems != null ) {
+        let elem = new tselem();
+        if ( typeof elems === 'object' ) elem.domElem = elems;
+        else elem.domElem = elems.domElem;
+        
+        if ( typeof elem.domElem !== 'object' ) elem.domElem = [ elem.domElem ];
+        return elem;
+    }
+
+    if ( selector != null && elems != null ) {
+        // Do stuff
+    }
 }
 
 class tselem {
-    
-    // Ctor
-    constructor( selector, elems ) { 
-        if ( selector != null ) { 
-            if ( elems != null ) this.domElem = elems;
-            else this.domElem = document.querySelectorAll( selector ); 
-            this.selector = selector; 
-        } else {
-            this.domElem = elems; 
-            this.selector = null;
-        }
-        
-        if ( typeof this.domElem !== 'object' ) this.domElem = [ this.domElem ];
-    }
     
     // One liners
     get( index ) { return new tselem( this.selector, new tselem( null, this.domElem[index] ) ); }
@@ -54,16 +59,10 @@ class tselem {
             } else elem.classList.remove( className );
         } catch ( error ) { throw 'Unsupported elem type: ' + typeof this.domElem; }
     }
-    
-    // Has Class
-    hasClass( className ) {
-        try {
-            return this.domElem.classList.contains( className );
-        } catch ( error ) { throw 'Unsupported elem type: ' + typeof this.domElem; }
-    }
 
     // Event
     on( event, func ) {
+        console.log( this );
         if ( typeof this.domElem === 'object' ) {
             for ( let elem of this.domElem ) {
                 elem.addEventListener( event, func ); }
@@ -71,16 +70,6 @@ class tselem {
             this.domElem.addEventListener( event, func );
         }
     } 
-    
-    // Event off
-    off( event ) {
-        if ( typeof this.domElem === 'object' ) {
-            for ( let elem of this.domElem ) {
-                elem.removeEventListener( event ); }
-        } else {
-            this.domElem.removeEventListener( event );
-        }
-    }
 
     // Style
     css ( styling ) {

@@ -25,6 +25,7 @@ class ViewTopBar extends React.Component {
     
     // Change view
     changeView() {
+        if ( this.props.willChangeView != null ) this.props.willChangeView();
         Globals.setMainState({ from : this.props.name });
         Globals.viewHandler.changeViewFocus(
             this.props.vref.leftview,

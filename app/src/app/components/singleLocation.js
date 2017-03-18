@@ -8,16 +8,18 @@ const React = require( 'react' ),
       SingleViewFooter = require( '../componentParts/singleviewfooter.js' ),
       
       Linkify = require( 'react-linkify' ).default,
-      TextPreproccesors = require( '../../modules/tools/textPreproccesors.js' );
-      
-require( '../../modules/plugins/slider.js' );
+      TextPreproccesors = require( '../../modules/tools/textPreproccesors.js' ),
+      TowwwnSlider = require( '../../modules/plugins/slider.js' );
 
 class SingleLocation extends React.Component {
     
     // Ctor
     constructor() { 
         super(); 
-        this.state = { 'jsxEvents' : null };
+        this.state = {
+            jsxEvents : null,
+            slider : new TowwwnSlider(),
+        };
     }
     
     // Component will receive props
@@ -47,10 +49,11 @@ class SingleLocation extends React.Component {
     componentDidUpdate() {
         
         // Inits slider
-        ts('.location-singleview-content .event-slider').initSlider({
-            prevButton : '.prevButton',
-            nextButton : '.nextButton',
-            inner : '.inner',
+        this.state.slider.initSlider({
+            outer : '.location-singleview-content .event-slider',
+            prevButtonClass : 'prevButton',
+            nextButtonClass : 'nextButton',
+            innerClass : 'inner',
         });
         
     }
