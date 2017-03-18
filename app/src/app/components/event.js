@@ -9,17 +9,27 @@ class Event extends React.Component {
     // Click Handler
     handleClick( e ) {
         e.preventDefault();
+        Globals.setMainState({ from : this.props.name });
         Globals.setMainState( 
             'singleevent', 
             this.props.elem
         );
         
-        Globals.setMainState({ from : this.props.name });
-        Globals.viewHandler.changeViewFocus(  
-            'event-single-view',
-            'event-calendar-view',
-            true, false, false
-        ); 
+        if ( this.props.vref != null ) {
+            Globals.viewHandler.changeViewFocus(
+                this.props.vref.leftView,
+                this.props.vref.rightView,
+                this.props.vref.fromLeft,
+                this.props.vref.fromRight,
+                false
+            );
+        } else {
+            Globals.viewHandler.changeViewFocus(  
+                'event-single-view',
+                'event-calendar-view',
+                true, false, false
+            ); 
+        }
     }
 
     // Format title

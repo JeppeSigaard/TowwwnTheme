@@ -19,6 +19,12 @@ class SingleLocation extends React.Component {
         this.state = { 
             jsxEvents : null,
             slider : new TowwwnSlider(),
+            eventVref : {
+                leftView : 'location-single-view',
+                rightView : 'event-single-view',
+                fromLeft : false,
+                fromRight : true
+            },
         };
     }
     
@@ -33,7 +39,7 @@ class SingleLocation extends React.Component {
                 // Generates elems
                 let jsxEvents = [];
                 for ( let eventData of resp ) {
-                    jsxEvents.push( <Event elem={ eventData } style={{ width : (100/resp.length) + '%' }} /> );
+                    jsxEvents.push( <Event elem={ eventData } name={ this.props.name } vref={ this.state.eventVref } style={{ width : (100/resp.length) + '%' }} /> );
                 }
                 
                 // Sets state
