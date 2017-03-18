@@ -39,6 +39,24 @@ class EventSingleView extends React.Component {
             });
         }
     }
+    
+    // Will change view
+    willChangeView() {
+        
+        // Opens new request
+        let request = new XMLHttpRequest();
+        request.addEventListener( 'load', ( resp ) => {
+            let data = JSON.parse( resp.target.response );
+            console.log( data[0] );
+            Globals.setMainState({
+                'singleLocation' : data[0],
+            });    
+        });
+        
+        request.open( 'GET', 'http://towwwn.dk/api/svendborg/locations/'+this.props.event.parentid );
+        request.send();
+        
+    }
 
     // Render
     render() {
@@ -48,7 +66,7 @@ class EventSingleView extends React.Component {
                 <div className="sync-outer">
                     <div className="sync-inner">
                         <div className="content">
-                            <ViewTopBar standard={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } name={ this.props.name } />
+                            <ViewTopBar standard={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
                             
                             { this.state.jsxEvent != null &&
                               this.state.jsxEvent }
