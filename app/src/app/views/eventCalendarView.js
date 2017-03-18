@@ -39,8 +39,8 @@ class EventCalendarView extends React.Component {
         let loadMoreBtn = document.getElementById('eventcv-load-more');
         if( this.isInView( loadMoreBtn ) && this.loadReturned ) 
             setTimeout(() => {
-                this.loadMore();
-            }, 1000);
+                if( this.isInView( loadMoreBtn ) && this.loadReturned ) this.loadMore();
+            }, 500);
     }
 
     // Set event layout
@@ -74,6 +74,8 @@ class EventCalendarView extends React.Component {
             resp.forEach(( item, index ) => {
                 events.push( <Event elem={ item } key={ 'event-' + item.fbid } setMainState={ this.props.setMainState } /> )
             });
+
+            console.log(events.length);
 
             this.props.setMainState({
                 'eventsData' : resp,

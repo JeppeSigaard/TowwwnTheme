@@ -28,6 +28,14 @@ class LocationSingleView extends React.Component{
             fromRight: true,
         };
         
+        // Close properties when coming from event
+        this.fromeventCalendarclose = {
+            leftview: 'event-calendar-view',
+            rightview: 'location-category-view',
+            fromLeft: true,
+            fromRight: false,
+        };
+
         // State
         this.state = {
             closeviewstate: this.standardclose, 
@@ -42,6 +50,10 @@ class LocationSingleView extends React.Component{
         if ( nextProps.from === 'event-single-view' ) {
             this.setState({
                 closeviewstate : this.fromeventclose,
+            });
+        } else if ( nextProps.from === 'event-calendar-view' ) {
+            this.setState({
+                closeviewstate : this.fromeventCalendarclose,
             });
         } else {
             this.setState({

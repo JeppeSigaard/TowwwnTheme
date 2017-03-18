@@ -9,14 +9,14 @@ class TowwwnSlider {
     // Constructor
     constructor( ) {
     }
-    
+
     // Init slider
     initSlider( params ) {
         return new Promise(( resolve, reject ) => {
             let outerElem = typeof params.outer === 'string' ? document.querySelectorAll( params.outer ) : null,
                 prevButton = typeof params.prevButtonClass === 'string' ? params.prevButtonClass : null,
                 nextButton = typeof params.nextButtonClass === 'string' ? params.nextButtonClass : null,
-                inner = typeof params.innerClass === 'string' ? params.innerClass : null; 
+                inner = typeof params.innerClass === 'string' ? params.innerClass : null;
 
             // AssignmentLoop
             let assignmentLoop = ( elem => {
@@ -82,7 +82,7 @@ class TowwwnSlider {
 
             // Runs assignment loop
             if ( typeof outerElem === 'object' ) {
-                for ( let outer of outerElem ) assignmentLoop( outer ); 
+                for ( let outer of outerElem ) assignmentLoop( outer );
             } else assignmentLoop( outerElem );
             
             this.ready = true;
@@ -90,5 +90,5 @@ class TowwwnSlider {
 
         });
     }
-    
+
 } module.exports = TowwwnSlider;

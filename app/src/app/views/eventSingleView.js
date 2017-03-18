@@ -54,7 +54,7 @@ class EventSingleView extends React.Component {
             });
         }
     }
-    
+
     // Will change view
     willChangeView() {
         Globals.setMainState({ singleLocation : null });
@@ -66,12 +66,12 @@ class EventSingleView extends React.Component {
             console.log( data[0] );
             Globals.setMainState({
                 'singleLocation' : data[0],
-            });    
+            });
         });
-        
+
         request.open( 'GET', 'http://towwwn.dk/api/svendborg/locations/'+this.props.event.parentid );
         request.send();
-        
+
     }
 
     // Render

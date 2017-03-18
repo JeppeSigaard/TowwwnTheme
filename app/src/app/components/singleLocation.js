@@ -16,7 +16,7 @@ class SingleLocation extends React.Component {
     // Ctor
     constructor() { 
         super(); 
-        this.state = { 
+        this.state = {
             jsxEvents : null,
             slider : new TowwwnSlider(),
             eventVref : {

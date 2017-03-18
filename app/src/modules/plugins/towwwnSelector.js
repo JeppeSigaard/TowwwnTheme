@@ -2,11 +2,11 @@
 
 // Towwwn Selector
 function TowwwnSelector( selector, elems ) {
-    if ( selector != null && elems == null ) { 
+    if ( selector != null && elems == null ) {
         let elem = new tselem();
         elem.domElem = document.querySelectorAll( selector );
         elem.selector = selector;
-        
+
         if ( typeof elem.domElem !== 'object' ) elem.domElem = [ elem.domElem ];
         return elem;
     }
@@ -19,7 +19,7 @@ function TowwwnSelector( selector, elems ) {
         if ( typeof elem.domElem !== 'object' ) elem.domElem = [ elem.domElem ];
         return elem;
     }
-    
+
     if ( selector != null && elems != null ) {
         // Do stuff
     }
@@ -59,7 +59,7 @@ class tselem {
             } else elem.classList.remove( className );
         } catch ( error ) { throw 'Unsupported elem type: ' + typeof this.domElem; }
     }
-    
+
     // Event
     on( event, func ) {
         console.log( this );
@@ -70,7 +70,7 @@ class tselem {
             this.domElem.addEventListener( event, func );
         }
     } 
-    
+
     // Style
     css ( styling ) {
         if ( typeof styling === 'object' ) {
