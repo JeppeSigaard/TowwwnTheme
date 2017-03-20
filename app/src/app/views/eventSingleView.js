@@ -13,11 +13,19 @@ class EventSingleView extends React.Component {
         super(); 
         
         this.state = {
-            'closeviewstate' : {
+            'closeviewstate' : { },
+            'standardclose' : {
                 'leftview' : 'event-calendar-view',
                 'rightview' : 'location-category-view',
                 'fromLeft' : false,
                 'fromRight' : true,
+                'notrans': false,
+            },
+            'fromlocationclose' : {
+                'leftview' : 'location-category-view',
+                'rightview' : 'location-single-view',
+                'fromLeft' : true,
+                'fromRight' : false,
                 'notrans': false,
             },
             'vref' : {
@@ -33,6 +41,13 @@ class EventSingleView extends React.Component {
     
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
+        console.log( nextProps.from );
+        if ( nextProps.from === 'location-single-view' ) {
+            this.setState({ closeviewstate : this.state.fromlocationclose });
+        } else {
+            this.setState({ closeviewstate : this.state.standardclose });
+        }
+        
         if ( nextProps.event != null ) {
             this.setState({
                 'jsxEvent' : <SingleEvent elem={ nextProps.event } />,
@@ -42,7 +57,8 @@ class EventSingleView extends React.Component {
 
     // Will change view
     willChangeView() {
-
+        Globals.setMainState({ singleLocation : null });
+        
         // Opens new request
         let request = new XMLHttpRequest();
         request.addEventListener( 'load', ( resp ) => {
