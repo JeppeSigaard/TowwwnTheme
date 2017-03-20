@@ -71,18 +71,9 @@ class TowwwnApp extends React.Component {
         // Gets category data
         let categoryData = new CategoryDataHandler();
         categoryData.getFeaturedCategories().then((resp) => {
-
-            // Converts to JSX elements
-            let categories = [];
-            resp.forEach(( item, index ) => {
-                categories.push( <LocationCategory elem={ item } key={ 'category-' + item.category_id } setMainState={ this.parsedSetState.bind(this) } /> );
-            });
-
             this.setState({
-                'futureCategoriesData' : resp,
-                'jsxCategories' : categories,
+                'featuredCategoriesData' : resp,
             });
-
         });
         
         categoryData.getAllCategories(false, true).then(( resp ) => {
@@ -122,7 +113,7 @@ class TowwwnApp extends React.Component {
                 <div className="content-container-inner">
                     <EventSingleView name="event-single-view" from={ this.state.from } event={ this.state.singleevent } setMainState={ this.parsedSetState.bind(this) } />
                     <EventCalendarView name="event-calendar-view" from={ this.state.from } events={ this.state.jsxEvents } setMainState={ this.parsedSetState.bind(this) } />
-                    <LocationCategoryView name="location-category-view" from={ this.state.from } categories={ this.state.jsxCategories } allCategories={ this.state.categoriesData } setMainState={ this.parsedSetState.bind(this) } />
+                    <LocationCategoryView name="location-category-view" from={ this.state.from } categories={ this.state.featuredCategoriesData } allCategories={ this.state.categoriesData } setMainState={ this.parsedSetState.bind(this) } />
                     <LocationListView name="location-list-view" from={ this.state.from } elems={ this.state.currentLocations } category={ this.state.currentLocationsCategory } setMainState={ this.parsedSetState.bind(this) } />
                     <LocationSingleView name="location-single-view" from={ this.state.from } elem={ this.state.singleLocation } setMainState={ this.parsedSetState.bind(this) } />
                 </div>

@@ -4654,6 +4654,8 @@ var ViewTopBar = function (_React$Component) {
         key: 'closeView',
         value: function closeView() {
             Globals.viewHandler.changeViewFocus(this.props.closeviewstate.leftview, this.props.closeviewstate.rightview, this.props.closeviewstate.fromLeft, this.props.closeviewstate.fromRight, false);
+
+            Globals.syncScroll.rescaleContainer();
         }
 
         // Change view
@@ -4664,6 +4666,8 @@ var ViewTopBar = function (_React$Component) {
             if (this.props.willChangeView != null) this.props.willChangeView();
             Globals.setMainState({ from: this.props.name });
             Globals.viewHandler.changeViewFocus(this.props.vref.leftview, this.props.vref.rightview, this.props.vref.fromLeft, this.props.vref.fromRight, false);
+
+            Globals.syncScroll.rescaleContainer();
         }
 
         // Render
@@ -7274,16 +7278,8 @@ var TowwwnApp = function (_React$Component) {
         // Gets category data
         var categoryData = new CategoryDataHandler();
         categoryData.getFeaturedCategories().then(function (resp) {
-
-            // Converts to JSX elements
-            var categories = [];
-            resp.forEach(function (item, index) {
-                categories.push(React.createElement(LocationCategory, { elem: item, key: 'category-' + item.category_id, setMainState: _this.parsedSetState.bind(_this) }));
-            });
-
             _this.setState({
-                'futureCategoriesData': resp,
-                'jsxCategories': categories
+                'featuredCategoriesData': resp
             });
         });
 
@@ -7330,7 +7326,7 @@ var TowwwnApp = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            return React.createElement('div', { className: 'content-container', id: 'page-content' }, React.createElement('div', { className: 'content-container-inner' }, React.createElement(EventSingleView, { name: 'event-single-view', from: this.state.from, event: this.state.singleevent, setMainState: this.parsedSetState.bind(this) }), React.createElement(EventCalendarView, { name: 'event-calendar-view', from: this.state.from, events: this.state.jsxEvents, setMainState: this.parsedSetState.bind(this) }), React.createElement(LocationCategoryView, { name: 'location-category-view', from: this.state.from, categories: this.state.jsxCategories, allCategories: this.state.categoriesData, setMainState: this.parsedSetState.bind(this) }), React.createElement(LocationListView, { name: 'location-list-view', from: this.state.from, elems: this.state.currentLocations, category: this.state.currentLocationsCategory, setMainState: this.parsedSetState.bind(this) }), React.createElement(LocationSingleView, { name: 'location-single-view', from: this.state.from, elem: this.state.singleLocation, setMainState: this.parsedSetState.bind(this) })));
+            return React.createElement('div', { className: 'content-container', id: 'page-content' }, React.createElement('div', { className: 'content-container-inner' }, React.createElement(EventSingleView, { name: 'event-single-view', from: this.state.from, event: this.state.singleevent, setMainState: this.parsedSetState.bind(this) }), React.createElement(EventCalendarView, { name: 'event-calendar-view', from: this.state.from, events: this.state.jsxEvents, setMainState: this.parsedSetState.bind(this) }), React.createElement(LocationCategoryView, { name: 'location-category-view', from: this.state.from, categories: this.state.featuredCategoriesData, allCategories: this.state.categoriesData, setMainState: this.parsedSetState.bind(this) }), React.createElement(LocationListView, { name: 'location-list-view', from: this.state.from, elems: this.state.currentLocations, category: this.state.currentLocationsCategory, setMainState: this.parsedSetState.bind(this) }), React.createElement(LocationSingleView, { name: 'location-single-view', from: this.state.from, elem: this.state.singleLocation, setMainState: this.parsedSetState.bind(this) })));
         }
     }]);
 
@@ -10634,7 +10630,8 @@ function _inherits(subClass, superClass) {
 }
 
 // Sub Category
-var React = __webpack_require__(6);
+var React = __webpack_require__(6),
+    Globals = __webpack_require__(14);
 
 var SubCategory = function (_React$Component) {
     _inherits(SubCategory, _React$Component);
@@ -10650,9 +10647,9 @@ var SubCategory = function (_React$Component) {
 
 
     _createClass(SubCategory, [{
-        key: "render",
+        key: 'render',
         value: function render() {
-            return React.createElement("div", { className: "sub-category" }, React.createElement("div", { className: "elem-counter" }, this.props.elem.location_count), this.props.elem.category_name);
+            return React.createElement('div', { className: 'sub-category', onClick: this.props.clickEvent.bind(this) }, React.createElement('div', { className: 'elem-counter' }, this.props.elem.location_count), this.props.elem.category_name);
         }
     }]);
 
@@ -10795,37 +10792,14 @@ var LocationCategory = function (_React$Component) {
         return _possibleConstructorReturn(this, (LocationCategory.__proto__ || Object.getPrototypeOf(LocationCategory)).call(this));
     }
 
-    // Handle click
+    // Render
 
 
     _createClass(LocationCategory, [{
-        key: 'handleClick',
-        value: function handleClick(e) {
-            var _this2 = this;
-
-            e.preventDefault();
-            this.props.setMainState({
-                'currentLocationsCategory': this.props.elem,
-                'currentLocations': null
-            });
-
-            Globals.setMainState({ from: this.props.name });
-            Globals.viewHandler.changeViewFocus('location-category-view', 'location-list-view', false, true, false);
-
-            Globals.locationDataHandler.getCategorySpecificLocation(this.props.elem.category_id).then(function (resp) {
-                _this2.props.setMainState({
-                    'currentLocations': resp
-                });
-            });
-        }
-
-        // Render
-
-    }, {
         key: 'render',
         value: function render() {
             var elem = this.props.elem;return React.createElement('div', { className: 'category', 'data-image-src': elem.category_imgurl, 'data-type': 'category', 'data-id': elem.category_id,
-                onClick: this.handleClick.bind(this) }, React.createElement('div', { className: 'category-content-container' }, React.createElement('div', { className: 'category-title' }, elem.category_name), React.createElement('div', { className: 'category-count' }, elem.location_count)));
+                onClick: this.props.clickEvent.bind(this) }, React.createElement('div', { className: 'category-content-container' }, React.createElement('div', { className: 'category-title' }, elem.category_name), React.createElement('div', { className: 'category-count' }, elem.location_count)));
         }
     }]);
 
@@ -11053,7 +11027,7 @@ var SubCategories = function (_React$Component) {
                     for (var _iterator = nextProps.subCategories[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                         var subCat = _step.value;
 
-                        cats.push(React.createElement(SubCategory, { elem: subCat, key: 'subcategory-' + subCat.category_id }));
+                        cats.push(React.createElement(SubCategory, { elem: subCat, key: 'subcategory-' + subCat.category_id, clickEvent: this.props.clickEvent }));
                     }
                 } catch (err) {
                     _didIteratorError = true;
@@ -11422,7 +11396,9 @@ function _inherits(subClass, superClass) {
 
 // Location Category view
 var React = __webpack_require__(6),
-    SubCategories = __webpack_require__(98);
+    LocationCategory = __webpack_require__(96),
+    SubCategories = __webpack_require__(98),
+    Globals = __webpack_require__(14);
 
 var LocationCategoryView = function (_React$Component) {
     _inherits(LocationCategoryView, _React$Component);
@@ -11437,14 +11413,72 @@ var LocationCategoryView = function (_React$Component) {
         return _this;
     }
 
-    // Activate Sub Categories List
+    // Handle category click
 
 
     _createClass(LocationCategoryView, [{
+        key: 'handleCategoryClick',
+        value: function handleCategoryClick(e) {
+
+            e.preventDefault();
+            Globals.setMainState({
+                'currentLocationsCategory': this.props.elem,
+                'currentLocations': null
+            });
+
+            Globals.setMainState({ from: this.props.name });
+            Globals.viewHandler.changeViewFocus('location-category-view', 'location-list-view', false, true, false);
+
+            Globals.locationDataHandler.getCategorySpecificLocation(this.props.elem.category_id).then(function (resp) {
+                Globals.setMainState({
+                    'currentLocations': resp
+                });
+            });
+        }
+
+        // Activate Sub Categories List
+
+    }, {
         key: 'toggleSubCategories',
         value: function toggleSubCategories() {
             var inner = document.getElementsByClassName('sub-category-inner')[0];
             if (this.state.subCatHeight !== '0px') this.setState({ 'subCatHeight': '0px' });else this.setState({ 'subCatHeight': inner.clientHeight + 'px' });
+        }
+
+        // Will receive props
+
+    }, {
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(nextProps) {
+            if (nextProps.categories != null) {
+                var jsxCategories = [];
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
+                try {
+                    for (var _iterator = nextProps.categories[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        var category = _step.value;
+
+                        jsxCategories.push(React.createElement(LocationCategory, { elem: category, name: nextProps.name, clickEvent: this.handleCategoryClick }));
+                    }
+                } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                        }
+                    } finally {
+                        if (_didIteratorError) {
+                            throw _iteratorError;
+                        }
+                    }
+                }
+
+                this.setState({ 'jsxCategories': jsxCategories });
+            }
         }
 
         // Render
@@ -11452,7 +11486,7 @@ var LocationCategoryView = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            return React.createElement('section', { className: 'container-section', id: 'location-category-view' }, React.createElement('div', { className: 'sync-outer' }, React.createElement('div', { className: 'sync-inner' }, React.createElement('div', { className: 'content' }, React.createElement('div', { className: 'category-bar' }, 'Svendborg i udvalg', React.createElement('div', { className: 'sub-categories-title', onClick: this.toggleSubCategories.bind(this) })), React.createElement(SubCategories, { subCategories: this.props.allCategories, outerHeight: this.state.subCatHeight }), React.createElement('div', { className: 'category-container' }, typeof this.props.categories !== 'undefined' && this.props.categories !== null && this.props.categories)))));
+            return React.createElement('section', { className: 'container-section', id: 'location-category-view' }, React.createElement('div', { className: 'sync-outer' }, React.createElement('div', { className: 'sync-inner' }, React.createElement('div', { className: 'content' }, React.createElement('div', { className: 'category-bar' }, 'Svendborg i udvalg', React.createElement('div', { className: 'sub-categories-title', onClick: this.toggleSubCategories.bind(this) })), React.createElement(SubCategories, { subCategories: this.props.allCategories, outerHeight: this.state.subCatHeight, clickEvent: this.handleCategoryClick }), React.createElement('div', { className: 'category-container' }, this.state.jsxCategories != null && this.state.jsxCategories)))));
         }
     }]);
 

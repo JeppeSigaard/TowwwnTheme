@@ -1,7 +1,9 @@
 
 
 // Sub Category
-const React = require( 'react' );
+const React = require( 'react' ),
+      Globals = require( '../globals.js' );
+
 class SubCategory extends React.Component {
     
     // Ctor
@@ -10,7 +12,7 @@ class SubCategory extends React.Component {
     // Render
     render() {
         return (
-            <div className="sub-category">
+            <div className="sub-category" onClick={ this.props.clickEvent.bind(this) } >
                 <div className="elem-counter">
                     { this.props.elem.location_count }
                 </div>

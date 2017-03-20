@@ -21,6 +21,8 @@ class ViewTopBar extends React.Component {
             this.props.closeviewstate.fromRight, 
             false
         );
+
+        Globals.syncScroll.rescaleContainer();
     }
     
     // Change view
@@ -34,6 +36,8 @@ class ViewTopBar extends React.Component {
             this.props.vref.fromRight, 
             false
         );
+
+        Globals.syncScroll.rescaleContainer();
     }
     
     // Render
