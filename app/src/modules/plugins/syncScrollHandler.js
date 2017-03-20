@@ -58,7 +58,9 @@ class SyncScrollHandler {
 
     // Rescales the container
     rescaleContainer( fv ) {
-        let focusedViews = null;
+        let focusedViews = null,
+            oldHeight = window.innerHeight;
+
         if ( fv != null ) { 
             this.focusedViews = fv;
             focusedViews = fv;
@@ -98,6 +100,7 @@ class SyncScrollHandler {
                 }
 
                 this.container.style.height = this.containerHeight + 'px';
+
                 if ( highestElem.parentNode.classList.contains('sync-outer') ) {
                     highestElem.parentNode.classList.remove( 'fixed' );
                     highestElem.parentNode.classList.remove( 'absolute' );

@@ -28,10 +28,10 @@ const React = require( 'react' ),
     ImageHandler = require( '../../modules/handlers/imageHandler.js' ),
 
     // TMP
-    SingleEvent = require( '../components/singleEvent.js' );
+    SingleEvent = require( '../components/singleEvent.js' ),
 
-// Polyfills
-require ('sticky-position');
+    // Polyfills
+    PositionSticky = require ('sticky-position');
 
 class TowwwnApp extends React.Component {
 
@@ -112,12 +112,7 @@ class TowwwnApp extends React.Component {
         Globals.syncScroll.wrapElems();
         Globals.syncScroll.rescaleContainer( Globals.viewHandler.focusedViews );
         this.imageHandler.lazyLoad();
-
         document.body.classList.remove('loading');
-    }
-
-    componentDidMount(){
-        // document.body.classList.remove('loading');
     }
 
     // Render
