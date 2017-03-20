@@ -14,6 +14,7 @@ class EventSingleView extends React.Component {
         
         this.state = {
             'closeviewstate' : { },
+
             'standardclose' : {
                 'leftview' : 'event-calendar-view',
                 'rightview' : 'location-category-view',
@@ -28,6 +29,7 @@ class EventSingleView extends React.Component {
                 'fromRight' : false,
                 'notrans': false,
             },
+
             'vref' : {
                 'leftview' : 'location-single-view',
                 'rightview' : 'event-single-view',
