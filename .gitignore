@@ -57,3 +57,4 @@ Temporary Items
 /js/index-min.js
 /.config.codekit3
 /node_modules/
+/app/bundle.js
