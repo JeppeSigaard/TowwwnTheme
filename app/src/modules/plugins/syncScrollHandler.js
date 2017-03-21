@@ -49,8 +49,6 @@ class SyncScrollHandler {
         this.inner = document.getElementsByClassName( 'sync-inner' );
     }
 
-
-
     // Checks if an elem is in view
     isInView( element ) {
         return element.offsetLeft >= 0 && element.offsetLeft < window.innerWidth - 200;
@@ -70,11 +68,16 @@ class SyncScrollHandler {
             if ( this.container !== null ) {
 
                 let high = document.getElementsByClassName('high');
-                for( let item of high ) { item.classList.remove('high') }
+                for( let item in high ) {
+                    if (high.hasOwnProperty(item)){
+                        high[item].classList.remove('high');
+                    }
+                }
 
                 this.containerHeight = 0; let highestElem = null;
                 
                 if ( focusedViews != null ) {
+
                     for ( let view of focusedViews ) {
                         for ( let outer of view.childNodes ) {
                             if ( outer.classList.contains('sync-outer') ) {
@@ -88,7 +91,7 @@ class SyncScrollHandler {
                                 } break;
                             }
                         } 
-                    }  
+                    }
                 } else {
                     let syncInners = document.getElementsByClassName('sync-inner');
                     for ( let item of syncInners ) {
@@ -114,7 +117,8 @@ class SyncScrollHandler {
 
     // Scroll Event Handler
     onscroll() {
-        if ( this.container === null ) return;
+
+        if ( this.container == null || this.elem == null ) return;
         // Fields
         let containerTop = this.container.offsetTop,
             containerHeight = this.container.clientHeight,
@@ -124,10 +128,13 @@ class SyncScrollHandler {
 
         // Check if above sync scroll area
         if ( winScrollTop  < containerTop - 60) {
+
             if(this.is_at !== 'top'){
-                for ( let item of this.elem ) {
-                    if ( !item.classList.contains( 'high' ) ) {
-                        item.scrollTop = 0;
+                for ( let item in this.elem ) {
+                    if(this.elem.hasOwnProperty(item)){
+                        if ( !this.elem[item].classList.contains( 'high' ) ) {
+                            this.elem[item].scrollTop = 0;
+                        }
                     }
                 }
 
@@ -138,9 +145,11 @@ class SyncScrollHandler {
         // Checks if below sync scroll area
         else if ( winScrollTop + winHeight > containerTop + containerHeight ) {
             if(this.is_at !== 'bottom'){
-                for ( let item of this.elem ) {
-                    if ( !item.classList.contains( 'high' ) ) {
-                        item.scrollTop = 500000;
+                for ( let item in this.elem ) {
+                    if(this.elem.hasOwnProperty(item)){
+                        if ( !this.elem[item].classList.contains( 'high' ) ) {
+                            this.elem[item].scrollTop = 500000;
+                        }
                     }
                 }
                 this.is_at = 'bottom';
@@ -152,9 +161,11 @@ class SyncScrollHandler {
         else {
             if(this.is_at !== 'middle'){this.is_at = 'middle';}
 
-            for ( let item of this.elem ) {
-                if ( !item.classList.contains( 'high' ) ) {
-                    item.scrollTop = item.scrollTop + delta;
+            for ( let item in this.elem ) {
+                if(this.elem.hasOwnProperty(item)){
+                    if ( !this.elem[item].classList.contains( 'high' ) ) {
+                        this.elem[item].scrollTop = this.elem[item].scrollTop + delta;
+                    }
                 }
             }
         }

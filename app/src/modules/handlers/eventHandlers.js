@@ -20,23 +20,19 @@ class ExtraEventHandlers {
         
         if ( window.pageYOffset >= bp ) {
             
-            let headerContainers = document.getElementsByClassName( 'site-header' );
+            let headerContainer = document.getElementById( 'site-header' );
             document.getElementById( 'menu-show-btns' ).classList.add('show');
             document.getElementById( 'menu-show-btns' ).classList.remove('active');
-            for ( let container of headerContainers ) {
-                container.classList.add('fixed');
-                container.classList.remove('active');
-            }
+            headerContainer.classList.add('fixed');
+            headerContainer.classList.remove('active');
 
         } else {
             
-            let headerContainers = document.getElementsByClassName( 'site-header' );
+            let headerContainer = document.getElementById( 'site-header' );
             document.getElementById( 'menu-show-btns' ).classList.remove( 'show' );
             document.getElementById( 'menu-show-btns' ).classList.remove( 'active' );
-            for ( let container of headerContainers ) {
-                container.classList.remove('fixed');
-                container.classList.remove('active');
-            }
+            headerContainer.classList.remove('fixed');
+            headerContainer.classList.remove('active');
         }
         
         // HEADER STUFF END
