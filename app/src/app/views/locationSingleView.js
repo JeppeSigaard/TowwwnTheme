@@ -73,7 +73,7 @@ class LocationSingleView extends React.Component{
                             <ViewTopBar standard={ true } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } />
                             
                             { this.props.elem != null &&
-                                <SingleLocation elem={ this.props.elem } /> }
+                                <SingleLocation elem={ this.props.elem } name={ this.props.name } /> }
                             { this.props.elem == null &&
                                 <Loader /> }
                         </div>

@@ -117,6 +117,18 @@ class SingleLocation extends React.Component {
                     </div>
                 </div>
                 }
+
+                { elem.description == null &&
+                  elem.about != null &&
+                <div className="description-container">
+                    <div className="title">{ elem.name }</div>
+                    <div className="description">
+                        <Linkify>
+                            { TextPreproccesors.nl2p( TextPreproccesors.ripRep( elem.about ) ) }
+                        </Linkify>
+                    </div>
+                </div>
+                }
                 <div className="breakline"></div>
                 
                 { this.state.jsxEvents != null &&

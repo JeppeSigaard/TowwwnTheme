@@ -13,6 +13,10 @@
         background-color: darken( $color-blue-2, 5% );
     }
     
+    &.clickable{
+        a{ cursor: pointer; }
+    }
+
     a{
        color: white;
         text-decoration: none;

@@ -2,7 +2,9 @@
 
 // Location Category view
 const React = require( 'react' ),
-      SubCategories = require( '../components/subcategories.js' );
+      LocationCategory = require( '../components/locationCategory.js' ),
+      SubCategories = require( '../components/subcategories.js' ),
+      Globals = require( '../globals.js' );
 
 class LocationCategoryView extends React.Component {
 
@@ -12,11 +14,45 @@ class LocationCategoryView extends React.Component {
         this.state = { subCatHeight : '0px' };
     }
 
+    // Handle category click
+    handleCategoryClick( e ) {
+
+        e.preventDefault();
+        Globals.setMainState({
+            'currentLocationsCategory' : this.props.elem,
+            'currentLocations' : null,
+        });
+
+        Globals.setMainState({ from : this.props.name });
+        Globals.viewHandler.changeViewFocus(
+            'location-category-view',
+            'location-list-view',
+            false, true, false
+        );
+
+        Globals.locationDataHandler.getCategorySpecificLocation( this.props.elem.category_id ).then(( resp ) => {
+            Globals.setMainState({
+                'currentLocations' : resp,
+            });
+        });
+
+    }
+
     // Activate Sub Categories List
     toggleSubCategories() {
         let inner = document.getElementsByClassName( 'sub-category-inner' )[0];
         if ( this.state.subCatHeight !== '0px' ) this.setState({ 'subCatHeight' : '0px' });
         else this.setState({ 'subCatHeight' : inner.clientHeight + 'px' });
+    }
+
+    // Will receive props
+    componentWillReceiveProps( nextProps ) {
+        if ( nextProps.categories != null ) {
+            let jsxCategories = [];
+            for ( let category of nextProps.categories ) {
+                jsxCategories.push( <LocationCategory elem={ category } name={ nextProps.name } clickEvent={ this.handleCategoryClick } /> );
+            } this.setState({ 'jsxCategories' : jsxCategories });
+        }
     }
 
     // Render
@@ -30,11 +66,11 @@ class LocationCategoryView extends React.Component {
                                 Svendborg i udvalg
                                 <div className="sub-categories-title" onClick={ this.toggleSubCategories.bind(this) } ></div>
                             </div>
-                            <SubCategories subCategories={ this.props.allCategories } outerHeight={ this.state.subCatHeight } />
+                            <SubCategories subCategories={ this.props.allCategories } outerHeight={ this.state.subCatHeight } clickEvent={ this.handleCategoryClick } />
+
                             <div className="category-container">
-                                { typeof this.props.categories !== 'undefined' &&
-                                  this.props.categories !== null &&
-                                  this.props.categories }
+                                { this.state.jsxCategories != null &&
+                                  this.state.jsxCategories }
                             </div>
                         </div>
                     </div>

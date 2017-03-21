@@ -14,6 +14,7 @@ class EventSingleView extends React.Component {
         
         this.state = {
             'closeviewstate' : { },
+
             'standardclose' : {
                 'leftview' : 'event-calendar-view',
                 'rightview' : 'location-category-view',
@@ -21,13 +22,15 @@ class EventSingleView extends React.Component {
                 'fromRight' : true,
                 'notrans': false,
             },
+
             'fromlocationclose' : {
-                'leftview' : 'location-category-view',
+                'leftview' : 'location-list-view',
                 'rightview' : 'location-single-view',
                 'fromLeft' : true,
                 'fromRight' : false,
                 'notrans': false,
             },
+
             'vref' : {
                 'leftview' : 'location-single-view',
                 'rightview' : 'event-single-view',
@@ -35,6 +38,7 @@ class EventSingleView extends React.Component {
                 'fromRight' : false,
                 'notrans': false,
             },
+
             jsxEvent : null,
         };
     }
@@ -82,7 +86,7 @@ class EventSingleView extends React.Component {
                 <div className="sync-outer">
                     <div className="sync-inner">
                         <div className="content">
-                            <ViewTopBar standard={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
+                            <ViewTopBar standard={ true } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
                             
                             { this.state.jsxEvent != null &&
                               this.state.jsxEvent }

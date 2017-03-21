@@ -17,7 +17,7 @@ class SubCategories extends React.Component {
         if ( nextProps.subCategories != null ) {
             let cats = [];
             for ( let subCat of nextProps.subCategories ) {
-                cats.push( <SubCategory elem={ subCat } key={ 'subcategory-' + subCat.category_id } /> );
+                cats.push( <SubCategory elem={ subCat } key={ 'subcategory-' + subCat.category_id } clickEvent={ this.props.clickEvent } /> );
             } this.setState({ 'jsxCats' : cats });
         }
     }
