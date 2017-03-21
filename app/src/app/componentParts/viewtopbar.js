@@ -10,6 +10,7 @@ class ViewTopBar extends React.Component {
     // Ctor
     constructor() { 
         super();
+        this.state = { };
     }
     
     // Close View
@@ -40,10 +41,18 @@ class ViewTopBar extends React.Component {
         Globals.syncScroll.rescaleContainer();
     }
     
+    // Component Will Receive Props
+    componentWillReceiveProps( nextProps ) {
+        let classes = 'viewbar';
+        if ( nextProps.darken ) classes += ' dark';
+        if ( nextProps.clickable ) classes += ' clickable';
+        this.setState({ classes : classes });
+    }
+    
     // Render
     render() {
         return ( 
-            <div className={ this.props.darken === true ? "viewbar dark" : "viewbar" }>
+            <div className={ this.state.classes != null ? this.state.classes : "viewbar" }>
                 { this.props.standard &&
                     <a onClick={ this.props.vref != null ? this.changeView.bind(this) : function() {} }>{ this.props.title }</a>
                 }
