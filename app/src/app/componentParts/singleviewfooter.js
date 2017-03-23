@@ -19,6 +19,10 @@ class SingleViewFooter extends React.Component {
         }
     }
     
+    componentDidMount(){
+        this.componentDidUpdate();
+    }
+
     // Render
     render() {
         let elem = this.props.elem,
@@ -28,6 +32,7 @@ class SingleViewFooter extends React.Component {
             id = null,
             website = null,
             phone = null,
+            phone_link = null,
             adress = null;
 
         if ( type === 'event' ) {
@@ -51,7 +56,8 @@ class SingleViewFooter extends React.Component {
 
         if ( elem.phone != null &&
              typeof elem.phone !== 'undefined' ) {
-            phone = elem.phone;
+                phone = elem.phone;
+                phone_link = 'tel://' + elem.phone.replace(' ','');
         }
 
         if ( elem.adress != null &&
@@ -72,7 +78,7 @@ class SingleViewFooter extends React.Component {
                     </div>
 
                     {/* Facebook */}
-                    <div className="sv-footer-block clickable" data-link={ 'http://fb.com/' + id } >
+                    <a className="sv-footer-block clickable" target="_blank" href={ 'http://fb.com/' + id + '?ref="towwwn"'} >
                         <div className="icon">
                             <svg viewBox="0 0 32 32">
                                 <use xlinkHref="#icon-facebook"></use>
@@ -81,11 +87,11 @@ class SingleViewFooter extends React.Component {
                         <div className="value">
                             { name }
                         </div>
-                    </div>
+                    </a>
 
                     {/* Website */}
                     { website !== null &&
-                        <div className="sv-footer-block clickable" data-link={ website } >
+                        <a className="sv-footer-block clickable" target="_blank" href={ website + '?ref="towwwn"'} >
                             <div className="icon">
                                 <svg viewBox="0 0 32 32">
                                     <use xlinkHref="#icon-web"></use>
@@ -94,12 +100,12 @@ class SingleViewFooter extends React.Component {
                             <div className="value">
                                 { website }
                             </div>
-                        </div>
+                        </a>
                     }
 
                     {/* Phone */}
                     { phone !== null &&
-                        <div className="sv-footer-block clickable" data-link-type="redirect" data-link={ 'tel://' + phone } >
+                        <a className="sv-footer-block clickable" href={phone_link} >
                             <div className="icon">
                                 <svg viewBox="0 0 32 32">
                                     <use xlinkHref="#icon-phone"></use>
@@ -108,12 +114,12 @@ class SingleViewFooter extends React.Component {
                             <div className="value">
                                 { phone }
                             </div>
-                        </div>
+                        </a>
                     }
 
                     {/* Adress */}
                     { phone !== null &&
-                        <div className="sv-footer-block clickable" data-link={ 'https://google.dk/maps/search/'+adress+',svendborg' } >
+                        <a className="sv-footer-block clickable" target="_blank" href={ 'https://google.dk/maps/search/'+adress+',svendborg' } >
                             <div className="icon">
                                 <svg viewBox="0 0 32 32">
                                     <use xlinkHref="#icon-address"></use>
@@ -122,7 +128,7 @@ class SingleViewFooter extends React.Component {
                             <div className="value">
                                 { adress }
                             </div>
-                        </div>
+                        </a>
                     }
 
                 </footer>
