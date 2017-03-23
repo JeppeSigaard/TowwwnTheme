@@ -1,6 +1,3 @@
-
-
-
 // Single Event
 const React = require( 'react' ),
       Linkify = require( 'react-linkify' ).default,
@@ -38,14 +35,16 @@ class SingleEvent extends React.Component {
         // Sets state
         this.setState({ imgurl : imgurl });
         
-    }
 
-    componentDidUpdate (obj){
+        // Bump up (plz fix)
         const singleSync = document.querySelectorAll('#event-single-view .sync-outer')[0];
         if(singleSync.scrollTop > 60){
             singleSync.scrollTop = 60;
         }
 
+    }
+
+    componentDidUpdate (obj){
         Globals.syncScroll.rescaleContainer();
     }
 

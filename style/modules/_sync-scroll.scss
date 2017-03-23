@@ -4,7 +4,7 @@
     width: 100%;
     padding: 0;
     margin: 0;
-    top: 0;
+    top: 60px;
     overflow: hidden;
     height: calc( 100vh - 60px );
 
@@ -12,10 +12,7 @@
         position: relative;
         height: auto;
         overflow: auto;
-    }
-    
-    &:not(.high) {
-        top: 60px;
+        top: 0;
     }
 
     &:after{
