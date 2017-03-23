@@ -28,7 +28,8 @@ class SingleViewFooter extends React.Component {
             id = null,
             website = null,
             phone = null,
-            adress = null;
+            adress = null,
+            hours = null;
 
         if ( type === 'event' ) {
 
@@ -41,6 +42,28 @@ class SingleViewFooter extends React.Component {
             picture = elem.picture;
             name = elem.name;
             id = elem.fbid;
+            
+            let hoursjson = JSON.parse( elem.hours );
+            if ( !Array.isArray( hoursjson ) &&
+                 elem.hours != null ) {
+                hours = [];
+                for ( let day in hoursjson ) {
+                    let dayformatted = day === 'mon' ? 'Mandag' :
+                            ( day === 'tue' ? 'Tirsdag' :
+                            ( day === 'wed' ? 'Onsdag' :
+                            ( day === 'thu' ? 'Torsdag' :
+                            ( day === 'fri' ? 'Fredag' :
+                            ( day === 'sat' ? 'Lørdag' :
+                            ( day === 'sun' ? 'Søndag' : 'Smamodag' ))))));
+                    
+                    hours.push(
+                        <div className="openinghours" key={ 'openinghours-' + day + '-' + elem.fbid } >
+                            <div className="day"> { dayformatted + ':' } </div>
+                            <div className="time"> { hoursjson[day][0] + ' - ' + hoursjson[day][1] }</div>
+                        </div>
+                    );
+                }
+            }
             
         }
         
@@ -107,6 +130,16 @@ class SingleViewFooter extends React.Component {
                             </div>
                             <div className="value">
                                 { phone }
+                            </div>
+                        </div>
+                    }
+                    
+                    {/* Hours */}
+                    { hours !== null &&
+                        <div className="sv-footer-block" >
+                            <div className="icon"></div>
+                            <div className="value">
+                                { hours }
                             </div>
                         </div>
                     }

@@ -35,10 +35,7 @@
                             <input id="searchfield" name="searchfield" type="text">
                             <?php //wp_nav_menu(array('theme_location' => 'header-menu', 'container' => false, 'fallback_cb' => null)) ?>
                         </form>-->
-
-                        <div class="headerlogo">
-                            <svg class="logo" viewBox="0 0 200 70"><use xlink:href="#towwwn-logo"></use></svg>
-                        </div>
+                        
                     </div>
                     <div id="headerbar">
                         <div class="logo-bg-container">
