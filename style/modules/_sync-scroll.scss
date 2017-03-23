@@ -1,16 +1,6 @@
-@keyframes repaint{
-    0%{transform: translateY(1px);}
-    100%{transform: translateY(0px);}
-}
-
-.repaint{
-   animation: repaint 1 linear forwards 50ms;
-}
-
 .sync-outer{
     position: -webkit-sticky;
     position: sticky;
-
     width: 100%;
     padding: 0;
     margin: 0;

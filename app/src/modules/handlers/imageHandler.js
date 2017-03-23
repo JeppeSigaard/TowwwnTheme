@@ -9,10 +9,11 @@ class ImageHandler {
     }
 
     isInView(element) {
-        let elemTop = element.getBoundingClientRect().top,
+        let preloadDistance = 200,
+            elemTop = element.getBoundingClientRect().top,
             elemBottom = element.getBoundingClientRect().bottom,
-            isVisibleY = (elemTop >= 0) && (elemBottom <= window.innerHeight),
-            isVisibleX = element.offsetLeft >= 0 && element.offsetLeft < window.innerWidth - 200;
+            isVisibleY = (elemTop >= 0 - preloadDistance) && (elemBottom <= window.innerHeight + preloadDistance),
+            isVisibleX = element.offsetLeft >= 0 && element.offsetLeft < window.innerWidth - preloadDistance;
         return isVisibleY && isVisibleX;
     }
 

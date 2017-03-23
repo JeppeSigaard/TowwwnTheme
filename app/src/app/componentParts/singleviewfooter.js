@@ -116,7 +116,7 @@ class SingleViewFooter extends React.Component {
                         <div className="sv-footer-block clickable" data-link={ 'https://google.dk/maps/search/'+adress+',svendborg' } >
                             <div className="icon">
                                 <svg viewBox="0 0 32 32">
-                                    <use xlinkHref="#icon-adress"></use>
+                                    <use xlinkHref="#icon-address"></use>
                                 </svg>
                             </div>
                             <div className="value">

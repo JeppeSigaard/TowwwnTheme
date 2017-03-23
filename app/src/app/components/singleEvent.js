@@ -6,6 +6,7 @@ const React = require( 'react' ),
       Linkify = require( 'react-linkify' ).default,
       DataFormatters = require( '../../modules/tools/dataFormatters.js' ),
       TextPreproccesors = require( '../../modules/tools/textPreproccesors.js' ),
+      Globals = require( '../globals.js' ),
 
       // Component parts
       SingleViewFooter = require('../componentParts/singleviewfooter.js');
@@ -44,6 +45,8 @@ class SingleEvent extends React.Component {
         if(singleSync.scrollTop > 60){
             singleSync.scrollTop = 60;
         }
+
+        Globals.syncScroll.rescaleContainer();
     }
 
     // Render

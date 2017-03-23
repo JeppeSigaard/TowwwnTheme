@@ -130,7 +130,7 @@ class ViewHandler {
             // Rescales containers
             this.focusedViews = [ leftView, rightView ];
             if ( this.syncScroll != null ) {
-                setTimeout( () => { this.syncScroll.rescaleContainer( this.focusedViews ) }, 20 );
+                setTimeout( () => { this.syncScroll.rescaleContainer( this.focusedViews ) }, 100 );
             }
 
         }, 30);
