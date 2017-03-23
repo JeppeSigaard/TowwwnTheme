@@ -1,112 +1,114 @@
 
 
 // Towwwn Selector
-function TowwwnSelector( selector, elems ) {
-    if ( selector != null && elems == null ) {
-        let elem = new tselem();
-        elem.domElem = document.querySelectorAll( selector );
-        elem.selector = selector;
+let TowwwnSelector = ( selector ) => {
+    let elem = new TSElem();
+    console.log( document.querySelectorAll(selector) );
+    elem.state = {
+        domnode : document.querySelectorAll( selector ),
+    }; return elem;
+}; module.exports = TowwwnSelector;
 
-        if ( typeof elem.domElem !== 'object' ) elem.domElem = [ elem.domElem ];
-        return elem;
+// Towwwwn Selector Elem
+class TSElem {
+    
+    // Check state
+    checkState() {
+        if ( this.state == null )
+            return false;
+        return true;
     }
     
-    if ( selector == null && elems != null ) {
-        let elem = new tselem();
-        if ( typeof elems === 'object' ) elem.domElem = elems;
-        else elem.domElem = elems.domElem;
-        
-        if ( typeof elem.domElem !== 'object' ) elem.domElem = [ elem.domElem ];
-        return elem;
-    }
-
-    if ( selector != null && elems != null ) {
-        // Do stuff
-    }
-}
-
-class tselem {
-    
-    // One liners
-    get( index ) { return new tselem( this.selector, new tselem( null, this.domElem[index] ) ); }
-    find( selector ) { return new tselem( this.selector+' '+selector ); }
-    children() { return new tselem( null, this.domElem.childNodes ); }
-    
-    // Foreach
-    foreach( func ) {
-        console.log( this.domElem );
-        if ( typeof this.domElem === 'object' ) {
-            for ( let elem of this.domElem ) { func( new tselem( this.selector, elem ) ); }
-        } else func( new tselem( this.selector, this.domElem ) );
+    // Get
+    get( index ) {
+        if ( index != null &&
+             typeof this.state.domnode === 'object' ) {
+            return this.state.domnode[ index ];
+        } else return this.state.domnode;
     }
     
     // Add Class
     addClass( className ) {
-        try {
-            if ( typeof this.domElem === 'object' ) {
-                for ( let elem of this.domElem ) {
-                    elem.classList.add( className ); }
-            } else elem.classList.add( className );
-        } catch ( error ) { throw 'Unsupported elem type: ' + typeof this.domElem; }
+        if ( this.state.domnode != null ) {
+            if ( typeof this.state.domnode === 'object' ) {
+                for ( let node of this.state.domnode )
+                    node.classList.add( className );
+            } else this.state.domnode.classList.add( className );
+        } return;
     }
     
-    // Remove Class
+    // Remove class
     removeClass( className ) {
-        try {
-            if ( typeof this.domElem === 'object' ) {
-                for ( let elem of this.domElem ) {
-                    elem.classList.remove( className ); }
-            } else elem.classList.remove( className );
-        } catch ( error ) { throw 'Unsupported elem type: ' + typeof this.domElem; }
+        if ( this.state.domnode != null ) {
+            if ( typeof this.state.domnode === 'object' ) {
+                for ( let node of this.state.domnode )
+                    node.classList.remove( className );
+            } else this.state.domnode.classList.remove( className );
+        } return;
     }
 
-    // Event
-    on( event, func ) {
-        console.log( this );
-        if ( typeof this.domElem === 'object' ) {
-            for ( let elem of this.domElem ) {
-                elem.addEventListener( event, func ); }
-        } else {
-            this.domElem.addEventListener( event, func );
-        }
-    } 
+    // Has class
+    hasClass( className ) {
+        if ( typeof this.state.domnode === 'object' ) {
+            for ( let elem of this.state.domnode ) {
+                if ( !elem.classList.contains( className ) )
+                    return false;
+            } return true;
+        } return this.state.domnode.contains( className );
+    }
 
-    // Style
-    css ( styling ) {
-        if ( typeof styling === 'object' ) {
-            if ( typeof this.domElem === 'object' ) {
-                for ( let elem of this.domElem ) {
-                    for ( let styleKey in styling ) {
-                        elem.style[ styleKey ] = styling[ styling ]; 
+    // On
+    on( event, func ) {
+        if ( typeof event !== 'string' || typeof func !== 'function' ) return;
+        if ( typeof this.state.domnode === 'object' ) {
+            for ( let elem of this.state.domnode )
+                elem.addEventListener( event, func );
+        } else this.state.domnode.addEventListener( event, func );
+    }
+
+    // Children
+    children() {
+        if ( this.state.domnode != null ) {
+            let elem = new TSElem();
+            elem.state = { domnode: [] };
+            if ( typeof this.state.domnode === 'object' ) {
+                for ( let node of this.state.domnode ) {
+                    for ( let child of node.childNodes ) {
+                        elem.state.domnode.push( child );
                     }
                 }
             } else {
-                for ( let styleKey in styling ) {
-                    this.domElem[ styleKey ] = styling[ styleKey ];
-                }
-            } return;
-        } else if ( typeof styling === 'string' ) {
-            if ( typeof this.domElem === 'object' ) return this.domElem[0].style[styling];
-            else return this.domElem.style[styling];
-        } throw 'Unsupported styling param type: ' + typeof styling;
+                for ( let child of this.state.domnode.childNodes )
+                    elem.state.domnode.push( child );
+            } return elem;
+        } return;
+    }
+
+    // Parent
+    parent() {
+        let elem = new TSElem();
+        if ( typeof this.state.domnode === 'object' ) {
+            elem.state = { domnode: this.state.domnode[0].parentNode };
+        } else elem.state = { domnode: this.state.domnode.parentNode };
+        return elem;
+    }
+
+    // Css
+    css() {
     }
     
     // Position
     position() {
-        let elem = null;
-        if ( typeof this.domElem === 'object' ) elem = this.domElem[0];
-        else elem = this.domElem;
-        
-        let resp = {
-            left: elem.offsetLeft - elem.parentNode.offsetLeft,
-            top: elem.offsetTop - elem.parentNode.offsetTop,
-        }; return resp;
+        let top = this.offset().top - this.parent().offset().top;
+        let left = this.offset().left - this.parent().offset().left;
+        return { top: top, left: left };
     }
     
-} module.exports = { default: TowwwnSelector, tselem: tselem };
+    // Offset
+    offset() {
+        let node = this.state.domNode[0];
+        if ( typeof this.state.domNode !== 'object' ) node = this.state.domNode;
+        return { top  : node.offsetTop, left : node.offsetLeft };
+    }
 
-
-
-
-
-
+}
