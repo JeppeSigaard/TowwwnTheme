@@ -79,6 +79,19 @@
     overflow: hidden;
     border-bottom: 1px solid #333;
 
+    .headerlogo {
+        width: 100%;
+        height: auto;
+        margin-top: -42px;
+
+        svg {
+            fill: white;
+            width: 120px;
+            height: auto;
+            margin-left: calc( 50% - 60px );
+        }
+    }
+
     .header-commercials{
         width: 100%;
         height: $top-area-height;
