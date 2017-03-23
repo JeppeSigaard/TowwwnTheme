@@ -2,6 +2,7 @@
 
 // Towwwn Selector
 let TowwwnSelector = ( selector ) => {
+    if ( selector == null ) return TSElem;
     let elem = new TSElem();
     console.log( document.querySelectorAll(selector) );
     elem.state = {
@@ -66,6 +67,28 @@ class TSElem {
         } else this.state.domnode.addEventListener( event, func );
     }
 
+    // On global click; NOT WORKING
+    static onGlobalClick( selector, func ) {
+        document.addEventListener( 'click', e => {
+            let nodes = document.querySelectorAll( selector );
+            if ( typeof nodes === 'object' ) {
+                for ( let item of nodes ) {
+                    let x = item.offsetLeft,
+                        y = item.offsetTop,
+                        w = item.clientWidth,
+                        h = item.clientHeight;
+
+                    if ( e.clientX >= x &&
+                         e.clientX <= x + w &&
+                         e.clientY >= y &&
+                         e.clientY <= y + h ) {
+                        func( e );
+                    }
+                }
+            }
+        });
+    }
+
     // Children
     children() {
         if ( this.state.domnode != null ) {
@@ -84,6 +107,30 @@ class TSElem {
         } return;
     }
 
+    // Individual Children
+    individualChildren() {
+        if ( this.state.domnode != null ) {
+            let elems = [];
+            if ( typeof this.state.domnode === 'object' ) {
+                for ( let node of this.state.domnode ) {
+                    for ( let child of node.childNodes ) {
+                        let elem = new TSElem();
+                        elem.state = {
+                            domnode: child,
+                        }; elems.push( elem );
+                    }
+                }
+            } else {
+                for ( let child of this.state.domnode.childNodes ) {
+                    let elem = new TSElem();
+                    elem.state = {
+                        domnode: child,
+                    }; elems.push( elem );
+                }
+            } return elems;
+        } return;
+    }
+
     // Parent
     parent() {
         let elem = new TSElem();
@@ -97,6 +144,16 @@ class TSElem {
     css() {
     }
     
+    // ComputedStyle
+    style() {
+        let resp = [];
+        if ( typeof this.state.domnode === 'object' ) {
+            for ( let node of this.state.domnodes )
+                resp.push( window.getComputedStyle( node ) );
+        } else { resp.push( window.getComputedStyle( this.state.domnode ) ); }
+        return resp;
+    }
+
     // Position
     position() {
         let top = this.offset().top - this.parent().offset().top;
