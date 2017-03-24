@@ -46,7 +46,6 @@ class EventSingleView extends React.Component {
     
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
-        console.log( nextProps.from );
         if ( nextProps.from === 'location-single-view' ) {
             this.setState({ closeviewstate : this.state.fromlocationclose });
         } else {

@@ -75,8 +75,6 @@ class EventCalendarView extends React.Component {
                 events.push( <Event from={ this.props.name } elem={ item } key={ 'event-' + item.fbid } setMainState={ this.props.setMainState } /> )
             });
 
-            console.log(events.length);
-
             this.props.setMainState({
                 'eventsData' : resp,
                 'jsxEvents' : events,
