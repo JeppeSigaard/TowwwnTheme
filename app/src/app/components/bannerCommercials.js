@@ -16,7 +16,7 @@ class BannerCommercials extends React.Component {
     }
 
     // Component will mount
-    componentWillMount() {
+    componentWillReceiveProps( nextProps ) {
         this.commercialDataHandler.getCommercials().then( data => {
             let bannerCommercials = [];
             for ( let item of data ) {
