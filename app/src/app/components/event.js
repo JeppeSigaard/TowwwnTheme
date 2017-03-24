@@ -34,7 +34,16 @@ class Event extends React.Component {
 
     locationRefClick( e ) {
         e.preventDefault();
-        console.log(this.props.elem.parentid);
+
+        Globals.setMainState({
+            singleLocation : null
+        });
+
+        Globals.viewHandler.changeViewFocus(
+            'location-single-view',
+            'event-calendar-view',
+            true, false, false
+        );
 
 
         let xhr = new XMLHttpRequest();
@@ -42,16 +51,11 @@ class Event extends React.Component {
 
                 // Resolves all locations
                 let location = JSON.parse( data.target.response )[0];
-                this.props.setMainState({
+                Globals.setMainState({
                     'singleLocation' : location,
                 });
 
                 Globals.setMainState({ from : this.props.name });
-                Globals.viewHandler.changeViewFocus(
-                    'location-single-view',
-                    'event-calendar-view',
-                    true, false, false
-                );
 
             }.bind(this);
 

@@ -73,7 +73,11 @@
 }
 
 .eventscontainer-outer{
-    padding: 10px;
+    padding: 3px;
+    @media (min-width: 480px){
+        padding: 10px;
+    }
+
 }
 
 .eventscontainer {
@@ -189,7 +193,7 @@
     box-sizing: border-box;
     position: relative;
     display: inline-block;
-    width: 145px;
+    width: 140px;
     margin: 4px;
     border: 1px solid rgba($color-blue-1, .6);
     background-color: #f9f9f9;

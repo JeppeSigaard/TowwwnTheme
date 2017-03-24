@@ -1,11 +1,9 @@
-
-
-
 // Single Event
 const React = require( 'react' ),
       Linkify = require( 'react-linkify' ).default,
       DataFormatters = require( '../../modules/tools/dataFormatters.js' ),
       TextPreproccesors = require( '../../modules/tools/textPreproccesors.js' ),
+      Globals = require( '../globals.js' ),
 
       // Component parts
       SingleViewFooter = require('../componentParts/singleviewfooter.js');
@@ -36,14 +34,18 @@ class SingleEvent extends React.Component {
 
         // Sets state
         this.setState({ imgurl : imgurl });
-        
-    }
 
-    componentDidUpdate (obj){
+
+        // Bump up (plz fix)
         const singleSync = document.querySelectorAll('#event-single-view .sync-outer')[0];
         if(singleSync.scrollTop > 60){
             singleSync.scrollTop = 60;
         }
+
+    }
+
+    componentDidUpdate (obj){
+        Globals.syncScroll.rescaleContainer();
     }
 
     // Render

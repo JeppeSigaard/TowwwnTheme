@@ -45,7 +45,6 @@ class SingleLocation extends React.Component {
                 // Sets state
                 if ( jsxEvents <= 0 ) jsxEvents = null;
                 this.setState({ 'jsxEvents' : jsxEvents });
-                Globals.syncScroll.rescaleContainer();
                 
             });
         }
@@ -62,6 +61,8 @@ class SingleLocation extends React.Component {
             innerClass : 'inner',
         });
         
+        Globals.syncScroll.rescaleContainer();
+
     }
     
     // Render
@@ -76,33 +77,33 @@ class SingleLocation extends React.Component {
                 
                 <div className="cta-icons">
                     { elem.phone != null &&
-                        <div className="cta-phone cta-icon" data-link={ 'tel://' + elem.phone } >
+                        <a className="cta-phone cta-icon" href={'tel://' + elem.phone} data-link={ 'tel://' + elem.phone } >
                             <div className="icon">
                                 <svg viewBox="0 0 32 32">
                                     <use xlinkHref="#icon-phone"></use>
                                 </svg>
                             </div>
-                        </div>
+                        </a>
                     }
                     
                     { elem.website != null &&
-                        <div className="cta-website cta-icon" data-link={ elem.website } >
+                        <a className="cta-website cta-icon" href={elem.website} data-link={ elem.website } >
                             <div className="icon">
                                 <svg viewBox="0 0 32 32">
                                     <use xlinkHref="#icon-web"></use>
                                 </svg>
                             </div>
-                        </div>
+                        </a>
                     }
                     
                     { elem.fbid != null &&
-                        <div className="cta-fb cta-icon" data-link={ 'http://fb.com/' + elem.fbid } >
+                        <a className="cta-fb cta-icon" href={'http://fb.com/' + elem.fbid} data-link={ 'http://fb.com/' + elem.fbid } >
                             <div className="icon">
                                 <svg viewBox="0 0 32 32">
                                     <use xlinkHref="#icon-facebook"></use>
                                 </svg>
                             </div>
-                        </div>
+                        </a>
                     }
                 </div>
                 <div className="breakline"></div>

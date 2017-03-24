@@ -72,7 +72,7 @@ class EventCalendarView extends React.Component {
             
             let events = [];
             resp.forEach(( item, index ) => {
-                events.push( <Event elem={ item } key={ 'event-' + item.fbid } setMainState={ this.props.setMainState } /> )
+                events.push( <Event from={ this.props.name } elem={ item } key={ 'event-' + item.fbid } setMainState={ this.props.setMainState } /> )
             });
 
             console.log(events.length);

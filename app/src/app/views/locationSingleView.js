@@ -28,12 +28,12 @@ class LocationSingleView extends React.Component{
             fromRight: true,
         };
         
-        // Close properties when coming from event
+        // CLose properties when coming from calendar
         this.fromeventCalendarclose = {
             leftview: 'event-calendar-view',
             rightview: 'location-category-view',
-            fromLeft: true,
-            fromRight: false,
+            fromLeft: false,
+            fromRight: true,
         };
 
         // State

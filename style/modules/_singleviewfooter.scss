@@ -8,12 +8,14 @@
     color: white;
 
     .sv-footer-block{
+        display: block;
+        text-decoration: none;
         position: relative;
         width: 100%;
         height: auto;
         background-color: darken($color-blue-2, 10%);
         font-family: 'Avenir';
-        transition: 120ms;
+        transition: 0ms; // Or 120ms ?:))
 
         &.clickable{
             cursor: pointer;
@@ -60,6 +62,13 @@
             background-size: 50px;
             background-position: center;
             background-repeat: no-repeat;
+
+            &.topaligned{
+                svg{
+                    top: 24px;
+                    transform: translate(-50%, 0);
+                }
+            }
 
             svg{
                 position: absolute;

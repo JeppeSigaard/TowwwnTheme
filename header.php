@@ -29,13 +29,13 @@
                                 <?php endforeach; ?>
                             </div>
                         </div>
+
                         <!--<form id="searchcontainer" action="/" method="post">
                             <label id="searchlabel" for="searchfield">Søg</label>
                             <svg id="searchicon" viewBox="0 0 32 32"><use xlink:href="#icon-search"></use></svg>
                             <input id="searchfield" name="searchfield" type="text">
                             <?php //wp_nav_menu(array('theme_location' => 'header-menu', 'container' => false, 'fallback_cb' => null)) ?>
                         </form>-->
-                        
                     </div>
                     <div id="headerbar">
                         <div class="logo-bg-container">
