@@ -6,16 +6,15 @@ class BannerCommercial extends React.Component {
 
     // Render
     render() {
-        return (
-            { this.props.elem != null &&
-              this.props.elem.commercial_tn_medium != null &&
-                <a className="bannerCommercial"
-                    href={ this.props.elem.link }
-                    target='_blank'
-                    style={{ backgroundImage : 'url('+this.props.elem.commercial_tn_medium+')' }} >
-                </a>
-            }
-        );
+        return this.props.elem != null &&
+               this.props.elem.commercial_tn_medium != null &&
+
+            <a className="bannerCommercial"
+                href={ this.props.elem.link }
+                target='_blank'
+                style={{ backgroundImage : 'url('+this.props.elem.commercial_tn_medium+')' }} >
+            </a>;
+
     }
 
 } module.exports = BannerCommercial;

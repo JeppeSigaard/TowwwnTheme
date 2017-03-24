@@ -4,6 +4,7 @@
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
       SingleEvent = require( '../components/singleEvent.js' ),
+      BannerCommercials = require( '../components/bannerCommercials.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' );
 
 class EventSingleView extends React.Component {
@@ -91,6 +92,7 @@ class EventSingleView extends React.Component {
                             { this.state.jsxEvent != null &&
                               this.state.jsxEvent }
                               
+                            <BannerCommercials />
                         </div>
                     </div>
                 </div>
