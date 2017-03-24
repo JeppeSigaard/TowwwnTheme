@@ -91,7 +91,6 @@ class SingleViewFooter extends React.Component {
         return (
 
             <div>
-                <div className="sv-footer-placeholder"></div>
                 <footer className="sv-footer" >
 
                     {/* Title */}

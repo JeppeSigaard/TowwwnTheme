@@ -3,6 +3,7 @@
 // Location Single view
 const React = require( 'react' ),
       SingleLocation = require( '../components/singleLocation.js' ),
+      BannerCommercials = require( '../components/bannerCommercials.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
       Loader = require( '../componentParts/loader.js' );
 
@@ -77,6 +78,8 @@ class LocationSingleView extends React.Component{
                                 <SingleLocation elem={ this.props.elem } name={ this.props.name } /> }
                             { this.props.elem == null &&
                                 <Loader /> }
+
+                            <BannerCommercials />
                         </div>
                     </div>
                 </div>
