@@ -13,6 +13,9 @@ class BannerCommercial extends React.Component {
                 href={ this.props.elem.link }
                 target='_blank'
                 style={{ backgroundImage : 'url('+this.props.elem.commercial_tn_medium+')' }} >
+                {/*<div className="title">
+                    { this.props.elem.title }
+                </div>*/}
             </a>;
 
     }

@@ -1,12 +1,19 @@
 
 
 // Event Handler
+const _ = require( '../plugins/towwwnSelector.js' );
 class ExtraEventHandlers {
     
     // Ctor
     constructor() {
-        window.addEventListener( 'scroll', this.onScroll.bind(this) );
-        document.getElementById( 'menu-show-btns' ).addEventListener( 'click', this.handleShowBtnClick.bind(this) );
+        _(window).on( 'scroll', this.onScroll.bind(this) );
+        _(window).on( 'resize', this.onResize.bind(this) );
+        _('#menu-show-btns').on( 'click', this.handleShowBtnClick.bind(this) );
+    }
+
+    onResize() {
+        if ( _(window).width() <= 640 ) _('body').addClass('mobile');
+        else _('body').removeClass('mobile');
     }
     
     // On Scroll
@@ -15,24 +22,13 @@ class ExtraEventHandlers {
         /* -------------------------------------------- */
         // HEADER STUFF START
         
-        let header = document.getElementById( 'header' ),
-            bp = header.clientHeight + header.offsetTop;
-        
+        let bp = _('#header').height() + _('#header').offset().top;
         if ( window.pageYOffset >= bp ) {
-            
-            let headerContainer = document.getElementById( 'site-header' );
-            document.getElementById( 'menu-show-btns' ).classList.add('show');
-            document.getElementById( 'menu-show-btns' ).classList.remove('active');
-            headerContainer.classList.add('fixed');
-            headerContainer.classList.remove('active');
-
+            _('#menu-show-btns').addClass('show').removeClass('active');
+            _('#site-header').addClass('fixed').removeClass('active');
         } else {
-            
-            let headerContainer = document.getElementById( 'site-header' );
-            document.getElementById( 'menu-show-btns' ).classList.remove( 'show' );
-            document.getElementById( 'menu-show-btns' ).classList.remove( 'active' );
-            headerContainer.classList.remove('fixed');
-            headerContainer.classList.remove('active');
+            _('#menu-show-btns').removeClass('show').removeClass('active');
+            _('#site-header').removeClass('fixed').removeClass('active');
         }
         
         // HEADER STUFF END
@@ -42,19 +38,15 @@ class ExtraEventHandlers {
     
     // Handle show btn click
     handleShowBtnClick() {
-        let showbtn = document.getElementById( 'menu-show-btns' ),
-            headerContainers = document.getElementsByClassName( 'site-header' );
-        if ( showbtn.classList.contains( 'active' ) ) {
-            document.getElementById( 'menu-show-btns' ).classList.remove( 'active' );
-            for ( let container of headerContainers ) {
-                container.classList.remove('active');
-            }
+
+        if ( _('#menu-show-btns').hasClass( 'active' ) ) {
+            _('#menu-show-btns').removeClass( 'active' );
+            _('.site-header').removeClass( 'active' );
         } else {
-            document.getElementById( 'menu-show-btns' ).classList.add( 'active' );
-            for ( let container of headerContainers ) {
-                container.classList.add('active');
-            }
+            _('#menu-show-btns').addClass( 'active' );
+            _('.site-header').addClass('active');
         }
+
     }
     
 } module.exports = ExtraEventHandlers;

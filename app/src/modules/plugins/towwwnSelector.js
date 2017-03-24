@@ -3,11 +3,25 @@
 // Towwwn Selector
 let TowwwnSelector = ( selector ) => {
     if ( selector == null ) return TSElem;
+
+    // Creates new elem
     let elem = new TSElem();
-    console.log( document.querySelectorAll(selector) );
-    elem.state = {
-        domnode : document.querySelectorAll( selector ),
-    }; return elem;
+
+    // Gets dom node(s)
+    if ( selector === document ) elem.state = { domnode : document, };
+    else if ( selector === window ) elem.state = { domnode : window, };
+    else elem.state = { domnode : document.querySelectorAll( selector ) };
+
+    // Checks if any elems where found
+    if ( elem.state.domnode.length != null && elem.state.domnode.length <= 0 &&
+         elem.state.domnode !== window && elem.state.domnode !== document ) {
+        throw "TowwwnSelector: No elements were found with selector: " + selector;
+        return;
+    }
+
+    // Returns elem
+    return elem;
+
 }; module.exports = TowwwnSelector;
 
 // Towwwwn Selector Elem
@@ -31,21 +45,17 @@ class TSElem {
     // Add Class
     addClass( className ) {
         if ( this.state.domnode != null ) {
-            if ( typeof this.state.domnode === 'object' ) {
-                for ( let node of this.state.domnode )
-                    node.classList.add( className );
-            } else this.state.domnode.classList.add( className );
-        } return;
+            for ( let node of this.state.domnode )
+                node.classList.add( className );
+        } return this;
     }
     
     // Remove class
     removeClass( className ) {
         if ( this.state.domnode != null ) {
-            if ( typeof this.state.domnode === 'object' ) {
-                for ( let node of this.state.domnode )
-                    node.classList.remove( className );
-            } else this.state.domnode.classList.remove( className );
-        } return;
+            for ( let node of this.state.domnode )
+                node.classList.remove( className );
+        } return this;
     }
 
     // Has class
@@ -55,16 +65,27 @@ class TSElem {
                 if ( !elem.classList.contains( className ) )
                     return false;
             } return true;
-        } return this.state.domnode.contains( className );
+        }
     }
 
     // On
     on( event, func ) {
+
         if ( typeof event !== 'string' || typeof func !== 'function' ) return;
-        if ( typeof this.state.domnode === 'object' ) {
-            for ( let elem of this.state.domnode )
-                elem.addEventListener( event, func );
-        } else this.state.domnode.addEventListener( event, func );
+        if ( this.state.domnode === window ||
+             this.state.domnode === document ) {
+            this.state.domnode.addEventListener( event, func );
+            return;
+        }
+
+        if ( Array.isArray( this.state.domnode ) ||
+             ( this.state.domnode.constructor.name != null &&
+               this.state.domnode.constructor.name === 'NodeList' )) {
+            for ( let elem of this.state.domnode ) {
+                elem.addEventListener( event, func ); }
+        }
+
+        return this;
     }
 
     // On global click; NOT WORKING
@@ -163,9 +184,31 @@ class TSElem {
     
     // Offset
     offset() {
-        let node = this.state.domNode[0];
-        if ( typeof this.state.domNode !== 'object' ) node = this.state.domNode;
-        return { top  : node.offsetTop, left : node.offsetLeft };
+        let node = this.state.domnode[0];
+        return { top : node.offsetTop, left : node.offsetLeft };
+    }
+
+    // Width
+    width() {
+        let node = this.state.domnode;
+        if ( node.constructor.name === 'NodeList' ) node = node[0];
+        return node.innerWidth || node.clientWidth;
+    }
+
+    // Height
+    height() {
+        let node = this.state.domnode;
+        if ( node.constructor.name === 'NodeList' ) node = node[0];
+        return node.innerHeight || node.clientHeight;
     }
 
 }
+
+
+
+
+
+
+
+
+
