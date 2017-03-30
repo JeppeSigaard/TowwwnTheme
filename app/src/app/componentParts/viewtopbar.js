@@ -4,7 +4,7 @@
 // View top bar
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
-      _ = require( '../../modules/plugins/towwwnSelector.js' );
+      _ = require( '../../modules/plugins/underscore.js' );
 
 class ViewTopBar extends React.Component {
     

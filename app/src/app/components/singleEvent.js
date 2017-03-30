@@ -15,7 +15,7 @@ class SingleEvent extends React.Component {
         super( props ); 
         this.state = {
             imgurl : ( props.elem.imgurl != null ? props.elem.imgurl : 
-                      'http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png' ),
+                      '' ),
         };
     }
     
@@ -29,7 +29,7 @@ class SingleEvent extends React.Component {
              typeof nextProps.elem.imgurl !== 'undefined' ) {
             imgurl = nextProps.elem.imgurl;
         } else {
-            imgurl = 'http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png';
+            imgurl = '';
         }
 
         // Sets state

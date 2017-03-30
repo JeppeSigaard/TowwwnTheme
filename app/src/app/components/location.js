@@ -3,7 +3,7 @@
 // Location
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
-      _ = require( '../../modules/plugins/towwwnSelector.js' );
+      _ = require( '../../modules/plugins/underscore.js' );
 
 class Location extends React.Component {
     

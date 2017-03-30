@@ -30,7 +30,7 @@ class LocationListView extends React.Component {
         if ( nextProps.elems != null ) {
             let jsxElems = [];
             for ( let elem of nextProps.elems ) {
-                jsxElems.push( <Location elem={ elem } setMainState={ nextProps.setMainState } /> );
+                jsxElems.push( <Location key={ 'location-'+elem.id } elem={ elem } setMainState={ nextProps.setMainState } /> );
             } this.setState({ 'jsxLocations' : jsxElems });
         } else {
             this.setState({ 'jsxLocations' : null });

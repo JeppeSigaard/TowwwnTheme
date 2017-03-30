@@ -5,7 +5,7 @@ const React = require( 'react' ),
       LocationCategory = require( '../components/locationCategory.js' ),
       SubCategories = require( '../components/subcategories.js' ),
       Globals = require( '../globals.js' ),
-      _ = require( '../../modules/plugins/towwwnSelector.js' );
+      _ = require( '../../modules/plugins/underscore.js' );
 
 class LocationCategoryView extends React.Component {
 
@@ -58,7 +58,7 @@ class LocationCategoryView extends React.Component {
         if ( nextProps.categories != null ) {
             let jsxCategories = [];
             for ( let category of nextProps.categories ) {
-                jsxCategories.push( <LocationCategory elem={ category } name={ nextProps.name } clickEvent={ this.handleCategoryClick } /> );
+                jsxCategories.push( <LocationCategory key={ 'category-'+category['category_id'] } elem={ category } name={ nextProps.name } clickEvent={ this.handleCategoryClick } /> );
             } this.setState({ 'jsxCategories' : jsxCategories });
         }
     }

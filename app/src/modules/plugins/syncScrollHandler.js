@@ -2,7 +2,7 @@
 
 // Sync Scroll
 const TowwwnApp = require( '../../app/pages/TowwwnApp.js' ),
-      _ = require( './towwwnSelector.js' );
+      _ = require( './underscore.js' );
 class SyncScrollHandler {
 
     // Ctor

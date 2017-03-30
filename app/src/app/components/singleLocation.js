@@ -2,7 +2,7 @@
 
 // Single Location
 const React = require( 'react' ),
-      _ = require( '../../modules/plugins/towwwnSelector.js' ),
+      _ = require( '../../modules/plugins/underscore.js' ),
       Globals = require( '../globals.js' ),
       Event = require( './event.js' ),
       SingleViewFooter = require( '../componentParts/singleviewfooter.js' ),
@@ -48,7 +48,7 @@ class SingleLocation extends React.Component {
                 // Generates elems
                 let jsxEvents = [];
                 for ( let eventData of resp ) {
-                    jsxEvents.push( <Event elem={ eventData } name={ this.props.name } vref={ this.state.eventVref } style={{ width : (100/resp.length) + '%' }} /> );
+                    jsxEvents.push( <Event elem={ eventData } key={ 'eventslide-'+eventData.id } name={ this.props.name } vref={ this.state.eventVref } style={{ width : (100/resp.length) + '%' }} /> );
                 }
                 
                 // Sets state

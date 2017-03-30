@@ -21,7 +21,7 @@ const React = require( 'react' ),
     LocationCategory = require( '../components/locationCategory.js' ),
 
     // Plugins
-    _ = require( '../../modules/plugins/towwwnSelector.js' ),
+    _ = require( '../../modules/plugins/underscore.js' ),
     SyncScrollHandler = require( '../../modules/plugins/syncScrollHandler.js' ),
     Slider = require( '../../modules/plugins/slider.js' ),
     ViewHandler = require( '../../modules/handlers/viewHandler.js' ),

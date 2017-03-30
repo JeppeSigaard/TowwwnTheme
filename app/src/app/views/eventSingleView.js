@@ -82,7 +82,6 @@ class EventSingleView extends React.Component {
         let request = new XMLHttpRequest();
         request.addEventListener( 'load', ( resp ) => {
             let data = JSON.parse( resp.target.response );
-            console.log( data[0] );
             Globals.setMainState({
                 'singleLocation' : data[0],
             });

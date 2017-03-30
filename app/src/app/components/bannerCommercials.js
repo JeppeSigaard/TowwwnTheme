@@ -20,7 +20,7 @@ class BannerCommercials extends React.Component {
         this.commercialDataHandler.getCommercials().then( data => {
             let bannerCommercials = [];
             for ( let item of data ) {
-                bannerCommercials.push( <BannerCommercial elem={ item } /> )
+                bannerCommercials.push( <BannerCommercial key={ 'commercial-'+item.id } elem={ item } /> )
             } this.setState({ bannercommercials : bannerCommercials });
         });
     }

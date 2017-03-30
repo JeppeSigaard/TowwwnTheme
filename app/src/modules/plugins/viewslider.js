@@ -1,7 +1,7 @@
 
 
 // View Slider
-const _ = require( './towwwnSelector.js' ),
+const _ = require( './underscore.js' ),
       Globals = require( '../../app/globals.js' )
       
 class ViewSlider {

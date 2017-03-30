@@ -110,10 +110,13 @@
     }
 
     &.lineLayout{
+        padding-top: 12px;
+        
         .event{
             width: 100%;
             min-height: 110px;
             height: auto;
+            margin: 6px 15px;
 
             .imgcontainer{
                 float: left;

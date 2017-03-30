@@ -2,7 +2,7 @@
 // Single Event Layout
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
-      _ = require( '../../modules/plugins/towwwnSelector.js' ),
+      _ = require( '../../modules/plugins/underscore.js' ),
       SingleEvent = require( './singleEvent.js' );
 
 class Event extends React.Component {
