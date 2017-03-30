@@ -42,7 +42,6 @@
 
 .event-sv-content-container {
     position: relative;
-    min-height: calc( 100vh - #{$menu-bar-height} - 60px );
     background-color: white;
     z-index: 10;
 

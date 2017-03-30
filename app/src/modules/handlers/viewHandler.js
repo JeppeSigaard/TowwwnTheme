@@ -1,17 +1,26 @@
 
 
 // View Handler
+const _ = require( '../plugins/towwwnSelector.js' );
 class ViewHandler {
     
     // Ctor
     constructor( syncScrollHandler ) {
-        this.focusedViews = [ document.getElementById('event-calendar-view'), document.getElementById('location-category-view') ];
-        this.changeViewFocus( this.focusedViews[0], this.focusedViews[1], true, false, true );
+        this.focusedViews = [ _('#event-calendar-view').get(0), _('#location-category-view').get(0) ];
+        this.mobileFocusedView = _('#event-calendar-view').get();
+        
+        if ( _('body').hasClass('mobile') ) this.changeMobileViewFocus( this.mobileFocusedView, true, false );
+        else this.changeViewFocus( this.focusedViews[0], this.focusedViews[1], true, false, true );
         if ( syncScrollHandler != null ) this.syncScroll = syncScrollHandler;
     }
     
     // Change view focus
     changeViewFocus( leftView, rightView, fromLeft, fromRight, notrans ) {
+        if ( _('body').hasClass('mobile') ) {
+            this.changeMobileViewFocus( leftView, fromLeft, fromRight );
+            return;
+        }
+        
         if ( fromLeft == null && fromRight == null ) fromLeft = true;
         
         if ( typeof leftView === 'string' )
@@ -136,4 +145,51 @@ class ViewHandler {
         }, 30);
     }
     
+    // Change mobile view focus
+    changeMobileViewFocus( activeView, fromLeft, fromRight ) {
+        
+        // Error if screen is less than 640px wide
+        if ( !_('body').hasClass('mobile') ) {
+            throw "ViewHandler: Using change mobile focus on screen with a width of more than 640px";
+            return;
+        }
+        
+        // Checks if the new views is already is in focus
+        if ( _(activeView).hasClass('active') ) {
+            throw "ViewHandler: View is already in focus";
+            return;
+        }
+        
+        // Adds needed classes
+        _(this.mobileFocusedView).removeClass('active');
+        _(activeView).addClass('notrans active');
+        
+        // Sets starting position for new view
+        if ( fromLeft ) _(activeView).css({ transform : 'translate(-100%,0)' });
+        if ( fromRight ) _(activeView).css({ transform : 'translate(100%,0)' });
+        
+        // Timeout
+        setTimeout(() => {
+            _(activeView).removeClass('notrans');
+        
+            // Translates view in
+            if ( fromLeft ) _(this.mobileFocusedView).css({ transform : 'translate(100%,0)' });
+            if ( fromRight ) _(this.mobileFocusedView).css({ transform : 'translate(-100%,0)' });
+            _(activeView).css({ transform : 'translate(0,0)' });
+
+            // Sets new focused view
+            this.mobileFocusedView = activeView;
+        }, 10);
+        
+    }
+    
 } module.exports = ViewHandler;
+
+
+
+
+
+
+
+
+

@@ -3,7 +3,8 @@
 
 // View top bar
 const React = require( 'react' ),
-      Globals = require( '../globals.js' );
+      Globals = require( '../globals.js' ),
+      _ = require( '../../modules/plugins/towwwnSelector.js' );
 
 class ViewTopBar extends React.Component {
     
@@ -15,13 +16,22 @@ class ViewTopBar extends React.Component {
     
     // Close View
     closeView() {
-        Globals.viewHandler.changeViewFocus(
-            this.props.closeviewstate.leftview,
-            this.props.closeviewstate.rightview,
-            this.props.closeviewstate.fromLeft, 
-            this.props.closeviewstate.fromRight, 
-            false
-        );
+        if ( _('body').hasClass('mobile') &&
+             this.props.closeviewstate.mobile != null ) {
+            Globals.viewHandler.changeMobileViewFocus(
+                this.props.closeviewstate.mobile.view,
+                this.props.closeviewstate.mobile.fromLeft,
+                this.props.closeviewstate.mobile.fromRight,
+            );
+        } else {
+            Globals.viewHandler.changeViewFocus(
+                this.props.closeviewstate.leftview,
+                this.props.closeviewstate.rightview,
+                this.props.closeviewstate.fromLeft, 
+                this.props.closeviewstate.fromRight, 
+                false
+            );
+        }
 
         Globals.syncScroll.rescaleContainer();
     }
@@ -30,13 +40,22 @@ class ViewTopBar extends React.Component {
     changeView() {
         if ( this.props.willChangeView != null ) this.props.willChangeView();
         Globals.setMainState({ from : this.props.name });
-        Globals.viewHandler.changeViewFocus(
-            this.props.vref.leftview,
-            this.props.vref.rightview,
-            this.props.vref.fromLeft, 
-            this.props.vref.fromRight, 
-            false
-        );
+        
+        if ( _('body').hasClass('mobile') ) {
+            Globals.viewHandler.changeMobileViewFocus(
+                this.props.vref.mobile.view,
+                this.props.vref.mobile.fromLeft,
+                this.props.vref.mobile.fromRight
+            );
+        } else {
+            Globals.viewHandler.changeViewFocus(
+                this.props.vref.leftview,
+                this.props.vref.rightview,
+                this.props.vref.fromLeft, 
+                this.props.vref.fromRight, 
+                false
+            );
+        }
 
         Globals.syncScroll.rescaleContainer();
     }

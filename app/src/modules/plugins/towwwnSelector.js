@@ -1,17 +1,25 @@
 
 
 // Towwwn Selector
-let TowwwnSelector = ( selector ) => {
+let UnderScore = ( selector ) => {
     if ( selector == null ) return TSElem;
 
     // Creates new elem
-    let elem = new TSElem();
+    let elem = new UnderScoreElem();
 
+    // Checks if selector is a node
+    if ( ( selector.constructor.name != null &&
+         selector.constructor.name === 'NodeList' ) ||
+         typeof selector === 'object' )
+        elem.state = { domnode: selector };
+    
     // Gets dom node(s)
-    if ( selector === document ) elem.state = { domnode : document, };
-    else if ( selector === window ) elem.state = { domnode : window, };
-    else elem.state = { domnode : document.querySelectorAll( selector ) };
-
+    if ( elem.state == null ) {
+        if ( selector === document ) elem.state = { domnode : document, };
+        else if ( selector === window ) elem.state = { domnode : window, };
+        else elem.state = { domnode : document.querySelectorAll( selector ) };
+    }
+        
     // Checks if any elems where found
     if ( elem.state.domnode.length != null && elem.state.domnode.length <= 0 &&
          elem.state.domnode !== window && elem.state.domnode !== document ) {
@@ -22,17 +30,10 @@ let TowwwnSelector = ( selector ) => {
     // Returns elem
     return elem;
 
-}; module.exports = TowwwnSelector;
+}; module.exports = UnderScore;
 
 // Towwwwn Selector Elem
-class TSElem {
-    
-    // Check state
-    checkState() {
-        if ( this.state == null )
-            return false;
-        return true;
-    }
+class UnderScoreElem {
     
     // Get
     get( index ) {
@@ -44,17 +45,35 @@ class TSElem {
     
     // Add Class
     addClass( className ) {
-        if ( this.state.domnode != null ) {
-            for ( let node of this.state.domnode )
-                node.classList.add( className );
+        if ( className.includes(' ') ) {
+            className = className.split(' ');
+            for ( let item of className ) {
+                for ( let node of this.state.domnode ) {
+                    node.classList.add( item );
+                }
+            }
+        } else {
+            if ( this.state.domnode != null ) {
+                for ( let node of this.state.domnode )
+                    node.classList.add( className );
+            }
         } return this;
     }
     
     // Remove class
     removeClass( className ) {
-        if ( this.state.domnode != null ) {
-            for ( let node of this.state.domnode )
-                node.classList.remove( className );
+        if ( className.includes(' ') ) {
+            className = className.split(' ');
+            for ( let item of className ) {
+                for ( let node of this.state.domnode ) {
+                    node.classList.remove( item );
+                }
+            }
+        } else {
+            if ( this.state.domnode != null ) {
+                for ( let node of this.state.domnode )
+                    node.classList.remove( className );
+            }
         } return this;
     }
 
@@ -162,17 +181,20 @@ class TSElem {
     }
 
     // Css
-    css() {
+    css( styling ) {
+        if ( typeof styling === 'object' ) {
+            for ( let key in styling ) {
+                for ( let elem of this.state.domnode ) {
+                    elem.style[ key ] = styling[ key ]; } }
+        } else throw "TowwwnSelector, css: Param needs to be of type object";
     }
     
     // ComputedStyle
     style() {
         let resp = [];
-        if ( typeof this.state.domnode === 'object' ) {
-            for ( let node of this.state.domnodes )
-                resp.push( window.getComputedStyle( node ) );
-        } else { resp.push( window.getComputedStyle( this.state.domnode ) ); }
-        return resp;
+        for ( let node of this.state.domnodes ) {
+            resp.push( window.getComputedStyle( node ) );
+        } return resp;
     }
 
     // Position
@@ -200,6 +222,11 @@ class TSElem {
         let node = this.state.domnode;
         if ( node.constructor.name === 'NodeList' ) node = node[0];
         return node.innerHeight || node.clientHeight;
+    }
+    
+    // Attribute
+    attr( attr ) { 
+        return this.state.domnode[0].getAttribute( attr );
     }
 
 }

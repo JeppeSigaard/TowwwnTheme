@@ -4,7 +4,8 @@
 const React = require( 'react' ),
       LocationCategory = require( '../components/locationCategory.js' ),
       SubCategories = require( '../components/subcategories.js' ),
-      Globals = require( '../globals.js' );
+      Globals = require( '../globals.js' ),
+      _ = require( '../../modules/plugins/towwwnSelector.js' );
 
 class LocationCategoryView extends React.Component {
 
@@ -24,11 +25,18 @@ class LocationCategoryView extends React.Component {
         });
 
         Globals.setMainState({ from : this.props.name });
-        Globals.viewHandler.changeViewFocus(
-            'location-category-view',
-            'location-list-view',
-            false, true, false
-        );
+        if ( _('body').hasClass('mobile') ) {
+            Globals.viewHandler.changeMobileViewFocus(
+                '#location-list-view',
+                false, true
+            );
+        } else {
+            Globals.viewHandler.changeViewFocus(
+                'location-category-view',
+                'location-list-view',
+                false, true, false
+            );
+        }
 
         Globals.locationDataHandler.getCategorySpecificLocation( this.props.elem.category_id ).then(( resp ) => {
             Globals.setMainState({

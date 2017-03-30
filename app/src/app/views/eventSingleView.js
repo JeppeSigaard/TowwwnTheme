@@ -22,6 +22,11 @@ class EventSingleView extends React.Component {
                 'fromLeft' : false,
                 'fromRight' : true,
                 'notrans': false,
+                mobile: {
+                    view : '#event-calendar-view',
+                    fromLeft : false,
+                    fromRight : true,
+                }
             },
 
             'fromlocationclose' : {
@@ -30,6 +35,11 @@ class EventSingleView extends React.Component {
                 'fromLeft' : true,
                 'fromRight' : false,
                 'notrans': false,
+                mobile: {
+                    view : '#location-single-view',
+                    fromLeft : true,
+                    fromRight : false,
+                }
             },
 
             'vref' : {
@@ -37,7 +47,12 @@ class EventSingleView extends React.Component {
                 'rightview' : 'event-single-view',
                 'fromLeft' : true,
                 'fromRight' : false,
-                'notrans': false,
+                'notrans' : false,
+                mobile : {
+                    view : '#location-single-view',
+                    fromLeft : true,
+                    fromRight : false,
+                }
             },
 
             jsxEvent : null,

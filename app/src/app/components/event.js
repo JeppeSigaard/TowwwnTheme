@@ -2,6 +2,7 @@
 // Single Event Layout
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
+      _ = require( '../../modules/plugins/towwwnSelector.js' ),
       SingleEvent = require( './singleEvent.js' );
 
 class Event extends React.Component {
@@ -16,19 +17,34 @@ class Event extends React.Component {
         );
         
         if ( this.props.vref != null ) {
-            Globals.viewHandler.changeViewFocus(
-                this.props.vref.leftView,
-                this.props.vref.rightView,
-                this.props.vref.fromLeft,
-                this.props.vref.fromRight,
-                false
-            );
+            if ( _('body').hasClass('mobile') ) {
+                Globals.viewHandler.changeMobileViewFocus( // Tmp
+                    this.props.vref.mobile.view,
+                    this.props.vref.mobile.fromLeft,
+                    this.props.vref.mobile.fromRight
+                );
+            } else {
+                Globals.viewHandler.changeViewFocus(
+                    this.props.vref.leftView,
+                    this.props.vref.rightView,
+                    this.props.vref.fromLeft,
+                    this.props.vref.fromRight,
+                    false
+                );
+            }
         } else {
-            Globals.viewHandler.changeViewFocus(  
-                'event-single-view',
-                'event-calendar-view',
-                true, false, false
-            ); 
+            if ( _('body').hasClass('mobile') ) {
+                Globals.viewHandler.changeMobileViewFocus(  
+                    '#event-single-view',
+                    true, false
+                );
+            } else {
+                Globals.viewHandler.changeViewFocus(  
+                    'event-single-view',
+                    'event-calendar-view',
+                    true, false, false
+                ); 
+            }
         }
     }
 
@@ -38,13 +54,19 @@ class Event extends React.Component {
         Globals.setMainState({
             singleLocation : null
         });
-
-        Globals.viewHandler.changeViewFocus(
-            'location-single-view',
-            'event-calendar-view',
-            true, false, false
-        );
-
+        
+        if ( _('body').hasClass('mobile') ) {
+            Globals.viewHandler.changeMobileViewFocus(
+                '#location-single-view',
+                true, false
+            );
+        } else {
+            Globals.viewHandler.changeViewFocus(
+                'location-single-view',
+                'event-calendar-view',
+                true, false, false
+            );
+        }
 
         let xhr = new XMLHttpRequest();
             xhr.onload = function ( data ) {

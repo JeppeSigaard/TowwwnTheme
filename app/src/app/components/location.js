@@ -2,7 +2,8 @@
 
 // Location
 const React = require( 'react' ),
-      Globals = require( '../globals.js' );
+      Globals = require( '../globals.js' ),
+      _ = require( '../../modules/plugins/towwwnSelector.js' );
 
 class Location extends React.Component {
     
@@ -17,11 +18,19 @@ class Location extends React.Component {
         });
         
         Globals.setMainState({ from : this.props.name });
-        Globals.viewHandler.changeViewFocus(
-            'location-list-view',
-            'location-single-view',
-            false, true, false
-        );
+        
+        if ( _('body').hasClass('mobile') ) {
+            Globals.viewHandler.changeMobileViewFocus(
+                '#location-single-view',
+                false, true
+            );
+        } else {
+            Globals.viewHandler.changeViewFocus(
+                'location-list-view',
+                'location-single-view',
+                false, true, false
+            );    
+        }
     }
     
     // Render

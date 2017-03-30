@@ -23,13 +23,18 @@ class SingleLocation extends React.Component {
                 leftView : 'location-single-view',
                 rightView : 'event-single-view',
                 fromLeft : false,
-                fromRight : true
+                fromRight : true,
+                mobile : {
+                    view: '#event-single-view',
+                    fromLeft: false,
+                    fromRight: true,
+                }
             },
         };
     }
     
-    // Component will receive props
-    componentWillReceiveProps( nextProps ) {
+    // Load events
+    loadEvents( nextProps ) {
         if ( nextProps.elem !== this.props.elem ) {
             this.setState({ 'jsxEvents' : null });
             Globals.eventDataHandler.getEvents({
@@ -49,6 +54,10 @@ class SingleLocation extends React.Component {
             });
         }
     }
+    
+    // Component will receive props
+    componentWillReceiveProps( nextProps ) { this.loadEvents( nextProps ); }
+    componentWillMount() { this.loadEvents( this.props ); }
     
     // Component did update
     componentDidUpdate() {

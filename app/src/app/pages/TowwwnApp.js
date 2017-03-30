@@ -25,6 +25,7 @@ const React = require( 'react' ),
     SyncScrollHandler = require( '../../modules/plugins/syncScrollHandler.js' ),
     Slider = require( '../../modules/plugins/slider.js' ),
     ViewHandler = require( '../../modules/handlers/viewHandler.js' ),
+    ViewSlider = require( '../../modules/plugins/viewslider.js' ),
     EventHandlers = require( '../../modules/handlers/eventHandlers.js' ),
     ImageHandler = require( '../../modules/handlers/imageHandler.js' ),
 
@@ -40,6 +41,9 @@ class TowwwnApp extends React.Component {
     constructor() {
         super();
         
+        // Checks if mobile
+        if ( _(window).width() <= 640 ) _('body').addClass('mobile');
+        
         // Instances
         this.imageHandler = new ImageHandler();
         this.eventHandlers = new EventHandlers();
@@ -51,6 +55,18 @@ class TowwwnApp extends React.Component {
         
         this.hasMounted = false;
         this.state = { from: null };
+        
+        // Relations
+        Globals.relations = {
+            'event-calendar-view' : {
+                left: null,
+                right: 'location-category-view',
+            },
+            'location-category-view' : {
+                left: 'event-calendar-view',
+                right: null,
+            }
+        };
 
         // Gets event data
         Globals.eventDataHandler = new EventDataHandler();
@@ -105,6 +121,11 @@ class TowwwnApp extends React.Component {
         Globals.syncScroll.rescaleContainer( Globals.viewHandler.focusedViews );
         this.imageHandler.lazyLoad();
         document.body.classList.remove('loading');
+    }
+    
+    // Component did mount
+    componentDidMount() {
+        this.viewSlider = new ViewSlider();
     }
 
     // Render

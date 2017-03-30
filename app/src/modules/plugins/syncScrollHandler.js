@@ -1,7 +1,8 @@
 
 
 // Sync Scroll
-const TowwwnApp = require( '../../app/pages/TowwwnApp.js' );
+const TowwwnApp = require( '../../app/pages/TowwwnApp.js' ),
+      _ = require( './towwwnSelector.js' );
 class SyncScrollHandler {
 
     // Ctor
@@ -56,6 +57,8 @@ class SyncScrollHandler {
 
     // Rescales the container
     rescaleContainer( fv ) {
+        if ( _('body').hasClass('mobile') ) return;
+        
         let focusedViews = null,
             oldHeight = window.innerHeight;
 
@@ -117,6 +120,7 @@ class SyncScrollHandler {
 
     // Scroll Event Handler
     onscroll() {
+        if ( _('body').hasClass('mobile') ) return;
 
         if ( this.container == null || this.elem == null ) return;
         // Fields

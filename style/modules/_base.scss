@@ -33,6 +33,25 @@ body {
         background-repeat: no-repeat;
         animation: fadeOutBodyAfter 200ms forwards;
     }
+    
+    &.mobile{
+        overflow-x: hidden;
+        
+        .container-section{
+            height: 100vh!important;
+            &.active{ 
+                position: relative!important;
+                vertical-align: top!important;
+                height: auto!important; 
+                
+                .sync-outer{
+                    position: relative!important;
+                    height: auto!important;
+                    top: 0!important;
+                }
+            }
+        }
+    }
 
     @media(min-width:#{$bp-1}){
         &:before, &:after{
@@ -97,6 +116,17 @@ p a{
     z-index: 20;
     border-top: none;
     border-bottom: none;
+}
+
+body.mobile{
+    #page-content{
+        height: auto!important;
+    }
+    
+    .content-container-inner{
+        height: auto!important;
+        position: relative!important;
+    }
 }
 
 $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
