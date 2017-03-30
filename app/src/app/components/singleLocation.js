@@ -2,7 +2,7 @@
 
 // Single Location
 const React = require( 'react' ),
-      ts = require( '../../modules/plugins/towwwnSelector.js' ).default,
+      _ = require( '../../modules/plugins/towwwnSelector.js' ),
       Globals = require( '../globals.js' ),
       Event = require( './event.js' ),
       SingleViewFooter = require( '../componentParts/singleviewfooter.js' ),
@@ -18,6 +18,7 @@ class SingleLocation extends React.Component {
         super(); 
         this.state = {
             jsxEvents : null,
+            smallscreen : false,
             slider : new TowwwnSlider(),
             eventVref : {
                 leftView : 'location-single-view',
@@ -31,6 +32,9 @@ class SingleLocation extends React.Component {
                 }
             },
         };
+        
+        // Event Handlers
+        _(window).on( 'resize', this.onResize.bind(this) );
     }
     
     // Load events
@@ -55,9 +59,15 @@ class SingleLocation extends React.Component {
         }
     }
     
+    // Resize
+    onResize() {
+        if ( _(window).width() <= 1000 ) this.setState({ smallscreen: true });
+        else this.setState({ smallscreen: false });
+    }
+    
     // Component will receive props
     componentWillReceiveProps( nextProps ) { this.loadEvents( nextProps ); }
-    componentWillMount() { this.loadEvents( this.props ); }
+    componentWillMount() { this.onResize(); this.loadEvents( this.props ); }
     
     // Component did update
     componentDidUpdate() {
@@ -154,7 +164,9 @@ class SingleLocation extends React.Component {
                             </svg>
                         </div>
                         
-                        <div className="inner" style={{ width : (this.state.jsxEvents.length/3*100) +'%' }} >
+                        <div className="inner" style={{ width : ( this.state.smallscreen ? 
+                                                                    (this.state.jsxEvents.length/2*100) :
+                                                                    (this.state.jsxEvents.length/3*100) ) +'%' }} >
                             { this.state.jsxEvents }
                         </div>
                     </div>

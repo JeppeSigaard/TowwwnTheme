@@ -58,14 +58,32 @@ class TowwwnApp extends React.Component {
         
         // Relations
         Globals.relations = {
+            
+            'event-single-view' : {
+                left: null,
+                right: 'event-calendar-view',
+            },
+            
             'event-calendar-view' : {
                 left: null,
                 right: 'location-category-view',
             },
+            
             'location-category-view' : {
                 left: 'event-calendar-view',
                 right: null,
-            }
+            },
+            
+            'location-list-view' : {
+                left: 'location-category-view',
+                right: null,
+            },
+            
+            'location-single-view' : {
+                left: 'location-list-view',
+                right: null,
+            },
+            
         };
 
         // Gets event data
