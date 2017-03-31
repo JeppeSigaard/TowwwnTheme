@@ -35,10 +35,16 @@ body {
     }
     
     &.mobile{
-        overflow-x: hidden;
+        #page-content{
+            height: auto !important;
+            width: 100vw;
+            overflow-x: hidden;
+        }
         
         .container-section{
             height: 100vh!important;
+            .sync-outer{ position: static; }
+            
             &.active{ 
                 position: relative!important;
                 vertical-align: top!important;
