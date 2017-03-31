@@ -13,39 +13,10 @@ class SingleEvent extends React.Component {
     // Ctor
     constructor( props ) { 
         super( props ); 
+        this.sharelink = props.elem.fbid != null ? ( 'https://www.facebook.com/events/' + props.elem.fbid ) : null;
         this.state = {
-            imgurl : ( props.elem.imgurl != null ? props.elem.imgurl : 
-                      '' ),
+            imgurl : ( props.elem.imgurl != null ? props.elem.imgurl : '' ),
         };
-    }
-    
-    // Component will receive props
-    componentWillReceiveProps( nextProps ) {
-        
-        // Extracts img url
-        let imgurl = null;
-        if ( nextProps.elem.imgurl !== '' &&
-             nextProps.elem.imgurl !== null &&
-             typeof nextProps.elem.imgurl !== 'undefined' ) {
-            imgurl = nextProps.elem.imgurl;
-        } else {
-            imgurl = '';
-        }
-
-        // Sets state
-        this.setState({ imgurl : imgurl });
-
-
-        // Bump up (plz fix)
-        const singleSync = document.querySelectorAll('#event-single-view .sync-outer')[0];
-        if(singleSync.scrollTop > 60){
-            singleSync.scrollTop = 60;
-        }
-
-    }
-
-    componentDidUpdate (obj){
-        Globals.syncScroll.rescaleContainer();
     }
 
     // Render
@@ -72,24 +43,27 @@ class SingleEvent extends React.Component {
 
                         {/* CTA Btns */}
                         <div className="es-btns" >
-                            <div className="status-btn share" data-link={ 'https://www.facebook.com/events/' + elem.fbid } >
+                            <a className="status-btn share fb-xfbml-parse-ignore" 
+                               href={ "https://www.facebook.com/sharer/sharer.php?u="+ 
+                                    encodeURI( 'https://www.facebook.com/events/' + this.props.elem.fbid ).replace( /%5B/g, '[' ).replace( /%5D/g, ']') +"&amp;src=sdkpreparse" } 
+                               onClick={ this.share.bind(this) } data-prevent>
                                 <div className="icon">
                                     <svg viewBox="0 0 32 32" >
                                         <use xlinkHref="#icon-facebook"></use>
                                     </svg>
                                 </div>
                                 <div className="text">Del</div>
-                            </div>
+                            </a>
 
                             { elem.ticket_uri !== '' && elem.ticket_uri !== null &&
-                                <div className="status-btn ticket" data-link={ elem.ticket_uri } >
+                                <a className="status-btn ticket" target="_blank" href={ elem.ticket_uri != null ? elem.ticket_uri : '#' } >
                                     <div className="icon">
                                         <svg viewBox="0 0 32 32">
                                             <use xlinkHref="#icon-ticket"></use>
                                         </svg>
                                     </div>
                                     <div className="text">Køb billet</div>
-                                </div>
+                                </a>
                             }
                         </div>
                         <hr className="lineBreak" />
@@ -110,5 +84,38 @@ class SingleEvent extends React.Component {
             </div>
         );
     }
+    
+    // Share
+    share() { if ( this.sharelink != null ) Globals.fb.share( this.sharelink ); }
+    
+    // Component will receive props
+    componentWillReceiveProps( nextProps ) {
+        this.sharelink = 'https://www.facebook.com/events/' + nextProps.elem.fbid;
+        
+        // Extracts img url
+        let imgurl = null;
+        if ( nextProps.elem.imgurl !== '' &&
+             nextProps.elem.imgurl !== null &&
+             typeof nextProps.elem.imgurl !== 'undefined' ) {
+            imgurl = nextProps.elem.imgurl;
+        } else {
+            imgurl = '';
+        }
+        
+        // Sets state
+        this.setState({ 
+            imgurl : imgurl,
+        });
+
+        // Bump up (plz fix)
+        const singleSync = document.querySelectorAll('#event-single-view .sync-outer')[0];
+        if(singleSync.scrollTop > 60){
+            singleSync.scrollTop = 60;
+        }
+
+    }
+
+    // Component did update
+    componentDidUpdate() { Globals.syncScroll.rescaleContainer(); }
 
 } module.exports = SingleEvent;

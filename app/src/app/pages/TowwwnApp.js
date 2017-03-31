@@ -8,6 +8,9 @@ const React = require( 'react' ),
     EventDataHandler = require( '../../modules/handlers/dataHandlers/eventDataHandler.js' ),
     CategoryDataHandler = require( '../../modules/handlers/dataHandlers/categoryDataHandler.js' ),
     LocationDataHandler = require( '../../modules/handlers/dataHandlers/locationDataHandler.js' ),
+      
+    // API Handlers
+    FBHandler = require( '../../modules/handlers/apihandlers/fbhandler.js' ),
 
     // Views
     EventSingleView = require( '../views/eventSingleView.js' ),
@@ -52,6 +55,7 @@ class TowwwnApp extends React.Component {
         Globals.syncScroll = new SyncScrollHandler();
         Globals.viewHandler = null;
         Globals.locationDataHandler = new LocationDataHandler();
+        Globals.fb = new FBHandler();
         
         this.hasMounted = false;
         this.state = { from: null };
@@ -122,6 +126,13 @@ class TowwwnApp extends React.Component {
 
     }
     
+    // Handle anchor click
+    handleAnchorClick( e ) {
+        if ( _([this]).attr('href') === '#' ||
+             _([this]).hasAttr('data-prevent') )
+            e.preventDefault();
+    }
+    
     // ParsedSetState
     parsedSetState( key, value ) {
         if ( typeof key !== 'object' ) { 
@@ -139,11 +150,21 @@ class TowwwnApp extends React.Component {
         Globals.syncScroll.rescaleContainer( Globals.viewHandler.focusedViews );
         this.imageHandler.lazyLoad();
         document.body.classList.remove('loading');
+        
+        // Handle anchor click
+        _('a').off( 'click', this.handleAnchorClick );
+        _('a').on( 'click', this.handleAnchorClick );
+    
     }
     
     // Component did mount
     componentDidMount() {
-        this.viewSlider = new ViewSlider();
+        this.viewSlider = new ViewSlider(); 
+        
+        // Handle anchor click
+        _('a').off( 'click', this.handleAnchorClick );
+        _('a').on( 'click', this.handleAnchorClick );
+    
     }
 
     // Render

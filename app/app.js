@@ -1,3 +1,4 @@
+'use strict';
 
 // Requires
 let React = require( 'react' ),

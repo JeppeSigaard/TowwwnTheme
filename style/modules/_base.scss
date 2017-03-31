@@ -46,6 +46,7 @@ body {
             .sync-outer{ position: static; }
             
             &.active{ 
+                z-index: 2;
                 position: relative!important;
                 vertical-align: top!important;
                 height: auto!important; 

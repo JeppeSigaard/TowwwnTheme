@@ -105,6 +105,28 @@ class UnderScoreElem {
         }
 
         return this;
+    
+    }
+    
+    // Off
+    off( event, func ) {
+        
+        if ( typeof event !== 'string' || typeof func !== 'function' ) return;
+        if ( this.state.domnode === window ||
+             this.state.domnode === document ) {
+            this.state.domnode.removeEventListener( event, func );
+            return;
+        }
+
+        if ( Array.isArray( this.state.domnode ) ||
+             ( this.state.domnode.constructor.name != null &&
+               this.state.domnode.constructor.name === 'NodeList' )) {
+            for ( let elem of this.state.domnode ) {
+                elem.removeEventListener( event, func ); }
+        }
+
+        return this;
+        
     }
 
     // On global click; NOT WORKING
@@ -225,9 +247,10 @@ class UnderScoreElem {
     }
     
     // Attribute
-    attr( attr ) { 
-        return this.state.domnode[0].getAttribute( attr );
-    }
+    attr( attr ) { return this.state.domnode[0].getAttribute( attr ); }
+    
+    // Has Attribute
+    hasAttr( attr ) { return this.state.domnode[0].getAttribute( attr ) != null ? true : false; }
 
 }
 

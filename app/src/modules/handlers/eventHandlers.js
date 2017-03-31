@@ -10,7 +10,8 @@ class ExtraEventHandlers {
         _(window).on( 'resize', this.onResize.bind(this) );
         _('#menu-show-btns').on( 'click', this.handleShowBtnClick.bind(this) );
     }
-
+    
+    // On resize
     onResize() {
         if ( _(window).width() <= 640 ) _('body').addClass('mobile');
         else _('body').removeClass('mobile');
@@ -47,6 +48,11 @@ class ExtraEventHandlers {
             _('.site-header').addClass('active');
         }
 
+    }
+    
+    // Handler anchor click
+    handleAnchorClick( e ) {
+        console.log( e, this );
     }
     
 } module.exports = ExtraEventHandlers;
