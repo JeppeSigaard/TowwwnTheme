@@ -3,7 +3,7 @@
 // Sub categories
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
-      _ = require( '../../modules/plugins/underscore.js' ),
+      _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
       SubCategory = require( '../componentParts/subcategory.js' );
 
 class SubCategories extends React.Component {

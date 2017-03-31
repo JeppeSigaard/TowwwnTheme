@@ -1,7 +1,7 @@
 
 
 // View Handler
-const _ = require( '../plugins/underscore.js' );
+const _ = require( '../libaries/underscore/underscore_main.js' );
 class ViewHandler {
     
     // Ctor

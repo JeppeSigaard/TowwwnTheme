@@ -5,7 +5,7 @@ const React = require( 'react' ),
       LocationCategory = require( '../components/locationCategory.js' ),
       SubCategories = require( '../components/subcategories.js' ),
       Globals = require( '../globals.js' ),
-      _ = require( '../../modules/plugins/underscore.js' );
+      _ = require( '../../modules/libaries/underscore/underscore_main.js' );
 
 class LocationCategoryView extends React.Component {
 

@@ -24,11 +24,11 @@ const React = require( 'react' ),
     LocationCategory = require( '../components/locationCategory.js' ),
 
     // Plugins
-    _ = require( '../../modules/plugins/underscore.js' ),
-    SyncScrollHandler = require( '../../modules/plugins/syncScrollHandler.js' ),
-    Slider = require( '../../modules/plugins/slider.js' ),
+    _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
+    SyncScrollHandler = require( '../../modules/libaries/syncScrollHandler.js' ),
+    Slider = require( '../../modules/libaries/slider.js' ),
     ViewHandler = require( '../../modules/handlers/viewHandler.js' ),
-    ViewSlider = require( '../../modules/plugins/viewslider.js' ),
+    ViewSlider = require( '../../modules/libaries/viewslider.js' ),
     EventHandlers = require( '../../modules/handlers/eventHandlers.js' ),
     ImageHandler = require( '../../modules/handlers/imageHandler.js' ),
 

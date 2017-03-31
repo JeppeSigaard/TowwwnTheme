@@ -2,14 +2,14 @@
 
 // Single Location
 const React = require( 'react' ),
-      _ = require( '../../modules/plugins/underscore.js' ),
+      _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
       Globals = require( '../globals.js' ),
       Event = require( './event.js' ),
       SingleViewFooter = require( '../componentParts/singleviewfooter.js' ),
       
       Linkify = require( 'react-linkify' ).default,
       TextPreproccesors = require( '../../modules/tools/textPreproccesors.js' ),
-      TowwwnSlider = require( '../../modules/plugins/slider.js' );
+      TowwwnSlider = require( '../../modules/libaries/slider.js' );
 
 class SingleLocation extends React.Component {
     

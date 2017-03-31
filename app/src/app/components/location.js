@@ -3,7 +3,7 @@
 // Location
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
-      _ = require( '../../modules/plugins/underscore.js' );
+      _ = require( '../../modules/libaries/underscore/underscore_main.js' );
 
 class Location extends React.Component {
     
