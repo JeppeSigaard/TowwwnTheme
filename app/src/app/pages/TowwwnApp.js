@@ -80,15 +80,15 @@ class TowwwnApp extends React.Component {
             'location-category-view' : {
                 left: 'event-calendar-view',
                 right: null,
-                canleft: false,
-                canright: true,
+                canleft: true,
+                canright: false,
             },
             
             'location-list-view' : {
                 left: 'location-category-view',
                 right: null,
-                canleft: false,
-                canright: true,
+                canleft: true,
+                canright: false,
             },
             
             'location-single-view' : {

@@ -2,6 +2,7 @@
 
 // Location Single view
 const React = require( 'react' ),
+      Globals = require( '../globals.js' ),
       SingleLocation = require( '../components/singleLocation.js' ),
       BannerCommercials = require( '../components/bannerCommercials.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
@@ -64,23 +65,32 @@ class LocationSingleView extends React.Component{
         
         // Sets close state
         if ( nextProps.from === 'event-single-view' ) {
-            Globals.relations[ nextProps.name ].fromright = false;
-            Globals.relations[ nextProps.name ].fromleft = true;
+            
+            Globals.relations[ nextProps.name ].canright = true;
+            Globals.relations[ nextProps.name ].canleft = false;
             
             this.setState({
                 closeviewstate : this.fromeventclose,
             });
+            
         } else if ( nextProps.from === 'event-calendar-view' ) {
-            Globals.relations[ nextProps.name ].fromright = true;
-            Globals.relations[ nextProps.name ].fromleft = false;
+            
+            Globals.relations[ nextProps.name ].canright = false;
+            Globals.relations[ nextProps.name ].canleft = false;
             
             this.setState({
                 closeviewstate : this.fromeventCalendarclose,
             });
+            
         } else {
+            
+            Globals.relations[ nextProps.name ].canright = false;
+            Globals.relations[ nextProps.name ].canleft = true;
+            
             this.setState({
                 closeviewstate : this.standardclose,
             });
+            
         }
         
     }

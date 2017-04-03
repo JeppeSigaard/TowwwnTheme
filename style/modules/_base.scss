@@ -20,7 +20,7 @@ body {
         //margin-right: 14px;
     }
 
-    &:after{
+    /*&:after{
         content: '';
         display: block;
         position: fixed;
@@ -32,9 +32,7 @@ body {
         background-size: 62px;
         background-repeat: no-repeat;
         animation: fadeOutBodyAfter 200ms forwards;
-    }
-    
-    &.loaded{ &:after{ animation: none; background-image: none; } }
+    }*/
     
     &.mobile{
         #page-content{
