@@ -10,7 +10,7 @@
     background-position: center;
     transform: translateY(0px);
     transition: transform 200ms;
-    border-bottom: 60px solid $color-grey-1;
+    border-bottom: $menu-bar-height solid $color-grey-1;
 
     &.fixed{
 

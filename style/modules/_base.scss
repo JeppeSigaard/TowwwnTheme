@@ -161,7 +161,7 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0;
-            height: 60px;
+            height: $menu-bar-height;
             background: $color-blue-2;
         }
 
