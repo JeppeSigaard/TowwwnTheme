@@ -100,6 +100,8 @@ class ViewSlider {
             _('#'+this.relations.right).removeClass('notrans').addClass('active').css({ transform: 'translate(0,0)' });
             Globals.viewHandler.mobileFocusedView = _('#'+this.relations.right).get();
             
+            Globals.setMainState({ currentMobileView : _('#'+this.relations.right) });
+            
         } else if ( this.distance * this.cos >= _(window).width() / 3 * 1 && this.canLeft ) {
             
             // Snap left
@@ -111,6 +113,8 @@ class ViewSlider {
                 _('#'+this.currentView).addClass('notrans').css({ transform: 'translate(-100%,0)' }); 
                 setTimeout(() => { _('#'+this.currentView).removeClass('notrans'); }, 40);
             }, parseFloat( window.getComputedStyle( _('#'+this.currentView).get(0) ).transitionDuration ) * 1000);
+            
+            Globals.setMainState({ currentMobileView : _('#'+this.relations.left) });
             
         } else { 
             

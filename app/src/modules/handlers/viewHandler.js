@@ -1,7 +1,8 @@
 
 
 // View Handler
-const _ = require( '../libaries/underscore/underscore_main.js' );
+const _ = require( '../libaries/underscore/underscore_main.js' ),
+      Globals = require( '../../app/globals.js' );
 class ViewHandler {
     
     // Ctor
@@ -159,6 +160,8 @@ class ViewHandler {
             throw "ViewHandler: View is already in focus";
             return;
         }
+        
+        Globals.setMainState({ currentMobileView : activeView });
         
         // Adds needed classes
         _(this.mobileFocusedView).removeClass('active');

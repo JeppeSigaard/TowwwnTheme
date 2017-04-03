@@ -22,6 +22,7 @@ const React = require( 'react' ),
     // Components
     Event = require( '../components/event.js' ),
     LocationCategory = require( '../components/locationCategory.js' ),
+    ViewSliderDots = require('../components/viewsliderdots.js'),
 
     // Plugins
     _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
@@ -58,7 +59,7 @@ class TowwwnApp extends React.Component {
         Globals.fb = new FBHandler();
         
         this.hasMounted = false;
-        this.state = { from: null };
+        this.state = { from: null, currentView: null, };
         
         // Relations
         Globals.relations = {
@@ -169,6 +170,7 @@ class TowwwnApp extends React.Component {
     
     // Component did mount
     componentDidMount() {
+        _('body').removeClass('loading');
         _('body').addClass('loaded');
         this.viewSlider = new ViewSlider(); 
         
@@ -189,6 +191,11 @@ class TowwwnApp extends React.Component {
                     <LocationListView name="location-list-view" from={ this.state.from } elems={ this.state.currentLocations } category={ this.state.currentLocationsCategory } setMainState={ this.parsedSetState.bind(this) } />
                     <LocationSingleView name="location-single-view" from={ this.state.from } elem={ this.state.singleLocation } setMainState={ this.parsedSetState.bind(this) } />
                 </div>
+                
+                { this.state.currentMobileView != null &&
+                  _('body').hasClass('mobile') &&
+                    <ViewSliderDots currentView={ this.state.currentMobileView } /> 
+                }
             </div>
         );
     }
