@@ -50,19 +50,19 @@ class ViewSliderDots extends React.Component {
         // Left dots
         for ( let iter = 0; iter < dotsLeft; iter++ ){
             this.state.dots.push(
-                <div className="viewslider-dot viewslider-dot-left" key={ "viewsliderdot-left-"+iter } ></div>
+                <div className="viewsliderdot viewsliderdot-left" key={ "viewsliderdot-left-"+iter } ></div>
             );
         }
         
         // Active dot
         this.state.dots.push(
-            <div className="viewslider-dot viewslider-dot-active" key="viewsliderdot-active" ></div>
+            <div className="viewsliderdot viewsliderdot-active" key="viewsliderdot-active" ></div>
         );
         
         // Right dots
         for ( let iter = 0; iter < dotsRight; iter++ ){
             this.state.dots.push(
-                <div className="viewslider-dot viewslider-dot-right" key={ "viewsliderdot-right-"+iter } ></div>
+                <div className="viewsliderdot viewsliderdot-right" key={ "viewsliderdot-right-"+iter } ></div>
             );
         }
         
@@ -72,9 +72,7 @@ class ViewSliderDots extends React.Component {
     render() {
         return (
             <div className="viewsliderdots">
-                <div className="viewsliderdots-inner">
-                    { this.state.dots != null && this.state.dots.length > 0 && this.state.dots }
-                </div>
+                { this.state.dots != null && this.state.dots.length > 0 && this.state.dots }
             </div>
         );
     }

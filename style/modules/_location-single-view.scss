@@ -33,7 +33,11 @@
 
 .location-singleview-content{
     width: 100%;
-    padding: 24px;
+    padding: 12px;
+    @media (min-width: 640px){
+     padding: 24px;
+    }
+
     height: auto;
     overflow: auto;
 
