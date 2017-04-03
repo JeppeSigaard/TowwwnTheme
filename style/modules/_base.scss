@@ -20,6 +20,7 @@ body {
         //margin-right: 14px;
     }
 
+    /*
     &:after{
         content: '';
         display: block;
@@ -33,6 +34,7 @@ body {
         background-repeat: no-repeat;
         animation: fadeOutBodyAfter 200ms forwards;
     }
+    */
     
     &.loaded{ &:after{ animation: none; background-image: none; } }
     
