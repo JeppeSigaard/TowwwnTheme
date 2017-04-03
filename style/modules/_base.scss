@@ -34,6 +34,8 @@ body {
         animation: fadeOutBodyAfter 200ms forwards;
     }
     
+    &.loaded{ &:after{ animation: none; background-image: none; } }
+    
     &.mobile{
         #page-content{
             height: auto !important;

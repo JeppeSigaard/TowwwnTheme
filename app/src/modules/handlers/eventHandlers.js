@@ -23,16 +23,14 @@ class ExtraEventHandlers {
         /* -------------------------------------------- */
         // HEADER STUFF START
         
-        if ( !_('body').hasClass('mobile') ) {
-            let bp = _('#header').height() + _('#header').offset().top;
-            if ( window.pageYOffset >= bp ) {
-                _('#menu-show-btns').addClass('show').removeClass('active');
-                _('#site-header').addClass('fixed').removeClass('active');
-            } else {
-                _('#menu-show-btns').removeClass('show').removeClass('active');
-                _('#site-header').removeClass('fixed').removeClass('active');
-            }
-        }
+//        let bp = _('#header').height() + _('#header').offset().top;
+//        if ( window.pageYOffset >= bp ) {
+//            _('#menu-show-btns').addClass('show').removeClass('active');
+//            _('#site-header').addClass('fixed').removeClass('active');
+//        } else {
+//            _('#menu-show-btns').removeClass('show').removeClass('active');
+//            _('#site-header').removeClass('fixed').removeClass('active');
+//        }
         
         // HEADER STUFF END
         /* -------------------------------------------- */

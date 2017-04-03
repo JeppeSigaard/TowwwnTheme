@@ -64,10 +64,16 @@ class LocationSingleView extends React.Component{
         
         // Sets close state
         if ( nextProps.from === 'event-single-view' ) {
+            Globals.relations[ nextProps.name ].fromright = false;
+            Globals.relations[ nextProps.name ].fromleft = true;
+            
             this.setState({
                 closeviewstate : this.fromeventclose,
             });
         } else if ( nextProps.from === 'event-calendar-view' ) {
+            Globals.relations[ nextProps.name ].fromright = true;
+            Globals.relations[ nextProps.name ].fromleft = false;
+            
             this.setState({
                 closeviewstate : this.fromeventCalendarclose,
             });

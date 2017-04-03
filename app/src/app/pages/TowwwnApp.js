@@ -64,28 +64,38 @@ class TowwwnApp extends React.Component {
         Globals.relations = {
             
             'event-single-view' : {
-                left: null,
+                left: 'location-single-view',
                 right: 'event-calendar-view',
+                canleft: false,
+                canright: true,
             },
             
             'event-calendar-view' : {
                 left: null,
                 right: 'location-category-view',
+                canleft: false,
+                canright: true,
             },
             
             'location-category-view' : {
                 left: 'event-calendar-view',
                 right: null,
+                canleft: false,
+                canright: true,
             },
             
             'location-list-view' : {
                 left: 'location-category-view',
                 right: null,
+                canleft: false,
+                canright: true,
             },
             
             'location-single-view' : {
                 left: 'location-list-view',
-                right: null,
+                right: 'event-single-view',
+                canleft: true,
+                canright: false,
             },
             
         };
@@ -159,6 +169,7 @@ class TowwwnApp extends React.Component {
     
     // Component did mount
     componentDidMount() {
+        _('body').addClass('loaded');
         this.viewSlider = new ViewSlider(); 
         
         // Handle anchor click
