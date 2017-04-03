@@ -46,17 +46,13 @@ class TowwwnSlider {
 
                 // Event Handlers
                 if ( !prevButtonElem.classList.contains( 'towwwnslider-button' ) ) {
-                    window.addEventListener( 'click', e => {
-                        if ( e.target === prevButtonElem || e.target.parentNode === prevButtonElem || 
-                             e.target.parentNode.parentNode === prevButtonElem ) 
+                    prevButtonElem.addEventListener( 'click', e => {
                             innerElem.changeSlide( currentIndex-1 ); });
                     prevButtonElem.classList.add( 'towwwnslider-button' );
                 }
 
                 if ( !nextButtonElem.classList.contains( 'towwwnslider-button' ) ) {
-                    window.addEventListener( 'click', e => {
-                        if ( e.target === nextButtonElem || e.target.parentNode === nextButtonElem || 
-                             e.target.parentNode.parentNode === nextButtonElem ) 
+                    nextButtonElem.addEventListener( 'click', e => {
                             innerElem.changeSlide( currentIndex+1 ); });
                     nextButtonElem.classList.add( 'towwwnslider-button' );
                 }
