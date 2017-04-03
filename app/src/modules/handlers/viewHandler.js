@@ -164,7 +164,7 @@ class ViewHandler {
         Globals.setMainState({ currentMobileView : activeView });
         
         // Adds needed classes
-        _(this.mobileFocusedView).removeClass('active');
+        _(this.mobileFocusedView).removeClass('active notrans');
         _(activeView).addClass('notrans active');
         
         // Sets starting position for new view

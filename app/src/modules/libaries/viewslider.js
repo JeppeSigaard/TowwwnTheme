@@ -88,6 +88,8 @@ class ViewSlider {
     
     // Touch End
     onTouchEnd(e) {
+        if ( this.distance < 30 ) return;
+        
         _('#'+this.currentView).removeClass('notrans');
         if ( this.canLeft ) _('#'+this.relations.left).removeClass('notrans');
         if ( this.canRight ) _('#'+this.relations.right).removeClass('notrans');
