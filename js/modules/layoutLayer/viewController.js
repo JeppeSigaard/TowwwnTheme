@@ -5,7 +5,7 @@ var ViewControllerModule = {
     settings: {
         ready: false,
         bbActive: false,
-        backButton: $('.back-button'),
+        backButton: '.event-bar .close-button',
         betaWarning: $('.beta-warning'),
         socialMedia: $('.socialmedia'),
         mobile: false,
@@ -20,13 +20,6 @@ var ViewControllerModule = {
 
     // Update
     update: function() {
-        if ( $(window).innerWidth() <= 640) {
-            this.settings.mobile = true;
-            this.settings.backButton.addClass('mobile');
-        } else {
-            this.settings.mobile = false;
-            this.settings.backButton.removeClass('mobile');
-        }
     },
 
     // Bind UI Actions
@@ -36,42 +29,18 @@ var ViewControllerModule = {
         }.bind(this));
 
         $(window).on('resize', this.update.bind(this));
-        this.settings.backButton.on( 'click', function() {
-            if ( this.settings.mobile ) {
-                ViewHandler.go_to( 0 );
-            }
-
-            this.disableBackButton();
+        $(document).on( 'click', this.settings.backButton, function() {
             ViewHandler.closeSingleView();
+            history.pushState({ type : 'home', id : null }, event.name + ' · Towwwn', main_path + '/');
         }.bind(this));
     },
 
     // Activate back button
     activeBackButton: function() {
-        if ( !this.settings.bbActive ) {
-            setTimeout(function() {
-                this.settings.backButton.addClass('active');
-            }.bind(this), 300);
-
-            this.settings.betaWarning.removeClass('active');
-            this.settings.socialMedia.removeClass('active');
-
-            this.settings.bbActive = true;
-        }
     },
 
     // Disable back button
     disableBackButton: function() {
-        if ( this.settings.bbActive ) {
-            this.settings.backButton.removeClass('active');
-
-            setTimeout(function() {
-                this.settings.betaWarning.addClass('active');
-                this.settings.socialMedia.addClass('active');
-            }.bind(this), 300);
-
-            this.settings.bbActive = false;
-        }
     }
 
 };

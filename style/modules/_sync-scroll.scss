@@ -1,25 +1,40 @@
 .sync-outer{
-    position:relative;
-    height: auto;
-    overflow: hidden;
+    position: -webkit-sticky;
+    position: sticky;
     width: 100%;
     padding: 0;
     margin: 0;
-    clear: both;
-}
-.sync-outer.fixed{
+    top: $menu-bar-height;
     overflow: hidden;
-    position: fixed;
-    left: 0;
-    top: 60px;
-    bottom: -100px;
-    padding-bottom: 100px;
+    height: calc( 100vh - #{$menu-bar-height} );
+
+    &.high{
+        position: relative;
+        height: auto;
+        overflow: auto;
+        top: 0;
+    }
+
+    &:after{
+        opacity: 0;
+        transition: opacity 200ms;
+        display: block;
+        content: '';
+        position: inherit;
+        top: 0px;
+        left: inherit;
+        width: inherit;
+        bottom: 0px;
+        background-color: rgba(black,0.4);
+        z-index: -1;
+        background-image: url(assets/icons/loading-white.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 64px;
+    }
 }
-.sync-outer.bottom{
-    top: auto;
-    bottom: 0;
-    position: absolute;
-}
+
+
 .sync-outer .sync-inner{
     position: relative;
     min-height: auto;
@@ -27,4 +42,13 @@
     padding: 0;
     margin: 0;
     clear: both;
+}
+
+
+.spoopy.spoopy-out .sync-outer:after{opacity: 0;}
+.spoopy .sync-outer.top:after{position: absolute;}
+.spoopy .sync-outer:after{
+    opacity: 1;
+    transition-delay: 100ms;
+    z-index:10;
 }

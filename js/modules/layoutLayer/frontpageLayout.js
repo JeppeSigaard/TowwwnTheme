@@ -10,12 +10,13 @@ var FrontPageModule = {
     
     // Init
     init: function( tmp ) {
+        let ViewHandler = require( './../view_handler.js' );
         
         // Generates left container content
         var lc = '<div id="eventsbar">';
         lc += '<div id="eventslayoutbtns">';
-        lc += '<img class="blocklayoutbtn" src="'+template_uri+'/style/assets/icons/blockLayout.PNG" />';
-        lc += '<img class="linelayoutbtn" src="'+template_uri+'/style/assets/icons/lineLayout.PNG" /></div>';
+        lc += '<svg viewBox="0 0 32 32" class="blocklayoutbtn"><use xlink:href="#icon-block-layout"></use></svg>';
+        lc += '<svg viewBox="0 0 32 32" class="linelayoutbtn"><use xlink:href="#icon-list-layout"></use></svg></div>';
         lc += '<div class="monthSelector"></div>';
         lc += '</div><div class="picker"></div>';
         
@@ -28,7 +29,7 @@ var FrontPageModule = {
         }
 
         this.settings.lc = lc;
-        if ( tmp ) ViewHandler.settings.left_container.html(lc);
+        if ( tmp ) ViewHandler.settings.event_calender.html(lc);
 
         // Generates front page
         this.generate_front_page( tmp );
@@ -37,23 +38,24 @@ var FrontPageModule = {
     
     // Generate front page
     generate_front_page: function( tmp ) {
+        let ViewHandler = require( './../view_handler.js' );
+        let EventCalenderModule = require( './eventCalenderLayout.js' );
         
         if ( tmp ) {
             ViewHandler.closeSingleView();
-            ViewControllerModule.disableBackButton();
 
             // Adds the base front page html to the container
             if ( ViewHandler.settings.poly_view ) {
                 ViewHandler.closeSingleView();
             } else {
-                ViewHandler.settings.left_container.removeClass('active');
-                ViewHandler.settings.right_container.html('').removeClass('active');
+                ViewHandler.settings.event_calender.removeClass('active');
+                // ViewHandler.settings.right_container.html('').removeClass('active');
             }
 
             $('.eventscontainer').removeClass('lineLayout');
         }
 
-        ViewHandler.settings.left_container.html( this.settings.lc );
+        ViewHandler.settings.event_calender.html( this.settings.lc );
         
         // Binds ui actions
         this.bindUIActions();
@@ -64,11 +66,6 @@ var FrontPageModule = {
         if ( tmp ) $('.load-more').html( 'Indlæser flere elementer...' );
         ViewHandler.bindUIActions();
         this.updateLayoutPosition();
-        ViewControllerModule.disableBackButton();
-
-        setTimeout(function() {
-            $(window).trigger('resize');
-        }, 250);
 
         // Annnnnd its ready
         this.settings.ready = true;
@@ -77,6 +74,9 @@ var FrontPageModule = {
     
     // Bind UI Actions
     bindUIActions: function() {
+        let syncScroll = require( './../tools/sync_scroll.js' );
+        let ViewHandler = require( './../view_handler.js' );
+        let EventCalenderModule = require( './eventCalenderLayout.js' );
 
         if ( !this.settings.ready ) {
             $('.logo-container').on( 'click', function(e) {
@@ -117,13 +117,15 @@ var FrontPageModule = {
         });
         */
 
-        $('.blocklayoutbtn').on( 'click', function() {
-            $('.eventscontainer').removeClass('lineLayout'); 
+        $(document).on( 'click', '.blocklayoutbtn', function() {
+            $('.eventscontainer').removeClass('lineLayout');
+            syncScroll.rescaleContainer();
             ViewHandler.reload_view( true );
         });
         
-        $('.linelayoutbtn').on( 'click', function() {
+        $(document).on( 'click', '.linelayoutbtn',function() {
             $('.eventscontainer').addClass('lineLayout');
+            syncScroll.rescaleContainer();
             ViewHandler.reload_view( true );
         });
         
@@ -140,7 +142,6 @@ var FrontPageModule = {
 
             setTimeout(function() {
                 syncScroll.rescaleContainer();
-                $(window).trigger('resize');
             }, 100);
 
         }.bind(this));
@@ -148,6 +149,6 @@ var FrontPageModule = {
     
     // Update layout parts position
     updateLayoutPosition: function() {
-    }
+    },
 
-}
+}; module.exports = FrontPageModule;

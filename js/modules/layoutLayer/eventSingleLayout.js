@@ -2,68 +2,49 @@ var EventSingleModule = {
     
     // Fields
     settings: {
+        elem_back: '',
     },
     
     // Init
     init: function() {
+        this.bindUIActions();
     },
     
     // Bind UI Actions
     bindUIActions: function() {
+        let ViewHandler = require( './../view_handler.js' );
+        $(document).on('click', '.event-bar .close-button', function() {
+            ViewHandler.change_view_focus( 1, true, false ); });
     },
     
     // Render Single View Event
-    render_sv_event: function( eventid, cb ) {
-        var event;
-        $.get(rest_api + 'events/' + eventid, function(data){
-            if(typeof data[0] !== 'undefined'){
-                event = data[0];
+    render_sv_event: function( event, cb) {
+        let ViewHandler = require( './../view_handler.js' );
+
+        // Generates html
+        ViewHandler.settings.event_singleview.html( EventSingleModule.generate_sv_event_html( event ) );
+        ViewHandler.settings.event_singleview.parents('.sync-outer').scrollTop(0);
+
+        // Defines height of blue box height
+        $('.event-sv-info-placeholder').css({height: $('.event-sv-info').outerHeight() + 'px'});
 
 
-                // Generates html
-                ViewHandler.settings.right_container.html( EventSingleModule.generate_sv_event_html( event ) );
-                ViewHandler.settings.right_container.addClass( 'active' );
-                ViewHandler.settings.left_container.addClass( 'active' );
-                ViewHandler.settings.right_container.parents('.sync-outer').scrollTop(0);
-
-                var lastDark = true;
-                $('.event-footer-block').each(function(iter, elem) {
-                    if ( lastDark ) { lastDark = false; }
-                    else {
-                        $(this).addClass('dark');
-                        lastDark = true;
-                    }
-                });
-
-                // Defines height of blue box height
-                $('.event-sv-info-placeholder').css({height: $('.event-sv-info').outerHeight() + 'px'});
-                ViewHandler.settings.right_container.removeClass('spoopy');
-
-                // Trigger resize
-                setTimeout(function() {
-                    $(window).trigger('resize');
-                }, 200);
-
-            }
-        });
-
-
+        if(typeof cb === 'function') cb();
     },
     
     // Generate single view event html
     generate_sv_event_html: function( event ) {
+        let HelpFunctions = require( './../tools/help_functions.js' );
+
         var desc_raw = event.description;
             if(desc_raw === null){desc_raw = '  ';}
-
-        var desc = HelpFunctions.nl2p(HelpFunctions.linkifier( desc_raw ));
-
-
+        var desc = HelpFunctions.nl2p(HelpFunctions.linkifier( HelpFunctions.ripRep(desc_raw)));
         var start_time = HelpFunctions.formatDate( event.start_time, true, true );
         
 
-        var response = '<div class="event-sv-content-container">';
+        var response = '<div class="event-bar"><a href="#" data-type="location" data-id="'+event.parentid+'">'+event.parentname+'</a><div class="close-button">&times;</div></div>';
+        response += '<div class="event-sv-content-container">';
         response += '<div class="event-singleview">';
-        response += '<div class="event-sv-parentname">'+event.parentname+'</div>';
 
         if ( event.imgurl !== '' && event.imgurl !== null && typeof event.imgurl !== 'undefined' ) {
             response += '<a href="'+event.imgurl+'" target="_blank" class="event-sv-img" style="background-image:url('+event.imgurl+');"></a>';
@@ -135,16 +116,10 @@ var EventSingleModule = {
 
         response += '</div></div>';
         /* FOOTER END */
-
-
-        if ( commercial_image_url !== '' ) {
-            response += '<div class="commercial-placeholder"></div>';
-            response += '<a href="'+commercial_link+'"><div class="commercial-img" style="background-image:url('+commercial_image_url+');"></div></a>';
-        }
         
 
         return response;
         
     },
     
-};
+}; module.exports = EventSingleModule;
