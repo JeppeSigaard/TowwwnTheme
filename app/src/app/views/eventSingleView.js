@@ -3,6 +3,7 @@
 // Event single view layout
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
+      BehaviourDataHandler = require( '../../modules/handlers/behaviourHandler/dataHandler.js' ),
       SingleEvent = require( '../components/singleEvent.js' ),
       BannerCommercials = require( '../components/bannerCommercials.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' );
@@ -13,6 +14,8 @@ class EventSingleView extends React.Component {
     constructor() { 
         super(); 
         
+        this.lastElem = null;
+        this.startTime = null;
         this.state = {
             'closeviewstate' : { },
 
@@ -61,6 +64,15 @@ class EventSingleView extends React.Component {
     
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
+        if ( nextProps.event != this.lastElem ) {
+            BehaviourDataHandler.parseData( 'event', nextProps.event );
+            this.lastElem = nextProps.event;
+
+            if ( this.props.event != null ) {
+                BehaviourDataHandler.parseTimeData( 'event', this.props.event.id, new Date().getTime()  -this.startTime );
+            } this.startTime = new Date().getTime();
+        }
+
         if ( nextProps.from === 'location-single-view' ) {
             Globals.relations[ nextProps.name ].canleft = true;
             Globals.relations[ nextProps.name ].canright = false;
@@ -80,6 +92,7 @@ class EventSingleView extends React.Component {
 
     // Will change view
     willChangeView() {
+
         Globals.setMainState({ singleLocation : null });
         
         // Opens new request

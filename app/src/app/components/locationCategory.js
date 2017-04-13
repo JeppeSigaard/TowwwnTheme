@@ -14,7 +14,6 @@ class LocationCategory extends React.Component {
 
     // Handle Click
     handleClick( e ) {
-        BehaviourDataHandler.parseData( 'location-category', this.props.elem );
         this.props.clickEvent.call( this, e );
     }
 

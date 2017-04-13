@@ -3,7 +3,6 @@
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
-      BehaviourDataHandler =  require( '../../modules/handlers/behaviourHandler/dataHandler.js' ),
       SingleEvent = require( './singleEvent.js' );
 
 class Event extends React.Component {
@@ -47,8 +46,6 @@ class Event extends React.Component {
                 ); 
             }
         }
-
-        BehaviourDataHandler.parseData( 'event', this.props.elem );
     }
 
     locationRefClick( e ) {

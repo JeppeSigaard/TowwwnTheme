@@ -2,6 +2,7 @@
 
 // Location List View
 const React = require( 'react' ),
+      BehaviourDataHandler = require( '../../modules/handlers/behaviourHandler/dataHandler.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
       Location = require( '../components/location.js' ),
       Loader = require( '../componentParts/loader.js' );
@@ -11,6 +12,8 @@ class LocationListView extends React.Component {
     // Ctor
     constructor() { 
         super();
+
+        this.lastElem = null;
         this.state = {
             'closeviewstate' : {
                 'leftview' : 'event-calendar-view',
@@ -27,6 +30,11 @@ class LocationListView extends React.Component {
     
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
+        if ( nextProps.category != this.lastElem ) {
+            BehaviourDataHandler.parseData( 'location-category', nextProps.category );
+            this.lastElem = nextProps.category;
+        }
+
         if ( nextProps.elems != null ) {
             let jsxElems = [];
             for ( let elem of nextProps.elems ) {

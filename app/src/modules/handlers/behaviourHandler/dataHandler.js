@@ -10,7 +10,6 @@ class BehaviourDataHandler{
     constructor() {
         if ( singleton != null ) return singleton;
         else singleton = this;
-        this.state = { };
     }
 
     /* ---- Parse Data ---- */
@@ -19,8 +18,19 @@ class BehaviourDataHandler{
         let catsRef = Globals.user.state.behaviourData.catRelatedClicks;
         if ( 'location-category' === type ) {
 
-            if ( catsRef[ data.category_id ] != null ) catsRef[ data.category_id ]++;
-            else catsRef[ data.category_id ] = 1;
+            if ( catsRef[ data.category_id ] == null )
+                catsRef[ data.category_id ] = 0;
+
+            catsRef[ data.category_id ]++;
+
+        } else if ( 'location' === type ) {
+
+            for ( let iter = 0; iter < data.categories.length; iter++ ) {
+                if ( catsRef[ data.categories[ iter ].category_id ] == null )
+                    catsRef[ data.categories[ iter ].category_id ] = 0;
+
+                catsRef[ data.categories[ iter ].category_id ]++;
+            }
 
         } else if ( 'event' === type ) {
 
@@ -40,6 +50,13 @@ class BehaviourDataHandler{
             request.send();
 
         } console.log( Globals.user.state );
+    }
+
+    // Parse time data
+    parseTimeData( type, id, time ) {
+        let elem = Globals.user.state.behaviourData.timeData[ type ];
+        if ( elem[ id ] == null ) elem[ id ] = 0;
+        elem[ id ] += time;
     }
 
 }

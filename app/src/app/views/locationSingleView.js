@@ -3,6 +3,7 @@
 // Location Single view
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
+      BehaviourDataHandler = require( '../../modules/handlers/behaviourHandler/dataHandler.js' ),
       SingleLocation = require( '../components/singleLocation.js' ),
       BannerCommercials = require( '../components/bannerCommercials.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
@@ -13,6 +14,8 @@ class LocationSingleView extends React.Component{
     // Ctor
     constructor() { 
         super(); 
+        this.startTime = 0;
+        this.lastElem = null;
         
         // Standard close properties
         this.standardclose = {
@@ -62,6 +65,14 @@ class LocationSingleView extends React.Component{
     
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
+        if ( nextProps.elem != this.lastElem ) {
+            BehaviourDataHandler.parseData( 'location', nextProps.elem );
+            this.lastElem = nextProps.elem;
+
+            if ( this.props.elem != null ) {
+                BehaviourDataHandler.parseTimeData( 'location', this.props.elem.id, new Date().getTime() - this.startTime );
+            } this.startTime = new Date().getTime();
+        }
         
         // Sets close state
         if ( nextProps.from === 'event-single-view' ) {
