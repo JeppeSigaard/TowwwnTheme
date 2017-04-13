@@ -61,3 +61,5 @@ Temporary Items
 /js/modules/contentLayer/eventContent-min.js
 /style/.sass-cache/
 /functions/fb-sdk/
+/node_modules/
+/app/bundle.js
