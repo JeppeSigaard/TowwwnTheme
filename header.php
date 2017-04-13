@@ -36,6 +36,8 @@
                             <input id="searchfield" name="searchfield" type="text">
                             <?php //wp_nav_menu(array('theme_location' => 'header-menu', 'container' => false, 'fallback_cb' => null)) ?>
                         </form>-->
+
+                        <div class="login-btn">Login</div>
                     </div>
                     <div id="headerbar">
                         <div class="logo-bg-container">

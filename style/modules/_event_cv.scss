@@ -50,6 +50,16 @@
         }
     }
     
+    .title{
+        position: absolute;
+        top: 50%; right: 20px;
+        line-height: $menu-bar-height;
+        transform: translate(0,-50%);
+        color: white;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+
     .monthSelector{
         position: absolute;
         display: inline-block;

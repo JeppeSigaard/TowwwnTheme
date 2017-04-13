@@ -72,7 +72,7 @@ class EventCalendarView extends React.Component {
             
             let events = [];
             resp.forEach(( item, index ) => {
-                events.push( <Event from={ this.props.name } elem={ item } key={ 'event-' + item.fbid } setMainState={ this.props.setMainState } /> )
+                events.push( <Event from={ this.props.name } elem={ item } key={ 'event-' + item.fbid } setMainState={ this.props.setMainState } /> );
             });
 
             this.props.setMainState({
@@ -101,9 +101,10 @@ class EventCalendarView extends React.Component {
                                        <use xlinkHref="#icon-list-layout"></use>
                                    </svg>
                                </div>
-                               <div className="monthSelector"></div>
+                               <div className="title">
+                                   Begivenheder
+                               </div>
                            </div>
-                           <div className="selector"></div>
 
 
                             <div className={ this.state.containerClasses + '-outer' } >

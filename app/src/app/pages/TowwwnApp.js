@@ -5,6 +5,7 @@ const React = require( 'react' ),
     Globals = require( '../globals.js' ),
       
     // Data Handlers
+    User = require( '../../modules/handlers/dataHandlers/userDataHandler.js' ),
     EventDataHandler = require( '../../modules/handlers/dataHandlers/eventDataHandler.js' ),
     CategoryDataHandler = require( '../../modules/handlers/dataHandlers/categoryDataHandler.js' ),
     LocationDataHandler = require( '../../modules/handlers/dataHandlers/locationDataHandler.js' ),
@@ -38,6 +39,9 @@ const React = require( 'react' ),
 
     // Polyfills
     PositionSticky = require ('sticky-position');
+
+// Automatic classes
+const EffectHandler = require( '../../modules/handlers/effectHandler.js' );
 
 class TowwwnApp extends React.Component {
 
@@ -172,6 +176,7 @@ class TowwwnApp extends React.Component {
     componentDidMount() {
         _('body').removeClass('loading');
         _('body').addClass('loaded');
+        Globals.user = new User();
         this.viewSlider = new ViewSlider(); 
         
         // Handle anchor click

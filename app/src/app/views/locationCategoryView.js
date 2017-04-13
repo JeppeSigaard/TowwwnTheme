@@ -71,7 +71,7 @@ class LocationCategoryView extends React.Component {
                     <div className="sync-inner">
                         <div className="content">
                             <div className="category-bar">
-                                Svendborg i udvalg
+                                Steder
                                 <div className="sub-categories-title" onClick={ this.toggleSubCategories.bind(this) } ></div>
                             </div>
                             <SubCategories subCategories={ this.props.allCategories } outerHeight={ this.state.subCatHeight } clickEvent={ this.handleCategoryClick } />

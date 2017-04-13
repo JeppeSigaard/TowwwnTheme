@@ -3,6 +3,7 @@
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
+      BehaviourDataHandler =  require( '../../modules/handlers/behaviourHandler/dataHandler.js' ),
       SingleEvent = require( './singleEvent.js' );
 
 class Event extends React.Component {
@@ -46,6 +47,8 @@ class Event extends React.Component {
                 ); 
             }
         }
+
+        BehaviourDataHandler.parseData( 'event', this.props.elem );
     }
 
     locationRefClick( e ) {
@@ -69,21 +72,23 @@ class Event extends React.Component {
         }
 
         let xhr = new XMLHttpRequest();
-            xhr.onload = function ( data ) {
+        xhr.onload = function ( data ) {
 
-                // Resolves all locations
-                let location = JSON.parse( data.target.response )[0];
-                Globals.setMainState({
-                    'singleLocation' : location,
-                });
+            // Resolves all locations
+            let location = JSON.parse( data.target.response )[0];
+            Globals.setMainState({
+                'singleLocation' : location,
+            });
 
-                Globals.setMainState({ from : this.props.name });
+            Globals.setMainState({ from : this.props.name });
 
-            }.bind(this);
+        }.bind(this);
 
-            // Sends request
-            xhr.open( 'GET', 'http://towwwn.dk/api/svendborg/locations/' + this.props.elem.parentid );
-            xhr.send();
+        // Sends request
+        xhr.open( 'GET', 'http://towwwn.dk/api/svendborg/locations/' + this.props.elem.parentid );
+        xhr.send();
+
+        BehaviourDataHandler.parseData( 'event', this.props.elem );
     }
 
     // Format title

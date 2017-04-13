@@ -221,6 +221,11 @@ class UnderScoreElem {
         } return resp;
     }
 
+    // Html
+    text( data ) {
+        for ( let item of this.state.domnode ) { item.textContent = data; }
+    }
+
     // Position
     position() {
         let top = this.offset().top - this.parent().offset().top;
