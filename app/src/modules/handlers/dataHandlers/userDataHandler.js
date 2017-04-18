@@ -9,7 +9,7 @@ class User {
 
     // Constructor
     constructor() {
-
+        
         this.state = {
             loggedIn: false,
             userFbid: null,
@@ -35,6 +35,12 @@ class User {
             Globals.fb.login().then(() => {
                 _('.login-btn').text( this.state.fbData.name.split(' ')[0] );
             });
+        });
+        
+        // On load, get behaviour statistics from cookie
+        window.onload = (() => {
+            let behaviourData = window._cookielib.read( 'behaviour_statistics' );
+            if ( behaviourData !== '' ) this.state.behaviourData = JSON.parse( behaviourData );
         });
 
         // Before unload, uploads behaviour statistics
@@ -62,7 +68,9 @@ class User {
                 // Sends request
                 request.send( JSON.stringify( data ) );
 
-            } else { /* Save in cookie? */ }
+            } else { 
+                window._cookielib.set( 'behaviour_statistics', JSON.stringify( this.state.behaviourData ), 30 );
+            }
 
         });
 
@@ -112,9 +120,48 @@ class User {
                         // Opens new request to get user behaviour statistics
                         let request = new XMLHttpRequest();
                         request.onload = (( data ) => {
-                            let json = JSON.parse( data.target.response );
-                            this.state.behaviourData = json.behaviour_statistics;
-                            console.log( this.state );
+                            
+                            let json = JSON.parse( data.target.response ),
+                                obj = json.behaviour_statistics;
+                            
+                            // Converts arrays back into objects
+                            let timeData = obj.timeData,
+                                types = [ 'event', 'location', 'locationcategory' ];
+                                
+                            for ( let key of types ) {
+                                if ( timeData[ key ].constructor.name === 'Array' ) {
+                                    var tmpObject = { };
+                                    for (var iter = 0; iter < timeData[ key ].length; iter++ ) {
+                                        if ( timeData[ key ][ iter ] != null ) tmpObject[ iter ] 
+                                            = timeData[ key ][ iter ];
+                                    } timeData[ key ] = tmpObject;
+                                }
+                            }
+                            
+                            // Adds new behaviour data from login, to old loaded from cookie
+                            let recursiveObjectAddition = (( newobj, oldobj ) => {
+                                let response = { };
+                                for ( let key of Object.keys( newobj ) ) {
+                                    if ( newobj[ key ] == null || 
+                                        oldobj == null ) continue;
+                                    if ( typeof newobj[ key ] === 'object' &&
+                                         typeof oldobj[ key ] === 'object' ) {
+                                        response[ key ] = recursiveObjectAddition( newobj[ key ], oldobj[ key ] );
+                                    } else {
+                                        if ( newobj[ key ] != null && oldobj[ key ] != null ) {
+                                            response[ key ] = newobj[ key ] + oldobj[ key ];
+                                        } else if ( newobj[ key ] != null ) {
+                                            response[ key ] = newobj[ key ];
+                                        } else if ( oldobj[ key ] != null ) {
+                                            response[ key ] = oldobj[ key ];
+                                        }
+                                    }
+                                } return response;
+                            }); 
+                            
+                            this.state.behaviourData = recursiveObjectAddition
+                                    ( obj, this.state.behaviourData );
+                            
                         });
 
                         // Sends request
@@ -124,7 +171,6 @@ class User {
                                      '&fields=behaviour_statistics' );
 
                         request.send();
-
                         resolve( data );
 
                     });
