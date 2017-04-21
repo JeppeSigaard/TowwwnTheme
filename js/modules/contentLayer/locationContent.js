@@ -32,6 +32,7 @@ var LocationModule = {
             if ( jsonResponse.length < 1 ) {
                 this.settings.page_counter = 0;
                 this.settings.ready = true;
+                this.settings.callback();
             } else {
                 this.settings.page_counter++;
                 this.get_locations( );    
@@ -40,7 +41,7 @@ var LocationModule = {
         }.bind(this);
         
         // Specifies get url, and sends
-        request.open( 'GET', rest_api+'locations?per_page=100&page='+this.settings.page_counter );
+        request.open( 'GET', rest_api+'locations?per_page=100&after=now&page='+this.settings.page_counter );
         request.send();
         
     },
@@ -53,4 +54,4 @@ var LocationModule = {
     generate_location_html: function() {
     },
     
-}
+}; module.exports = LocationModule;

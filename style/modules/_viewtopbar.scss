@@ -1,0 +1,46 @@
+.viewbar{
+    position: relative;
+    width: 100%;
+    height: $menu-bar-height;
+    padding-left: 20px;
+    line-height: $menu-bar-height;
+    color: white;
+    text-transform: uppercase;
+    font-size: 12px;
+    background-color: $color-blue-2;
+
+    &.dark{
+        background-color: darken( $color-blue-2, 5% );
+    }
+
+    &.clickable{
+        a{ cursor: pointer; }
+    }
+
+    a{
+       color: white;
+        text-decoration: none;
+        height: inherit;
+        line-height: inherit;
+        display: inline-block;
+    }
+
+    .close-button{
+        position: absolute;
+        top: 50%;
+        right: 0px;
+        width: $menu-bar-height + 5;
+        text-align: center;
+        transform: translate(0,-50%);
+        color: white;
+        font-size: 28px;
+        cursor: pointer;
+        background-color: transparent;
+        transition: background-color 120ms;
+        border-left: 1px solid rgba(white,.6);
+
+        &:hover{
+            background-color: lighten($color-blue-2,2%);
+        }
+    }
+}

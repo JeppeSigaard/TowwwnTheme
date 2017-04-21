@@ -1,0 +1,55 @@
+{
+  "name": "TowwwnTheme",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./app/app.js",
+  "scripts": {
+    "singlebuild": "webpack",
+    "minify": "webpack -p",
+    "debug": "webpack --watch",
+    "minifydebug": "webpack --watch -p",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JeppeSigaard/TowwwnTheme.git"
+  },
+  "keywords": [],
+  "author": "SmartMonkey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JeppeSigaard/TowwwnTheme/issues"
+  },
+  "homepage": "https://github.com/JeppeSigaard/TowwwnTheme#readme",
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
+    "css-loader": "^0.26.4",
+    "file-loader": "^0.10.1",
+    "node-sass": "^4.5.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-linkify": "^0.2.0",
+    "sass-loader": "^6.0.3",
+    "sticky-position": "^1.0.1",
+    "style-loader": "^0.13.2",
+    "url-loader": "^0.5.8",
+    "webpack": "^2.2.1"
+  },
+  "dependencies": {
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
+    "css-loader": "^0.26.2",
+    "file-loader": "^0.10.1",
+    "node-sass": "^4.5.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-linkify": "^0.2.0",
+    "sass-loader": "^6.0.2",
+    "style-loader": "^0.13.2",
+    "url-loader": "^0.5.8",
+    "webpack": "^2.2.1"
+  }
+}

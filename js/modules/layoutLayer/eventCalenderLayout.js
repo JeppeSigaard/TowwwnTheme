@@ -23,10 +23,37 @@ var EventCalenderModule = {
         $(window).on('resize', function() {
             EventCalenderModule.setEventCalendarWidth();
         });
+
+        $(document).on( 'mouseup', '.event', function( e ) {
+            if ( !$('.eventtext', this).hasClass('filled') ) {
+                $('.filled').css({ 'background-color' : 'transparent' });
+                $('.filled .ripple').addClass('animateBack');
+                $('.bookmark-mode').removeClass('bookmark-mode');
+                $('.filled .ripple').css({
+                    'left': ( $('.filled').innerWidth() / 2 - $('.filled .ripple').outerWidth() / 2 ) + 'px',
+                    'top': ( $('.filled').innerHeight() / 2 - $('.filled .ripple').outerHeight() / 2 ) + 'px',
+                });
+
+                $('.eventtext', this).addClass('bookmark-mode');
+                $('.eventtext .ripple', this).addClass('animate');
+                $('.eventtext .ripple', this).css({
+                    'left': ( e.pageX - $('.eventtext', this).offset().left - $('.ripple', this).outerWidth() / 2 ) + 'px',
+                    'top': ( e.pageY - $('.eventtext', this).offset().top - $('.ripple', this).outerWidth() / 2 ) + 'px',
+                });
+
+                setTimeout(function() {
+                    $('.eventtext .ripple').removeClass('animate');
+                    $('.filled .ripple').removeClass('animateBack');
+                    $('.filled').removeClass('filled');
+                    $('.eventtext', this).addClass('filled');
+                }.bind(this), 300);
+            }
+        });
     },
     
     // Render Events
     renderEventCalender: function( view, modifiers ) {
+        let EventContentModule = require( './../contentLayer/eventContent.js' );
 
         this.settings.breakpointView = view;
         
@@ -81,6 +108,7 @@ var EventCalenderModule = {
     
     // Load more
     loadMore: function( getNum ) {
+        let syncScroll = require( './../tools/sync_scroll.js' );
         
         // Generates event array
         var buffer = [], bpArray = this.settings.breakpointArray;
@@ -110,9 +138,9 @@ var EventCalenderModule = {
 
         // Rescales container
         setTimeout(function() {
-            //syncScroll.rescaleContainer();
-            $(window).trigger('resize');
-        }, 150);
+            syncScroll.rescaleContainer();
+            this.setEventCalendarWidth();
+        }.bind(this), 150);
 
         // Return the rest
         return bpArray.length-this.settings.breakpoint;
@@ -120,44 +148,8 @@ var EventCalenderModule = {
     },
 
     // Generate Event HTML
-    generateEventHtml: function( elem ) {
-        
-        // Sets up vars
-        var response = '',
-            time_formatted = HelpFunctions.formatDate( elem.start_time, false, false ),
-            name = String(elem.name).substr(0, 36) + ( String(elem.name).substr(36,99).split( ' ' )[0] );
-        
-        // Adds length formatting to name
-        if ( name.length !== String(elem.name).length ) name += ' ...';
-        var words = name.split(' ');
-        for ( var i = 0; i < words.length; i++ ) {
-            if ( words[i].length > 14 ) {
-                words[i] = words[i].substr(0,14)+'-<br />'+words[i].substr(12,999999999);
-            } 
-        } name = words.join(' ');
-        
-        // Generates the html itself
-        var response = '<div class="event" id="'+elem.id+'">';
-        
-        if ( typeof elem.images !== 'undefined' &&
-            elem.images[130] !== null &&
-            typeof elem.images[130] !== 'undefined' ) {
-            response += '<div class="imgcontainer" data-image-src="'+elem.images[130]+'" ></div>';
-        } else if ( elem.imgurl !== '' &&
-                   elem.imgurl !== null &&
-                   typeof elem.imgurl !== 'undefined' ) {
-            response += '<div class="imgcontainer" data-image-src="'+elem.imgurl+'" ></div>';
-        } else {
-            response += '<div class="imgcontainer imgloaded" style="background-image:url(http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png)" ></div>';
-        }
+    generateEventHtml: function( elem, outerClass ) {
 
-        response += '<div class="eventtext">';
-        response += '<div class="title">'+name+'</div>';
-        response += '<div class="start_time">'+time_formatted+'</div>';
-        response += '<div class="eventlocation-container">';
-        response += '<div class="eventblackbar"></div>';
-        response += '<div class="eventlocation">'+elem.parentname+'</div></div></div></div>';
-        return response;
         
     },
 
@@ -198,4 +190,4 @@ var EventCalenderModule = {
         }
     },
 
-}
+}; module.exports = EventCalenderModule;

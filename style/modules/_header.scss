@@ -1,3 +1,26 @@
+#site-header{
+    position: -webkit-sticky;
+    position: sticky;
+    top: -$top-area-height;
+    z-index: 10;
+    background-color: $color-grey-1;
+    height: $menu-bar-height + $top-area-height;
+    background-image: url(assets/images/header-bg.jpg);
+    background-size: cover;
+    background-position: center;
+    transform: translateY(0px);
+    transition: transform 200ms;
+    border-bottom: $menu-bar-height solid $color-grey-1;
+
+    &.fixed{
+
+        &.active{
+            transform: translateY($top-area-height);
+            // #header{ background-size: calc(cover + 25%); }
+        }
+    }
+}
+
 @media screen and (max-width: $bp-1) {
     .header-container{
         max-width: $main-container-width-bp-1!important;
@@ -5,6 +28,12 @@
 }
 
 @media screen and (max-width: $bp-m) {
+
+    #site-header{
+        height: $menu-bar-height;
+        top: 0px;
+    }
+
     .header-container{
         position: fixed;
         top: -$top-area-height;
@@ -41,40 +70,28 @@
     transition: 200ms;
     height: auto;
     z-index: 100000;
-    
-    &.fixed{
-        position: fixed;
-        top: -$top-area-height;
-        transition: 200ms;
-        
-        &.active{
-            top: 0;
-            // #header{ background-size: calc(cover + 25%); }
-        }
-    }
-}
-
-.header-placeholder{
-    width: 100%;
-    max-width: $main-container-width;
-    height: calc(#{$top-area-height} + #{$menu-bar-height});
-    display: none;
-    
-    &.fixed{
-        display: block;
-    }
 }
 
 #header{
     position: relative;
     width: 100%;
     height: $top-area-height;
-    background-image: url(http://dev.smamo.dk/wp-content/uploads/2016/02/smamo-slide-2.jpg);
-    background-size: cover;
-    background-position: center;
     transition: 200ms;
     overflow: hidden;
     border-bottom: 1px solid #333;
+
+    .headerlogo {
+        width: 100%;
+        height: auto;
+        margin-top: -42px;
+
+        svg {
+            fill: white;
+            width: 120px;
+            height: auto;
+            margin-left: calc( 50% - 60px );
+        }
+    }
 
     .header-commercials{
         width: 100%;
