@@ -11,11 +11,6 @@ get_functions_part(array(
     'location-list',
 ));
 
-// Custom types
-get_functions_part(array(
-    'commercials',
-), 'custom-types');
-
 // Kirki
 if ( class_exists( "Kirki" ) ) {
     get_functions_part(array(
