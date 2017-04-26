@@ -26,8 +26,8 @@ class Location extends React.Component {
             );
         } else {
             Globals.viewHandler.changeViewFocus(
-                'location-list-view',
-                'location-single-view',
+                '#location-list-view',
+                '#location-single-view',
                 false, true, false
             );    
         }

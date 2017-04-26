@@ -34,9 +34,6 @@ class NeuralNetwork {
     processData( catRelatedClicks, 
                  catRelatedTimes ) {
         
-        // Natural logarithm
-        const e = 2.718281828459;
-        
         // Param Type Error
         if ( catRelatedClicks.constructor.name !== 'Object' ||
              catRelatedTimes.constructor.name !== 'Object' ) {
@@ -62,24 +59,21 @@ class NeuralNetwork {
             avg += catRelatedTimes[ key ];
         } avg /= Object.keys( catRelatedTimes ).length;
         
-        // Sigmoid
-        let sigmoid = (( val, spec ) => {
-            return ;
-        });
-        
         // Does the actual calculation
         for ( let iter = 0; iter <= highestKey; iter++ ) {
             let elem = 0;
-            if ( catRelatedClicks[ iter ] == null ||
-                 catRelatedTimes[ iter ] == null ) {
-                response.push( elem ); continue;   
-            }
+            if ( catRelatedClicks[ iter ] != null &&
+                 catRelatedTimes[ iter ] != null ) {
+                
+                // Omg, Aske... Seriously... What does 10 000 even do...
+                // Whats the purpose, youre just lowering the number...
+                // To future smarter me: For fuckness sake plz change this... :((
+                elem = catRelatedClicks[ iter ] * (( catRelatedTimes[ iter ] - avg ) / 10000 ); 
             
-            // Calc
-            response[ iter ] = catRelatedClicks[ iter ] * 
-                1 / ( 1 + Math.pow( e, -( catRelatedTimes[ iter ] )));
-            
-        } return response;
+            } response.push( elem );
+        } 
+        
+        return response;
         
     }
     
@@ -88,6 +82,25 @@ class NeuralNetwork {
     activate( inputs ) {
         if ( inputs == null ) return false;
         
+        let response = [ ];
+        for ( let neuron of this.outputNeurons ) {
+            let respTmp = neuron.invoke( inputs, 1 );
+            if ( respTmp ) response.push( neuron );
+        } return response;
+        
     }
     
 } module.exports = NeuralNetwork;
+
+
+
+
+
+
+
+
+
+
+
+
+

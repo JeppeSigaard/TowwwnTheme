@@ -1,5 +1,3 @@
-'use strict';
-
 // Requires
 let React = require( 'react' ),
     ReactDOM = require( 'react-dom' ),

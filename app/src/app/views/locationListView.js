@@ -16,8 +16,8 @@ class LocationListView extends React.Component {
         this.lastElem = null;
         this.state = {
             'closeviewstate' : {
-                'leftview' : 'event-calendar-view',
-                'rightview' : 'location-category-view',
+                'leftview' : '#event-calendar-view',
+                'rightview' : '#location-category-view',
                 'fromLeft' : true,
                 'fromRigth' : false,
                 mobile: {
@@ -49,13 +49,13 @@ class LocationListView extends React.Component {
     render() {
         return (
             <section className="container-section" id="location-list-view">
+               { this.props.category != null && 
+                    <ViewTopBar closeviewstate={ this.state.closeviewstate } title={ this.props.category.category_name } darken={ true } standard={ true } name={ this.props.name } />
+                }
+                
                 <div className="sync-outer">
                     <div className="sync-inner">
-                        <div className="content">
-                            { this.props.category != null && 
-                                <ViewTopBar closeviewstate={ this.state.closeviewstate } title={ this.props.category.category_name } darken={ true } standard={ true } name={ this.props.name } />
-                            }
-                            
+                        <div className="content">           
                             <div className="location-list" >
                                 { this.state.jsxLocations != null && this.state.jsxLocations }
                                 { this.state.jsxLocations == null && <Loader /> }

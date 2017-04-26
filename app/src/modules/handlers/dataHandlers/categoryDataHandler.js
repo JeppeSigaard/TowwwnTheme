@@ -73,5 +73,28 @@ class CategoryDataHandler {
             
         });
     }
+    
+    // Get a category
+    getCategory( id ) {
+        return new Promise(( resolve, reject ) => {
+
+            // Opens new get request
+            let request = new XMLHttpRequest();
+            request.onload = function( response ) {
+                resolve( JSON.parse( response.target.response ) );
+            }.bind(this);
+
+            // Sends request
+            request.open( 'GET', 'http://towwwn.dk/api/svendborg/categories/'+id );
+            request.send();
+            
+        });
+    } 
 
 } module.exports = CategoryDataHandler;
+
+
+
+
+
+

@@ -7,11 +7,14 @@
 }
     
 #eventsbar{
-    position: relative;
+    position: sticky!important;
+    top: 55px!important;
+    z-index: 100!important;
     width: 100%;
     height: $menu-bar-height;
     background-color: darken($color-blue-2, 5%);
     z-index: 10;
+    border-bottom: 1px solid #292929;
     // border-right: 1px solid rgba(0,0,0,.2);
 
     #eventslayoutbtns{

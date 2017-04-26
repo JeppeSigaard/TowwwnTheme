@@ -52,7 +52,7 @@ class ExtraEventHandlers {
     
     // Handler anchor click
     handleAnchorClick( e ) {
-        console.log( e, this );
+        // console.log( e, this );
     }
     
 } module.exports = ExtraEventHandlers;

@@ -12,6 +12,9 @@ const React = require( 'react' ),
       
     // API Handlers
     FBHandler = require( '../../modules/handlers/apihandlers/fbhandler.js' ),
+      
+    // Deep Learning
+    NeuralNetwork = require( '../../modules/deepLearning/neuralNetwork.js' ),
 
     // Views
     EventSingleView = require( '../views/eventSingleView.js' ),
@@ -123,14 +126,14 @@ class TowwwnApp extends React.Component {
         });
 
         // Gets category data
-        let categoryData = new CategoryDataHandler();
-        categoryData.getFeaturedCategories().then((resp) => {
+        Globals.categoryDataHandler = new CategoryDataHandler();
+        Globals.categoryDataHandler.getFeaturedCategories().then((resp) => {
             this.setState({
                 'featuredCategoriesData' : resp,
             });
         });
         
-        categoryData.getAllCategories(false, true).then(( resp ) => {
+        Globals.categoryDataHandler.getAllCategories(false, true).then(( resp ) => {
             this.setState({
                 'categoriesData' : resp,
             });
@@ -176,6 +179,7 @@ class TowwwnApp extends React.Component {
     componentDidMount() {
         _('body').removeClass('loading');
         _('body').addClass('loaded');
+        
         Globals.user = new User();
         this.viewSlider = new ViewSlider(); 
         

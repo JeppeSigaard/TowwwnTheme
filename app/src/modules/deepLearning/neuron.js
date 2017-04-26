@@ -20,9 +20,6 @@ class Neuron {
     invoke( inputs, 
             spectrum ) {
         
-        // Natural logarithm
-        const e = 2.718281828459;
-        
         // Param type error
         if ( inputs.constructor.name !== 'Array' ) {
             throw 'Output Neuron, invoke: Params need to be of type array';
@@ -32,9 +29,8 @@ class Neuron {
         // This parts actually does stuff:))
         spectrum = spectrum != null ? spectrum : 1; this.output = 0;
         for ( let iter = 0; iter < inputs.length; iter++ ) {
-            this.axonValue += inputs[ iter ] * this.weights[ iter ];
-        } this.axonValue = ( 1 / ( 1 + Math.pow( e, -( this.axonValue * spectrum ))));
-        return this.axonValue > 0;
+            this.output += inputs[ iter ] * this.weights[ iter ];
+        } return this.output > 0;
           
     }
     

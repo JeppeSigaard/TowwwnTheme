@@ -89,24 +89,23 @@ class EventCalendarView extends React.Component {
     render() {
         return (
             <section className="container-section" id="event-calendar-view">
+               <div id="eventsbar">
+                   <div id="eventslayoutbtns">
+                       <svg viewBox="0 0 32 32" className="blocklayoutbtn" onClick={ this.setEventLayout.bind(this) } >
+                           <use xlinkHref="#icon-block-layout"></use>
+                       </svg>
+                       <svg viewBox="0 0 32 32" className="linelayoutbtn" onClick={ this.setEventLayout.bind(this) } >
+                           <use xlinkHref="#icon-list-layout"></use>
+                       </svg>
+                   </div>
+                   <div className="title">
+                       Begivenheder
+                   </div>
+               </div>
+               
                 <div className="sync-outer">
                     <div className="sync-inner">
                         <div className="content">
-                           <div id="eventsbar">
-                               <div id="eventslayoutbtns">
-                                   <svg viewBox="0 0 32 32" className="blocklayoutbtn" onClick={ this.setEventLayout.bind(this) } >
-                                       <use xlinkHref="#icon-block-layout"></use>
-                                   </svg>
-                                   <svg viewBox="0 0 32 32" className="linelayoutbtn" onClick={ this.setEventLayout.bind(this) } >
-                                       <use xlinkHref="#icon-list-layout"></use>
-                                   </svg>
-                               </div>
-                               <div className="title">
-                                   Begivenheder
-                               </div>
-                           </div>
-
-
                             <div className={ this.state.containerClasses + '-outer' } >
                                 <div className={ this.state.containerClasses }>
 

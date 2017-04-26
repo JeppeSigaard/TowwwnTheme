@@ -40,8 +40,8 @@ class Event extends React.Component {
                 );
             } else {
                 Globals.viewHandler.changeViewFocus(  
-                    'event-single-view',
-                    'event-calendar-view',
+                    '#event-single-view',
+                    '#event-calendar-view',
                     true, false, false
                 ); 
             }
@@ -62,8 +62,8 @@ class Event extends React.Component {
             );
         } else {
             Globals.viewHandler.changeViewFocus(
-                'location-single-view',
-                'event-calendar-view',
+                '#location-single-view',
+                '#event-calendar-view',
                 true, false, false
             );
         }
@@ -84,8 +84,6 @@ class Event extends React.Component {
         // Sends request
         xhr.open( 'GET', 'http://towwwn.dk/api/svendborg/locations/' + this.props.elem.parentid );
         xhr.send();
-
-        BehaviourDataHandler.parseData( 'event', this.props.elem );
     }
 
     // Format title

@@ -20,8 +20,8 @@ class EventSingleView extends React.Component {
             'closeviewstate' : { },
 
             'standardclose' : {
-                'leftview' : 'event-calendar-view',
-                'rightview' : 'location-category-view',
+                'leftview' : '#event-calendar-view',
+                'rightview' : '#location-category-view',
                 'fromLeft' : false,
                 'fromRight' : true,
                 'notrans': false,
@@ -33,8 +33,8 @@ class EventSingleView extends React.Component {
             },
 
             'fromlocationclose' : {
-                'leftview' : 'location-list-view',
-                'rightview' : 'location-single-view',
+                'leftview' : '#location-list-view',
+                'rightview' : '#location-single-view',
                 'fromLeft' : true,
                 'fromRight' : false,
                 'notrans': false,
@@ -46,8 +46,8 @@ class EventSingleView extends React.Component {
             },
 
             'vref' : {
-                'leftview' : 'location-single-view',
-                'rightview' : 'event-single-view',
+                'leftview' : '#location-single-view',
+                'rightview' : '#event-single-view',
                 'fromLeft' : true,
                 'fromRight' : false,
                 'notrans' : false,
@@ -69,7 +69,7 @@ class EventSingleView extends React.Component {
             this.lastElem = nextProps.event;
 
             if ( this.props.event != null ) {
-                BehaviourDataHandler.parseTimeData( 'event', this.props.event.id, new Date().getTime()  -this.startTime );
+                BehaviourDataHandler.parseTimeData( 'event', this.props.event.id, new Date().getTime()  -this.startTime, this.props.event.parentid );
             } this.startTime = new Date().getTime();
         }
 
@@ -114,10 +114,10 @@ class EventSingleView extends React.Component {
         let elem = this.props.event;
         return (
             <section className="container-section" id="event-single-view">
+                <ViewTopBar standard={ true } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
                 <div className="sync-outer">
                     <div className="sync-inner">
                         <div className="content">
-                            <ViewTopBar standard={ true } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
                             
                             { this.state.jsxEvent != null &&
                               this.state.jsxEvent }

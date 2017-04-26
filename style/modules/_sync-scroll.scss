@@ -4,9 +4,9 @@
     width: 100%;
     padding: 0;
     margin: 0;
-    top: $menu-bar-height;
+    top: calc( #{$menu-bar-height} * 2 );
     overflow: hidden;
-    height: calc( 100vh - #{$menu-bar-height} );
+    height: calc( 100vh - #{$menu-bar-height} * 2 );
 
     &.high{
         position: relative;

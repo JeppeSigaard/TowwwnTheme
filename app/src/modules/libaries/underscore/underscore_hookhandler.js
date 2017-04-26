@@ -4,8 +4,7 @@
 class HookHandler {
 
     /* ---- Constructor ---- */
-    constructor( parent ) {
-        this.parentName = parent.constructor.name;
+    constructor() {
         this.hooks = { };
     }
 
@@ -17,8 +16,7 @@ class HookHandler {
     }
 
     /* ---- Trigger ---- */
-    trigger( event, auth, data ) {
-        if ( auth.constructor.name !== this.parentName ) return;
+    trigger( event, data ) {
         if ( this.hooks[event] != null ) {
             for ( let func of this.hooks[event] ) {
                 func( data );
