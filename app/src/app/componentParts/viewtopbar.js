@@ -33,6 +33,7 @@ class ViewTopBar extends React.Component {
             );
         }
 
+        if ( this.props.onClose != null ) this.props.onClose();
         Globals.syncScroll.rescaleContainer();
     }
     
