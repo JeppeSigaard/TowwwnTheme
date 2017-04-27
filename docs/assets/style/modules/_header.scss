@@ -1,0 +1,36 @@
+$header-height: 55px;
+
+header.docs-header{
+    background: $color-grey-2;
+    height: $header-height;
+    position: sticky;
+    top: 0;
+    overflow: auto;
+    z-index: 10;
+    box-shadow: 1px 1px 2px rgba(0,0,0,.2);
+}
+
+.header-logo{
+    margin: 15px 10px;
+    color: white;
+
+    svg{
+        height: 25px;
+        width:auto;
+        fill: white;
+        margin-right: 5px;
+    }
+
+    span{
+        display: inline-block;
+        vertical-align: top;
+        font-size: 13px;
+        height: 25px;
+        line-height: 1;
+        padding-top: 12px;
+    }
+
+    @media(min-width: 480px){
+        margin: 15px 20px;
+    }
+}

@@ -1,0 +1,40 @@
+.menu{
+    padding: 10px 0px;
+    border-top: 1px solid $color-blue-1;
+
+    ul{
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    li{
+
+        &:hover a:before,
+        &.current_page_item a:before{
+            content: '';
+            top: 10px;
+            left: -10px;
+            position: absolute;
+            height: 0px;
+            width: 0px;
+            border-left: 5px solid $color-blue-1;
+            border-top:5px solid transparent;
+            border-bottom:5px solid transparent;
+        }
+
+        &.current_page_item a:before,
+        &.current_page_item:hover a:before{
+             border-left: 5px solid $color-blue-2;
+        }
+
+    }
+
+    a{
+        line-height: 2;
+        display: block;
+        color: inherit;
+        text-decoration: none;
+        position: relative;
+    }
+}
