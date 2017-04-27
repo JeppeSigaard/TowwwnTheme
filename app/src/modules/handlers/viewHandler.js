@@ -7,7 +7,7 @@ class ViewHandler {
 
     // Ctor
     constructor( syncScrollHandler ) {
-        this.focusedViews = [ _('#event-calendar-view').get(0), _('#location-category-view').get(0) ];
+        this.focusedViews = [ '#event-calendar-view', '#location-category-view' ];
         this.mobileFocusedView = _('#event-calendar-view').get();
 
         if ( _('body').hasClass('mobile') ) this.changeMobileViewFocus( this.mobileFocusedView, true, false );
@@ -22,128 +22,140 @@ class ViewHandler {
             return;
         }
 
-        if ( fromLeft == null && fromRight == null ) fromLeft = true;
+        if ( notrans ) {
+            _( leftView ).addClass('notrans').get(0).offsetHeight;
+            _( rightView ).addClass('notrans').get(0).offsetHeight;
 
-        if ( typeof leftView === 'string' )
-            leftView = document.getElementById( leftView );
-
-        if ( typeof rightView === 'string' )
-            rightView = document.getElementById( rightView );
-
-        if ( this.focusedViews[0] === leftView &&
-             this.focusedViews[1] === rightView ) {
-            this.focusedViews[0].classList.add('notrans');
-            this.focusedViews[1].classList.add('notrans');
-            this.focusedViews[0].style.transform = 'translate(0,0)';
-            this.focusedViews[1].style.transform = 'translate(100%, 0)';
-            this.focusedViews[0].classList.remove('notrans');
-            this.focusedViews[1].classList.remove('notrans');
-            return;
+            if ( this.focusedViews.length > 1 ) {
+                _( this.focusedViews[0] ).addClass('notrans').get(0).offsetHeight;
+                _( this.focusedViews[1] ).addClass('notrans').get(0).offsetHeight;
+            }
         }
 
-        // For old views
-        if ( ! ( this.focusedViews[0] === rightView || this.focusedViews[1] === leftView ) ) {
-            if ( fromLeft ) {
-                setTimeout(() => {
-                    this.focusedViews[0].style.transform = 'translate(200%, 0)';
-                    this.focusedViews[1].style.transform = 'translate(300%, 0)';
-
-                    if ( this.focusedViews[0].id !== leftView.id && this.focusedViews[0].id !== rightView.id ) {
-                        let prevFocus = this.focusedViews[0];
-                        setTimeout(() => {
-                            prevFocus.classList.add('notrans');
-                            prevFocus.style.transform = 'translate(-100%, 0px)';
-                            setTimeout(() => { prevFocus.classList.remove('notrans'); }, 15);
-                        }, parseFloat( window.getComputedStyle( this.focusedViews[0], null ).transitionDuration ) * 1000 + 10 );
-                    }
-
-                    if ( this.focusedViews[1].id !== leftView.id && this.focusedViews[1].id !== rightView.id ) {
-                        let prevFocus = this.focusedViews[1];
-                        setTimeout(() => {
-                            prevFocus.classList.add('notrans');
-                            prevFocus.style.transform = 'translate(-100%, 0px)';
-                            setTimeout(() => { prevFocus.classList.remove('notrans'); }, 15);
-                        }, parseFloat( window.getComputedStyle( this.focusedViews[1], null ).transitionDuration ) * 1000 + 10 );
-                    }
-
-                }, 0);
+        let leftFocused = false, rightFocused = false;
+        if ( this.focusedViews.length > 1 ) {
+            if ( this.focusedViews.includes( leftView ) && this.focusedViews.includes( rightView ) ) {
+                Globals.syncScroll.wrapElems();
+                Globals.syncScroll.rescaleContainer( [ _( leftView ).get(0), _( rightView ).get(0) ] );
+                return;
             }
 
-            if ( fromRight ) {
-                setTimeout(() => {
-                    this.focusedViews[0].style.transform = 'translate(-200%, 0)';
-                    this.focusedViews[1].style.transform = 'translate(-100%, 0)';
-                }, 0);
+            if ( this.focusedViews[0] === leftView ) {
+                fromLeft = true; fromRight = false;
+                rightFocused = true;
             }
 
-            // Adds notrans classes, if param is set
-            leftView.classList.add('notrans');
-            rightView.classList.add('notrans');
-
-            if ( fromLeft ) {
-                leftView.style.transform = 'translate(-200%,0)';
-                rightView.style.transform = 'translate(-100%, 0)';
+            if ( this.focusedViews[0] === rightView ) {
+                fromLeft = true; fromRight = false;
+                rightFocused = true;
             }
 
-            if ( fromRight ) {
-                leftView.style.transform = 'translate(200%, 0)';
-                rightView.style.transform = 'translate(300%, 0)';
+            if ( this.focusedViews[1] === rightView ) {
+                fromLeft = false; fromRight = true;
+                leftFocused = true;
             }
 
-        } else {
-
-            leftView.classList.add('notrans');
-            rightView.classList.add('notrans');
-
-            if ( this.focusedViews[0] == rightView ) {
-                fromLeft = true;
-                fromRight = false;
-                leftView.style.transform = 'translate(-100%,0)';
-                this.focusedViews[1].style.transform = 'translate(200%,0)';
-
-                if ( this.focusedViews[1].id !== leftView.id && this.focusedViews[1].id !== rightView.id ) {
-                    let prevFocus = this.focusedViews[1];
-                    setTimeout(() => {
-                        prevFocus.classList.add('notrans');
-                        prevFocus.style.transform = 'translate(-100%, 0px)';
-                        setTimeout(() => { prevFocus.classList.remove('notrans'); }, 15);
-                    }, parseFloat( window.getComputedStyle( this.focusedViews[1], null ).transitionDuration ) * 1000 + 10 );
-                }
-
-            } else if ( this.focusedViews[1] == leftView ) {
-                fromLeft = false;
-                fromRight = true;
-                rightView.style.transform = 'translate(200%,0)';
-                this.focusedViews[0].style.transform = 'translate(-100%,0)';
+            if ( this.focusedViews[1] === leftView ) {
+                fromLeft = false; fromRight = true;
+                leftFocused = true;
             }
 
+            if ( fromLeft && !leftFocused ) {
+                _( this.focusedViews[0] ).css({ 'left': '100%' });
+                _( this.focusedViews[1] ).css({ 'left': '150%' });
+            }
+
+            if ( fromRight && !rightFocused ) {
+                _( this.focusedViews[0] ).css({ 'left': '-100%' });
+                _( this.focusedViews[1] ).css({ 'left': '-50%' });
+            }
+
+            if ( leftFocused ) { _( this.focusedViews[0] ).css({ 'left': '-50%' }); }
+            if ( rightFocused ) { _( this.focusedViews[1] ).css({ 'left': '100%' }); }
+
+            let oldLeftFocus = this.focusedViews[0];
+            if ( this.focusedViews[0] !== leftView && this.focusedViews[0] !== rightView ) {
+                setTimeout(( ) => {
+                    _( oldLeftFocus ).addClass('notrans').css({ 'left' : '-50%' });
+                    _( oldLeftFocus ).get(0).offsetHeight;
+                    _( oldLeftFocus ).removeClass('notrans');
+                }, parseFloat( window.getComputedStyle( _( this.focusedViews[0] ).get(0) ).transitionDuration ) * 1000 );
+            }
+
+            let oldRightFocus = this.focusedViews[1];
+            if ( this.focusedViews[1] !== leftView && this.focusedViews[1] !== rightView ) {
+                setTimeout(( ) => {
+                    _( oldRightFocus ).addClass('notrans').css({ 'left' : '-50%' });
+                    _( oldRightFocus ).get(0).offsetHeight;
+                    _( oldRightFocus ).removeClass('notrans');
+                }, parseFloat( window.getComputedStyle( _( this.focusedViews[1] ).get(0) ).transitionDuration ) * 1000 );
+            }
+
+            window.cs = window.getComputedStyle( _( this.focusedViews[1] ).get(0) );
         }
 
         if ( !notrans ) {
-            setTimeout(() => {
-                leftView.classList.remove( 'notrans' );
-                rightView.classList.remove( 'notrans' );
-            }, 15);
+            _( leftView ).addClass('notrans');
+            _( rightView ).addClass('notrans');
         }
 
-        // Brings new views into view
-        setTimeout(() => {
-            leftView.style.transform = 'translate(0%,0)';
-            rightView.style.transform = 'translate(100%,0)';
-
-            // Remove notrans classes
-            this.focusedViews[0].classList.remove('notrans');
-            this.focusedViews[1].classList.remove('notrans');
-            leftView.classList.remove('notrans');
-            rightView.classList.remove('notrans');
-
-            // Rescales containers
-            this.focusedViews = [ leftView, rightView ];
-            if ( this.syncScroll != null ) {
-                setTimeout( () => { this.syncScroll.rescaleContainer( this.focusedViews ) }, 100 );
+        if ( fromLeft ) {
+            if ( !rightFocused ) {
+                _( leftView ).css({ 'left' : '-100%' })
+                _( rightView ).css({ 'left' : '-50%' });
+            } else {
+                _( leftView ).css({ 'left' : '-50%' });
+                _( rightView ).css({ 'left' : '0' });
             }
+        }
 
-        }, 30);
+        if ( fromRight ) {
+            if ( !leftFocused ) {
+                _( leftView ).css({ 'left' : '100%' });
+                _( rightView ).css({ 'left' : '150%' });
+            } else {
+                _( leftView ).css({ 'left' : '50%' });
+                _( rightView ).css({ 'left' : '100%' });
+            }
+        }
+
+        // Forces the browser to run the css queue
+        _( leftView ).get(0).offsetHeight;
+        _( rightView ).get(0).offsetHeight;
+
+        if ( this.focusedViews.length > 1 ) {
+            _( this.focusedViews[0] ).get(0).offsetHeight;
+            _( this.focusedViews[1] ).get(0).offsetHeight;
+        }
+
+        if ( !notrans ) {
+            _( leftView ).removeClass('notrans');
+            _( rightView ).removeClass('notrans');
+        }
+
+        _( leftView ).css({ 'left': '0' });
+        _( rightView ).css({ 'left': '50%' });
+
+        _( leftView ).get(0).offsetHeight;
+        _( rightView ).get(0).offsetHeight;
+
+        this.focusedViews[0] = leftView;
+        this.focusedViews[1] = rightView;
+
+        if ( notrans ) {
+            _( leftView ).removeClass('notrans');
+            _( rightView ).removeClass('notrans');
+
+            if ( this.focusedViews.length > 1 ) {
+                _( this.focusedViews[0] ).removeClass('notrans');
+                _( this.focusedViews[1] ).removeClass('notrans');
+            }
+        }
+
+        Globals.syncScroll.wrapElems();
+        Globals.syncScroll.rescaleContainer( [ _( leftView ).get(0), _( rightView ).get(0) ] );
+        return;
+
     }
 
     // Change mobile view focus

@@ -190,11 +190,6 @@
     }
 }
 
-<<<<<<< HEAD
-    .event {
-        overflow: hidden;
-        box-sizing: border-box;
-=======
 .event {
     box-sizing: border-box;
     position: relative;
@@ -218,7 +213,6 @@
     }
 
     .imgcontainer{
->>>>>>> origin/react-conversion
         position: relative;
         width: 100%;
         padding-bottom: 50%;
@@ -262,21 +256,6 @@
         }
     }
 
-<<<<<<< HEAD
-        .imgcontainer{
-            width: 100%;
-            padding-bottom: 50%;
-            background-size: cover;
-            background-position: center 20%;
-            border-bottom: 1px solid rgba($color-blue-1, .6);
-            position: relative;
-            z-index: 1;
-
-            &.loading{
-                background-repeat: no-repeat;
-                background-size: 30px;
-                background-position: center;
-=======
     .eventtext{
         position: relative;
         overflow: hidden;
@@ -328,7 +307,6 @@
 
             &.animate{
                 animation: ripple 300ms ease-in forwards;
->>>>>>> origin/react-conversion
             }
 
             &.animateBack{

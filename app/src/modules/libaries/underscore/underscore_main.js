@@ -4,7 +4,7 @@ require( './underscore_cookie_lib.js' );
 
 // Towwwn Selector
 let UnderScore = ( selector ) => {
-    if ( selector == null ) return TSElem;
+    if ( selector == null ) return UnderScoreElem;
 
     // Creates new elem
     let elem = new UnderScoreElem();
@@ -19,14 +19,18 @@ let UnderScore = ( selector ) => {
     if ( elem.state == null ) {
         if ( selector === document ) elem.state = { domnode : document, };
         else if ( selector === window ) elem.state = { domnode : window, };
-        else elem.state = { domnode : document.querySelectorAll( selector ) };
+        else {
+            let domnode = document.querySelectorAll( selector );
+            if ( domnode.constructor.name === 'NodeList' ) elem.state = { domnode : domnode };
+            else elem.state = { domnode: [ domnode ] };
+        }
     }
 
     // Checks if any elems where found
     if ( elem.state.domnode.length != null && elem.state.domnode.length <= 0 &&
          elem.state.domnode !== window && elem.state.domnode !== document ) {
-        throw "TowwwnSelector: No elements were found with selector: " + selector;
-        return;
+        // throw "TowwwnSelector: No elements were found with selector: " + selector;
+        return false;
     }
 
     // Returns elem
@@ -41,12 +45,17 @@ class UnderScoreElem {
     get( index ) {
         if ( index != null &&
              typeof this.state.domnode === 'object' ) {
-            return this.state.domnode[ index ];
+            if ( this.state.domnode.constructor.name !== 'HTMLElement' ) {
+                return this.state.domnode[ index ];
+            } else return this.state.domnode;
         } else return this.state.domnode;
     }
 
     // Add Class
     addClass( className ) {
+        if ( this.state.domnode.constructor.name === 'HTMLElement' )
+            this.state.domnode = [ this.state.domnode ];
+
         if ( className.includes(' ') ) {
             className = className.split(' ');
             for ( let item of className ) {
@@ -64,6 +73,9 @@ class UnderScoreElem {
 
     // Remove class
     removeClass( className ) {
+        if ( this.state.domnode.constructor.name === 'HTMLElement' )
+            this.state.domnode = [ this.state.domnode ];
+
         if ( className.includes(' ') ) {
             className = className.split(' ');
             for ( let item of className ) {
@@ -207,9 +219,14 @@ class UnderScoreElem {
     // Css
     css( styling ) {
         if ( typeof styling === 'object' ) {
-            for ( let key in styling ) {
-                for ( let elem of this.state.domnode ) {
-                    elem.style[ key ] = styling[ key ]; } }
+            for ( let key of Object.keys( styling ) ) {
+                if ( this.state.domnode.constructor.name === 'HTMLElement' )
+                    this.state.domnode = [ this.state.domnode ];
+
+                for ( let iter = 0; iter < this.state.domnode.length; iter++ ) {
+                    this.state.domnode[ iter ].style[ key ] = styling[ key ];
+                }
+            }
         } else throw "TowwwnSelector, css: Param needs to be of type object";
     }
 
@@ -219,6 +236,11 @@ class UnderScoreElem {
         for ( let node of this.state.domnodes ) {
             resp.push( window.getComputedStyle( node ) );
         } return resp;
+    }
+
+    // Html
+    text( data ) {
+        for ( let item of this.state.domnode ) { item.textContent = data; }
     }
 
     // Position
