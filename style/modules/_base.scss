@@ -221,6 +221,7 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
         background-color: white;
         transition: 500ms, width 400ms;
         transition-timing-function: $horizontal-bezier;
+        left: 50%;
 
         &.normalize{
             width: 50%;
@@ -232,6 +233,7 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
     #event-calendar-view{
         transition: 500ms, width 400ms;
         transition-timing-function: $horizontal-bezier;
+        left: 0%;
         
         &.normalize{
             width: 50%;

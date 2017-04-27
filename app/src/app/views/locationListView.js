@@ -2,6 +2,7 @@
 
 // Location List View
 const React = require( 'react' ),
+      _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
       BehaviourDataHandler = require( '../../modules/handlers/behaviourHandler/dataHandler.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
       Location = require( '../components/location.js' ),
@@ -28,6 +29,9 @@ class LocationListView extends React.Component {
         };
     }
     
+    // On close
+    onClose() { _( '.category.bookmark-mode' ).removeClass('bookmark-mode'); }
+
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
         if ( nextProps.category != this.lastElem ) {
@@ -50,7 +54,7 @@ class LocationListView extends React.Component {
         return (
             <section className="container-section" id="location-list-view">
                { this.props.category != null && 
-                    <ViewTopBar closeviewstate={ this.state.closeviewstate } title={ this.props.category.category_name } darken={ true } standard={ true } name={ this.props.name } />
+                    <ViewTopBar closeviewstate={ this.state.closeviewstate } title={ this.props.category.category_name } darken={ true } standard={ true } name={ this.props.name } onClose={ this.onClose.bind(this) } />
                 }
                 
                 <div className="sync-outer">

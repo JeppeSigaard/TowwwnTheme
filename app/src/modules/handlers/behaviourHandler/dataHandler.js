@@ -48,7 +48,7 @@ class BehaviourDataHandler{
             request.open( 'GET', 'http://towwwn.dk/api/svendborg/locations/' + data.parentid );
             request.send();
 
-        } console.log( Globals.user.state );
+        }
     }
 
     // Parse time data

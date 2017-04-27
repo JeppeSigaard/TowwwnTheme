@@ -80,14 +80,13 @@ class SyncScrollHandler {
                 this.containerHeight = 0; let highestElem = null;
                 
                 if ( focusedViews != null ) {
-
                     for ( let view of focusedViews ) {
                         for ( let outer of view.childNodes ) {
                             if ( outer.classList.contains('sync-outer') ) {
                                 for ( let inner of outer.childNodes ) {
                                     if ( inner.classList.contains( 'sync-inner' ) ) {
                                         if ( inner.clientHeight > this.containerHeight && this.isInView( inner ) ) {
-                                            this.containerHeight = inner.clientHeight;
+                                            this.containerHeight = inner.clientHeight + 55;
                                             highestElem = inner;
                                         } break;
                                     }
