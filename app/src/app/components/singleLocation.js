@@ -42,7 +42,9 @@ class SingleLocation extends React.Component {
         if ( nextProps.elem !== this.props.elem ) {
             this.setState({ 'jsxEvents' : null });
             Globals.eventDataHandler.getEvents({
-                'parent' : nextProps.elem.id
+                'parent' : nextProps.elem.id,
+                'per_page' : '1000',
+                'after' : 'now'
             }).then(( resp ) => {
 
                 // Generates elems
