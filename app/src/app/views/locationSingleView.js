@@ -13,11 +13,13 @@ class LocationSingleView extends React.Component{
     // Ctor
     constructor() {
         super();
+        this.startTime = 0;
+        this.lastElem = null;
 
         // Standard close properties
         this.standardclose = {
-            leftview: 'location-category-view',
-            rightview: 'location-list-view',
+            leftview: '#location-category-view',
+            rightview: '#location-list-view',
             fromLeft: true,
             fromRight: false,
             mobile: {
@@ -29,8 +31,8 @@ class LocationSingleView extends React.Component{
 
         // Close properties when coming from event
         this.fromeventclose = {
-            leftview: 'event-single-view',
-            rightview: 'event-calendar-view',
+            leftview: '#event-single-view',
+            rightview: '#event-calendar-view',
             fromLeft: false,
             fromRight: true,
             mobile: {
@@ -42,8 +44,8 @@ class LocationSingleView extends React.Component{
 
         // CLose properties when coming from calendar
         this.fromeventCalendarclose = {
-            leftview: 'event-calendar-view',
-            rightview: 'location-category-view',
+            leftview: '#event-calendar-view',
+            rightview: '#location-category-view',
             fromLeft: false,
             fromRight: true,
             mobile: {
@@ -62,6 +64,9 @@ class LocationSingleView extends React.Component{
 
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
+        if ( nextProps.elem != this.lastElem ) {
+            this.lastElem = nextProps.elem;
+        }
 
         // Sets close state
         if ( nextProps.from === 'event-single-view' ) {
@@ -99,11 +104,11 @@ class LocationSingleView extends React.Component{
     render() {
         return (
             <section className="container-section" id="location-single-view">
+                <ViewTopBar standard={ true } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } />
+
                 <div className="sync-outer">
                     <div className="sync-inner">
                         <div className="content">
-                            <ViewTopBar standard={ true } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } />
-
                             { this.props.elem != null &&
                                 <SingleLocation elem={ this.props.elem } name={ this.props.name } /> }
                             { this.props.elem == null &&

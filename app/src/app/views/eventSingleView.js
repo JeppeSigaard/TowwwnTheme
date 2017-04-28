@@ -13,12 +13,14 @@ class EventSingleView extends React.Component {
     constructor() {
         super();
 
+        this.lastElem = null;
+        this.startTime = null;
         this.state = {
             'closeviewstate' : { },
 
             'standardclose' : {
-                'leftview' : 'event-calendar-view',
-                'rightview' : 'location-category-view',
+                'leftview' : '#event-calendar-view',
+                'rightview' : '#location-category-view',
                 'fromLeft' : false,
                 'fromRight' : true,
                 'notrans': false,
@@ -30,8 +32,8 @@ class EventSingleView extends React.Component {
             },
 
             'fromlocationclose' : {
-                'leftview' : 'location-list-view',
-                'rightview' : 'location-single-view',
+                'leftview' : '#location-list-view',
+                'rightview' : '#location-single-view',
                 'fromLeft' : true,
                 'fromRight' : false,
                 'notrans': false,
@@ -43,8 +45,8 @@ class EventSingleView extends React.Component {
             },
 
             'vref' : {
-                'leftview' : 'location-single-view',
-                'rightview' : 'event-single-view',
+                'leftview' : '#location-single-view',
+                'rightview' : '#event-single-view',
                 'fromLeft' : true,
                 'fromRight' : false,
                 'notrans' : false,
@@ -61,6 +63,10 @@ class EventSingleView extends React.Component {
 
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
+        if ( nextProps.event != this.lastElem ) {
+            this.lastElem = nextProps.event;
+        }
+
         if ( nextProps.from === 'location-single-view' ) {
             Globals.relations[ nextProps.name ].canleft = true;
             Globals.relations[ nextProps.name ].canright = false;
@@ -80,6 +86,7 @@ class EventSingleView extends React.Component {
 
     // Will change view
     willChangeView() {
+
         Globals.setMainState({ singleLocation : null });
 
         // Opens new request
@@ -91,7 +98,7 @@ class EventSingleView extends React.Component {
             });
         });
 
-        request.open( 'GET', 'https://towwwn.dk/api/svendborg/locations/'+this.props.event.parentid );
+        request.open( 'GET', 'http://towwwn.dk/api/svendborg/locations/'+this.props.event.parentid );
         request.send();
 
     }
@@ -101,10 +108,10 @@ class EventSingleView extends React.Component {
         let elem = this.props.event;
         return (
             <section className="container-section" id="event-single-view">
+                <ViewTopBar standard={ true } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
                 <div className="sync-outer">
                     <div className="sync-inner">
                         <div className="content">
-                            <ViewTopBar standard={ true } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
 
                             { this.state.jsxEvent != null &&
                               this.state.jsxEvent }

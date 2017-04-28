@@ -4,9 +4,9 @@
     width: 100%;
     padding: 0;
     margin: 0;
-    top: $menu-bar-height;
+    top: calc( #{$menu-bar-height} * 2 );
     overflow: hidden;
-    height: calc( 100vh - #{$menu-bar-height} );
+    height: calc( 100vh - #{$menu-bar-height} * 2 );
 
     &.high{
         position: relative;
@@ -38,7 +38,7 @@
 .sync-outer .sync-inner{
     position: relative;
     min-height: auto;
-    overflow: hidden;
+    overflow: auto;
     padding: 0;
     margin: 0;
     clear: both;
