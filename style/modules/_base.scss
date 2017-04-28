@@ -181,6 +181,7 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
         font-size: 16px;
         display: inline-block;
         vertical-align: top;
+        transition: 400ms;
         transition-timing-function: $horizontal-bezier;
     
         &:nth-child(2n) {
@@ -219,26 +220,14 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
     // Location categories
     #location-category-view{
         background-color: white;
-        transition: 500ms, width 400ms;
-        transition-timing-function: $horizontal-bezier;
-        left: 50%;
-
-        &.normalize{
-            width: 50%;
-        }
+        left: 60%;
     }
 
     
     // Event Calender
     #event-calendar-view{
-        transition: 500ms, width 400ms;
-        transition-timing-function: $horizontal-bezier;
         left: 0%;
-        
-        &.normalize{
-            width: 50%;
-        }
-        
+
         .content{
             min-height: calc(100vh - #{$menu-bar-height});
         }

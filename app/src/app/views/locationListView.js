@@ -21,6 +21,8 @@ class LocationListView extends React.Component {
                 'rightview' : '#location-category-view',
                 'fromLeft' : true,
                 'fromRigth' : false,
+                'leftSize' : 55,
+                'rightSize' : 45,
                 mobile: {
                     view: '#location-category-view',
                     fromLeft: true, fromRight: false,

@@ -11,17 +11,22 @@ class ViewHandler {
         this.mobileFocusedView = _('#event-calendar-view').get();
         
         if ( _('body').hasClass('mobile') ) this.changeMobileViewFocus( this.mobileFocusedView, true, false );
-        else this.changeViewFocus( this.focusedViews[0], this.focusedViews[1], true, false, true );
+        else this.changeViewFocus( this.focusedViews[0], this.focusedViews[1], true, false, true, 60, 40 );
         if ( syncScrollHandler != null ) this.syncScroll = syncScrollHandler;
     }
     
     // Change view focus
-    changeViewFocus( leftView, rightView, fromLeft, fromRight, notrans ) {
+    changeViewFocus( leftView, rightView, fromLeft, fromRight, notrans, leftSize, rightSize ) {
         if ( _('body').hasClass('mobile') ) {
             this.changeMobileViewFocus( leftView, fromLeft, fromRight );
             return;
         }
         
+        _('.container-section').css({ 'width' : '50%' });
+
+        if ( leftSize == null ) leftSize = 50;
+        if ( rightSize == null ) rightSize = 50;
+
         if ( notrans ) {
             _( leftView ).addClass('notrans').get(0).offsetHeight;
             _( rightView ).addClass('notrans').get(0).offsetHeight;
@@ -32,13 +37,11 @@ class ViewHandler {
             }
         }
 
+        _( leftView ).css({ 'width' : leftSize+'%' });
+        _( rightView ).css({ 'width' : rightSize+'%' });
+
         let leftFocused = false, rightFocused = false;
         if ( this.focusedViews.length > 1 ) {
-            if ( this.focusedViews.includes( leftView ) && this.focusedViews.includes( rightView ) ) {
-                Globals.syncScroll.wrapElems();
-                Globals.syncScroll.rescaleContainer( [ _( leftView ).get(0), _( rightView ).get(0) ] );
-                return;
-            }
             
             if ( this.focusedViews[0] === leftView ) { 
                 fromLeft = true; fromRight = false; 
@@ -105,7 +108,7 @@ class ViewHandler {
                 _( rightView ).css({ 'left' : '-50%' });
             } else {
                 _( leftView ).css({ 'left' : '-50%' });
-                _( rightView ).css({ 'left' : '0' });
+                // _( rightView ).css({ 'left' : '0' });
             }
         }
         
@@ -114,7 +117,7 @@ class ViewHandler {
                 _( leftView ).css({ 'left' : '100%' });
                 _( rightView ).css({ 'left' : '150%' });
             } else {
-                _( leftView ).css({ 'left' : '50%' });
+                // _( leftView ).css({ 'left' : '50%' });
                 _( rightView ).css({ 'left' : '100%' });
             }
         }
@@ -134,7 +137,7 @@ class ViewHandler {
         }
 
         _( leftView ).css({ 'left': '0' });
-        _( rightView ).css({ 'left': '50%' });
+        _( rightView ).css({ 'left': leftSize+'%' });
 
         _( leftView ).get(0).offsetHeight;
         _( rightView ).get(0).offsetHeight;

@@ -25,6 +25,8 @@ class EventSingleView extends React.Component {
                 'fromLeft' : false,
                 'fromRight' : true,
                 'notrans': false,
+                'leftSize': 55,
+                'rightSize': 45,
                 mobile: {
                     view : '#event-calendar-view',
                     fromLeft : false,
