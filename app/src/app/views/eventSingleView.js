@@ -91,7 +91,7 @@ class EventSingleView extends React.Component {
             });
         });
 
-        request.open( 'GET', 'https://towwwn.dk/api/svendborg/locations/'+this.props.event.parentid );
+        request.open( 'GET', app_data.rest_api + 'svendborg/locations/'+this.props.event.parentid );
         request.send();
 
     }

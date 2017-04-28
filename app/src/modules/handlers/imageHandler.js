@@ -24,7 +24,7 @@ class ImageHandler {
             if ( this.isInView( item ) && !item.classList.contains('loading') && !item.classList.contains('imgloaded') ) {
                 let imgSrc = item.getAttribute( 'data-image-src' );
                 item.classList.add('loading');
-                item.style['background-image'] = 'url(style/assets/icons/loading.svg)';
+                item.style['background-image'] = 'url('+app_data.template_uri+'/style/assets/icons/loading.svg)';
 
                 var request = new XMLHttpRequest();
                 request.onload = function() {

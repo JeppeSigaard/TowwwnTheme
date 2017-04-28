@@ -6,13 +6,17 @@ const _ = require( '../libaries/underscore/underscore_main.js' ),
 class ViewHandler {
 
     // Ctor
-    constructor( syncScrollHandler ) {
-        this.focusedViews = [ _('#event-calendar-view').get(0), _('#location-category-view').get(0) ];
-        this.mobileFocusedView = _('#event-calendar-view').get();
+    constructor( left, right, mobile ) {
+
+        const initialLeftView = ( left != null ) ? '#' + left : '#event-calendar-view',
+              initialRightView = ( right != null ) ? '#' + right : '#location-category-view',
+              initialMobileView = (mobile != null ) ? '#' + mobile : '#event-calendar-view';
+
+        this.focusedViews = [ _(initialLeftView).get(0), _(initialRightView).get(0) ];
+        this.mobileFocusedView = _(initialMobileView).get();
 
         if ( _('body').hasClass('mobile') ) this.changeMobileViewFocus( this.mobileFocusedView, true, false );
         else this.changeViewFocus( this.focusedViews[0], this.focusedViews[1], true, false, true );
-        if ( syncScrollHandler != null ) this.syncScroll = syncScrollHandler;
     }
 
     // Change view focus

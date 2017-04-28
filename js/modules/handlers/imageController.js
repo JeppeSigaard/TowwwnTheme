@@ -24,7 +24,7 @@ var ImageController = {
             ImageController.settings.loaderReady = true;
         }
 
-        xhr.open( 'GET', template_uri+'/style/assets/icons/loading.svg' );
+        xhr.open( 'GET', app_data.template_uri+'/style/assets/icons/loading.svg' );
         xhr.send();
 
         // Loads in image at correct size to header
@@ -102,7 +102,7 @@ var ImageController = {
                     if ( ImageController.settings.backImages ) {
                         elem.css( 'background-image', 'url('+template_uri+'/style/assets/icons/loading.svg)' ).addClass('loading');
                     } else {
-                        elem.attr( 'src', template_uri+'/style/assets/icons/loading.svg' ).addClass('loading');
+                        elem.attr( 'src', app_data.template_uri+'/style/assets/icons/loading.svg' ).addClass('loading');
                     }
                 }
 

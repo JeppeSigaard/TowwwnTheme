@@ -5482,6 +5482,9 @@ var Event = function (_React$Component) {
             Globals.setMainState({ from: this.props.name });
             Globals.setMainState('singleevent', this.props.elem);
 
+            // Push to browser history
+            Globals.history.push(this.props.elem);
+
             if (this.props.vref != null) {
                 if (_('body').hasClass('mobile')) {
                     Globals.viewHandler.changeMobileViewFocus( // Tmp
@@ -5521,11 +5524,14 @@ var Event = function (_React$Component) {
                     'singleLocation': location
                 });
 
+                // Push to browser history
+                Globals.history.push(this.props.elem);
+
                 Globals.setMainState({ from: this.props.name });
             }.bind(this);
 
             // Sends request
-            xhr.open('GET', 'https://towwwn.dk/api/svendborg/locations/' + this.props.elem.parentid);
+            xhr.open('GET', app_data.rest_api + 'svendborg/locations/' + this.props.elem.parentid);
             xhr.send();
         }
 
@@ -5589,7 +5595,7 @@ var Event = function (_React$Component) {
                 image = this.extractImageUrl(this.props.elem);
 
             // Html
-            return React.createElement('a', { className: 'event', style: this.props.style != null ? this.props.style : {}, onClick: this.eventRefClick.bind(this) }, React.createElement('div', { className: 'imgcontainer', 'data-image-src': image }, React.createElement('div', { className: 'loader' }, React.createElement('img', { src: template_uri + '/style/assets/icons/loading-white.svg' }))), React.createElement('div', { className: 'eventtext' }, React.createElement('div', { className: 'ripple' }), React.createElement('div', { className: 'title' }, title), React.createElement('div', { className: 'start_time' }, semanticTime)), React.createElement('div', { className: 'eventlocation-container' }, React.createElement('div', { className: 'eventblackbar' }), React.createElement('div', { className: 'eventlocation' }, elem.parentname)));
+            return React.createElement('a', { className: 'event', style: this.props.style != null ? this.props.style : {}, onClick: this.eventRefClick.bind(this) }, React.createElement('div', { className: 'imgcontainer', 'data-image-src': image }, React.createElement('div', { className: 'loader' }, React.createElement('img', { src: app_data.template_uri + '/style/assets/icons/loading-white.svg' }))), React.createElement('div', { className: 'eventtext' }, React.createElement('div', { className: 'ripple' }), React.createElement('div', { className: 'title' }, title), React.createElement('div', { className: 'start_time' }, semanticTime)), React.createElement('div', { className: 'eventlocation-container' }, React.createElement('div', { className: 'eventblackbar' }), React.createElement('div', { className: 'eventlocation' }, elem.parentname)));
         }
     }]);
 
@@ -8017,6 +8023,7 @@ _ = __webpack_require__(10),
     ViewSlider = __webpack_require__(119),
     EventHandlers = __webpack_require__(114),
     ImageHandler = __webpack_require__(115),
+    historyHandler = __webpack_require__(231),
 
 
 // TMP
@@ -8047,6 +8054,7 @@ var TowwwnApp = function (_React$Component) {
         Globals.viewHandler = null;
         Globals.locationDataHandler = new LocationDataHandler();
         Globals.fb = new FBHandler();
+        Globals.history = new historyHandler();
 
         _this.hasMounted = false;
         _this.state = { from: null, currentView: null };
@@ -8154,7 +8162,6 @@ var TowwwnApp = function (_React$Component) {
     }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate() {
-            if (Globals.viewHandler === null) Globals.viewHandler = new ViewHandler(this.syncScroll);
             Globals.syncScroll.wrapElems();
             Globals.syncScroll.rescaleContainer(Globals.viewHandler.focusedViews);
             this.imageHandler.lazyLoad();
@@ -8163,6 +8170,9 @@ var TowwwnApp = function (_React$Component) {
             // Handle anchor click
             _('a').off('click', this.handleAnchorClick);
             _('a').on('click', this.handleAnchorClick);
+
+            _('body').removeClass('loading');
+            _('body').addClass('loaded');
         }
 
         // Component did mount
@@ -8170,9 +8180,91 @@ var TowwwnApp = function (_React$Component) {
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            _('body').removeClass('loading');
-            _('body').addClass('loaded');
+
             this.viewSlider = new ViewSlider();
+
+            // Render 404
+            if (app_data.type == '404') {
+                if (Globals.viewHandler === null) Globals.viewHandler = new ViewHandler();
+            }
+
+            // Render Front page
+            if (app_data.type == 'page') {
+                if (Globals.viewHandler === null) Globals.viewHandler = new ViewHandler();
+                Globals.history.replace({ 'type': 'home', 'name': 'Towwwn' });
+            }
+
+            // Render single event
+            if (app_data.type == 'event' && app_data.id != null) {
+
+                if (Globals.viewHandler === null) {
+                    Globals.viewHandler = new ViewHandler('event-single-view', 'event-calendar-view', 'event-single-view');
+                }
+
+                var request = new XMLHttpRequest();
+                request.addEventListener('load', function (data) {
+                    var singleEvent = JSON.parse(data.target.response);
+                    Globals.setMainState({ 'singleevent': singleEvent[0] });
+                    Globals.history.replace(singleEvent[0]);
+                });
+
+                request.open('GET', app_data.rest_api + 'svendborg/events/' + app_data.id);
+                request.send();
+            }
+
+            // Render category list
+            if (app_data.type == 'category') {
+                if (Globals.viewHandler === null) {
+                    Globals.viewHandler = new ViewHandler('location-category-view', 'location-list-view', 'location-list-view');
+                }
+
+                var _request = new XMLHttpRequest();
+                _request.addEventListener('load', function (data) {
+                    var category = JSON.parse(data.target.response);
+                    Globals.history.replace(category);
+
+                    Globals.locationDataHandler.getCategorySpecificLocation(category.category_id).then(function (resp) {
+
+                        console.log(resp);
+
+                        Globals.setMainState({
+                            'currentLocationsCategory': category,
+                            'currentLocations': resp
+                        });
+                    });
+                });
+
+                _request.open('GET', app_data.rest_api + 'svendborg/categories/' + app_data.id);
+                _request.send();
+            }
+
+            // Render single location
+            if (app_data.type == 'location' && app_data.id != null) {
+
+                if (Globals.viewHandler === null) {
+                    Globals.viewHandler = new ViewHandler('location-list-view', 'location-single-view', 'location-single-view');
+                }
+
+                var _request2 = new XMLHttpRequest();
+                _request2.addEventListener('load', function (data) {
+                    var singleLocation = JSON.parse(data.target.response);
+                    Globals.setMainState({ 'singleLocation': singleLocation[0] });
+                    Globals.history.replace(singleLocation[0]);
+
+                    Globals.locationDataHandler.getCategorySpecificLocation(singleLocation[0].categories[0].category_id).then(function (resp) {
+
+                        console.log(resp);
+
+                        Globals.setMainState({
+                            'currentLocationsCategory': singleLocation[0].categories[0],
+                            'currentLocations': resp
+                        });
+                    });
+                });
+
+                _request2.open('GET', app_data.rest_api + 'svendborg/locations/' + app_data.id);
+                _request2.send();
+            }
 
             // Handle anchor click
             _('a').off('click', this.handleAnchorClick);
@@ -11909,6 +12001,8 @@ var Location = function (_React$Component) {
                 'singleLocation': this.props.elem
             });
 
+            Globals.history.push(this.props.elem);
+
             Globals.setMainState({ from: this.props.name });
 
             if (_('body').hasClass('mobile')) {
@@ -12650,7 +12744,7 @@ var EventSingleView = function (_React$Component) {
                 });
             });
 
-            request.open('GET', 'https://towwwn.dk/api/svendborg/locations/' + this.props.event.parentid);
+            request.open('GET', app_data.rest_api + 'svendborg/locations/' + this.props.event.parentid);
             request.send();
         }
 
@@ -12739,6 +12833,7 @@ var LocationCategoryView = function (_React$Component) {
                 'currentLocations': null
             });
 
+            Globals.history.push(this.props.elem);
             Globals.setMainState({ from: this.props.name });
             if (_('body').hasClass('mobile')) {
                 Globals.viewHandler.changeMobileViewFocus('#location-list-view', false, true);
@@ -13218,7 +13313,7 @@ var CategoryDataHandler = function () {
                 }.bind(_this);
 
                 // Sends request
-                request.open('GET', 'https://towwwn.dk/api/svendborg/categories?featured=1');
+                request.open('GET', app_data.rest_api + 'svendborg/categories?featured=1');
                 request.send();
             });
         }
@@ -13256,7 +13351,7 @@ var CategoryDataHandler = function () {
                 }.bind(_this2);
 
                 // Sends request
-                request.open('GET', 'https://towwwn.dk/api/svendborg/categories');
+                request.open('GET', app_data.rest_api + 'svendborg/categories');
                 request.send();
             });
         }
@@ -13319,7 +13414,7 @@ var CommercialDataHandler = function () {
                 };
 
                 // Sends request
-                request.open('GET', 'https://towwwn.dk/api/svendborg/commercials');
+                request.open('GET', app_data.rest_api + 'svendborg/commercials');
                 request.send();
             });
         }
@@ -13428,10 +13523,10 @@ var EventDataHandler = function () {
 
                 // Sends request
                 if (cont) {
-                    xhr.open('GET', 'https://towwwn.dk/api/svendborg/events?per_page=' + getNum + '&page=' + _this.futurePage + '&after=now');
+                    xhr.open('GET', app_data.rest_api + 'svendborg/events?per_page=' + getNum + '&page=' + _this.futurePage + '&after=now');
                     _this.futurePage++;
                 } else {
-                    xhr.open('GET', 'https://towwwn.dk/api/svendborg/events?per_page=' + getNum + '&page=1&after=now');
+                    xhr.open('GET', app_data.rest_api + 'svendborg/events?per_page=' + getNum + '&page=1&after=now');
                 }
 
                 xhr.send();
@@ -13471,7 +13566,7 @@ var EventDataHandler = function () {
                     });
 
                     // Sends request
-                    request.open('GET', 'https://towwwn.dk/api/svendborg/events?' + str);
+                    request.open('GET', app_data.rest_api + 'svendborg/events?' + str);
                     request.send();
                 } else {
                     reject('When no propeties needed, use other event data handler method');
@@ -13538,7 +13633,7 @@ var LocationDataHandler = function () {
                 }.bind(_this);
 
                 // Sends request
-                xhr.open('GET', 'https://towwwn.dk/api/svendborg/locations?per_page=100000000&page=1');
+                xhr.open('GET', app_data.rest_api + 'svendborg/locations?per_page=100000000&page=1');
                 xhr.send();
             });
         }
@@ -13559,7 +13654,7 @@ var LocationDataHandler = function () {
                 }.bind(_this2);
 
                 // Sends request
-                xhr.open('GET', 'https://towwwn.dk/api/svendborg/locations?per_page=100000000&page=1&cat=' + catID);
+                xhr.open('GET', app_data.rest_api + 'svendborg/locations?per_page=100000000&page=1&cat=' + catID);
                 xhr.send();
             });
         }
@@ -13729,7 +13824,7 @@ var ImageHandler = function () {
                     if (_this.isInView(item) && !item.classList.contains('loading') && !item.classList.contains('imgloaded')) {
                         var imgSrc = item.getAttribute('data-image-src');
                         item.classList.add('loading');
-                        item.style['background-image'] = 'url(style/assets/icons/loading.svg)';
+                        item.style['background-image'] = 'url(' + app_data.template_uri + '/style/assets/icons/loading.svg)';
 
                         request = new XMLHttpRequest();
 
@@ -13802,14 +13897,17 @@ var _ = __webpack_require__(10),
 var ViewHandler = function () {
 
     // Ctor
-    function ViewHandler(syncScrollHandler) {
+    function ViewHandler(left, right, mobile) {
         _classCallCheck(this, ViewHandler);
 
-        this.focusedViews = [_('#event-calendar-view').get(0), _('#location-category-view').get(0)];
-        this.mobileFocusedView = _('#event-calendar-view').get();
+        var initialLeftView = left != null ? '#' + left : '#event-calendar-view',
+            initialRightView = right != null ? '#' + right : '#location-category-view',
+            initialMobileView = mobile != null ? '#' + mobile : '#event-calendar-view';
+
+        this.focusedViews = [_(initialLeftView).get(0), _(initialRightView).get(0)];
+        this.mobileFocusedView = _(initialMobileView).get();
 
         if (_('body').hasClass('mobile')) this.changeMobileViewFocus(this.mobileFocusedView, true, false);else this.changeViewFocus(this.focusedViews[0], this.focusedViews[1], true, false, true);
-        if (syncScrollHandler != null) this.syncScroll = syncScrollHandler;
     }
 
     // Change view focus
@@ -29649,6 +29747,103 @@ __webpack_require__(97);
 // Main Entry Point
 var root = document.getElementById('root');
 ReactDOM.render(React.createElement(TowwwnApp, null), root);
+
+/***/ }),
+/* 231 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+}();
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+    }
+}
+
+var _ = __webpack_require__(10),
+    Globals = __webpack_require__(7),
+    typeslugs = {
+    event: 'event',
+    location: 'location',
+    category: 'category'
+};
+
+var historyHandler = function () {
+    function historyHandler(obj) {
+        _classCallCheck(this, historyHandler);
+
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+
+        window.onpopstate = function (event) {
+            this.pop(event);
+        }.bind(this);
+    }
+
+    // Replace the current history state
+
+
+    _createClass(historyHandler, [{
+        key: 'replace',
+        value: function replace(obj) {
+            var path = obj.type == 'home' ? app_data.main_path + '/' : app_data.main_path + '/' + typeslugs[obj.type] + '/' + obj.slug + '/';
+            history.replaceState(obj, obj.name, path);
+        }
+
+        // Add new history state
+
+    }, {
+        key: 'push',
+        value: function push(obj) {
+
+            console.log(obj);
+            var path = obj.type == 'home' ? app_data.main_path + '/' : app_data.main_path + '/' + typeslugs[obj.type] + '/' + obj.slug + '/';
+            history.pushState(obj, obj.name, path);
+        }
+
+        // handles pop state
+
+    }, {
+        key: 'pop',
+        value: function pop(event) {
+
+            // To events
+            if (event.state.type == 'event') {
+                Globals.setMainState({ 'singleevent': event.state });
+                Globals.viewHandler.changeViewFocus(_('#event-single-view'), _('#event-calendar-view'), true, false, false);
+            }
+
+            // To locations
+            else if (event.state.type == 'location') {
+                    Globals.setMainState({ 'singleLocation': event.state });
+                }
+
+                // Home
+                else if (event.state.type == 'home') {
+                        Globals.setMainState({
+                            'singleLocation': null,
+                            'singleevent': null
+                        });
+                    }
+        }
+    }]);
+
+    return historyHandler;
+}();
+
+module.exports = historyHandler;
 
 /***/ })
 /******/ ]);
