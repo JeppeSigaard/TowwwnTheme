@@ -144,7 +144,7 @@ class Event extends React.Component {
 
         // Html
         return (
-            <a className="event" style={ this.props.style != null ? this.props.style : {} } onClick={ this.eventRefClick.bind(this) }  >
+            <a className="event" href={ app_data.main_path + '/event/' + this.props.elem.slug } style={ this.props.style != null ? this.props.style : {} } onClick={ this.eventRefClick.bind(this) }  >
                 <div className="imgcontainer" data-image-src={ image } >
                     <div className="loader">
                         <img src={ app_data.template_uri + '/style/assets/icons/loading-white.svg' } />

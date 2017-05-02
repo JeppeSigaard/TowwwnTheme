@@ -41,7 +41,7 @@ class Location extends React.Component {
         let elem = this.props.elem;
         if ( elem != null ) {
             return (
-                <a className="location-container" onClick={ this.handleClick.bind(this) } >
+                <a href={ app_data.main_path + '/location/' + elem.slug }  className="location-container" onClick={ this.handleClick.bind(this) } >
                     <span className="location-picture" style={{ 'backgroundImage' : 'url(' + elem.picture + ')' }} ></span>
                     <span className="location-description">
                         <h2 className="location-title">{ elem.name }</h2>
