@@ -29,6 +29,11 @@ class historyHandler {
     push( obj ){
         const path = (obj.type == 'home') ? app_data.main_path + '/' : app_data.main_path + '/' + typeslugs[obj.type] + '/' + obj.slug + '/';
         history.pushState(obj, obj.name, path );
+
+        // Google analytics send pageview
+        if(typeof ga == 'function'){
+            ga('send', 'pageview', path);
+        }
     }
 
     // handles pop state
@@ -73,6 +78,11 @@ class historyHandler {
                 'singleLocation' : null,
                 'singleevent' : null,
             });
+        }
+
+        // Google analytics send pageview
+        if(typeof ga == 'function'){
+            ga('send', 'pageview', event.state.path);
         }
     }
 
