@@ -27,8 +27,6 @@ class historyHandler {
 
     // Add new history state
     push( obj ){
-
-        console.log(obj);
         const path = (obj.type == 'home') ? app_data.main_path + '/' : app_data.main_path + '/' + typeslugs[obj.type] + '/' + obj.slug + '/';
         history.pushState(obj, obj.name, path );
     }
@@ -38,23 +36,44 @@ class historyHandler {
 
         // To events
         if(event.state.type == 'event'){
+            Globals.viewHandler.changeViewFocus('event-single-view', 'event-calendar-view', true, true, true);
             Globals.setMainState({'singleevent' : event.state});
-            Globals.viewHandler.changeViewFocus(_('#event-single-view'), _('#event-calendar-view'), true, false, false);
         }
 
         // To locations
         else if(event.state.type == 'location'){
+            Globals.viewHandler.changeViewFocus('location-list-view', 'location-single-view', true, true, true);
             Globals.setMainState({'singleLocation' : event.state});
+
+            Globals.locationDataHandler.getCategorySpecificLocation( event.state.categories[0].category_id ).then(( resp ) => {
+                Globals.setMainState({
+                    'currentLocationsCategory' : event.state.categories[0],
+                    'currentLocations' : resp,
+                });
+            });
+
         }
+
+        // To category
+        else if(event.state.type == 'category'){
+            Globals.viewHandler.changeViewFocus('location-category-view', 'location-list-view', true, true, true);
+            Globals.locationDataHandler.getCategorySpecificLocation( event.state.category_id ).then(( resp ) => {
+                Globals.setMainState({
+                    'currentLocationsCategory' : event.state,
+                    'currentLocations' : resp,
+                });
+            });
+        }
+
 
         // Home
         else if(event.state.type == 'home'){
+            Globals.viewHandler.changeViewFocus('event-calendar-view', 'location-category-view', true, true, true);
             Globals.setMainState({
                 'singleLocation' : null,
                 'singleevent' : null,
             });
         }
-
     }
 
 } module.exports = historyHandler;

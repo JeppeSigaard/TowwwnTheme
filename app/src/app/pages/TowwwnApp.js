@@ -217,11 +217,7 @@ class TowwwnApp extends React.Component {
             request.addEventListener( 'load', ( data ) => {
                 let category = JSON.parse( data.target.response );
                 Globals.history.replace(category);
-
                 Globals.locationDataHandler.getCategorySpecificLocation( category.category_id ).then(( resp ) => {
-
-                    console.log(resp);
-
                     Globals.setMainState({
                         'currentLocationsCategory' : category,
                         'currentLocations' : resp,
@@ -248,9 +244,6 @@ class TowwwnApp extends React.Component {
                 Globals.history.replace(singleLocation[0]);
 
                 Globals.locationDataHandler.getCategorySpecificLocation( singleLocation[0].categories[0].category_id ).then(( resp ) => {
-
-                    console.log(resp);
-
                     Globals.setMainState({
                         'currentLocationsCategory' : singleLocation[0].categories[0],
                         'currentLocations' : resp,
