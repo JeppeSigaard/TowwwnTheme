@@ -82,13 +82,15 @@ function towwwn_og_meta(){
 
         // Type
         $meta_type = 'article';
+        $meta_start_date = null;
+
 
         if ('event' == get_post_type($post->ID)){
-            $meta_type = 'event';
+            $meta_type = 'article';
         }
 
         if ('location' == get_post_type($post->ID)){
-            $meta_type = 'location';
+            $meta_type = 'article';
         }
 
         if(is_archive()){
@@ -119,5 +121,9 @@ function towwwn_og_meta(){
 
         echo '<meta property="og:type" content="'. $meta_type .'">';
         echo '<meta property="og:url" content="'. $meta_url .'">';
+
+        if(get_theme_mod('facebook_app_id')){
+            echo '<meta property="fb:app_id" content="'. get_theme_mod('facebook_app_id') .'">';
+        }
     }
 }

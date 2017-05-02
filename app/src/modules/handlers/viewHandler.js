@@ -8,19 +8,18 @@ class ViewHandler {
     // Ctor
     constructor( left, right, mobile ) {
 
-        const initialLeftView = ( left != null ) ? '#' + left : '#event-calendar-view',
-              initialRightView = ( right != null ) ? '#' + right : '#location-category-view',
-              initialMobileView = (mobile != null ) ? '#' + mobile : '#event-calendar-view';
+        const initialLeftView = ( left != null ) ?  left : '#event-calendar-view',
+              initialRightView = ( right != null ) ? right : '#location-category-view',
+              initialMobileView = (mobile != null ) ? mobile : '#event-calendar-view';
 
-        this.focusedViews = [ _(initialLeftView).get(0), _(initialRightView).get(0) ];
-        this.mobileFocusedView = _(initialMobileView).get();
-
-        if ( _('body').hasClass('mobile') ) this.changeMobileViewFocus( this.mobileFocusedView, true, false );
-        else this.changeViewFocus( this.focusedViews[0], this.focusedViews[1], true, false, true );
+        this.focusedViews = [ '#event-calendar-view', '#location-category-view' ];
+        this.mobileFocusedView = '#event-calendar-view';
+        this.changeViewFocus( initialLeftView, initialRightView, true, true, true);
     }
 
     // Change view focus
     changeViewFocus( leftView, rightView, fromLeft, fromRight, notrans ) {
+
         if ( _('body').hasClass('mobile') ) {
             this.changeMobileViewFocus( leftView, fromLeft, fromRight );
             return;

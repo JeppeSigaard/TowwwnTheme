@@ -36,13 +36,13 @@ class historyHandler {
 
         // To events
         if(event.state.type == 'event'){
-            Globals.viewHandler.changeViewFocus('event-single-view', 'event-calendar-view', true, true, true);
+            Globals.viewHandler.changeViewFocus('#event-single-view', '#event-calendar-view', true, true, true);
             Globals.setMainState({'singleevent' : event.state});
         }
 
         // To locations
         else if(event.state.type == 'location'){
-            Globals.viewHandler.changeViewFocus('location-list-view', 'location-single-view', true, true, true);
+            Globals.viewHandler.changeViewFocus('#location-list-view', '#location-single-view', true, true, true);
             Globals.setMainState({'singleLocation' : event.state});
 
             Globals.locationDataHandler.getCategorySpecificLocation( event.state.categories[0].category_id ).then(( resp ) => {
@@ -56,7 +56,7 @@ class historyHandler {
 
         // To category
         else if(event.state.type == 'category'){
-            Globals.viewHandler.changeViewFocus('location-category-view', 'location-list-view', true, true, true);
+            Globals.viewHandler.changeViewFocus('#location-category-view', '#location-list-view', true, true, true);
             Globals.locationDataHandler.getCategorySpecificLocation( event.state.category_id ).then(( resp ) => {
                 Globals.setMainState({
                     'currentLocationsCategory' : event.state,
@@ -68,7 +68,7 @@ class historyHandler {
 
         // Home
         else if(event.state.type == 'home'){
-            Globals.viewHandler.changeViewFocus('event-calendar-view', 'location-category-view', true, true, true);
+            Globals.viewHandler.changeViewFocus('#event-calendar-view', '#location-category-view', true, true, true);
             Globals.setMainState({
                 'singleLocation' : null,
                 'singleevent' : null,

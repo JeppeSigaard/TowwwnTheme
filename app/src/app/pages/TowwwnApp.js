@@ -55,7 +55,7 @@ class TowwwnApp extends React.Component {
 
         // Globals
         Globals.syncScroll = new SyncScrollHandler();
-        Globals.viewHandler = null;
+        //Globals.viewHandler = null;
         Globals.locationDataHandler = new LocationDataHandler();
         Globals.fb = new FBHandler();
         Globals.history = new historyHandler();
@@ -177,24 +177,22 @@ class TowwwnApp extends React.Component {
     componentDidMount() {
 
         this.viewSlider = new ViewSlider();
+        Globals.viewHandler = null;
 
         // Render 404
         if ( app_data.type == '404'){
-            if ( Globals.viewHandler === null ) Globals.viewHandler = new ViewHandler();
+            Globals.viewHandler = new ViewHandler();
         }
 
         // Render Front page
         if ( app_data.type == 'page' ){
-            if ( Globals.viewHandler === null ) Globals.viewHandler = new ViewHandler();
+            Globals.viewHandler = new ViewHandler();
             Globals.history.replace({'type' : 'home', 'name' : 'Towwwn'});
         }
 
         // Render single event
         if ( app_data.type == 'event' && app_data.id != null ){
-
-            if ( Globals.viewHandler === null ) {
-                Globals.viewHandler = new ViewHandler('event-single-view', 'event-calendar-view', 'event-single-view');
-            }
+            Globals.viewHandler = new ViewHandler('#event-single-view', '#event-calendar-view', '#event-single-view');
 
             let request = new XMLHttpRequest();
             request.addEventListener( 'load', ( data ) => {
@@ -210,9 +208,7 @@ class TowwwnApp extends React.Component {
 
         // Render category list
         if( app_data.type == 'category' ){
-            if ( Globals.viewHandler === null ) {
-                Globals.viewHandler = new ViewHandler('location-category-view', 'location-list-view', 'location-list-view');
-            }
+            Globals.viewHandler = new ViewHandler('#location-category-view', '#location-list-view', '#location-list-view');
 
             let request = new XMLHttpRequest();
             request.addEventListener( 'load', ( data ) => {
@@ -234,9 +230,7 @@ class TowwwnApp extends React.Component {
         // Render single location
         if ( app_data.type == 'location' && app_data.id != null ){
 
-            if ( Globals.viewHandler === null ) {
-                Globals.viewHandler = new ViewHandler('location-list-view', 'location-single-view', 'location-single-view');
-            }
+            Globals.viewHandler = new ViewHandler('#location-list-view', '#location-single-view', '#location-single-view');
 
             let request = new XMLHttpRequest();
             request.addEventListener( 'load', ( data ) => {

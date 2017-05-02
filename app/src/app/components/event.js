@@ -126,7 +126,7 @@ class Event extends React.Component {
             response = elem.imgurl; }
 
         // If none found, use placeholder
-        else { response = 'http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png'; }
+        else { response = app_data.template_uri + '/style/assets/images/placeholder-camera-green.png'; }
 
         return response;
 
