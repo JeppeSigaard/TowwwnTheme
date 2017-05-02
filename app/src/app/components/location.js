@@ -17,6 +17,8 @@ class Location extends React.Component {
             'singleLocation' : this.props.elem,
         });
 
+        Globals.history.push(this.props.elem);
+
         Globals.setMainState({ from : this.props.name });
 
         if ( _('body').hasClass('mobile') ) {
@@ -31,6 +33,7 @@ class Location extends React.Component {
                 false, true, false
             );
         }
+
     }
 
     // Render

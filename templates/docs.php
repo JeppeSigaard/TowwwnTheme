@@ -27,7 +27,8 @@
         </main>
         <aside>
            <div class="inner">
-                <?php wp_nav_menu(array('theme_location' => 'main-menu')); ?>
+                <?php wp_nav_menu(array('theme_location' => 'sub-page-menu','container' => 'div', 'container_class' => 'menu', 'menu_class' => 'side-menu-ul',
+                            'fallback_cb' => null)); ?>
            </div>
         </aside>
     </div>

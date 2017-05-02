@@ -25,6 +25,7 @@ class LocationCategoryView extends React.Component {
             'currentLocations' : null,
         });
 
+        Globals.history.push(this.props.elem);
         Globals.setMainState({ from : this.props.name });
         if ( _('body').hasClass('mobile') ) {
             Globals.viewHandler.changeMobileViewFocus(

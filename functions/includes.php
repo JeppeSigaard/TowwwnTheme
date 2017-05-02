@@ -3,16 +3,34 @@
 add_action('wp_head',function(){
     $template = (is_page() && !is_front_page()) ? 'page' : 'app';
 
-    echo '<script> 
-    var rest_api = "' . get_theme_mod('rest_api_url') . '"; 
-    var main_path = "' . site_url() . '";
-    var template_uri = "' . get_template_directory_uri() . '";
-    var commercial_image_url = "'. get_theme_mod('commercial') .'";
-    var commercial_link = "'. get_theme_mod('commercial_link') .'";
-    var template = "' . $template .  '";
-    </script>';
+    if('app' === $template){
 
-    if('app' === $template){wp_enqueue_script('main-script');}
+        global $wp_query; $app_id = ''; $app_type = '';
+
+        if($wp_query->post !== NULL){
+            $app_id =  (!is_404()) ? $wp_query->post->ID : '0';
+            $app_type = (!is_404()) ? get_post_type($app_id) : '404';
+        }
+
+        if(isset($wp_query->query['category'])){
+            $app_id = get_cat_ID( $wp_query->query['category'] );
+            $app_type = 'category';
+        }
+
+
+
+        wp_enqueue_script('main-script');
+        wp_localize_script( 'main-script', 'app_data', array(
+            'ajax_url' => admin_url( 'admin-ajax.php' ),
+            'rest_api' => get_theme_mod('rest_api_url'),
+            'main_path' => site_url(),
+            'template_uri' => get_template_directory_uri(),
+            'commercial_image_url' => get_theme_mod('commercial'),
+            'commercial_link' => get_theme_mod('commercial_link'),
+            'type' => $app_type,
+            'id' => $app_id,
+        ));
+    }
     else{
         wp_enqueue_script('docs-script');
         wp_enqueue_style('page-style');
@@ -32,9 +50,6 @@ add_action( 'wp_enqueue_scripts', function() {
     // wp_enqueue_script( 'flickityScript', 'https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js' );
     
     wp_register_script( 'main-script', get_template_directory_uri() . '/app/bundle.js', array(), null, true );
-    wp_localize_script( 'main-script', 'ajax_obj', array(
-        'ajax_url' => admin_url( 'admin-ajax.php' ),
-    ) );
     
     // Styles
     wp_enqueue_style( 'swiper-style', 'https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.1/css/swiper.min.css' );

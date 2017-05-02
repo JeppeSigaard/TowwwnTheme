@@ -17,6 +17,9 @@ class Event extends React.Component {
             this.props.elem
         );
 
+        // Push to browser history
+        Globals.history.push(this.props.elem);
+
         if ( this.props.vref != null ) {
             if ( _('body').hasClass('mobile') ) {
                 Globals.viewHandler.changeMobileViewFocus( // Tmp
@@ -78,12 +81,15 @@ class Event extends React.Component {
                     'singleLocation' : location,
                 });
 
+                // Push to browser history
+                Globals.history.push(this.props.elem);
+
                 Globals.setMainState({ from : this.props.name });
 
             }.bind(this);
 
             // Sends request
-            xhr.open( 'GET', 'https://towwwn.dk/api/svendborg/locations/' + this.props.elem.parentid );
+            xhr.open( 'GET', app_data.rest_api + 'svendborg/locations/' + this.props.elem.parentid );
             xhr.send();
     }
 
@@ -141,7 +147,7 @@ class Event extends React.Component {
             <a className="event" style={ this.props.style != null ? this.props.style : {} } onClick={ this.eventRefClick.bind(this) }  >
                 <div className="imgcontainer" data-image-src={ image } >
                     <div className="loader">
-                        <img src={ template_uri + '/style/assets/icons/loading-white.svg' } />
+                        <img src={ app_data.template_uri + '/style/assets/icons/loading-white.svg' } />
                     </div>
                 </div>
 

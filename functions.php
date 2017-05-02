@@ -9,6 +9,7 @@ get_functions_part(array(
     'settings',
     'menu',
     'location-list',
+    'og-meta',
 ));
 
 // Kirki

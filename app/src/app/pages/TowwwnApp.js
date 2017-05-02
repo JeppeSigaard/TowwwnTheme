@@ -32,6 +32,7 @@ const React = require( 'react' ),
     ViewSlider = require( '../../modules/libaries/viewslider.js' ),
     EventHandlers = require( '../../modules/handlers/eventHandlers.js' ),
     ImageHandler = require( '../../modules/handlers/imageHandler.js' ),
+    historyHandler = require('../../modules/handlers/historyHandler.js'),
 
     // TMP
     SingleEvent = require( '../components/singleEvent.js' ),
@@ -57,6 +58,7 @@ class TowwwnApp extends React.Component {
         Globals.viewHandler = null;
         Globals.locationDataHandler = new LocationDataHandler();
         Globals.fb = new FBHandler();
+        Globals.history = new historyHandler();
 
         this.hasMounted = false;
         this.state = { from: null, currentView: null, };
@@ -156,9 +158,9 @@ class TowwwnApp extends React.Component {
 
     // After render
     componentDidUpdate() {
-        if ( Globals.viewHandler === null ) Globals.viewHandler = new ViewHandler( this.syncScroll );
-        // Globals.syncScroll.wrapElems();
-        // Globals.syncScroll.rescaleContainer( Globals.viewHandler.focusedViews );
+        //Globals.syncScroll.wrapElems();
+        //Globals.syncScroll.rescaleContainer( Globals.viewHandler.focusedViews );
+
         this.imageHandler.lazyLoad();
         document.body.classList.remove('loading');
 
@@ -166,13 +168,95 @@ class TowwwnApp extends React.Component {
         _('a').off( 'click', this.handleAnchorClick );
         _('a').on( 'click', this.handleAnchorClick );
 
+
+        _('body').removeClass('loading');
+        _('body').addClass('loaded');
     }
 
     // Component did mount
     componentDidMount() {
-        _('body').removeClass('loading');
-        _('body').addClass('loaded');
+
         this.viewSlider = new ViewSlider();
+
+        // Render 404
+        if ( app_data.type == '404'){
+            if ( Globals.viewHandler === null ) Globals.viewHandler = new ViewHandler();
+        }
+
+        // Render Front page
+        if ( app_data.type == 'page' ){
+            if ( Globals.viewHandler === null ) Globals.viewHandler = new ViewHandler();
+            Globals.history.replace({'type' : 'home', 'name' : 'Towwwn'});
+        }
+
+        // Render single event
+        if ( app_data.type == 'event' && app_data.id != null ){
+
+            if ( Globals.viewHandler === null ) {
+                Globals.viewHandler = new ViewHandler('event-single-view', 'event-calendar-view', 'event-single-view');
+            }
+
+            let request = new XMLHttpRequest();
+            request.addEventListener( 'load', ( data ) => {
+                let singleEvent = JSON.parse( data.target.response );
+                Globals.setMainState( {'singleevent': singleEvent[0]});
+                Globals.history.replace(singleEvent[0]);
+            });
+
+            request.open( 'GET', app_data.rest_api + 'svendborg/events/' + app_data.id );
+            request.send();
+
+        }
+
+        // Render category list
+        if( app_data.type == 'category' ){
+            if ( Globals.viewHandler === null ) {
+                Globals.viewHandler = new ViewHandler('location-category-view', 'location-list-view', 'location-list-view');
+            }
+
+            let request = new XMLHttpRequest();
+            request.addEventListener( 'load', ( data ) => {
+                let category = JSON.parse( data.target.response );
+                Globals.history.replace(category);
+                Globals.locationDataHandler.getCategorySpecificLocation( category.category_id ).then(( resp ) => {
+                    Globals.setMainState({
+                        'currentLocationsCategory' : category,
+                        'currentLocations' : resp,
+                    });
+                });
+
+            });
+
+            request.open( 'GET', app_data.rest_api + 'svendborg/categories/' + app_data.id );
+            request.send();
+        }
+
+        // Render single location
+        if ( app_data.type == 'location' && app_data.id != null ){
+
+            if ( Globals.viewHandler === null ) {
+                Globals.viewHandler = new ViewHandler('location-list-view', 'location-single-view', 'location-single-view');
+            }
+
+            let request = new XMLHttpRequest();
+            request.addEventListener( 'load', ( data ) => {
+                let singleLocation = JSON.parse( data.target.response );
+                Globals.setMainState( {'singleLocation' : singleLocation[0]});
+                Globals.history.replace(singleLocation[0]);
+
+                Globals.locationDataHandler.getCategorySpecificLocation( singleLocation[0].categories[0].category_id ).then(( resp ) => {
+                    Globals.setMainState({
+                        'currentLocationsCategory' : singleLocation[0].categories[0],
+                        'currentLocations' : resp,
+                    });
+                });
+
+            });
+
+            request.open( 'GET', app_data.rest_api + 'svendborg/locations/' + app_data.id );
+            request.send();
+        }
+
 
         // Handle anchor click
         _('a').off( 'click', this.handleAnchorClick );
