@@ -3,7 +3,9 @@
 // Event Calendar View
 const React = require( 'react' ),
       Event = require( '../components/event.js' ),
-      Globals = require( '../globals.js' );
+      Globals = require( '../globals.js' ),
+      LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
+      _ = require( '../../modules/libaries/underscore/underscore_main.js' );
 
 class EventCalendarView extends React.Component {
 
@@ -14,15 +16,6 @@ class EventCalendarView extends React.Component {
         this.eventsLength = 0;
         this.allLoaded = false;
         this.loadReturned = true;
-
-        this.bindEventListeners();
-    }
-
-    // Add Event Listeners
-    bindEventListeners() {
-
-        // Activates internal scroll function
-        window.addEventListener( 'scroll', this.onscroll.bind(this) );
     }
 
     // In view
@@ -31,16 +24,18 @@ class EventCalendarView extends React.Component {
             elemBottom = element.getBoundingClientRect().bottom,
             isVisibleY = (elemTop >= 0) && (elemBottom <= window.innerHeight),
             isVisibleX = element.offsetLeft >= 0 && element.offsetLeft < window.innerWidth - 200;
+
         return isVisibleY && isVisibleX;
     }
 
     // Scroll event
     onscroll(){
         let loadMoreBtn = document.getElementById('eventcv-load-more');
-        if( this.isInView( loadMoreBtn ) && this.loadReturned )
+        if( this.isInView( loadMoreBtn ) && this.loadReturned ) {
             setTimeout(() => {
-                if( this.isInView( loadMoreBtn ) && this.loadReturned ) this.loadMore();
+                if ( this.isInView( loadMoreBtn ) && this.loadReturned ) this.loadMore();
             }, 500);
+        }
     }
 
     // Set event layout
@@ -55,9 +50,7 @@ class EventCalendarView extends React.Component {
     loadMore() {
 
         if ( this.allLoaded ) return;
-
         if( !this.loadReturned ) return;
-
         this.loadReturned = false;
 
         // document.getElementById( 'eventcv-load-more' ).innerHTML = 'Indlæser...';
@@ -85,39 +78,49 @@ class EventCalendarView extends React.Component {
 
     }
 
+    // Component did mount
+    componentDidMount() {
+        this.lazyLoad = new LazyLoadHandler( '#event-calendar-view .scroll-container' );
+        _( '#event-calendar-view .scroll-container' ).on( 'scroll', this.onscroll.bind(this) );
+    }
+
+    // Component did update
+    componentDidUpdate() {
+        if ( this.props.events != null ) {
+            this.lazyLoad.triggerload();
+        }
+    }
+
     // Render
     render() {
         return (
             <section className="container-section" id="event-calendar-view">
-                <div className="sync-outer">
-                    <div className="sync-inner">
-                        <div className="content">
-                           <div id="eventsbar">
-                               <div id="eventslayoutbtns">
-                                   <svg viewBox="0 0 32 32" className="blocklayoutbtn" onClick={ this.setEventLayout.bind(this) } >
-                                       <use xlinkHref="#icon-block-layout"></use>
-                                   </svg>
-                                   <svg viewBox="0 0 32 32" className="linelayoutbtn" onClick={ this.setEventLayout.bind(this) } >
-                                       <use xlinkHref="#icon-list-layout"></use>
-                                   </svg>
-                               </div>
-                               <div className="monthSelector"></div>
-                           </div>
-                           <div className="selector"></div>
+               <div id="eventsbar">
+                   <div id="eventslayoutbtns">
+                       <svg viewBox="0 0 32 32" className="blocklayoutbtn" onClick={ this.setEventLayout.bind(this) } >
+                           <use xlinkHref="#icon-block-layout"></use>
+                       </svg>
+                       <svg viewBox="0 0 32 32" className="linelayoutbtn" onClick={ this.setEventLayout.bind(this) } >
+                           <use xlinkHref="#icon-list-layout"></use>
+                       </svg>
+                   </div>
+                   <div className="monthSelector"></div>
+               </div>
+               <div className="selector"></div>
 
+                <div className="scroll-container">
+                    <div className="content">
+                        <div className={ this.state.containerClasses + '-outer' } >
+                            <div className={ this.state.containerClasses }>
 
-                            <div className={ this.state.containerClasses + '-outer' } >
-                                <div className={ this.state.containerClasses }>
+                                {/* Renders events */}
+                                { typeof this.props.events !== 'undefined' &&
+                                  this.props.events !== null &&
+                                  this.props.events }
 
-                                    {/* Renders events */}
-                                    { typeof this.props.events !== 'undefined' &&
-                                      this.props.events !== null &&
-                                      this.props.events }
-
-                                </div>
                             </div>
-                            <div id="eventcv-load-more" className="loading" onClick={ this.loadMore.bind(this) } ></div>
                         </div>
+                        <div id="eventcv-load-more" className="loading" onClick={ this.loadMore.bind(this) } ></div>
                     </div>
                 </div>
             </section>

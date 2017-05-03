@@ -32,8 +32,6 @@ class ViewTopBar extends React.Component {
                 false
             );
         }
-
-        Globals.syncScroll.rescaleContainer();
     }
 
     // Change view
@@ -56,8 +54,6 @@ class ViewTopBar extends React.Component {
                 false
             );
         }
-
-        Globals.syncScroll.rescaleContainer();
     }
 
     // Component Will Receive Props

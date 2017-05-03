@@ -2,6 +2,7 @@
 
 // Location Single view
 const React = require( 'react' ),
+      LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       Globals = require( '../globals.js' ),
       SingleLocation = require( '../components/singleLocation.js' ),
       BannerCommercials = require( '../components/bannerCommercials.js' ),
@@ -16,8 +17,8 @@ class LocationSingleView extends React.Component{
 
         // Standard close properties
         this.standardclose = {
-            leftview: 'location-category-view',
-            rightview: 'location-list-view',
+            leftview: '#location-category-view',
+            rightview: '#location-list-view',
             fromLeft: true,
             fromRight: false,
             mobile: {
@@ -29,8 +30,8 @@ class LocationSingleView extends React.Component{
 
         // Close properties when coming from event
         this.fromeventclose = {
-            leftview: 'event-single-view',
-            rightview: 'event-calendar-view',
+            leftview: '#event-single-view',
+            rightview: '#event-calendar-view',
             fromLeft: false,
             fromRight: true,
             mobile: {
@@ -42,8 +43,8 @@ class LocationSingleView extends React.Component{
 
         // CLose properties when coming from calendar
         this.fromeventCalendarclose = {
-            leftview: 'event-calendar-view',
-            rightview: 'location-category-view',
+            leftview: '#event-calendar-view',
+            rightview: '#location-category-view',
             fromLeft: false,
             fromRight: true,
             mobile: {
@@ -95,22 +96,33 @@ class LocationSingleView extends React.Component{
 
     }
 
+    // Component did mount
+    componentDidMount() {
+        this.lazyLoad = new LazyLoadHandler( '#location-single-view .scroll-container' );
+    }
+
+    // Component did update
+    componentDidUpdate() {
+        if ( this.props.elem != null ) {
+            this.lazyLoad.triggerload();
+        }
+    }
+
     // Render
     render() {
         return (
             <section className="container-section" id="location-single-view">
-                <div className="sync-outer">
-                    <div className="sync-inner">
-                        <div className="content">
-                            <ViewTopBar standard={ true } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } />
+                <ViewTopBar standard={ true } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } />
 
-                            { this.props.elem != null &&
-                                <SingleLocation elem={ this.props.elem } name={ this.props.name } /> }
-                            { this.props.elem == null &&
-                                <Loader /> }
 
-                            <BannerCommercials />
-                        </div>
+                <div className="scroll-container">
+                    <div className="content">
+                        { this.props.elem != null &&
+                            <SingleLocation elem={ this.props.elem } name={ this.props.name } /> }
+                        { this.props.elem == null &&
+                            <Loader /> }
+
+                        <BannerCommercials />
                     </div>
                 </div>
             </section>

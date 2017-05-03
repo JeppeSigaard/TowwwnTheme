@@ -26,12 +26,10 @@ const React = require( 'react' ),
 
     // Plugins
     _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
-    SyncScrollHandler = require( '../../modules/libaries/syncScrollHandler.js' ),
     Slider = require( '../../modules/libaries/slider.js' ),
     ViewHandler = require( '../../modules/handlers/viewHandler.js' ),
     ViewSlider = require( '../../modules/libaries/viewslider.js' ),
     EventHandlers = require( '../../modules/handlers/eventHandlers.js' ),
-    ImageHandler = require( '../../modules/handlers/imageHandler.js' ),
 
     // TMP
     SingleEvent = require( '../components/singleEvent.js' ),
@@ -49,11 +47,9 @@ class TowwwnApp extends React.Component {
         if ( _(window).width() <= 640 ) _('body').addClass('mobile');
 
         // Instances
-        this.imageHandler = new ImageHandler();
         this.eventHandlers = new EventHandlers();
 
         // Globals
-        Globals.syncScroll = new SyncScrollHandler();
         Globals.viewHandler = null;
         Globals.locationDataHandler = new LocationDataHandler();
         Globals.fb = new FBHandler();
@@ -156,10 +152,7 @@ class TowwwnApp extends React.Component {
 
     // After render
     componentDidUpdate() {
-        if ( Globals.viewHandler === null ) Globals.viewHandler = new ViewHandler( this.syncScroll );
-        // Globals.syncScroll.wrapElems();
-        // Globals.syncScroll.rescaleContainer( Globals.viewHandler.focusedViews );
-        this.imageHandler.lazyLoad();
+        if ( Globals.viewHandler === null ) Globals.viewHandler = new ViewHandler( );
         document.body.classList.remove('loading');
 
         // Handle anchor click

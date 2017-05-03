@@ -8,16 +8,12 @@ body {
     margin: 0;
     background-color: #e0e0e0;
     font-family: 'Montserrat', 'Avenir Bold', sans-serif;
+    height: 100%;
+    overflow: hidden;
 
     * {
         font-family: inherit;
         box-sizing: border-box;
-    }
-
-    &.no-scroll{
-        // overflow: hidden;
-        height: 100%;
-        //margin-right: 14px;
     }
 
     &.loaded{ &:after{ animation: none; background-image: none; } }
@@ -30,20 +26,10 @@ body {
         }
 
         .container-section{
-            height: 100vh!important;
             .sync-outer{ position: static; }
 
             &.active{
                 z-index: 2;
-                position: relative!important;
-                vertical-align: top!important;
-                height: auto!important;
-
-                .sync-outer{
-                    position: relative!important;
-                    height: auto!important;
-                    top: 0!important;
-                }
             }
         }
     }
@@ -175,13 +161,17 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
         top: 0;
         left: -50%;
         width: 100%;
-        height: 100%;
+        height: 100vh;
         min-height: calc(100vh - #{$top-area-height} - #{$menu-bar-height});
         transition: 500ms;
         font-size: 16px;
         display: inline-block;
         vertical-align: top;
         transition-timing-function: $horizontal-bezier;
+
+        @media screen and ( max-width: $bp-m ) {
+            left: -100%;
+        }
 
         &:nth-child(2n) {
             background-color: #f0f0f0;
@@ -199,8 +189,13 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
             transition: 0ms!important;
         }
 
-        .content{
-            min-height: calc( 100vh - #{$menu-bar-height} );
+        .scroll-container{
+            overflow-y: scroll;
+            overflow-x: hidden;
+            height: calc( 100vh - 110px );
+            width: 100%;
+            position: absolute;
+            bottom: 0;
         }
 
         @media(min-width:640px){
@@ -211,10 +206,6 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
     &.slowtrans .container-section{
         transition: 50000000ms!important;
     }
-
-    // Event single view
-    #event-single-view {
-    }
     
     // Location categories
     #location-category-view{
@@ -223,8 +214,8 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
         transition-timing-function: $horizontal-bezier;
         left: 50%;
 
-        &.normalize{
-            width: 50%;
+        @media screen and ( max-width: $bp-m ) {
+            left: -100%;
         }
     }
 
@@ -234,10 +225,6 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
         transition: 500ms, width 400ms;
         transition-timing-function: $horizontal-bezier;
         left: 0%;
-
-        &.normalize{
-            width: 50%;
-        }
 
         .content{
             min-height: calc(100vh - #{$menu-bar-height});

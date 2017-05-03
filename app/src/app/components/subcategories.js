@@ -25,11 +25,6 @@ class SubCategories extends React.Component {
             } this.setState({ 'jsxCats' : cats });
         }
 
-        // Rescales container
-        setTimeout(() => {
-            Globals.syncScroll.rescaleContainer();
-        }, parseFloat( window.getComputedStyle( _('.sub-category-outer').get(0) ).transitionDuration ) * 1000);
-
     }
 
     // Render

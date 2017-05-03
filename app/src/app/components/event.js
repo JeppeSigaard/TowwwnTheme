@@ -41,8 +41,8 @@ class Event extends React.Component {
                 );
             } else {
                 Globals.viewHandler.changeViewFocus(
-                    'event-single-view',
-                    'event-calendar-view',
+                    '#event-single-view',
+                    '#event-calendar-view',
                     true, false, false
                 );
             }

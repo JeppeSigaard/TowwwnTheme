@@ -21,8 +21,8 @@ class SingleLocation extends React.Component {
             smallscreen : false,
             slider : new TowwwnSlider(),
             eventVref : {
-                leftView : 'location-single-view',
-                rightView : 'event-single-view',
+                leftView : '#location-single-view',
+                rightView : '#event-single-view',
                 fromLeft : false,
                 fromRight : true,
                 mobile : {
@@ -79,8 +79,6 @@ class SingleLocation extends React.Component {
             nextButtonClass : 'nextButton',
             innerClass : 'inner',
         });
-
-        Globals.syncScroll.rescaleContainer();
 
     }
 
