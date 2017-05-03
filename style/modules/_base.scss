@@ -192,9 +192,12 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
         .scroll-container{
             overflow-y: scroll;
             overflow-x: hidden;
-            height: calc( 100vh - 110px );
+            height:100%;
             width: 100%;
+            padding-top: $menu-bar-height * 2;
+            -webkit-overflow-scrolling: touch;
             position: absolute;
+            z-index: 1;
             bottom: 0;
         }
 
