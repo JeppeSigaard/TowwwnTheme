@@ -7,7 +7,7 @@
 
         set: ( key, value, expireDays ) => {
             let d = new Date(); d.setTime( d.getTime() + expireDays*24*60*60*1000 );
-            document.cookie = key+'='+value+';expires='+d.toUTCString()+';';
+            document.cookie = key+'='+value+';expires='+d.toUTCString()+';path=/;';
         },
 
         read: key => {
