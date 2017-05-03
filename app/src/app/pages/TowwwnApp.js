@@ -3,7 +3,7 @@
 require( '../../modules/tools/textPreproccesors.js' );
 const React = require( 'react' ),
     Globals = require( '../globals.js' ),
-      
+    
     // Data Handlers
     User = require( '../../modules/handlers/dataHandlers/userDataHandler.js' ),
     EventDataHandler = require( '../../modules/handlers/dataHandlers/eventDataHandler.js' ),
@@ -30,12 +30,10 @@ const React = require( 'react' ),
 
     // Plugins
     _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
-    SyncScrollHandler = require( '../../modules/libaries/syncScrollHandler.js' ),
     Slider = require( '../../modules/libaries/slider.js' ),
     ViewHandler = require( '../../modules/handlers/viewHandler.js' ),
     ViewSlider = require( '../../modules/libaries/viewslider.js' ),
     EventHandlers = require( '../../modules/handlers/eventHandlers.js' ),
-    ImageHandler = require( '../../modules/handlers/imageHandler.js' ),
 
     // TMP
     SingleEvent = require( '../components/singleEvent.js' ),
@@ -56,11 +54,9 @@ class TowwwnApp extends React.Component {
         if ( _(window).width() <= 640 ) _('body').addClass('mobile');
         
         // Instances
-        this.imageHandler = new ImageHandler();
         this.eventHandlers = new EventHandlers();
         
         // Globals
-        Globals.syncScroll = new SyncScrollHandler();
         Globals.viewHandler = null;
         Globals.locationDataHandler = new LocationDataHandler();
         Globals.fb = new FBHandler();
@@ -70,42 +66,36 @@ class TowwwnApp extends React.Component {
         
         // Relations
         Globals.relations = {
-            
             'event-single-view' : {
                 left: 'location-single-view',
                 right: 'event-calendar-view',
                 canleft: false,
                 canright: true,
             },
-            
             'event-calendar-view' : {
                 left: null,
                 right: 'location-category-view',
                 canleft: false,
                 canright: true,
             },
-            
             'location-category-view' : {
                 left: 'event-calendar-view',
                 right: null,
                 canleft: true,
                 canright: false,
             },
-            
             'location-list-view' : {
                 left: 'location-category-view',
                 right: null,
                 canleft: true,
                 canright: false,
             },
-            
             'location-single-view' : {
                 left: 'location-list-view',
                 right: 'event-single-view',
                 canleft: true,
                 canright: false,
             },
-            
         };
 
         // Gets event data
@@ -132,25 +122,25 @@ class TowwwnApp extends React.Component {
                 'featuredCategoriesData' : resp,
             });
         });
-        
+
         Globals.categoryDataHandler.getAllCategories(false, true).then(( resp ) => {
             this.setState({
                 'categoriesData' : resp,
             });
         });
-        
+
         // Set main state
         Globals.setMainState = this.parsedSetState.bind(this);
 
     }
-    
+
     // Handle anchor click
     handleAnchorClick( e ) {
         if ( _([this]).attr('href') === '#' ||
              _([this]).hasAttr('data-prevent') )
             e.preventDefault();
     }
-    
+
     // ParsedSetState
     parsedSetState( key, value ) {
         if ( typeof key !== 'object' ) { 
@@ -160,19 +150,16 @@ class TowwwnApp extends React.Component {
             this.setState(key);
         }
     }
-    
+
     // After render
     componentDidUpdate() {
-        if ( Globals.viewHandler === null ) Globals.viewHandler = new ViewHandler( this.syncScroll );
-        // Globals.syncScroll.wrapElems();
-        // Globals.syncScroll.rescaleContainer( [  ] );
-        this.imageHandler.lazyLoad();
+        if ( Globals.viewHandler === null ) Globals.viewHandler = new ViewHandler( );
         document.body.classList.remove('loading');
-        
+
         // Handle anchor click
         _('a').off( 'click', this.handleAnchorClick );
         _('a').on( 'click', this.handleAnchorClick );
-    
+
     }
     
     // Component did mount
@@ -186,7 +173,6 @@ class TowwwnApp extends React.Component {
         // Handle anchor click
         _('a').off( 'click', this.handleAnchorClick );
         _('a').on( 'click', this.handleAnchorClick );
-    
     }
 
     // Render
@@ -203,7 +189,7 @@ class TowwwnApp extends React.Component {
                 
                 { this.state.currentMobileView != null &&
                   _('body').hasClass('mobile') &&
-                    <ViewSliderDots currentView={ this.state.currentMobileView } /> 
+                    <ViewSliderDots currentView={ this.state.currentMobileView } />
                 }
             </div>
         );

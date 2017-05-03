@@ -4,6 +4,7 @@
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
       BehaviourDataHandler = require( '../../modules/handlers/behaviourHandler/dataHandler.js' ),
+      LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       SingleEvent = require( '../components/singleEvent.js' ),
       BannerCommercials = require( '../components/bannerCommercials.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' );
@@ -25,8 +26,6 @@ class EventSingleView extends React.Component {
                 'fromLeft' : false,
                 'fromRight' : true,
                 'notrans': false,
-                'leftSize': 55,
-                'rightSize': 45,
                 mobile: {
                     view : '#event-calendar-view',
                     fromLeft : false,
@@ -84,7 +83,7 @@ class EventSingleView extends React.Component {
             Globals.relations[ nextProps.name ].canright = true;
             this.setState({ closeviewstate : this.state.standardclose });
         }
-        
+
         if ( nextProps.event != null ) {
             this.setState({
                 'jsxEvent' : <SingleEvent elem={ nextProps.event } />,
@@ -94,7 +93,6 @@ class EventSingleView extends React.Component {
 
     // Will change view
     willChangeView() {
-
         Globals.setMainState({ singleLocation : null });
         
         // Opens new request
@@ -117,15 +115,14 @@ class EventSingleView extends React.Component {
         return (
             <section className="container-section" id="event-single-view">
                 <ViewTopBar standard={ true } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
-                <div className="sync-outer">
-                    <div className="sync-inner">
-                        <div className="content">
-                            
-                            { this.state.jsxEvent != null &&
-                              this.state.jsxEvent }
-                              
-                            <BannerCommercials />
-                        </div>
+                
+                <div className="scroll-container">
+                    <div className="content">
+
+                        { this.state.jsxEvent != null &&
+                          this.state.jsxEvent }
+
+                        <BannerCommercials />
                     </div>
                 </div>
             </section>

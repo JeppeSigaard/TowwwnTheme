@@ -3,10 +3,11 @@
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
-      SingleEvent = require( './singleEvent.js' );
+      SingleEvent = require( './singleEvent.js' ),
+      DataFormatters = require( '../../modules/tools/dataFormatters.js' );
 
 class Event extends React.Component {
-    
+
     // Click Handlers
     eventRefClick( e ) {
         e.preventDefault();
@@ -34,7 +35,7 @@ class Event extends React.Component {
             }
         } else {
             if ( _('body').hasClass('mobile') ) {
-                Globals.viewHandler.changeMobileViewFocus(  
+                Globals.viewHandler.changeMobileViewFocus(
                     '#event-single-view',
                     true, false
                 );
@@ -54,7 +55,7 @@ class Event extends React.Component {
         Globals.setMainState({
             singleLocation : null
         });
-        
+
         if ( _('body').hasClass('mobile') ) {
             Globals.viewHandler.changeMobileViewFocus(
                 '#location-single-view',
@@ -150,7 +151,7 @@ class Event extends React.Component {
                     <div className="title">{ title }</div>
                     <div className="start_time">{ semanticTime }</div>
                 </div>
-
+                
                 <div className="eventlocation-container" onClick={ this.locationRefClick.bind(this) } >
                     <div className="eventblackbar"></div>
                     <div className="eventlocation">{ elem.parentname }</div>

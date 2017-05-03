@@ -9,7 +9,7 @@ class Location extends React.Component {
     
     // Ctor
     constructor() { super(); }
-    
+
     // Handle Click
     handleClick( e ) {
         e.preventDefault();
@@ -18,7 +18,6 @@ class Location extends React.Component {
         });
         
         Globals.setMainState({ from : this.props.name });
-        
         if ( _('body').hasClass('mobile') ) {
             Globals.viewHandler.changeMobileViewFocus(
                 '#location-single-view',
@@ -32,7 +31,7 @@ class Location extends React.Component {
             );    
         }
     }
-    
+
     // Render
     render() {
         let elem = this.props.elem;

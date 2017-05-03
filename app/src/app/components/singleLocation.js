@@ -79,8 +79,6 @@ class SingleLocation extends React.Component {
             nextButtonClass : 'nextButton',
             innerClass : 'inner',
         });
-        
-        Globals.syncScroll.rescaleContainer();
 
     }
     

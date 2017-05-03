@@ -47,7 +47,7 @@ var EventSingleModule = {
         response += '<div class="event-singleview">';
 
         if ( event.imgurl !== '' && event.imgurl !== null && typeof event.imgurl !== 'undefined' ) {
-            response += '<div class="event-sv-img" style="background-image:url('+event.imgurl+');"></div>';
+            response += '<a href="'+event.imgurl+'" target="_blank" class="event-sv-img" style="background-image:url('+event.imgurl+');"></a>';
         } else {
             response += '<div class="event-sv-img" style="background-image:url(http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png);"></div>';
         }

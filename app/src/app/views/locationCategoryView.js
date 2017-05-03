@@ -2,11 +2,12 @@
 
 // Location Category view
 const React = require( 'react' ),
+      _Array = require( '../../modules/libaries/underscore/underscore_array.js' ),
+      LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       LocationCategory = require( '../components/locationCategory.js' ),
       SubCategories = require( '../components/subcategories.js' ),
       Globals = require( '../globals.js' ),
-      _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
-      _Array = require( '../../modules/libaries/underscore/underscore_array.js' );
+      _ = require( '../../modules/libaries/underscore/underscore_main.js' );
 
 class LocationCategoryView extends React.Component {
 
@@ -49,10 +50,8 @@ class LocationCategoryView extends React.Component {
 
     // Activate Sub Categories List
     toggleSubCategories() {
-        let syncOuter = document.querySelectorAll('#location-category-view .sync-outer');
-        for ( let item of syncOuter ) {
-            item.scrollTop = 0; }
-        
+        let sc = _( '#location-category-view .scroll-container' );
+        if ( sc !== false ) { sc = sc.get(0).scrollTop = 0; }
         let inner = document.getElementsByClassName( 'sub-category-inner' )[0];
         if ( this.state.subCatHeight !== '0px' ) this.setState({ 'subCatHeight' : '0px' });
         else this.setState({ 'subCatHeight' : inner.clientHeight + 'px' });
@@ -73,6 +72,7 @@ class LocationCategoryView extends React.Component {
     // Component did mount
     componentDidMount() {
         this.userHook.call(this);
+        this.lazyLoad = new LazyLoadHandler( '#location-category-view .scroll-container' );
     }
     
     // User Hook
@@ -87,7 +87,7 @@ class LocationCategoryView extends React.Component {
                         if ( jsxCats.data.length >= data.length )
                             this.setState({ suggestedCategories : jsxCats.data });
                     });
-                    
+
                     if ( data.length > 2 ) {
                         data.sort(( a, b ) => {
                             if ( a.output > b.output ) return -1;
@@ -95,7 +95,7 @@ class LocationCategoryView extends React.Component {
                             return 0;
                         }); data = [ data[0], data[1], data[2] ];
                     }
-                    
+
                     for ( let iter = 0; iter < data.length; iter++ ) {
                         Globals.categoryDataHandler.getCategory( data[ iter ].id ).then(( resp ) => {
                             jsxCats.push( <LocationCategory key={ 'predicted-category-'+data[ iter ].id } elem={ resp } name={ this.props.name } clickEvent={ this.handleCategoryClick } /> );
@@ -103,6 +103,13 @@ class LocationCategoryView extends React.Component {
                     } 
                 });
             });
+        }
+    }
+
+    // Component did update
+    componentDidUpdate() {
+        if ( this.state.jsxCategories != null ) {
+            this.lazyLoad.triggerload();
         }
     }
 
@@ -114,30 +121,29 @@ class LocationCategoryView extends React.Component {
                     Steder
                     <div className="sub-categories-title" onClick={ this.toggleSubCategories.bind(this) } ></div>
                 </div>
-                <div className="sync-outer">
-                    <div className="sync-inner">
-                        <div className="content">
-                            <SubCategories subCategories={ this.props.allCategories } outerHeight={ this.state.subCatHeight } clickEvent={ this.handleCategoryClick } />
+                
+                <div className="scroll-container">
+                    <div className="content">
+                        <SubCategories subCategories={ this.props.allCategories } outerHeight={ this.state.subCatHeight } clickEvent={ this.handleCategoryClick } />
 
-                            <div className="category-container">
-                                { this.state.suggestedCategories != null &&
-                                    (<div className="suggested-cats">
-                                        <h2>Foreslået Kategorier</h2>
-                                        <div className="breakline" ></div>
-                                        { this.state.suggestedCategories } 
-                                        <div className="breakline" ></div>
-                                    </div>)
-                                }
+                        <div className="category-container">
+                            { this.state.suggestedCategories != null &&
+                                (<div className="suggested-cats">
+                                    <h2>Foreslået Kategorier</h2>
+                                    <div className="breakline" ></div>
+                                    { this.state.suggestedCategories } 
+                                    <div className="breakline" ></div>
+                                </div>)
+                            }
 
-                                { this.state.suggestedCategories != null &&
-                                    (<div className="categories-header">
-                                        Svendborg i udvalg
-                                    </div>)
-                                }
-                               
-                                { this.state.jsxCategories != null &&
-                                  this.state.jsxCategories }
-                            </div>
+                            { this.state.suggestedCategories != null &&
+                                (<div className="categories-header">
+                                    Svendborg i udvalg
+                                </div>)
+                            }
+
+                            { this.state.jsxCategories != null &&
+                              this.state.jsxCategories }
                         </div>
                     </div>
                 </div>

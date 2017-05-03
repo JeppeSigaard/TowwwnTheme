@@ -14,18 +14,18 @@ let UnderScore = ( selector ) => {
          selector.constructor.name === 'NodeList' ) ||
          typeof selector === 'object' )
         elem.state = { domnode: selector };
-    
+
     // Gets dom node(s)
     if ( elem.state == null ) {
         if ( selector === document ) elem.state = { domnode : document, };
         else if ( selector === window ) elem.state = { domnode : window, };
         else {
             let domnode = document.querySelectorAll( selector );
-            if ( domnode.constructor.name === 'NodeList' ) elem.state = { domnode : domnode }; 
+            if ( domnode.constructor.name === 'NodeList' ) elem.state = { domnode : domnode };
             else elem.state = { domnode: [ domnode ] };
         }
     }
-        
+
     // Checks if any elems where found
     if ( elem.state.domnode.length != null && elem.state.domnode.length <= 0 &&
          elem.state.domnode !== window && elem.state.domnode !== document ) {
@@ -50,12 +50,12 @@ class UnderScoreElem {
             } else return this.state.domnode;
         } else return this.state.domnode;
     }
-    
+
     // Add Class
     addClass( className ) {
         if ( this.state.domnode.constructor.name === 'HTMLElement' )
             this.state.domnode = [ this.state.domnode ];
-        
+
         if ( className.includes(' ') ) {
             className = className.split(' ');
             for ( let item of className ) {
@@ -70,12 +70,12 @@ class UnderScoreElem {
             }
         } return this;
     }
-    
+
     // Remove class
     removeClass( className ) {
         if ( this.state.domnode.constructor.name === 'HTMLElement' )
             this.state.domnode = [ this.state.domnode ];
-        
+
         if ( className.includes(' ') ) {
             className = className.split(' ');
             for ( let item of className ) {
@@ -119,12 +119,10 @@ class UnderScoreElem {
         }
 
         return this;
-    
     }
     
     // Off
     off( event, func ) {
-        
         if ( typeof event !== 'string' || typeof func !== 'function' ) return;
         if ( this.state.domnode === window ||
              this.state.domnode === document ) {
@@ -140,7 +138,6 @@ class UnderScoreElem {
         }
 
         return this;
-        
     }
 
     // On global click; NOT WORKING
@@ -220,12 +217,14 @@ class UnderScoreElem {
     css( styling ) {
         if ( typeof styling === 'object' ) {
             for ( let key of Object.keys( styling ) ) {
-                if ( this.state.domnode.constructor.name === 'HTMLElement' )
+                if ( this.state.domnode.constructor.name === 'HTMLElement' ||
+                     this.state.domnode.constructor.name === 'HTMLDivElement' ) {
                     this.state.domnode = [ this.state.domnode ];
-                    
+                }
+
                 for ( let iter = 0; iter < this.state.domnode.length; iter++ ) {
-                    this.state.domnode[ iter ].style[ key ] = styling[ key ]; 
-                } 
+                    this.state.domnode[ iter ].style[ key ] = styling[ key ];
+                }
             }
         } else throw "TowwwnSelector, css: Param needs to be of type object";
     }
@@ -249,7 +248,7 @@ class UnderScoreElem {
         let left = this.offset().left - this.parent().offset().left;
         return { top: top, left: left };
     }
-    
+
     // Offset
     offset() {
         let node = this.state.domnode[0];
@@ -269,12 +268,35 @@ class UnderScoreElem {
         if ( node.constructor.name === 'NodeList' ) node = node[0];
         return node.innerHeight || node.clientHeight;
     }
-    
+
     // Attribute
-    attr( attr ) { return this.state.domnode[0].getAttribute( attr ); }
-    
+    attr( attr ) {
+        window.domnode = this.state.domnode;
+        if ( this.state.domnode.constructor.name === 'HTMLElement' ||
+             this.state.domnode.constructor.name === 'HTMLDivElement' ) {
+            this.state.domnode = [ this.state.domnode ];
+        } return this.state.domnode[0].getAttribute(attr);
+    }
+
     // Has Attribute
-    hasAttr( attr ) { return this.state.domnode[0].getAttribute( attr ) != null ? true : false; }
+    hasAttr( attr ) {
+        if ( this.state.domnode.constructor.name === 'HTMLElement' ||
+             this.state.domnode.constructor.name === 'HTMLDivElement' ) {
+            this.state.domnode = [ this.state.domnode ];
+        } return this.state.domnode[0].getAttribute( attr ) != null ? true : false;
+    }
+
+    // Remove Attribute
+    removeAttr( attr ) {
+        if ( this.state.domnode.constructor.name === 'HTMLElement' ||
+             this.state.domnode.constructor.name === 'HTMLDivElement' ) {
+            this.state.domnode = [ this.state.domnode ];
+        }
+
+        for ( let item of this.state.domnode ) {
+            item.removeAttribute( attr );
+        } return this;
+    }
 
 }
 

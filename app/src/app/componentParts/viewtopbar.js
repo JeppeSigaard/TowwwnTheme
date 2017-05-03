@@ -33,17 +33,14 @@ class ViewTopBar extends React.Component {
                 this.props.closeviewstate.leftSize,
                 this.props.closeviewstate.rightSize
             );
-        }
-
-        if ( this.props.onClose != null ) this.props.onClose();
-        Globals.syncScroll.rescaleContainer();
+        } if ( this.props.onClose != null ) this.props.onClose();
     }
-    
+
     // Change view
     changeView() {
         if ( this.props.willChangeView != null ) this.props.willChangeView();
         Globals.setMainState({ from : this.props.name });
-        
+
         if ( _('body').hasClass('mobile') ) {
             Globals.viewHandler.changeMobileViewFocus(
                 this.props.vref.mobile.view,
@@ -54,13 +51,11 @@ class ViewTopBar extends React.Component {
             Globals.viewHandler.changeViewFocus(
                 this.props.vref.leftview,
                 this.props.vref.rightview,
-                this.props.vref.fromLeft, 
-                this.props.vref.fromRight, 
+                this.props.vref.fromLeft,
+                this.props.vref.fromRight,
                 false
             );
         }
-
-        Globals.syncScroll.rescaleContainer();
     }
 
     // Component Will Receive Props
@@ -73,7 +68,7 @@ class ViewTopBar extends React.Component {
     
     // Render
     render() {
-        return ( 
+        return (
             <div className={ this.state.classes != null ? this.state.classes : "viewbar" }>
                 { this.props.standard &&
                     <a onClick={ this.props.vref != null ? this.changeView.bind(this) : function() {} }>{ this.props.title }</a>
@@ -86,5 +81,5 @@ class ViewTopBar extends React.Component {
             </div>
         );
     }
-    
+
 } module.exports = ViewTopBar;

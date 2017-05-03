@@ -11,8 +11,8 @@ const React = require( 'react' ),
 class SingleEvent extends React.Component {
 
     // Ctor
-    constructor( props ) { 
-        super( props ); 
+    constructor( props ) {
+        super( props );
         this.sharelink = props.elem.fbid != null ? ( 'https://www.facebook.com/events/' + props.elem.fbid ) : null;
         this.state = {
             imgurl : ( props.elem.imgurl != null ? props.elem.imgurl : '' ),
@@ -46,6 +46,7 @@ class SingleEvent extends React.Component {
                             <a className="status-btn share fb-xfbml-parse-ignore" 
                                href={ "https://www.facebook.com/sharer/sharer.php?u="+ 
                                     encodeURI( 'https://www.facebook.com/events/' + this.props.elem.fbid ).replace( /%5B/g, '[' ).replace( /%5D/g, ']') +"&amp;src=sdkpreparse" } 
+
                                onClick={ this.share.bind(this) } data-prevent>
                                 <div className="icon">
                                     <svg viewBox="0 0 32 32" >
@@ -101,21 +102,12 @@ class SingleEvent extends React.Component {
         } else {
             imgurl = '';
         }
-        
+
         // Sets state
-        this.setState({ 
+        this.setState({
             imgurl : imgurl,
         });
 
-        // Bump up (plz fix)
-        const singleSync = document.querySelectorAll('#event-single-view .sync-outer')[0];
-        if(singleSync.scrollTop > 60){
-            singleSync.scrollTop = 60;
-        }
-
     }
-
-    // Component did update
-    componentDidUpdate() { Globals.syncScroll.rescaleContainer(); }
-
+    
 } module.exports = SingleEvent;

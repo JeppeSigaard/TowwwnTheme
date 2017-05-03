@@ -11,7 +11,7 @@ class ViewHandler {
         this.mobileFocusedView = _('#event-calendar-view').get();
         
         if ( _('body').hasClass('mobile') ) this.changeMobileViewFocus( this.mobileFocusedView, true, false );
-        else this.changeViewFocus( this.focusedViews[0], this.focusedViews[1], true, false, true, 60, 40 );
+        else this.changeViewFocus( this.focusedViews[0], this.focusedViews[1], true, false, true );
         if ( syncScrollHandler != null ) this.syncScroll = syncScrollHandler;
     }
     
@@ -21,6 +21,9 @@ class ViewHandler {
             this.changeMobileViewFocus( leftView, fromLeft, fromRight );
             return;
         }
+        
+        if ( this.focusedViews.includes( leftView ) &&
+             this.focusedViews.includes( rightView ) ) return;
         
         _('.container-section').css({ 'width' : '50%' });
 
@@ -153,11 +156,7 @@ class ViewHandler {
                 _( this.focusedViews[0] ).removeClass('notrans');
                 _( this.focusedViews[1] ).removeClass('notrans');
             }
-        }
-
-        Globals.syncScroll.wrapElems();
-        Globals.syncScroll.rescaleContainer( [ _( leftView ).get(0), _( rightView ).get(0) ] );
-        return;
+        } return;
             
     }
     
@@ -183,17 +182,17 @@ class ViewHandler {
         _(activeView).addClass('notrans active');
         
         // Sets starting position for new view
-        if ( fromLeft ) _(activeView).css({ transform : 'translate(-100%,0)' });
-        if ( fromRight ) _(activeView).css({ transform : 'translate(100%,0)' });
+        if ( fromLeft ) _(activeView).css({ left : '-100%' });
+        if ( fromRight ) _(activeView).css({ left : '100%' });
         
         // Timeout
         setTimeout(() => {
             _(activeView).removeClass('notrans');
         
             // Translates view in
-            if ( fromLeft ) _(this.mobileFocusedView).css({ transform : 'translate(100%,0)' });
-            if ( fromRight ) _(this.mobileFocusedView).css({ transform : 'translate(-100%,0)' });
-            _(activeView).css({ transform : 'translate(0,0)' });
+            if ( fromLeft ) _(this.mobileFocusedView).css({ left : '100%' });
+            if ( fromRight ) _(this.mobileFocusedView).css({ left : '-100%' });
+            _(activeView).css({ left : '0' });
 
             // Sets new focused view
             this.mobileFocusedView = activeView;

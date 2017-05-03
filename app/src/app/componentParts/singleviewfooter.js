@@ -27,8 +27,8 @@ class SingleViewFooter extends React.Component {
             name = elem.parentname;
             id = elem.parentfbid;
 
-        } else if ( type === 'location' ) { 
-            
+        } else if ( type === 'location' ) {
+
             picture = elem.picture;
             name = elem.name;
             id = elem.fbid;
@@ -45,7 +45,7 @@ class SingleViewFooter extends React.Component {
                             ( day === 'fri' ? 'Fredag' :
                             ( day === 'sat' ? 'Lørdag' :
                             ( day === 'sun' ? 'Søndag' : 'Smamodag' ))))));
-                    
+
                     hours.push(
                         <div className="openinghours" key={ 'openinghours-' + day + '-' + elem.fbid } >
                             <div className="day"> { dayformatted + ':' } </div>
@@ -53,8 +53,7 @@ class SingleViewFooter extends React.Component {
                         </div>
                     );
                 }
-            }
-            
+            } 
         }
         
         if ( elem.website != null &&
@@ -72,7 +71,7 @@ class SingleViewFooter extends React.Component {
              typeof elem.adress !== 'undefined' ) {
             adress = elem.adress;
         }
-        
+
         return (
 
             <div>
@@ -123,7 +122,7 @@ class SingleViewFooter extends React.Component {
                             </div>
                         </a>
                     }
-                    
+
                     {/* Hours */}
                     { hours !== null &&
                         <div className="sv-footer-block" >

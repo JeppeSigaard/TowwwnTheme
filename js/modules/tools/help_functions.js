@@ -39,6 +39,9 @@ var HelpFunctions = {
  
     // Linkifier
     linkifier: function( text ) {
+        if(!text || null === text){
+            return '';
+        }
         
         if(typeof text === 'undefined'|| null === text){return '';}
 
