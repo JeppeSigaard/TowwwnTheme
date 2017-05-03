@@ -23,7 +23,7 @@ class LocationDataHandler{
             }.bind(this);
 
             // Sends request
-            xhr.open( 'GET', 'http://towwwn.dk/api/svendborg/locations?per_page=100000000&page=1' );
+            xhr.open( 'GET', app_data.rest_api + 'svendborg/locations?per_page=100000000&page=1' );
             xhr.send();
 
         });
@@ -40,7 +40,7 @@ class LocationDataHandler{
             }.bind(this);
 
             // Sends request
-            xhr.open( 'GET', 'http://towwwn.dk/api/svendborg/locations?per_page=100000000&page=1&cat='+catID );
+            xhr.open( 'GET', app_data.rest_api + 'svendborg/locations?per_page=100000000&page=1&cat='+catID );
             xhr.send();
 
         });

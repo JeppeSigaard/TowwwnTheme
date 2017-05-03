@@ -6,7 +6,8 @@ const React = require( 'react' ),
       LocationCategory = require( '../components/locationCategory.js' ),
       SubCategories = require( '../components/subcategories.js' ),
       Globals = require( '../globals.js' ),
-      _ = require( '../../modules/libaries/underscore/underscore_main.js' );
+      _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
+      _Array = require( '../../modules/libaries/underscore/underscore_array.js' );
 
 class LocationCategoryView extends React.Component {
 
@@ -25,6 +26,7 @@ class LocationCategoryView extends React.Component {
             'currentLocations' : null,
         });
 
+        Globals.history.push(this.props.elem);
         Globals.setMainState({ from : this.props.name });
         if ( _('body').hasClass('mobile') ) {
             Globals.viewHandler.changeMobileViewFocus(
@@ -49,7 +51,6 @@ class LocationCategoryView extends React.Component {
 
     // Activate Sub Categories List
     toggleSubCategories() {
-
         let sc = _( '#location-category-view .scroll-container' );
         if ( sc !== false ) { sc = sc.get(0).scrollTop = 0; }
 
@@ -66,16 +67,55 @@ class LocationCategoryView extends React.Component {
                 jsxCategories.push( <LocationCategory key={ 'category-'+category['category_id'] } elem={ category } name={ nextProps.name } clickEvent={ this.handleCategoryClick } /> );
             } this.setState({ 'jsxCategories' : jsxCategories });
         }
+
+        this.userHook.call(this);
     }
 
     // Component did mount
     componentDidMount() {
-        this.lazyLoad = new LazyLoadHandler( '#location-category-view .scroll-container' );
+        this.userHook.call(this);
+    }
+
+    // User Hook
+    userHook() {
+        if ( this.hookedIntoUser == null && Globals.user != null ) {
+            this.hookedIntoUser = true;
+
+            Globals.user.hooks.add( 'onlogin', ( ) => {
+                Globals.user.predictBehaviour().then(( data ) => {
+                    let jsxCats = new _Array([ ]);
+                    jsxCats.hooks.add( 'onpush', () => {
+                        if ( jsxCats.data.length >= data.length )
+                            this.setState({ suggestedCategories : jsxCats.data });
+                    });
+
+                    if ( data.length > 2 ) {
+                        data.sort(( a, b ) => {
+                            if ( a.output > b.output ) return -1;
+                            if ( a.output < b.output ) return 1;
+                            return 0;
+                        }); data = [ data[0], data[1], data[2] ];
+                    }
+
+                    for ( let iter = 0; iter < data.length; iter++ ) {
+                        Globals.categoryDataHandler.getCategory( data[ iter ].id ).then(( resp ) => {
+                            jsxCats.push( <LocationCategory key={ 'predicted-category-'+data[ iter ].id } elem={ resp } name={ this.props.name } clickEvent={ this.handleCategoryClick } /> );
+                        });
+                    }
+                });
+            });
+        }
+    }
+
+    // Component did mount
+    componentDidMount() {
+         this.lazyLoad = new LazyLoadHandler( '#location-category-view .scroll-container' );
     }
 
     // Component did update
     componentDidUpdate() {
         if ( this.state.jsxCategories != null ) {
+            if ( this.lazyLoad == null ) this.lazyLoad = new LazyLoadHandler( '#location-category-view .scroll-container' );
             this.lazyLoad.triggerload();
         }
     }
@@ -85,7 +125,7 @@ class LocationCategoryView extends React.Component {
         return (
             <section className="container-section" id="location-category-view">
                <div className="category-bar">
-                    Svendborg i udvalg
+                    Steder
                     <div className="sub-categories-title" onClick={ this.toggleSubCategories.bind(this) } ></div>
                 </div>
 

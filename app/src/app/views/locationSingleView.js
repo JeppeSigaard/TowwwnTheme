@@ -14,6 +14,8 @@ class LocationSingleView extends React.Component{
     // Ctor
     constructor() {
         super();
+        this.startTime = 0;
+        this.lastElem = null;
 
         // Standard close properties
         this.standardclose = {
@@ -63,6 +65,9 @@ class LocationSingleView extends React.Component{
 
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
+        if ( nextProps.elem != this.lastElem ) {
+            this.lastElem = nextProps.elem;
+        }
 
         // Sets close state
         if ( nextProps.from === 'event-single-view' ) {
@@ -113,7 +118,6 @@ class LocationSingleView extends React.Component{
         return (
             <section className="container-section" id="location-single-view">
                 <ViewTopBar standard={ true } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } />
-
 
                 <div className="scroll-container">
                     <div className="content">

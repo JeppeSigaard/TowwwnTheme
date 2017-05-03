@@ -185,8 +185,8 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
             }
         }
 
-         &.notrans{
-            transition: 0ms!important;
+        &.notrans{
+            transition-duration: 0ms!important;
         }
 
         .scroll-container{

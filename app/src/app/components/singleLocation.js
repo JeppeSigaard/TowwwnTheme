@@ -39,10 +39,12 @@ class SingleLocation extends React.Component {
 
     // Load events
     loadEvents( nextProps ) {
-        if ( nextProps.elem !== this.props.elem ) {
-            this.setState({ 'jsxEvents' : null });
+        if ( nextProps.elem !== this.lastLoaded ) {
+            this.lastLoaded = nextProps.elem;
             Globals.eventDataHandler.getEvents({
-                'parent' : nextProps.elem.id
+                'parent' : nextProps.elem.id,
+                'per_page' : '1000',
+                'after' : 'now'
             }).then(( resp ) => {
 
                 // Generates elems
@@ -67,7 +69,7 @@ class SingleLocation extends React.Component {
 
     // Component will receive props
     componentWillReceiveProps( nextProps ) { this.loadEvents( nextProps ); }
-    componentWillMount() { this.onResize(); this.loadEvents( this.props ); }
+    componentDidMount() { this.onResize(); this.loadEvents( this.props ); }
 
     // Component did update
     componentDidUpdate() {

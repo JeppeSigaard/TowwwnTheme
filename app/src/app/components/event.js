@@ -17,6 +17,9 @@ class Event extends React.Component {
             this.props.elem
         );
 
+        // Push to browser history
+        Globals.history.push(this.props.elem);
+
         if ( this.props.vref != null ) {
             if ( _('body').hasClass('mobile') ) {
                 Globals.viewHandler.changeMobileViewFocus( // Tmp
@@ -63,8 +66,8 @@ class Event extends React.Component {
             );
         } else {
             Globals.viewHandler.changeViewFocus(
-                'location-single-view',
-                'event-calendar-view',
+                '#location-single-view',
+                '#event-calendar-view',
                 true, false, false
             );
         }
@@ -78,12 +81,15 @@ class Event extends React.Component {
                     'singleLocation' : location,
                 });
 
+                // Push to browser history
+                Globals.history.push(this.props.elem);
+
                 Globals.setMainState({ from : this.props.name });
 
             }.bind(this);
 
             // Sends request
-            xhr.open( 'GET', 'http://towwwn.dk/api/svendborg/locations/' + this.props.elem.parentid );
+            xhr.open( 'GET', app_data.rest_api + 'svendborg/locations/' + this.props.elem.parentid );
             xhr.send();
     }
 
@@ -120,7 +126,7 @@ class Event extends React.Component {
             response = elem.imgurl; }
 
         // If none found, use placeholder
-        else { response = 'http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png'; }
+        else { response = app_data.template_uri + '/style/assets/images/placeholder-camera-green.png'; }
 
         return response;
 
@@ -138,10 +144,10 @@ class Event extends React.Component {
 
         // Html
         return (
-            <a className="event" style={ this.props.style != null ? this.props.style : {} } onClick={ this.eventRefClick.bind(this) }  >
+            <a className="event" href={ app_data.main_path + '/event/' + this.props.elem.slug } style={ this.props.style != null ? this.props.style : {} } onClick={ this.eventRefClick.bind(this) }  >
                 <div className="imgcontainer" data-image-src={ image } >
                     <div className="loader">
-                        <img src={ template_uri + '/style/assets/icons/loading-white.svg' } />
+                        <img src={ app_data.template_uri + '/style/assets/icons/loading-white.svg' } />
                     </div>
                 </div>
 

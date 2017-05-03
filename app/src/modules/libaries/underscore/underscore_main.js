@@ -276,6 +276,7 @@ class UnderScoreElem {
     attr( attr ) {
         window.domnode = this.state.domnode;
         if ( this.state.domnode.constructor.name === 'HTMLElement' ||
+             this.state.domnode.constructor.name === 'HTMLAnchorElement' ||
              this.state.domnode.constructor.name === 'HTMLDivElement' ) {
             this.state.domnode = [ this.state.domnode ];
         } return this.state.domnode[0].getAttribute(attr);
@@ -284,6 +285,7 @@ class UnderScoreElem {
     // Has Attribute
     hasAttr( attr ) {
         if ( this.state.domnode.constructor.name === 'HTMLElement' ||
+             this.state.domnode.constructor.name === 'HTMLAnchorElement' ||
              this.state.domnode.constructor.name === 'HTMLDivElement' ) {
             this.state.domnode = [ this.state.domnode ];
         } return this.state.domnode[0].getAttribute( attr ) != null ? true : false;
@@ -292,6 +294,7 @@ class UnderScoreElem {
     // Remove Attribute
     removeAttr( attr ) {
         if ( this.state.domnode.constructor.name === 'HTMLElement' ||
+             this.state.domnode.constructor.name === 'HTMLAnchorElement' ||
              this.state.domnode.constructor.name === 'HTMLDivElement' ) {
             this.state.domnode = [ this.state.domnode ];
         }

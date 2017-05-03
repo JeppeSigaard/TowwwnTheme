@@ -9,12 +9,8 @@ get_functions_part(array(
     'settings',
     'menu',
     'location-list',
+    'og-meta',
 ));
-
-// Custom types
-get_functions_part(array(
-    'commercials',
-), 'custom-types');
 
 // Kirki
 if ( class_exists( "Kirki" ) ) {

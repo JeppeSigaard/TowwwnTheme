@@ -9,7 +9,8 @@
     font-size: 12px;
     background-color: $color-blue-2;
     top: 55px;
-    border-bottom: 1px solid rgba(0,0,0,.3);
+    z-index: 100;
+    border-bottom: 1px solid #292929;
 
     &.dark{
         background-color: darken( $color-blue-2, 5% );

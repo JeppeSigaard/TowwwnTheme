@@ -288,17 +288,67 @@
                 &:hover{
                     color: white;
                 }
-
-
             }
+        }
+    }
+
+    .login-btn{
+        position: absolute;
+        bottom: 0; right: 0;
+        background-color: #494949; // darken($color-blue-1,14%);
+        height: 32px; width: auto;
+        line-height: 32px;
+        padding: 0 20px 0 12px;
+        font-size: 13px;
+        text-transform: uppercase;
+        color: white;
+        cursor: pointer;
+        z-index: 10;
+
+        transition: 120ms;
+        &:before{ transition: inherit; }
+
+        &:before{
+            content: '';
+            position: absolute;
+            left: -16px; top: 0;
+            width: 0px; height: 0px;
+            border-left: 8px solid transparent;
+            border-right: 8px solid #494949;
+            border-top: 16px solid transparent;
+            border-bottom: 16px solid #494949;
+        }
+
+        &:hover{
+            background-color: #555;
+
+            &:before{
+                border-left: 8px solid transparent;
+                border-right: 8px solid #555;
+                border-top: 16px solid transparent;
+                border-bottom: 16px solid #555;
+            }
+        }
+
+        &.bounce{
+            animation: bounce 0.35s forwards;
         }
     }
 }
 
+@keyframes bounce{
+    0% {
+        padding: 0 20px 0 12px;
+    }
 
+    50% {
+        padding: 0 24px 0 16px;
+    }
 
-
-
+    100% {
+        padding: 0 20px 0 12px;
+    }
+}
 
 
 

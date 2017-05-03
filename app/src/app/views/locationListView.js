@@ -3,6 +3,7 @@
 // Location List View
 const React = require( 'react' ),
       LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
+      _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
       Location = require( '../components/location.js' ),
       Loader = require( '../componentParts/loader.js' );
@@ -12,6 +13,8 @@ class LocationListView extends React.Component {
     // Ctor
     constructor() {
         super();
+
+        this.lastElem = null;
         this.state = {
             'closeviewstate' : {
                 'leftview' : '#event-calendar-view',
@@ -26,8 +29,15 @@ class LocationListView extends React.Component {
         };
     }
 
+    // On close
+    onClose() { _( '.category.bookmark-mode' ).removeClass('bookmark-mode'); }
+
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
+        if ( nextProps.category != this.lastElem ) {
+            this.lastElem = nextProps.category;
+        }
+
         if ( nextProps.elems != null ) {
             let jsxElems = [];
             for ( let elem of nextProps.elems ) {

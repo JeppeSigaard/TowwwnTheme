@@ -1,0 +1,42 @@
+article{
+    max-width: 640px;
+    margin: auto;
+    line-height: 1.5;
+
+    p a{
+        position: relative;
+        color: $color-blue-1;
+        text-decoration: none;
+        transition: 400ms;
+        transition-timing-function: cubic-bezier(.54, 0, .18, 1.5);
+
+        &:hover{
+            color: darken( $color-blue-1, 7% );
+
+            &:before{
+                width: 100%;
+                background-color: darken( $color-blue-1, 7% );
+            }
+        }
+
+        &:before{
+            content: '';
+            position: absolute;
+            left: 50%; bottom: -2px;
+            transform: translate(-50%, 0);
+            width: 0; height: 1px;
+            background-color: $color-blue-1;
+            transition: 400ms;
+            transition-timing-function: cubic-bezier(.54, 0, .18, 1.5);
+        }
+    }
+
+}
+
+@media(min-width: 1280px){
+    padding: 40px 0px;
+}
+
+.article-header{
+    border-bottom: 2px solid $color-blue-1;
+}

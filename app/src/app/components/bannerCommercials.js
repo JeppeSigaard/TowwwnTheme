@@ -27,7 +27,7 @@ class BannerCommercials extends React.Component {
 
     // Render
     render() {
-        return this.state.bannercommercials != null && (
+        return this.state.bannercommercials != null && this.state.bannercommercials.length > 0 && (
             <div className="bannerCommercials">{ this.state.bannercommercials }</div>
         );
     }
