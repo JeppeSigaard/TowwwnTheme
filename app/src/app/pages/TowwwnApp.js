@@ -23,6 +23,7 @@ const React = require( 'react' ),
     Event = require( '../components/event.js' ),
     LocationCategory = require( '../components/locationCategory.js' ),
     ViewSliderDots = require('../components/viewsliderdots.js'),
+    CookiePolicy = require('../components/cookiePolicy.js'),
 
     // Plugins
     _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
@@ -178,7 +179,7 @@ class TowwwnApp extends React.Component {
         }
 
         // Render Front page
-        if ( app_data.type == 'page' ){
+        if ( app_data.type == 'page' || app_data.type == 'post' ){
             Globals.viewHandler = new ViewHandler();
             Globals.history.replace({'type' : 'home', 'name' : 'Towwwn'});
         }
@@ -267,6 +268,8 @@ class TowwwnApp extends React.Component {
                   _('body').hasClass('mobile') &&
                     <ViewSliderDots currentView={ this.state.currentMobileView } />
                 }
+
+                <CookiePolicy name="towwwn-cookie"/>
             </div>
         );
     }

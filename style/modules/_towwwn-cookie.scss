@@ -1,0 +1,60 @@
+$towwwn-cookie-menu-width: $menu-bar-height * 1.1;
+
+.towwwn-cookie {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: $menu-bar-height;
+    line-height: $menu-bar-height;
+    background: $color-blue-2;
+    z-index: 10000;
+    color: white;
+    padding: 0px 10px;
+    box-shadow: 1px 2px 3px 0px rgba(black,.1);
+    font-family:  'Avenir';
+    font-size: 12px;
+    opacity: 1;
+
+    &.fadeout{
+        opacity: 0;
+        transition: opacity 200ms;
+    }
+
+    .towwwn-cookie-text{
+        width: calc(100% - #{$towwwn-cookie-menu-width});
+        text-align: center;
+        display: block;
+    }
+
+    @media (min-width: 640px){
+        font-size: 14px;
+    }
+
+    a{
+        color: inherit;
+        text-decoration: underline;
+    }
+
+    .towwwn-cookie-close{
+        font-family: 'Avenir bold';
+        display: block;
+        position: absolute;
+        z-index: 2;
+        width: $towwwn-cookie-menu-width;
+        height: $menu-bar-height;
+        top: 0;
+        right: 0;
+        border-left: 1px solid white;
+        text-align: center;
+        line-height: $menu-bar-height;
+        background: $color-blue-1;
+        transition: background .2s;
+        cursor: pointer;
+        font-size: 20px;
+
+        &:hover{
+            background: lighten($color-blue-1, 5);
+        }
+    }
+}
