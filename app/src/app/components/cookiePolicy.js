@@ -1,6 +1,5 @@
 const React = require( 'react' ),
-      Globals = require( '../globals.js' ),
-      _ = require( '../../modules/libaries/underscore/underscore_main.js' );
+      Globals = require( '../globals.js' );
 
 class CookiePolicy extends React.Component {
 
