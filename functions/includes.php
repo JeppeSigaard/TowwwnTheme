@@ -17,8 +17,6 @@ add_action('wp_head',function(){
             $app_type = 'category';
         }
 
-
-
         wp_enqueue_script('main-script');
         wp_localize_script( 'main-script', 'app_data', array(
             'ajax_url' => admin_url( 'admin-ajax.php' ),

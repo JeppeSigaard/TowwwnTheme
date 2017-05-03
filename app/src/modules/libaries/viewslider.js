@@ -40,14 +40,14 @@ class ViewSlider {
                 this.canLeft = true;
                 let elem = _('#'+this.relations.left);
                 elem.addClass('notrans');
-                elem.css({ 'transform' : 'translate(-100%,0)' });
+                elem.css({ 'left' : '-100%' });
             }
 
             if ( this.relations.right != null && this.relations.canright ) {
                 this.canRight = true;
                 let elem = _('#'+this.relations.right);
                 elem.addClass('notrans');
-                elem.css({ 'transform' : 'translate(100%,0)' });
+                elem.css({ 'left' : '100%' });
             }
         }
 
@@ -75,9 +75,9 @@ class ViewSlider {
             if ( this.distance * this.cos <= bleft &&
                  this.distance * this.cos >= bright ) {
                 let ntrans = ( ( this.distance * this.cos ) / sw ) * 100;
-                _('#'+this.currentView).css({ transform : 'translate('+ ntrans +'%, 0)' });
-                if ( this.canLeft ) _('#'+this.relations.left).css({ transform : 'translate('+ ( -100 + ntrans ) +'%,0)' });
-                if ( this.canRight ) _('#'+this.relations.right).css({ transform : 'translate('+ ( 100 + ntrans ) +'%,0)' });
+                _('#'+this.currentView).css({ left : ntrans+'%' });
+                if ( this.canLeft ) _('#'+this.relations.left).css({ left : ( -100 + ntrans )+'%' });
+                if ( this.canRight ) _('#'+this.relations.right).css({ left : ( 100 + ntrans )+'%' });
             }
 
         } else if ( Math.abs( this.distance ) >= 30 ) {
@@ -91,15 +91,15 @@ class ViewSlider {
         if ( this.distance < 30 ) return;
 
         _('#'+this.currentView).removeClass('notrans');
-        if ( this.canLeft ) _('#'+this.relations.left).removeClass('notrans');
-        if ( this.canRight ) _('#'+this.relations.right).removeClass('notrans');
+        if ( this.canLeft && _('#'+this.relations.left) !== false ) _('#'+this.relations.left).removeClass('notrans');
+        if ( this.canRight && _('#'+this.relations.right) !== false ) _('#'+this.relations.right).removeClass('notrans');
 
         // Snaps views
         if ( this.distance * this.cos <= -( _(window).width() / 3 * 1 ) && this.canRight ) {
 
             // Snap right
-            _('#'+this.currentView).removeClass('notrans').removeClass('active').css({ transform: 'translate(-100%,0)' });
-            _('#'+this.relations.right).removeClass('notrans').addClass('active').css({ transform: 'translate(0,0)' });
+            _('#'+this.currentView).removeClass('notrans').removeClass('active').css({ left: '-100%' });
+            _('#'+this.relations.right).removeClass('notrans').addClass('active').css({ left: '0' });
             Globals.viewHandler.mobileFocusedView = _('#'+this.relations.right).get();
 
             Globals.setMainState({ currentMobileView : _('#'+this.relations.right) });
@@ -107,12 +107,12 @@ class ViewSlider {
         } else if ( this.distance * this.cos >= _(window).width() / 3 * 1 && this.canLeft ) {
 
             // Snap left
-            _('#'+this.currentView).removeClass('notrans').removeClass('active').css({ transform: 'translate(100%,0)' });
-            _('#'+this.relations.left).removeClass('notrans').addClass('active').css({ transform: 'translate(0,0)' });
+            _('#'+this.currentView).removeClass('notrans').removeClass('active').css({ left: '100%' });
+            _('#'+this.relations.left).removeClass('notrans').addClass('active').css({ left: '0' });
             Globals.viewHandler.mobileFocusedView = _('#'+this.relations.left).get();
 
             setTimeout(() => {
-                _('#'+this.currentView).addClass('notrans').css({ transform: 'translate(-100%,0)' });
+                _('#'+this.currentView).addClass('notrans').css({ left: '-100%' });
                 setTimeout(() => { _('#'+this.currentView).removeClass('notrans'); }, 40);
             }, parseFloat( window.getComputedStyle( _('#'+this.currentView).get(0) ).transitionDuration ) * 1000);
 
@@ -121,14 +121,20 @@ class ViewSlider {
         } else {
 
             // Snap middle
-            _('#'+this.currentView).removeClass('notrans').css({ transform: 'translate(0,0)' });
-            if ( this.canLeft ) _('#'+this.relations.left).removeClass('notrans').css({ transform: 'translate(-100%,0)' });
-            if ( this.canRight ) _('#'+this.relations.right).removeClass('notrans').css({ transform: 'translate(100%,0)' });
+            if ( _('#'+this.currentView) !== false )
+                _('#'+this.currentView).removeClass('notrans').css({ left: '0' });
 
-            if ( this.canRight ) {
+            if ( this.canLeft && _('#'+this.relations.left) !== false )
+                _('#'+this.relations.left).removeClass('notrans').css({ left: '-100%' });
+
+            if ( this.canRight && _('#'+this.relations.right) !== false )
+                _('#'+this.relations.right).removeClass('notrans').css({ left: '100%' });
+
+            if ( this.canRight && _('#'+this.relations.right) !== false ) {
                 setTimeout(() => {
-                    _('#'+this.relations.right).addClass('notrans').css({ transform: 'translate(-100%,0)' });
-                    setTimeout(() => { _('#'+this.relations.left).removeClass('notrans'); }, 40);
+                    _('#'+this.relations.right).addClass('notrans').css({ left: '-100%' });
+                    _('#'+this.relations.right).get(0).offsetHeight;
+                    _('#'+this.relations.right).removeClass('notrans');
                 }, parseFloat( window.getComputedStyle( _('#'+this.relations.right).get(0) ).transitionDuration ) * 1000);
             }
 

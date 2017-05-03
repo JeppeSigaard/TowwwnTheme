@@ -82,8 +82,6 @@ class SingleLocation extends React.Component {
             innerClass : 'inner',
         });
 
-        Globals.syncScroll.rescaleContainer();
-
     }
 
     // Render

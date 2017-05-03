@@ -3,6 +3,7 @@
 // Event single view layout
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
+      LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       SingleEvent = require( '../components/singleEvent.js' ),
       BannerCommercials = require( '../components/bannerCommercials.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' );
@@ -107,16 +108,14 @@ class EventSingleView extends React.Component {
         let elem = this.props.event;
         return (
             <section className="container-section" id="event-single-view">
-                <ViewTopBar standard={ true } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
-                <div className="sync-outer">
-                    <div className="sync-inner">
-                        <div className="content">
+               <ViewTopBar standard={ true } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
 
-                            { this.state.jsxEvent != null &&
-                              this.state.jsxEvent }
+                <div className="scroll-container">
+                    <div className="content">
+                        { this.state.jsxEvent != null &&
+                          this.state.jsxEvent }
 
-                            <BannerCommercials />
-                        </div>
+                        <BannerCommercials />
                     </div>
                 </div>
             </section>

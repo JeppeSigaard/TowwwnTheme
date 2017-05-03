@@ -2,6 +2,7 @@
 
 // Location Category view
 const React = require( 'react' ),
+      LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       LocationCategory = require( '../components/locationCategory.js' ),
       SubCategories = require( '../components/subcategories.js' ),
       Globals = require( '../globals.js' ),
@@ -50,9 +51,8 @@ class LocationCategoryView extends React.Component {
 
     // Activate Sub Categories List
     toggleSubCategories() {
-        let syncOuter = document.querySelectorAll('#location-category-view .sync-outer');
-        for ( let item of syncOuter ) {
-            item.scrollTop = 0; }
+        let sc = _( '#location-category-view .scroll-container' );
+        if ( sc !== false ) { sc = sc.get(0).scrollTop = 0; }
 
         let inner = document.getElementsByClassName( 'sub-category-inner' )[0];
         if ( this.state.subCatHeight !== '0px' ) this.setState({ 'subCatHeight' : '0px' });
@@ -107,6 +107,19 @@ class LocationCategoryView extends React.Component {
         }
     }
 
+    // Component did mount
+    componentDidMount() {
+         this.lazyLoad = new LazyLoadHandler( '#location-category-view .scroll-container' );
+    }
+
+    // Component did update
+    componentDidUpdate() {
+        if ( this.state.jsxCategories != null ) {
+            if ( this.lazyLoad == null ) this.lazyLoad = new LazyLoadHandler( '#location-category-view .scroll-container' );
+            this.lazyLoad.triggerload();
+        }
+    }
+
     // Render
     render() {
         return (
@@ -115,30 +128,14 @@ class LocationCategoryView extends React.Component {
                     Steder
                     <div className="sub-categories-title" onClick={ this.toggleSubCategories.bind(this) } ></div>
                 </div>
-                <div className="sync-outer">
-                    <div className="sync-inner">
-                        <div className="content">
-                            <SubCategories subCategories={ this.props.allCategories } outerHeight={ this.state.subCatHeight } clickEvent={ this.handleCategoryClick } />
 
-                            <div className="category-container">
-                                { this.state.suggestedCategories != null &&
-                                    (<div className="suggested-cats">
-                                        <h2>Foreslået Kategorier</h2>
-                                        <div className="breakline" ></div>
-                                        { this.state.suggestedCategories }
-                                        <div className="breakline" ></div>
-                                    </div>)
-                                }
+                <div className="scroll-container">
+                    <div className="content">
+                        <SubCategories subCategories={ this.props.allCategories } outerHeight={ this.state.subCatHeight } clickEvent={ this.handleCategoryClick } />
 
-                                { this.state.suggestedCategories != null &&
-                                    (<div className="categories-header">
-                                        Svendborg i udvalg
-                                    </div>)
-                                }
-
-                                { this.state.jsxCategories != null &&
-                                  this.state.jsxCategories }
-                            </div>
+                        <div className="category-container">
+                            { this.state.jsxCategories != null &&
+                              this.state.jsxCategories }
                         </div>
                     </div>
                 </div>

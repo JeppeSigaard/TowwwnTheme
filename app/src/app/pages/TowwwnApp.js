@@ -27,12 +27,10 @@ const React = require( 'react' ),
 
     // Plugins
     _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
-    SyncScrollHandler = require( '../../modules/libaries/syncScrollHandler.js' ),
     Slider = require( '../../modules/libaries/slider.js' ),
     ViewHandler = require( '../../modules/handlers/viewHandler.js' ),
     ViewSlider = require( '../../modules/libaries/viewslider.js' ),
     EventHandlers = require( '../../modules/handlers/eventHandlers.js' ),
-    ImageHandler = require( '../../modules/handlers/imageHandler.js' ),
     historyHandler = require('../../modules/handlers/historyHandler.js'),
 
     // TMP
@@ -51,12 +49,10 @@ class TowwwnApp extends React.Component {
         if ( _(window).width() <= 640 ) _('body').addClass('mobile');
 
         // Instances
-        this.imageHandler = new ImageHandler();
         this.eventHandlers = new EventHandlers();
 
         // Globals
-        Globals.syncScroll = new SyncScrollHandler();
-        //Globals.viewHandler = null;
+        Globals.viewHandler = null;
         Globals.locationDataHandler = new LocationDataHandler();
         Globals.fb = new FBHandler();
         Globals.history = new historyHandler();
@@ -68,7 +64,7 @@ class TowwwnApp extends React.Component {
         Globals.relations = {
 
             'event-single-view' : {
-                left: 'location-single-view',
+                left: null,
                 right: 'event-calendar-view',
                 canleft: false,
                 canright: true,
@@ -97,7 +93,7 @@ class TowwwnApp extends React.Component {
 
             'location-single-view' : {
                 left: 'location-list-view',
-                right: 'event-single-view',
+                right: null,
                 canleft: true,
                 canright: false,
             },
@@ -159,10 +155,6 @@ class TowwwnApp extends React.Component {
 
     // After render
     componentDidUpdate() {
-        //Globals.syncScroll.wrapElems();
-        //Globals.syncScroll.rescaleContainer( Globals.viewHandler.focusedViews );
-
-        this.imageHandler.lazyLoad();
         document.body.classList.remove('loading');
 
         // Handle anchor click
@@ -176,6 +168,7 @@ class TowwwnApp extends React.Component {
 
     // Component did mount
     componentDidMount() {
+        document.body.classList.remove('loading');
 
         this.viewSlider = new ViewSlider();
         Globals.viewHandler = null;

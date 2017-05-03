@@ -220,8 +220,10 @@ class UnderScoreElem {
     css( styling ) {
         if ( typeof styling === 'object' ) {
             for ( let key of Object.keys( styling ) ) {
-                if ( this.state.domnode.constructor.name === 'HTMLElement' )
+                if ( this.state.domnode.constructor.name === 'HTMLElement' ||
+                     this.state.domnode.constructor.name === 'HTMLDivElement' ) {
                     this.state.domnode = [ this.state.domnode ];
+                }
 
                 for ( let iter = 0; iter < this.state.domnode.length; iter++ ) {
                     this.state.domnode[ iter ].style[ key ] = styling[ key ];
@@ -271,10 +273,36 @@ class UnderScoreElem {
     }
 
     // Attribute
-    attr( attr ) { return this.state.domnode[0].getAttribute( attr ); }
+    attr( attr ) {
+        window.domnode = this.state.domnode;
+        if ( this.state.domnode.constructor.name === 'HTMLElement' ||
+             this.state.domnode.constructor.name === 'HTMLAnchorElement' ||
+             this.state.domnode.constructor.name === 'HTMLDivElement' ) {
+            this.state.domnode = [ this.state.domnode ];
+        } return this.state.domnode[0].getAttribute(attr);
+    }
 
     // Has Attribute
-    hasAttr( attr ) { return this.state.domnode[0].getAttribute( attr ) != null ? true : false; }
+    hasAttr( attr ) {
+        if ( this.state.domnode.constructor.name === 'HTMLElement' ||
+             this.state.domnode.constructor.name === 'HTMLAnchorElement' ||
+             this.state.domnode.constructor.name === 'HTMLDivElement' ) {
+            this.state.domnode = [ this.state.domnode ];
+        } return this.state.domnode[0].getAttribute( attr ) != null ? true : false;
+    }
+
+    // Remove Attribute
+    removeAttr( attr ) {
+        if ( this.state.domnode.constructor.name === 'HTMLElement' ||
+             this.state.domnode.constructor.name === 'HTMLAnchorElement' ||
+             this.state.domnode.constructor.name === 'HTMLDivElement' ) {
+            this.state.domnode = [ this.state.domnode ];
+        }
+
+        for ( let item of this.state.domnode ) {
+            item.removeAttribute( attr );
+        } return this;
+    }
 
 }
 

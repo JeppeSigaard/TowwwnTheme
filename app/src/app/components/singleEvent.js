@@ -107,15 +107,6 @@ class SingleEvent extends React.Component {
             imgurl : imgurl,
         });
 
-        // Bump up (plz fix)
-        const singleSync = document.querySelectorAll('#event-single-view .sync-outer')[0];
-        if(singleSync.scrollTop > 60){
-            singleSync.scrollTop = 60;
-        }
-
     }
-
-    // Component did update
-    componentDidUpdate() { Globals.syncScroll.rescaleContainer(); }
 
 } module.exports = SingleEvent;

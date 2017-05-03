@@ -2,6 +2,7 @@
 
 // Location Single view
 const React = require( 'react' ),
+      LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       Globals = require( '../globals.js' ),
       SingleLocation = require( '../components/singleLocation.js' ),
       BannerCommercials = require( '../components/bannerCommercials.js' ),
@@ -100,22 +101,32 @@ class LocationSingleView extends React.Component{
 
     }
 
+    // Component did mount
+    componentDidMount() {
+        this.lazyLoad = new LazyLoadHandler( '#location-single-view .scroll-container' );
+    }
+
+    // Component did update
+    componentDidUpdate() {
+        if ( this.props.elem != null ) {
+            this.lazyLoad.triggerload();
+        }
+    }
+
     // Render
     render() {
         return (
             <section className="container-section" id="location-single-view">
                 <ViewTopBar standard={ true } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } />
 
-                <div className="sync-outer">
-                    <div className="sync-inner">
-                        <div className="content">
-                            { this.props.elem != null &&
-                                <SingleLocation elem={ this.props.elem } name={ this.props.name } /> }
-                            { this.props.elem == null &&
-                                <Loader /> }
+                <div className="scroll-container">
+                    <div className="content">
+                        { this.props.elem != null &&
+                            <SingleLocation elem={ this.props.elem } name={ this.props.name } /> }
+                        { this.props.elem == null &&
+                            <Loader /> }
 
-                            <BannerCommercials />
-                        </div>
+                        <BannerCommercials />
                     </div>
                 </div>
             </section>

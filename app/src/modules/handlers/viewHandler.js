@@ -37,11 +37,7 @@ class ViewHandler {
 
         let leftFocused = false, rightFocused = false;
         if ( this.focusedViews.length > 1 ) {
-            if ( this.focusedViews.includes( leftView ) && this.focusedViews.includes( rightView ) ) {
-                Globals.syncScroll.wrapElems();
-                Globals.syncScroll.rescaleContainer( [ _( leftView ).get(0), _( rightView ).get(0) ] );
-                return;
-            }
+            if ( this.focusedViews.includes( leftView ) && this.focusedViews.includes( rightView ) ) return;
 
             if ( this.focusedViews[0] === leftView ) {
                 fromLeft = true; fromRight = false;
@@ -153,11 +149,7 @@ class ViewHandler {
                 _( this.focusedViews[0] ).removeClass('notrans');
                 _( this.focusedViews[1] ).removeClass('notrans');
             }
-        }
-
-        Globals.syncScroll.wrapElems();
-        Globals.syncScroll.rescaleContainer( [ _( leftView ).get(0), _( rightView ).get(0) ] );
-        return;
+        } return;
 
     }
 
@@ -183,17 +175,17 @@ class ViewHandler {
         _(activeView).addClass('notrans active');
 
         // Sets starting position for new view
-        if ( fromLeft ) _(activeView).css({ transform : 'translate(-100%,0)' });
-        if ( fromRight ) _(activeView).css({ transform : 'translate(100%,0)' });
+        if ( fromLeft ) _(activeView).css({ left : '-100%' });
+        if ( fromRight ) _(activeView).css({ left : '100%' });
 
         // Timeout
         setTimeout(() => {
             _(activeView).removeClass('notrans');
 
             // Translates view in
-            if ( fromLeft ) _(this.mobileFocusedView).css({ transform : 'translate(100%,0)' });
-            if ( fromRight ) _(this.mobileFocusedView).css({ transform : 'translate(-100%,0)' });
-            _(activeView).css({ transform : 'translate(0,0)' });
+            if ( fromLeft ) _(this.mobileFocusedView).css({ left : '100%' });
+            if ( fromRight ) _(this.mobileFocusedView).css({ left : '-100%' });
+            _(activeView).css({ left : '0' });
 
             // Sets new focused view
             this.mobileFocusedView = activeView;
