@@ -7,20 +7,34 @@ var ViewHandler = {
         ready: false,
         poly_view: false,
         content_container: $('.content-container'),
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> origin/internalscroll
         event_calender: $('#section1 .content'),
         event_singleview: $('#section0 .content'),
         location_categories: $('#section2 .content'),
         location_listview: $('#section3 .content'),
         location_singleview: $('#section4 .content'),
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> origin/internalscroll
         event_calender_outer: $('#section1'),
         event_singleview_outer: $('#section0'),
         location_categories_outer: $('#section2'),
         location_listview_outer: $('#section3'),
+<<<<<<< HEAD
         location_singleview_outer: $('#section4'),  
         
         views: [], 
+=======
+        location_singleview_outer: $('#section4'),
+
+        views: [],
+>>>>>>> origin/internalscroll
         ls: $('.content-container-inner').position().left,
         centered_view: [ 1, 2 ],
         currentIndex: 1,
@@ -35,6 +49,7 @@ var ViewHandler = {
         $('.container-section').each(function( iter, elem ) {
             this.settings.views.push( $(elem) );
         }.bind(this));
+<<<<<<< HEAD
         
         // Loads swipe functionality
         this.swipe();
@@ -49,6 +64,22 @@ var ViewHandler = {
             } lastSize = $(window).innerWidth();
         }.bind(this));
 
+=======
+
+        // Loads swipe functionality
+        this.swipe();
+
+        // Reloads current view to fit mobile screen sizes
+        var lastSize = $(window).innerWidth();
+        $(window).on( 'resize', function() {
+            if ( ( $(window).innerWidth() <= 640 && lastSize > 640 ) || ( $(window).innerWidth() > 640 && lastSize <= 640 ) ) {
+                setTimeout( function() {
+                    this.change_view_focus( this.settings.currentIndex, this.settings.forcedLeft, this.settings.forcedRight );
+                }.bind(this), 400);
+            } lastSize = $(window).innerWidth();
+        }.bind(this));
+
+>>>>>>> origin/internalscroll
         // Swipes from categories to events on load
         var elem = $('.content-container-inner', this.settings.content_container);
         elem.addClass('notrans');
@@ -73,12 +104,20 @@ var ViewHandler = {
         this.settings.forcedRight = forceRight;
         var cls = -( $('.content-container-inner').position().left ),
             crs = cls + $('.content-container').innerWidth();
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> origin/internalscroll
         if ( typeof viewIndex === 'number' ) {
             var elem = this.settings.views[viewIndex],
                 elem_ls = elem.position().left,
                 elem_rs = elem.position().left + elem.innerWidth();
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> origin/internalscroll
             if ( forceLeft ) {
                 this.settings.ls = -( elem_ls / $('.content-container').innerWidth() * 100 );
                 $('.content-container-inner').css({ 'left': this.settings.ls + '%' });
@@ -92,6 +131,7 @@ var ViewHandler = {
                 this.settings.ls = -( ( elem_rs - $('.content-container').innerWidth() ) / $('.content-container').innerWidth() * 100 );
                 $('.content-container-inner').css({ 'left': this.settings.ls + '%' });
             }
+<<<<<<< HEAD
             
         } else if ( typeof viewIndex === 'object' ) {
             viewIndex.sort(function( a, b ) { 
@@ -100,12 +140,26 @@ var ViewHandler = {
                 return 0;
             }); 
             
+=======
+
+        } else if ( typeof viewIndex === 'object' ) {
+            viewIndex.sort(function( a, b ) {
+                if ( a < b ) return -1;
+                if ( a > b ) return 1;
+                return 0;
+            });
+
+>>>>>>> origin/internalscroll
             var lowElem = this.settings.views[viewIndex[0]],
                 highElem = this.settings.views[viewIndex[viewIndex.length-1]],
                 from = lowElem.position().left,
                 to = highElem.position().left + highElem.innerWidth(),
                 width = Math.abs( to - from );
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> origin/internalscroll
             this.settings.ls = -( ( from - ( $('.content-container').innerWidth() - width ) / 2 ) );
             $('.content-container-inner').css({ 'left': this.settings.ls + 'px' });
         }
@@ -117,10 +171,17 @@ var ViewHandler = {
             ImageController.lazyLoad();
         }, 420);
     },
+<<<<<<< HEAD
     
     // Swipe functionlaity
     swipe: function() {
         
+=======
+
+    // Swipe functionlaity
+    swipe: function() {
+
+>>>>>>> origin/internalscroll
         // add rudimentary swipe for mouse (prolly improve, k fam?)
         /*var mousePos = false, canSwipe = false;
         $('.content-container').on('mousedown',function(e){
@@ -142,7 +203,11 @@ var ViewHandler = {
             timestart = null,
             viewLocked = false,
             too_fast = false;
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> origin/internalscroll
         $('.content-container').on( 'touchstart', function(e) {
 
             too_fast = true;
@@ -159,7 +224,11 @@ var ViewHandler = {
         var changed = false, changeable = true, xDirection = 0, yDirection = 0;
         $('.content-container').on( 'touchmove', function( e ) {
           if ( touchstartX !== null && touchstartY !== null ) {
+<<<<<<< HEAD
             var distanceX = touchstartX - e.touches[0].pageX , 
+=======
+            var distanceX = touchstartX - e.touches[0].pageX ,
+>>>>>>> origin/internalscroll
                 distanceY = touchstartY - e.touches[0].pageY,
                 distance = Math.sqrt( distanceX * distanceX + distanceY * distanceY ),
                 direction = Math.atan2( distanceY, distanceX );
@@ -189,7 +258,11 @@ var ViewHandler = {
           }
 
           if( -($('.content-container-inner').position().left) < 0 ) {
+<<<<<<< HEAD
             $('.content-container-inner').css({ 'left': 0 });    
+=======
+            $('.content-container-inner').css({ 'left': 0 });
+>>>>>>> origin/internalscroll
           } if ( -($('.content-container-inner').position().left) + $('.content-container').innerWidth() >
                  $('.content-container-inner').outerWidth()) {
             $('.content-container-inner').css({ 'left': -($('.content-container-inner').outerWidth() - $('.content-container').innerWidth()) + 'px' });
@@ -232,14 +305,24 @@ var ViewHandler = {
             }
 
           }, 250);
+<<<<<<< HEAD
           
+=======
+
+>>>>>>> origin/internalscroll
           $('.content-container-inner').removeClass('notrans');
 
           too_fast = false;
         });
+<<<<<<< HEAD
         
     },
     
+=======
+
+    },
+
+>>>>>>> origin/internalscroll
     // Toggle poly view
     toggle_poly_view: function( activeOnly ) {
         

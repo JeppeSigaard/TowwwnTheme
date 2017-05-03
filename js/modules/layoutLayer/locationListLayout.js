@@ -1,9 +1,16 @@
 
 var LocationListModule = {
+<<<<<<< HEAD
     
     // Settings
     settings: { },
     
+=======
+
+    // Settings
+    settings: { },
+
+>>>>>>> origin/internalscroll
     // Init
     init: function() {
         let ViewHandler = require( './../view_handler.js' );
@@ -17,11 +24,16 @@ var LocationListModule = {
             ViewHandler.settings.location_categories_outer.removeClass('normalize');
             $('.category-container .selected').removeClass('selected');
         });
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> origin/internalscroll
         // Opens sub category view
         $(document).on( 'click', '.sub-categories-title', function() {
             var outer = $('.sub-category-outer'),
                 inner = $('.sub-category-inner');
+<<<<<<< HEAD
             
             if ( outer.hasClass('open') ) outer.css('height', '0px').removeClass('open');
             else outer.css('height', inner.outerHeight() + 'px').addClass('open');
@@ -30,6 +42,16 @@ var LocationListModule = {
         // Animates ripple
         $(document).on( 'click', '.location-container', function( e ) {
             
+=======
+
+            if ( outer.hasClass('open') ) outer.css('height', '0px').removeClass('open');
+            else outer.css('height', inner.outerHeight() + 'px').addClass('open');
+        });
+
+        // Animates ripple
+        $(document).on( 'click', '.location-container', function( e ) {
+
+>>>>>>> origin/internalscroll
             // Removes bookmark mode for other elems
             $('.bookmark-mode').removeClass('bookmark-mode');
             $('.location-list .filled .ripple').addClass('animateBack');
@@ -38,7 +60,11 @@ var LocationListModule = {
                 'left' : ( $(this).parent().innerWidth() / 2 - $(this).outerWidth() / 2 ) + 'px',
             });
             $('.filled').removeClass('filled');
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> origin/internalscroll
             // Adds & animates bookmark mode for clicked elem
             $(this).addClass('bookmark-mode');
             $('.ripple', this).addClass('animate');
@@ -46,13 +72,18 @@ var LocationListModule = {
                 'top': ( e.pageY - $(this).offset().top - $('.ripple', this).outerHeight() / 2 ) + 'px',
                 'left': ( e.pageX - $(this).offset().left - $('.ripple', this).outerWidth() / 2 ) + 'px',
             });
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> origin/internalscroll
             // Stuff when trans is done
             setTimeout(function() {
                 $('.animateBack').removeClass('animateBack');
                 $('.animate').removeClass('animate');
                 $(this).addClass('filled');
             }.bind(this), 300);
+<<<<<<< HEAD
             
         });
         
@@ -64,6 +95,19 @@ var LocationListModule = {
         
         var html = '<div class="locationlist-bar">'+data.category_name+'<div class="close-button">&times;</div></div>';
         
+=======
+
+        });
+
+    },
+
+    // Render Locatiions
+    renderLocationList: function( data, cb ) {
+        let ViewHandler = require( './../view_handler.js' );
+
+        var html = '<div class="locationlist-bar">'+data.category_name+'<div class="close-button">&times;</div></div>';
+
+>>>>>>> origin/internalscroll
         html += '<div class="location-list" id="'+data.category_id+'" data-slug="'+data.category_slug+'">';
 
         for (var i in data.locations){
@@ -80,12 +124,20 @@ var LocationListModule = {
         }
 
     },
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> origin/internalscroll
     // Generate Location List Html
     generateLocationElemHtml: function( location ) {
         var response = '<a href="#" class="location-container" data-type="location" data-id="'+location.id+'">',
             about = typeof location.about !== 'undefined' && location.about !== null ? location.about : '';
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> origin/internalscroll
         response += '<span class="ripple"></span>';
         response += '<span class="location-picture" style="background-image:url('+location.picture+');"></span>';
         response += '<span class="location-description"><h2 class="location-title">'+location.name+'</h2>';
@@ -94,5 +146,9 @@ var LocationListModule = {
 
         return response + '</a>';
     },
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> origin/internalscroll
 }; module.exports = LocationListModule;

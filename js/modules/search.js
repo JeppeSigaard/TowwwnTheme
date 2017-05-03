@@ -100,7 +100,11 @@ var SearchModule = {
             if ( a[0] > b[0] ) return 1;
             return 0;
         });
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> origin/internalscroll
         // Locations
         var resp = [];
         var locations = LocationModule.settings.locations;
@@ -155,8 +159,13 @@ var SearchModule = {
         } else {
 
             // Generates categories html
+<<<<<<< HEAD
             var response = '<div class="search-container">'; 
             
+=======
+            var response = '<div class="search-container">';
+
+>>>>>>> origin/internalscroll
             if ( categories.length > 0 ) {
                 response += '<div class="search-category-container white">Sted kategorier:<div class="breakline"></div>';
                 response += '<div class="flex">';
@@ -164,6 +173,7 @@ var SearchModule = {
                     response += LocationCategoryModule.generate_category_html( categories[i][1] );
                 } response += '</div></div>';
             }
+<<<<<<< HEAD
             
             if ( locations.length > 0 ) {
                 response += '<div class="search-category-container">Steder:<div class="breakline"></div>';
@@ -174,19 +184,41 @@ var SearchModule = {
                     response += LocationListModule.generateLocationElemHtml( item );
                 }); 
                 
+=======
+
+            if ( locations.length > 0 ) {
+                response += '<div class="search-category-container">Steder:<div class="breakline"></div>';
+                response += '<div class="unflex">';
+
+                locations.forEach(function( item, index ) {
+                    console.log( item );
+                    response += LocationListModule.generateLocationElemHtml( item );
+                });
+
+>>>>>>> origin/internalscroll
                 response += '</div>';
                 response += '</div>';
             }
 
             if ( events.length > 0 ) {
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> origin/internalscroll
                 // Generates event html
                 response += '<div class="search-category-container white">Begivenheder:<div class="breakline"></div>';
                 response += '<div class="flex">';
                 for ( var iter = 0; iter < events.length; iter++ ) {
+<<<<<<< HEAD
                     response += EventCalenderModule.generateEventHtml( events[iter] ); 
                 } response += '</div>';
             
+=======
+                    response += EventCalenderModule.generateEventHtml( events[iter] );
+                } response += '</div>';
+
+>>>>>>> origin/internalscroll
             }
 
             // Render the html

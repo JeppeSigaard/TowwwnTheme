@@ -1,6 +1,5 @@
 .viewbar{
-    position: sticky!important;
-    top: 55px!important;
+    position: relative;
     width: 100%;
     height: $menu-bar-height;
     padding-left: 20px;
@@ -9,13 +8,13 @@
     text-transform: uppercase;
     font-size: 12px;
     background-color: $color-blue-2;
-    z-index: 100;
-    border-bottom: 1px solid #292929;
-    
+    top: 55px;
+    border-bottom: 1px solid rgba(0,0,0,.3);
+
     &.dark{
         background-color: darken( $color-blue-2, 5% );
     }
-    
+
     &.clickable{
         a{ cursor: pointer; }
     }

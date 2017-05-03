@@ -6,7 +6,7 @@
     transform: translate( -50%, -50% );
     width: calc(8px * 3 + 14px * 2);
     height: auto;
-    
+
     .loader-line{
         position: absolute;
         top: 0;
@@ -16,14 +16,14 @@
         background-color: lighten($color-blue-1, 15%);
         border: 1px solid $color-blue-1;
     }
-    
+
     .loader-line-1{
         left: 0;
         animation-duration: 1.2s;
         animation-name: ll1;
         animation-iteration-count: infinite;
     }
-    
+
     .loader-line-2{
         left: 50%;
         transform: translate(-50%, 0);
@@ -31,14 +31,14 @@
         animation-name: ll2;
         animation-iteration-count: infinite;
     }
-    
+
     .loader-line-3{
         right: 0;
         animation-duration: 1.2s;
         animation-name: ll3;
         animation-iteration-count: infinite;
     }
-    
+
     @keyframes ll1{
         0% {
             width: 8px;
@@ -59,7 +59,7 @@
             top: 0; left: 0;
         }
     }
-    
+
     @keyframes ll2{
         5% {
             width: 8px;
@@ -80,7 +80,7 @@
             top: 0;
         }
     }
-    
+
     @keyframes ll3{
         10% {
             width: 8px;

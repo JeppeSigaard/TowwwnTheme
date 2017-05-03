@@ -6,14 +6,12 @@
 
 
 .ripple{
-	
 	&.animate{
 		opacity: 1;
 		animation: ripple linear forwards .5s;
 		width: 400px;
 		height: 400px;
 	}
-	
 	pointer-events: none;
 	z-index: 0;
 	position: absolute;

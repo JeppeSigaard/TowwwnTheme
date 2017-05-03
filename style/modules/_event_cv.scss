@@ -7,15 +7,14 @@
 }
     
 #eventsbar{
-    position: sticky!important;
-    top: 55px!important;
+    position: relative;
     z-index: 100!important;
     width: 100%;
     height: $menu-bar-height;
     background-color: darken($color-blue-2, 5%);
     z-index: 10;
-    border-bottom: 1px solid #292929;
-    // border-right: 1px solid rgba(0,0,0,.2);
+    top: 55px;
+    border-bottom: 1px solid rgba(0,0,0,.3);
 
     #eventslayoutbtns{
         position: relative;
@@ -100,11 +99,9 @@
     width: 100%;
     height: auto;
     padding: 0;
-    padding-bottom: 60px;
 
     @media(min-width: 640px){
        padding: 0;
-        padding-bottom: 60px;
     }
 
     display: flex;
@@ -391,10 +388,6 @@
             font-size: 9px;
             color: $color-blue-1;
             line-height: 11px;
-
-            &:hover{
-                text-decoration: underline;
-            }
         }
     }
 }
@@ -410,8 +403,7 @@
 }
 
 #eventcv-load-more{
-    position: absolute;
-    bottom: 0;
+    position: relative;
     width: 100%;
     height: 80px; //124px;
     //line-height: 124px;
@@ -422,7 +414,7 @@
     cursor: pointer;
     // border-right: 1px solid rgba(0, 0, 0, 0.2);
     // border-top: 1px solid rgba(40, 40, 40, 0.2);
-    
+
     &:before{
         content: '';
         display: block;
@@ -435,7 +427,7 @@
         transform: translate(-50%,-50%);
         background: rgba($color-blue-2,.3);
     }
-    
+
      &:after{
         content: '';
         display: block;
@@ -448,9 +440,9 @@
         transform: translate(-50%,-50%);
         background: rgba($color-blue-2,.3);
     }
-    
+
     &.loading{
-        
+
         &:after,&:before{
             display: none;
         }

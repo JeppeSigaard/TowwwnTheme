@@ -1,9 +1,16 @@
 
 var LocationSingleViewModule = {
+<<<<<<< HEAD
     
     // Settings
     settings: {},
     
+=======
+
+    // Settings
+    settings: {},
+
+>>>>>>> origin/internalscroll
     // Init
     init: function() {
         let ViewHandler = require( './../view_handler.js' );
@@ -19,15 +26,25 @@ var LocationSingleViewModule = {
             ViewHandler.change_view_focus( 3, false, true );
         });
     },
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> origin/internalscroll
     // Render location single view
     renderSingleView: function( obj ) {
         let ViewHandler = require( './../view_handler.js' );
         let EventCalenderModule = require( './eventCalenderLayout.js' );
         let HelpFunctions = require( './../tools/help_functions.js' );
+<<<<<<< HEAD
         
         $.get( rest_api+'events?parent='+obj.id, {}, function( data ) {
             
+=======
+
+        $.get( rest_api+'events?parent='+obj.id, {}, function( data ) {
+
+>>>>>>> origin/internalscroll
             // Generates html
             var html = '<div class="location-singleview-bar">'+ obj.name +'<div class="close-button">&times;</div></div>';
             html += '<div class="location-singleview-content">';
@@ -126,16 +143,28 @@ var LocationSingleViewModule = {
                 'prevButton' : '.prevButton',
                 'nextButton' : '.nextButton',
             });
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> origin/internalscroll
             $('.location-singleview-content .sv-info-placeholder').css(
                 'height', $('.location-singleview-content .sv-info').outerHeight());
 
         });
     },
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> origin/internalscroll
     // Generate location singleview html
     generateHtml: function() {
         // Do stuff
     },
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> origin/internalscroll
 }; module.exports = LocationSingleViewModule;

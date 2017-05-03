@@ -8,42 +8,28 @@ body {
     margin: 0;
     background-color: #e0e0e0;
     font-family: 'Montserrat', 'Avenir Bold', sans-serif;
+    height: 100%;
+    overflow: hidden;
 
     * {
         font-family: inherit;
         box-sizing: border-box;
     }
 
-    &.no-scroll{
-        // overflow: hidden;
-        height: 100%;
-        //margin-right: 14px;
-    }
-    
-    &.loaded{ &:after{ animation: none; background-image: none; } } 
-    
+    &.loaded{ &:after{ animation: none; background-image: none; } }
+
     &.mobile{
         #page-content{
             height: auto !important;
             width: 100vw;
             overflow-x: hidden;
         }
-        
+
         .container-section{
-            height: 100vh!important;
             .sync-outer{ position: static; }
-            
-            &.active{ 
+
+            &.active{
                 z-index: 2;
-                position: relative!important;
-                vertical-align: top!important;
-                height: auto!important; 
-                
-                .sync-outer{
-                    position: relative!important;
-                    height: auto!important;
-                    top: 0!important;
-                }
             }
         }
     }
@@ -117,7 +103,7 @@ body.mobile{
     #page-content{
         height: auto!important;
     }
-    
+
     .content-container-inner{
         height: auto!important;
         position: relative!important;
@@ -132,7 +118,7 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
     background-color: white;
     z-index: 1;
     min-height: 100vh;
-    
+
     .content-container-inner{
         width: 100%; height: 100%;
         position: absolute;
@@ -140,7 +126,7 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
         font-size: 0;
         transition: 400ms;
         transition-timing-function: $horizontal-bezier;
-        
+
         &:before{
             content: '';
             position: absolute;
@@ -160,7 +146,6 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
     
     &.poly-view .content{ height: auto!important; }
 
-    
     .loader{
         position: absolute;
         top: 45%;
@@ -175,19 +160,22 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
         top: 0;
         left: -50%;
         width: 100%;
-        height: 100%;
-        min-height: calc(100vh - #{$top-area-height} - #{$menu-bar-height} * 2);
+        height: 100vh;
+        min-height: calc(100vh - #{$top-area-height} - #{$menu-bar-height});
         transition: 500ms;
         font-size: 16px;
         display: inline-block;
         vertical-align: top;
-        transition: 400ms;
         transition-timing-function: $horizontal-bezier;
-    
+
+        @media screen and ( max-width: $bp-m ) {
+            left: -100%;
+        }
+
         &:nth-child(2n) {
             background-color: #f0f0f0;
         }
-    
+
         &:nth-child(5n) {
             background-color: #f9f9f9;
 
@@ -196,12 +184,17 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
             }
         }
 
-        &.notrans{
-            transition-duration: 0ms!important;
+         &.notrans{
+            transition: 0ms!important;
         }
-    
-        .content{
-            min-height: calc( 100vh - #{$menu-bar-height} );
+
+        .scroll-container{
+            overflow-y: scroll;
+            overflow-x: hidden;
+            height: calc( 100vh - 110px );
+            width: 100%;
+            position: absolute;
+            bottom: 0;
         }
 
         @media(min-width:640px){
@@ -220,13 +213,21 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
     // Location categories
     #location-category-view{
         background-color: white;
-        left: 60%;
+
+        @media screen and ( min-width: 640px ) {
+            left: 50%;
+            width: 50%;
+        }
     }
 
     
     // Event Calender
     #event-calendar-view{
-        left: 0%;
+        left: 0;
+
+        @media screen and ( min-width: 640px ) {
+            width: 50%;
+        }
 
         .content{
             min-height: calc(100vh - #{$menu-bar-height});
