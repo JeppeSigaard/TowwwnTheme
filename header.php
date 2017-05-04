@@ -42,25 +42,17 @@
                         <div class="logo-bg-container">
                             <div class="logo-bg"></div>
                         </div>
-                        <a href="<?php echo get_bloginfo('url'); ?>" class="logo-container">
-                            <svg class="logo" viewBox="0 0 200 70"><use xlink:href="#towwwn-logo"></use></svg>
-                            <div class="city"><?php echo get_theme_mod('city'); ?></div>
-                        </a>
-                        <div id="menu-show-btns" id="menu-show-btns">
-                            <svg class="menu-show-img" viewBox="0 0 32 32"><use xlink:href="#icon-search-circle" ></use></svg>
-                            <svg class="menu-hide-img" viewBox="0 0 32 32"><use xlink:href="#icon-show-menu" ></use></svg>
-                        </div>
-
-                        <a href="<?php echo get_theme_mod('facebook_url'); ?>"><div class="beta-warning active">
-                            <div class="info">Info
-                                <svg class="info-arrow-img" viewBox="0 0 32 32"><use xlink:href="#icon-info-arrow"></use></svg>
+                        <div id="top-nav-icons">
+                            <div class="nav-events nav-elem">
+                                <svg viewBox="0 0 32 32"><use xlink:href="#icon-event"></use></svg>
                             </div>
-                            <div class="version"><?php echo get_theme_mod('version'); ?></div>
-                            </div></a>
-                        <div class="back-button">
-                        <svg viewBox="0 0 32 32" class="back-img"><use xlink:href="#icon-left-arrow"></use></svg>
+                            <div class="nav-places nav-elem">
+                                <svg viewBox="0 0 32 32"><use xlink:href="#icon-location"></use></svg>
+                            </div>
+                            <div class="nav-user nav-elem">
+                                <svg viewBox="0 0 32 32"><use xlink:href="#icon-user"></use></svg>
+                            </div>
                         </div>
-                        <div class="socialmedia active"></div>
                     </div>
                 </div>
             </header>

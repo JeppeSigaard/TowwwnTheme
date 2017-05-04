@@ -8,7 +8,6 @@ class ExtraEventHandlers {
     constructor() {
         _(window).on( 'scroll', this.onScroll.bind(this) );
         _(window).on( 'resize', this.onResize.bind(this) );
-        _('#menu-show-btns').on( 'click', this.handleShowBtnClick.bind(this) );
     }
     
     // On resize
@@ -35,19 +34,6 @@ class ExtraEventHandlers {
         // HEADER STUFF END
         /* -------------------------------------------- */
         
-    }
-    
-    // Handle show btn click
-    handleShowBtnClick() {
-
-        if ( _('#menu-show-btns').hasClass( 'active' ) ) {
-            _('#menu-show-btns').removeClass( 'active' );
-            _('.site-header').removeClass( 'active' );
-        } else {
-            _('#menu-show-btns').addClass( 'active' );
-            _('.site-header').addClass('active');
-        }
-
     }
     
     // Handler anchor click
