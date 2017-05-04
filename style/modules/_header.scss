@@ -27,42 +27,6 @@
     }
 }
 
-@media screen and (max-width: $bp-m) {
-
-    #site-header{
-        height: $menu-bar-height;
-        top: 0px;
-    }
-
-    .header-container{
-        position: fixed;
-        top: -$top-area-height;
-        transition: 200ms;
-
-        &.active{
-            top: 0;
-        }
-    }
-
-    .header-placeholder{
-        height: $menu-bar-height!important;
-        display: block!important;
-    }
-
-    #header{
-        .prevButton{
-            left: calc(50% - 135px)!important;
-        }
-
-        .nextButton{
-            left: calc(50% + 135px)!important;
-        }
-
-        #searchfield{
-            width: 250px!important;
-        }
-    }
-}
 
 .header-container{
     width: 100%;

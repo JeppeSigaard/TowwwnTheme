@@ -31,6 +31,10 @@ body {
             &.active{
                 z-index: 2;
             }
+
+            .scroll-container{
+                padding-bottom: 28px;
+            }
         }
     }
 
@@ -99,16 +103,6 @@ p a{
     border-bottom: none;
 }
 
-body.mobile{
-    #page-content{
-        height: auto!important;
-    }
-
-    .content-container-inner{
-        height: auto!important;
-        position: relative!important;
-    }
-}
 
 $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
 .content-container{
