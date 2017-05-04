@@ -33,10 +33,12 @@ class LazyLoadHandler {
 
                 request.onload = (( response ) => {
                     uElem.css({ 'background-image' : 'url('+ response.target.responseURL +')' });
+                     uElem.removeClass('loading-image', '1');
                 });
 
                 request.open( 'GET', uElem.attr('data-image-src') );
                 uElem.removeAttr( 'data-image-src' );
+                uElem.addClass('loading-image', '1');
                 request.send();
             }
         }

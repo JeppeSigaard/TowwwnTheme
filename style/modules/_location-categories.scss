@@ -156,7 +156,8 @@ a.category{
     margin-bottom: 16px;
     cursor: pointer;
 
-    &[data-image-src]{
+    &[data-image-src],
+    &.loading-image{
         background-size: 32px;
         background-position: center;
     }
