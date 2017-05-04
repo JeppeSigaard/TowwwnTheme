@@ -1,10 +1,10 @@
 #site-header{
     position: fixed;
-    top: -$top-area-height;
+    top: 0px;
     z-index: 1000;
     width: 100%;
     background-color: $color-grey-1;
-    height: $menu-bar-height + $top-area-height;
+    height: $menu-bar-height;
     background-image: url(assets/images/header-bg.jpg);
     background-size: cover;
     background-position: center;

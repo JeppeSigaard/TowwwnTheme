@@ -13,30 +13,6 @@
 
             <header id="site-header" class="site-header">
                 <div class="header-container">
-                    <div id="header">
-                        <div class="header-commercials">
-                            <div class="header-commercial-bullets"></div>
-                            <div class="swiper-wrapper">
-                                <?php $commercials = get_posts(array( 'post_type' => 'commercial', 'numberposts' => -1 ));
-                                foreach($commercials as $com) : ?>
-                                   <?php $link = (get_post_meta($com->ID,'link', true)) ? esc_url(get_post_meta($com->ID,'link', true)): '#'; ?>
-                                    <a target="_blank" class="swiper-slide" href="<?php echo $link ?>">
-                                        <div data-src-small="<?php echo get_post_meta($com->ID, 'commercial_tn_small', true); ?>"
-                                             data-src-medium="<?php echo get_post_meta($com->ID, 'commercial_tn_medium', true); ?>"
-                                             data-src-large="<?php echo get_post_meta($com->ID, 'commercial_tn_large', true); ?>"
-                                             class="slide-img"></div>
-                                    </a>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-
-                        <!--<form id="searchcontainer" action="/" method="post">
-                            <label id="searchlabel" for="searchfield">Søg</label>
-                            <svg id="searchicon" viewBox="0 0 32 32"><use xlink:href="#icon-search"></use></svg>
-                            <input id="searchfield" name="searchfield" type="text">
-                            <?php //wp_nav_menu(array('theme_location' => 'header-menu', 'container' => false, 'fallback_cb' => null)) ?>
-                        </form>-->
-                    </div>
                     <div id="headerbar">
                         <div class="logo-bg-container">
                             <div class="logo-bg"></div>
