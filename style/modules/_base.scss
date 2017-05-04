@@ -4,6 +4,8 @@
     100%{opacity: 0; visibility: hidden;}
 }
 
+html {overflow: -moz-scrollbars-none;}
+
 body {
     margin: 0;
     background-color: #e0e0e0;
@@ -92,10 +94,11 @@ p a{
 }
 
 .main-container{
-    position: relative;
-    margin: 0 auto;
+    position: absolute;
+    margin: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
+    overflow: hidden;
     max-width: $main-container-width;
     transition: 200ms;
     z-index: 20;
@@ -106,16 +109,19 @@ p a{
 
 $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
 .content-container{
-    position: relative;
+    position: absolute;
     width: 100%;
-    height: auto;
+    height: 100%;
+    overflow: hidden;
     background-color: white;
     z-index: 1;
     min-height: 100vh;
 
     .content-container-inner{
-        width: 100%; height: 100%;
         position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
         top: 0; left: 0%;
         font-size: 0;
         transition: 400ms;
@@ -185,16 +191,20 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
         }
 
         .scroll-container{
-            overflow-y: -moz-scrollbars-vertical;
-            overflow-y: scroll;
+            overflow-y: auto;
             overflow-x: hidden;
             height:100%;
-            width: calc(100% + 15px);
+            width: 100%;
             padding-top: $menu-bar-height * 2;
             -webkit-overflow-scrolling: touch;
             position: absolute;
             z-index: 1;
             bottom: 0;
+
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            display: none;
         }
 
         @media(min-width:640px){
