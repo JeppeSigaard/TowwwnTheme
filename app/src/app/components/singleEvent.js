@@ -4,6 +4,7 @@ const React = require( 'react' ),
       DataFormatters = require( '../../modules/tools/dataFormatters.js' ),
       TextPreproccesors = require( '../../modules/tools/textPreproccesors.js' ),
       Globals = require( '../globals.js' ),
+      _ = require('../../modules/libaries/underscore/underscore_main.js'),
 
       // Component parts
       SingleViewFooter = require('../componentParts/singleviewfooter.js');
@@ -90,6 +91,9 @@ class SingleEvent extends React.Component {
 
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
+
+        _('#event-single-view .scroll-container').get()[0].scrollTop = 0;
+
         this.sharelink = 'https://www.facebook.com/events/' + nextProps.elem.fbid;
 
         // Extracts img url
