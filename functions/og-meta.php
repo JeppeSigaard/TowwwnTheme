@@ -100,8 +100,8 @@ function towwwn_og_meta(){
             $meta_type = 'website';
         }
 
-        echo '<meta itemprop="name" content="'. $post->post_title .'">';
-        echo '<meta property="og:title" content="'. $post->post_title .'">';
+        echo '<meta itemprop="name" content="'.  htmlspecialchars($post->post_title) .'">';
+        echo '<meta property="og:title" content="'. htmlspecialchars($post->post_title) .'">';
         echo '<meta property="og:site_name" content="'. get_bloginfo('title') .'">';
 
         if ($meta_description) :
