@@ -92,9 +92,9 @@ class SingleEvent extends React.Component {
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
 
-        if( nextProps.elem !== this.latsElem ){
+        if( nextProps.elem !== this.lastElem ){
             _('#event-single-view .scroll-container').get()[0].scrollTop = 0;
-            this.lastElem = nextProps.elem
+            this.lastElem = nextProps.elem;
         }
 
         this.sharelink = 'https://www.facebook.com/events/' + nextProps.elem.fbid;
