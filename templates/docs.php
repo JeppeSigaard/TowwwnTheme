@@ -11,7 +11,9 @@
     <?php while (have_posts()) : the_post(); ?>
     <header class="docs-header">
         <div class="header-logo">
+            <a href="<?php bloginfo('url') ?>">
             <svg viewBox="0 0 200 70"><use xlink:href="#towwwn-logo"></use></svg>
+            </a>
             <span>Docs.</span>
         </div>
     </header>

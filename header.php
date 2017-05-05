@@ -26,7 +26,7 @@
                             <svg class="menu-hide-img" viewBox="0 0 32 32"><use xlink:href="#icon-show-menu" ></use></svg>
                         </div>
 
-                        <a href="<?php echo get_theme_mod('facebook_url'); ?>"><div class="beta-warning active">
+                        <a href="<?php echo get_bloginfo('url') ?>/docs/"><div class="beta-warning active">
                             <div class="info">Info
                                 <svg class="info-arrow-img" viewBox="0 0 32 32"><use xlink:href="#icon-info-arrow"></use></svg>
                             </div>
