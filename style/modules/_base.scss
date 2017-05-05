@@ -10,7 +10,9 @@ body {
     margin: 0;
     background-color: #e0e0e0;
     font-family: 'Montserrat', 'Avenir Bold', sans-serif;
-    height: 100%;
+    position: fixed;
+    height: 100vh;
+    width:100vw;
     overflow: hidden;
 
     * {
@@ -21,11 +23,6 @@ body {
     &.loaded{ &:after{ animation: none; background-image: none; } }
 
     &.mobile{
-        #page-content{
-            height: auto !important;
-            width: 100vw;
-            overflow-x: hidden;
-        }
 
         .container-section{
             .sync-outer{ position: static; }
@@ -94,7 +91,7 @@ p a{
 }
 
 .main-container{
-    position: absolute;
+    position: fixed;
     margin: 0;
     width: 100%;
     height: 100%;
@@ -109,7 +106,7 @@ p a{
 
 $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
 .content-container{
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -118,7 +115,7 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
     min-height: 100vh;
 
     .content-container-inner{
-        position: absolute;
+        position: fixed;
         width: 100%;
         height: 100%;
         overflow: hidden;

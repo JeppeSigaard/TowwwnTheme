@@ -29,17 +29,17 @@ class LazyLoadHandler {
         for ( let elem of elems ) {
             if ( this.isInView( elem, 200 ) ) {
                 let uElem = _( elem ),
-                    request = new XMLHttpRequest();
+                    imgSrc = uElem.attr('data-image-src'),
+                    imgPlaceholder = new Image();
 
-                request.onload = (( response ) => {
-                    uElem.css({ 'background-image' : 'url('+ response.target.responseURL +')' });
-                     uElem.removeClass('loading-image', '1');
-                });
+                imgPlaceholder.onload = function() {
+                    uElem.css({ 'background-image' : 'url('+ imgSrc +')' });
+                    uElem.removeClass('loading-image', '1');
+                }
 
-                request.open( 'GET', uElem.attr('data-image-src') );
                 uElem.removeAttr( 'data-image-src' );
                 uElem.addClass('loading-image', '1');
-                request.send();
+                imgPlaceholder.src = imgSrc;
             }
         }
 

@@ -27,9 +27,9 @@
         
         .logo{
             position: absolute;
-            width: 60px;
+            width: 55px;
             height: auto;
-            top: 12px;
+            top: 8px;
             left: 50%;
             fill: rgba(white,.9);
             transform: translate(-50%,0);
@@ -39,11 +39,11 @@
             color: white;
             position: absolute;
             left: 50%;
-            bottom: 8px;
+            bottom: 7px;
             transform: translate(-50%, 0);
             width: auto;
             text-align: center;
-            font-size: 9px;
+            font-size: 8px;
             text-transform: uppercase;
         }
     }

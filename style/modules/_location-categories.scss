@@ -27,12 +27,12 @@
     height: $menu-bar-height;
     background-color: $color-blue-2;
     line-height: $menu-bar-height;
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
     padding-left: 20px;
     color: white;
     cursor: pointer;
-    top: 55px;
+    top: $menu-bar-height;
     border-bottom: 1px solid #292929;
 
     .sub-categories-title{

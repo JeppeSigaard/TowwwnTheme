@@ -13,13 +13,13 @@
     height: $menu-bar-height;
     background-color: darken($color-blue-2, 5%);
     z-index: 10;
-    top: 55px;
+    top: $menu-bar-height;
     border-bottom: 1px solid rgba(0,0,0,.3);
     // border-right: 1px solid rgba(0,0,0,.2);
 
     #eventslayoutbtns{
         position: relative;
-        width: 128px;
+        width: 115px;
         height: 100%;
         border-right: 1px solid #CDCDCD;
         transition: 300ms;
@@ -34,8 +34,8 @@
             top: 50%;
             transform: translate(-50%, -50%);
             width: auto;
-            height: 22px;
-            width: 22px;
+            height: 18px;
+            width: 18px;
             cursor: pointer;
             fill: rgba(white,.9);
             transition: fill 120ms;
@@ -60,7 +60,7 @@
         transform: translate(0,-50%);
         color: white;
         text-transform: uppercase;
-        font-size: 12px;
+        font-size: 11px;
     }
 
     .monthSelector{
