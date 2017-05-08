@@ -136,7 +136,6 @@ class SingleLocation extends React.Component {
 
                 { elem.description != null &&
                 <div className="description-container">
-                    <div className="title">{ elem.name }</div>
                     <div className="description">
                         <Linkify>
                             { TextPreproccesors.nl2p( TextPreproccesors.ripRep( elem.description ) ) }
@@ -145,10 +144,8 @@ class SingleLocation extends React.Component {
                 </div>
                 }
 
-                { elem.description == null &&
-                  elem.about != null &&
+                { (elem.description == null && elem.about != null)  &&
                 <div className="description-container">
-                    <div className="title">{ elem.name }</div>
                     <div className="description">
                         <Linkify>
                             { TextPreproccesors.nl2p( TextPreproccesors.ripRep( elem.about ) ) }

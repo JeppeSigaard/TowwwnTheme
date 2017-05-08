@@ -19,7 +19,6 @@ class ViewSlider {
         _(window).on('touchstart', this.onTouchStart.bind(this));
         _(window).on('touchmove', this.onTouchMove.bind(this));
         _(window).on('touchend', this.onTouchEnd.bind(this));
-
     }
 
     // Handlers
@@ -75,7 +74,7 @@ class ViewSlider {
             if ( this.distance * this.cos <= bleft &&
                  this.distance * this.cos >= bright ) {
                 let ntrans = ( ( this.distance * this.cos ) / sw ) * 100;
-                _('#'+this.currentView).css({ left : ntrans+'%' });
+                _('#'+this.currentView).addClass('scroll-lock').css({ left : ntrans+'%' });
                 if ( this.canLeft ) _('#'+this.relations.left).css({ left : ( -100 + ntrans )+'%' });
                 if ( this.canRight ) _('#'+this.relations.right).css({ left : ( 100 + ntrans )+'%' });
             }
@@ -90,7 +89,7 @@ class ViewSlider {
     onTouchEnd(e) {
         if ( this.distance < 30 ) return;
 
-        _('#'+this.currentView).removeClass('notrans');
+        _('#'+this.currentView).removeClass('notrans scroll-lock');
         if ( this.canLeft && _('#'+this.relations.left) !== false ) _('#'+this.relations.left).removeClass('notrans');
         if ( this.canRight && _('#'+this.relations.right) !== false ) _('#'+this.relations.right).removeClass('notrans');
 

@@ -104,7 +104,7 @@ p a{
 }
 
 
-$horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
+$horizontal-bezier: cubic-bezier(.6, 0, .4, 1);
 .content-container{
     position: fixed;
     width: 100%;
@@ -154,6 +154,7 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
     }
 
     .container-section{
+        z-index: 1;
         overflow: hidden;
         position: absolute;
         top: 0;
@@ -186,6 +187,15 @@ $horizontal-bezier: cubic-bezier(.73, .01, .61, 1.03);
         &.notrans{
             transition-duration: 0ms!important;
         }
+
+        &.scroll-lock .scroll-container{
+            overflow-y: hidden;
+        }
+
+        &.active{
+            z-index: 2;
+        }
+
 
         .scroll-container{
             overflow-y: auto;
