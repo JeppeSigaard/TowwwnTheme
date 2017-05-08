@@ -1,7 +1,7 @@
 #headerbar{
     position: relative;
     width: 100%;
-    height: $menu-bar-height;
+    height: $header-bar-height;
     border-bottom: 1px solid #151515;
     z-index: 20;
     overflow: hidden;
@@ -9,7 +9,8 @@
     .logo-container{
         position: absolute;
         left: 0;
-        width: 97px;
+        width: auto;
+        padding-right: 20px;
         height: 100%;
         z-index: 30;
         cursor: pointer;
@@ -19,178 +20,61 @@
             content: '';
             position: absolute;
             right: -18px;
-            border-top: $menu-bar-height / 2 solid transparent;
-            border-bottom: $menu-bar-height / 2 solid darken($color-grey-1, 10%);
+            border-top: $header-bar-height / 2 solid transparent;
+            border-bottom: $header-bar-height / 2 solid darken($color-grey-1, 10%);
             border-left: 9px solid darken($color-grey-1, 10%);
             border-right: 9px solid transparent;
         }
         
         .logo{
-            position: absolute;
-            width: 55px;
-            height: auto;
-            top: 8px;
-            left: 50%;
-            fill: rgba(white,.9);
-            transform: translate(-50%,0);
+            width: 24px;
+            height: $header-bar-height;
+            fill: white;
+            margin: 0px 10px;
+            display: inline-block;
+            vertical-align: top;
         }
         
         .city{
+            display: inline-block;
+            vertical-align: top;
             color: white;
-            position: absolute;
-            left: 50%;
-            bottom: 7px;
-            transform: translate(-50%, 0);
             width: auto;
-            text-align: center;
-            font-size: 8px;
+            height: $header-bar-height;
+            line-height: $header-bar-height;
+            font-size: 9px;
             text-transform: uppercase;
-        }
-    }
-    
-    #menu-show-btns{
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        width: 38px;
-        height: 38px;
-        opacity: .4;
-    
-        .menu-show-img{
-            fill: white;
-            position: absolute;
-            top: 60px;
-            width: 37px;
-            height: 37px;
-            transition: all 300ms, rotate 500ms, top 300ms;
-            cursor: pointer;
-        }
-        
-        .menu-hide-img{
-            fill: white;
-            position: absolute;
-            top: 60px;
-            width: 37px;
-            height: 37px;
-            transition: all 300ms, rotate 500ms, top 300ms;
-            cursor: pointer;
-        }
-        
-        &.active{
-            .menu-show-img{
-                top: 60px!important;
-            }
-            
-            .menu-hide-img{
-                top: 0!important;
-            }
-        }
-        
-        &.show{
-            .menu-show-img{
-                top: 0;
-            }
-        }
-
-    }
-    
-
-    .back-button{
-        position: absolute;
-        background-color: darken( $color-grey-1, 10% );
-        top: 0;
-        right: -140px;
-        bottom: 0;
-        width: 112px;
-        transition: 300ms;
-        z-index: 10;
-        &.active { right: 0; }
-
-        &::before{
-            content: '';
-            position: absolute;
-            left: -16px;
-            border-top: $menu-bar-height / 2 solid darken( $color-grey-1, 10% );
-            border-bottom: $menu-bar-height / 2 solid transparent;
-            border-left: 8px solid transparent;
-            border-right: 8px solid darken( $color-grey-1, 10% );
-        }
-
-        &.mobile{
-            .back-img{
-                transform: translate(-50%, -50%) rotate(0deg);
-            }
-        }
-
-        .back-img{
-            fill: white;
-            opacity: .8;
-            position: absolute;
-            width: 36px;
-            height: 36px;
-            top: 50%;
-            left: 46%;
-            transform: translate(-50%, -50%) rotate(180deg);
-        }
-
-    }
-
-    .beta-warning{
-        position: absolute;
-        top: 50%;
-        right: -128px;
-        transform: translate(0, -50%);
-        color: white;
-        text-align: right;
-        line-height: 14px;
-        transition: 300ms;
-        z-index: 9;
-        cursor: pointer;
-        &.active { right: 22px; }
-        
-        .info {
-            text-transform: uppercase;
-            font-size: 13px;
-
-            .info-arrow-img{
-                fill: white;
-                width: 10px;
-                height: 10px;
-                margin-left: 4px;
-            }
-        }
-        
-        .version {
-            text-transform: capitalize;
-            font-size: 10px;
-        }
-    }
-    
-    .socialmedia {
-        display: none;
-        position: absolute;
-        width: auto;
-        height: auto;
-        right: 15px;
-        top: 50%;
-        transform: translate(0, -50%);
-        
-        .fb_link{
-            width: auto;
-            height: auto;
-            opacity: .5;
-            transition: 200ms;
-            &:hover{ opacity: .85; }
-            
-            .fb_img{
-                width: 36px;
-                height: 36px;
-            }
         }
     }
 }
 
+
+.header-bar-nav{
+        height: $header-bar-height;
+        text-align: right;
+        float: right;
+        font-size: 0;
+        
+        a{
+            background-color: transparent;
+            display: inline-block;
+            position: relative;
+            fill: #f0f0f0;
+            height: $header-bar-height;
+            border-left: 1px solid white;
+            width: $header-bar-height * 1.15;
+            transition: background-color 120ms, fill 120ms;
+        }
+        
+        svg{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 14px;
+            width: 14px;
+        }
+    }
 
 
 

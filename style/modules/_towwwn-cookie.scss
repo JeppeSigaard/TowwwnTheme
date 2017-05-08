@@ -1,19 +1,20 @@
-$towwwn-cookie-menu-width: $menu-bar-height * 1.1;
+$towwwn-cookie-menu-width: ($menu-bar-height) * 1.1;
 
 .towwwn-cookie {
     position: absolute;
+    z-index: 10000;
     left: 0;
-    top: $menu-bar-height;
+    top: $header-bar-height;
     right: 0;
-    height: $menu-bar-height;
-    line-height: $menu-bar-height;
+    height:  $menu-bar-height;
+    line-height:  $menu-bar-height;
     background: $color-blue-2;
     z-index: 10000;
     color: white;
     padding: 0px 10px;
     border-bottom: 1px solid rgba(black,.2);
     font-family:  'Avenir';
-    font-size: 12px;
+    font-size: 10px;
     opacity: 1;
 
     &.fadeout{

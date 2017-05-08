@@ -141,6 +141,44 @@ class TowwwnApp extends React.Component {
         if ( _([this]).attr('href') === '#' ||
              _([this]).hasAttr('data-prevent') )
             e.preventDefault();
+
+        _('.header-bar-nav-icon').removeClass('active');
+
+        if(_([this]).hasClass('goto-events')){
+
+            _([this]).addClass('active');
+
+            if ( _('body').hasClass('mobile') ) {
+                Globals.viewHandler.changeMobileViewFocus(
+                    '#event-calendar-view',
+                    true, false
+                );
+            } else {
+                Globals.viewHandler.changeViewFocus(
+                    '#event-calendar-view',
+                    '#location-category-view',
+                    true, false, false
+                );
+            }
+        }
+
+         if(_([this]).hasClass('goto-locations')){
+
+            _([this]).addClass('active');
+
+            if ( _('body').hasClass('mobile') ) {
+                Globals.viewHandler.changeMobileViewFocus(
+                    '#location-category-view',
+                    false, true
+                );
+            } else {
+                Globals.viewHandler.changeViewFocus(
+                    '#event-calendar-view',
+                    '#location-category-view',
+                    false, true, false
+                );
+            }
+        }
     }
 
     // ParsedSetState
@@ -263,12 +301,6 @@ class TowwwnApp extends React.Component {
                     <LocationListView name="location-list-view" from={ this.state.from } elems={ this.state.currentLocations } category={ this.state.currentLocationsCategory } setMainState={ this.parsedSetState.bind(this) } />
                     <LocationSingleView name="location-single-view" from={ this.state.from } elem={ this.state.singleLocation } setMainState={ this.parsedSetState.bind(this) } />
                 </div>
-
-                { this.state.currentMobileView != null &&
-                  _('body').hasClass('mobile') &&
-                    <ViewSliderDots currentView={ this.state.currentMobileView } />
-                }
-
                 <CookiePolicy name="towwwn-cookie"/>
             </div>
         );

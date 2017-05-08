@@ -202,7 +202,7 @@ $horizontal-bezier: cubic-bezier(.6, 0, .4, 1);
             overflow-x: hidden;
             height:100%;
             width: 100%;
-            padding-top: $menu-bar-height * 2;
+            padding-top: $menu-bar-height + $header-bar-height;
             -webkit-overflow-scrolling: touch;
             position: absolute;
             z-index: 1;

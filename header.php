@@ -18,24 +18,20 @@
                             <div class="logo-bg"></div>
                         </div>
                         <a href="<?php echo get_bloginfo('url'); ?>" class="logo-container">
-                            <svg class="logo" viewBox="0 0 200 70"><use xlink:href="#towwwn-logo"></use></svg>
+                            <svg class="logo" viewBox="0 0 32 32"><use xlink:href="#towwwn-logo-17"></use></svg>
                             <div class="city"><?php echo get_theme_mod('city'); ?></div>
                         </a>
-                        <div id="menu-show-btns" id="menu-show-btns">
-                            <svg class="menu-show-img" viewBox="0 0 32 32"><use xlink:href="#icon-search-circle" ></use></svg>
-                            <svg class="menu-hide-img" viewBox="0 0 32 32"><use xlink:href="#icon-show-menu" ></use></svg>
-                        </div>
-
-                        <a href="<?php echo get_bloginfo('url') ?>/docs/"><div class="beta-warning active">
-                            <div class="info">Info
-                                <svg class="info-arrow-img" viewBox="0 0 32 32"><use xlink:href="#icon-info-arrow"></use></svg>
-                            </div>
-                            <div class="version"><?php echo get_theme_mod('version'); ?></div>
-                            </div></a>
-                        <div class="back-button">
-                        <svg viewBox="0 0 32 32" class="back-img"><use xlink:href="#icon-left-arrow"></use></svg>
-                        </div>
-                        <div class="socialmedia active"></div>
+                        <nav class="header-bar-nav">
+                            <a class="header-bar-nav-icon goto-events" href="#">
+                                <svg viewBox="0 0 32 32"><use xlink:href="#icon-star"></use></svg>
+                            </a>
+                            <a class="header-bar-nav-icon goto-locations" href="#">
+                                <svg viewBox="0 0 32 32"><use xlink:href="#icon-location"></use></svg>
+                            </a>
+                            <a class="header-bar-nav-icon" href="<?php bloginfo('url') ?>/docs/">
+                                <svg viewBox="0 0 32 32"><use xlink:href="#icon-info"></use></svg>
+                            </a>
+                        </nav>
                     </div>
                 </div>
             </header>

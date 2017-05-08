@@ -12,6 +12,7 @@ class CookiePolicy extends React.Component {
     }
 
     handleApprove( e ){
+        e.preventDefault();
         window._cookielib.set('cookie-ok','ok', 365);
         this.setState({classNames : ['towwwn-cookie', 'fadeout']});
     }
@@ -24,7 +25,7 @@ class CookiePolicy extends React.Component {
 
             return(
                 <div className={ classNames }>
-                    <div className="towwwn-cookie-text">Towwwn bruger cookies. <a href={app_data.main_path + '/cookie/'}>Læs mere her</a></div>
+                    <div className="towwwn-cookie-text">Towwwn bruger cookies. <a href={app_data.main_path + '/cookie/'}>Læs mere</a> eller  <a href="#" onClick={ this.handleApprove.bind(this) }>Acceptér</a></div>
                     <div className="towwwn-cookie-close" onClick={ this.handleApprove.bind(this) }>√</div>
                 </div>
             )
