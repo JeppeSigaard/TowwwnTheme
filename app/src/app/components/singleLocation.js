@@ -21,8 +21,8 @@ class SingleLocation extends React.Component {
             smallscreen : false,
             slider : new TowwwnSlider(),
             eventVref : {
-                leftView : '#location-single-view',
-                rightView : '#event-single-view',
+                leftView : '#event-single-view',
+                rightView : '#location-single-view',
                 fromLeft : false,
                 fromRight : true,
                 mobile : {
@@ -47,7 +47,6 @@ class SingleLocation extends React.Component {
                 'per_page' : '1000',
                 'after' : 'now'
             }).then(( resp ) => {
-
                 if(resp.length > 0){
                     this.setEvents(resp);
                     return;
@@ -162,6 +161,7 @@ class SingleLocation extends React.Component {
                     </div>
                 </div>
                 <div className="breakline"></div>
+
                 { this.state.jsxEvents != null &&
                     <div className="event-slider">
                         <div className="prevButton button">

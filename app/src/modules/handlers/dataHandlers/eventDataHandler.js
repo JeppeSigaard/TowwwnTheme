@@ -49,7 +49,6 @@ class EventDataHandler{
 
     // Get events
     getEvents( properties ) {
-
         return new Promise(( resolve, reject ) => {
 
             // Sets get params using properties
@@ -57,9 +56,12 @@ class EventDataHandler{
                  properties.length < 1 ) {
 
                 let str = [];
-                for ( let key of Object.keys( properties ) ) {
-                    str.push( key+'='+properties[key] );
-                } str = str.join('&');
+                for ( let key in properties ) {
+                    str.push( key+'='+properties[key] ); }
+
+                if ( str.length > 0 ) {
+                    str.join(':');
+                } else reject();
 
                 // Opens new request
                 let request = new XMLHttpRequest();

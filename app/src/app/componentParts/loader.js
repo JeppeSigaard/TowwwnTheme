@@ -17,5 +17,5 @@ class Loader extends React.Component {
             </div>
         );
     }
-
 } module.exports = Loader;
+

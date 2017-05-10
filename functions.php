@@ -1,8 +1,5 @@
 <?php
 
-// Aut
-$aut = 657576;
-
 // Includes php from root functions folder
 get_functions_part(array(
     'includes',

@@ -1,7 +1,9 @@
 
 
 // Event Handler
-const _ = require( '../libaries/underscore/underscore_main.js' );
+const _ = require( '../libaries/underscore/underscore_main.js' ),
+      Globals = require( '../../app/globals.js' );
+
 class ExtraEventHandlers {
 
     // Ctor
@@ -36,22 +38,9 @@ class ExtraEventHandlers {
 
     }
 
-    // Handle show btn click
-    handleShowBtnClick() {
-
-        if ( _('#menu-show-btns').hasClass( 'active' ) ) {
-            _('#menu-show-btns').removeClass( 'active' );
-            _('.site-header').removeClass( 'active' );
-        } else {
-            _('#menu-show-btns').addClass( 'active' );
-            _('.site-header').addClass('active');
-        }
-
-    }
-
     // Handler anchor click
     handleAnchorClick( e ) {
-        console.log( e, this );
+        // console.log( e, this );
     }
 
 } module.exports = ExtraEventHandlers;

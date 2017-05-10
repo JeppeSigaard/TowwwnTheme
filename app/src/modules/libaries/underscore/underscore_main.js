@@ -119,12 +119,10 @@ class UnderScoreElem {
         }
 
         return this;
-
     }
 
     // Off
     off( event, func ) {
-
         if ( typeof event !== 'string' || typeof func !== 'function' ) return;
         if ( this.state.domnode === window ||
              this.state.domnode === document ) {
@@ -140,7 +138,6 @@ class UnderScoreElem {
         }
 
         return this;
-
     }
 
     // On global click; NOT WORKING
@@ -228,14 +225,22 @@ class UnderScoreElem {
                 for ( let iter = 0; iter < this.state.domnode.length; iter++ ) {
                     this.state.domnode[ iter ].style[ key ] = styling[ key ];
                 }
-            }
-        } else throw "TowwwnSelector, css: Param needs to be of type object";
+            } return this;
+        } else {
+            throw "TowwwnSelector, css: Param needs to be of type object";
+            return this;
+        }
     }
 
     // ComputedStyle
     style() {
+        if ( this.state.domnode.constructor.name === 'HTMLElement' ||
+             this.state.domnode.constructor.name === 'HTMLDivElement' ) {
+            this.state.domnode = [ this.state.domnode ];
+        }
+
         let resp = [];
-        for ( let node of this.state.domnodes ) {
+        for ( let node of this.state.domnode ) {
             resp.push( window.getComputedStyle( node ) );
         } return resp;
     }

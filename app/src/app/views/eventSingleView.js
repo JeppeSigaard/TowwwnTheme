@@ -3,6 +3,7 @@
 // Event single view layout
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
+      BehaviourDataHandler = require( '../../modules/handlers/behaviourHandler/dataHandler.js' ),
       LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       SingleEvent = require( '../components/singleEvent.js' ),
       BannerCommercials = require( '../components/bannerCommercials.js' ),
@@ -20,8 +21,8 @@ class EventSingleView extends React.Component {
             'closeviewstate' : { },
 
             'standardclose' : {
-                'leftview' : '#event-calendar-view',
-                'rightview' : '#location-category-view',
+                'leftview' : '#search-view',
+                'rightview' : '#event-calendar-view',
                 'fromLeft' : false,
                 'fromRight' : true,
                 'notrans': false,
@@ -33,8 +34,8 @@ class EventSingleView extends React.Component {
             },
 
             'fromlocationclose' : {
-                'leftview' : '#location-list-view',
-                'rightview' : '#location-single-view',
+                'leftview' : '#location-single-view',
+                'rightview' : '#location-list-view',
                 'fromLeft' : true,
                 'fromRight' : false,
                 'notrans': false,
@@ -45,9 +46,23 @@ class EventSingleView extends React.Component {
                 }
             },
 
+            'fromsearchclose' : {
+                'leftview' : '#search-view',
+                'rightview' : '#search-results-view',
+                'fromLeft' : true,
+                'fromRight' : false,
+                'notrans': false,
+                'ignoreAutoDirection': true,
+                mobile: {
+                    view : '#search-results-view',
+                    fromLeft : true,
+                    fromRight : false,
+                }
+            },
+
             'vref' : {
-                'leftview' : '#location-single-view',
-                'rightview' : '#event-single-view',
+                'leftview' : '#event-single-view',
+                'rightview' : '#location-single-view',
                 'fromLeft' : true,
                 'fromRight' : false,
                 'notrans' : false,
@@ -65,13 +80,22 @@ class EventSingleView extends React.Component {
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
         if ( nextProps.event != this.lastElem ) {
+            BehaviourDataHandler.parseData( 'event', nextProps.event );
             this.lastElem = nextProps.event;
+
+            if ( this.props.event != null ) {
+                BehaviourDataHandler.parseTimeData( 'event', this.props.event.id, new Date().getTime()  -this.startTime, this.props.event.parentid );
+            } this.startTime = new Date().getTime();
         }
 
         if ( nextProps.from === 'location-single-view' ) {
             Globals.relations[ nextProps.name ].canleft = true;
             Globals.relations[ nextProps.name ].canright = false;
             this.setState({ closeviewstate : this.state.fromlocationclose });
+        } else if ( nextProps.from === 'search-results-view' ) {
+            Globals.relations[ nextProps.name ].canleft = true;
+            Globals.relations[ nextProps.name ].canright = false;
+            this.setState({ closeviewstate : this.state.fromsearchclose });
         } else {
             Globals.relations[ nextProps.name ].canleft = false;
             Globals.relations[ nextProps.name ].canright = true;
@@ -108,10 +132,11 @@ class EventSingleView extends React.Component {
         let elem = this.props.event;
         return (
             <section className="container-section" id="event-single-view">
-               <ViewTopBar standard={ true } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
+                <ViewTopBar standard={ true } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
 
                 <div className="scroll-container">
                     <div className="content">
+
                         { this.state.jsxEvent != null &&
                           this.state.jsxEvent }
 

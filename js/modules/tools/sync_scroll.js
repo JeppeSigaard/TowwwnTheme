@@ -98,6 +98,7 @@ var syncScroll = {
             $('.sync-outer .sync-inner').each(function(){
                 var elem = $(this);
                 if (elem.innerHeight() > syncScroll.settings.containerHeight){
+<<<<<<< HEAD
 
                     if(syncScroll.isInView(elem)){
                         syncScroll.settings.containerHeight = elem.innerHeight();
@@ -110,6 +111,41 @@ var syncScroll = {
             highestElem.parent('.sync-outer').removeClass('fixed absolute top').addClass('high');
         }
 
+        if(typeof cb === 'function'){
+            cb();
+=======
+
+                    if(syncScroll.isInView(elem)){
+                        syncScroll.settings.containerHeight = elem.innerHeight();
+                        highestElem = elem;
+                    }
+                }
+            });
+
+            this.settings.container.css('height', this.settings.containerHeight);
+            highestElem.parent('.sync-outer').removeClass('fixed absolute top').addClass('high');
+>>>>>>> origin/internalscroll
+        }
+    },
+
+    // Scroll event handler
+    onScroll : function(){
+
+        // Run if script ready and new cycle is allowed
+        if (this.ready && this.settings.canPosition && this.settings.canFixedScroll){
+
+<<<<<<< HEAD
+            // dissalow new cycle (until completion) i.e prevent spassing, lul
+            this.settings.canPosition = false;
+
+            // vars
+            var ct = this.settings.container.offset().top,
+                ch = this.settings.container.innerHeight(),
+                st = $(window).scrollTop(),
+                wh = $(window).height(),
+                diff = st - this.settings.lastScrollTop,
+                forceRepaint = false;
+=======
         if(typeof cb === 'function'){
             cb();
         }
@@ -132,9 +168,15 @@ var syncScroll = {
                 diff = st - this.settings.lastScrollTop,
                 forceRepaint = false;
 
+>>>>>>> origin/internalscroll
 
             // if(diff === 0){this.settings.canPosition = true; return;}
 
+<<<<<<< HEAD
+            // if(diff === 0){this.settings.canPosition = true; return;}
+
+=======
+>>>>>>> origin/internalscroll
             // Above sync scroll area (syncs should either be high or top)
             if(ct >= st + 60){
             }
@@ -198,11 +240,19 @@ var syncScroll = {
 
     releaseView : function(){
         let EventCalenderModule = require( './../layoutLayer/eventCalenderLayout.js' );
+<<<<<<< HEAD
 
         this.settings.canFixedScroll = true;
         $('.sync-outer').removeAttr('style');
         $('body').removeClass('no-scroll').removeAttr('style');
 
+=======
+
+        this.settings.canFixedScroll = true;
+        $('.sync-outer').removeAttr('style');
+        $('body').removeClass('no-scroll').removeAttr('style');
+
+>>>>>>> origin/internalscroll
         this.setHorizontalPosition();
 
         this.onScroll();

@@ -29,9 +29,12 @@ class ViewTopBar extends React.Component {
                 this.props.closeviewstate.rightview,
                 this.props.closeviewstate.fromLeft,
                 this.props.closeviewstate.fromRight,
-                false
+                false,
+                this.props.closeviewstate.ignoreAutoDirection,
+                this.props.closeviewstate.leftSize,
+                this.props.closeviewstate.rightSize
             );
-        }
+        } if ( this.props.onClose != null ) this.props.onClose();
     }
 
     // Change view

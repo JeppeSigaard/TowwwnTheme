@@ -40,7 +40,7 @@
         right: 0;
         top: 0;
         height: $menu-bar-height;
-        min-width: $menu-bar-height + 5;
+        min-width: $menu-bar-height * 1.2;
         border-left: 1px solid rgba(white,.5);
         background: transparent;
         transition: background 120ms;
@@ -52,8 +52,8 @@
         &:after{
             content: '';
             position: absolute;
-            top: 50%; right:( $menu-bar-height + 5) / 2;
-            transform: translate(50%,-50%);
+            top: 50%; left: 50%;
+            transform: translate(-50%,-50%);
             width: 0; height: 0;
             margin-top: 4px;
             border: 6px solid transparent;
@@ -150,8 +150,9 @@ a.category{
     border: 1px solid $color-blue-1;
     background-color: $color-blue-2;
     background-image: url(assets/icons/loading-white.svg);
-    background-size: cover;
-    background-position: center 20%;
+    background-size: 32px;
+    background-position: center;
+    padding-right: 175px;
     background-origin: content-box;
     margin-bottom: 16px;
     cursor: pointer;
@@ -206,11 +207,41 @@ a.category{
 
     &.bookmark-mode{
         .category-content-container{
-            width: 100%;
+
+             background-color: rgba(darken($color-blue-1, 22%), .9);
+
+            .category-count{
+                display: none;
+            }
+
+            /*&:after{
+                content: '';
+                background-image: url('assets/icons/loading.svg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: 32px;
+                position: absolute;
+                top: 60%;
+                left: 50%!important; // calc( 175px / 2 );
+                transform: translate(-50%, -50%);
+                width: 40px;
+                height: 40px;
+                background-color: white;
+
+                @media(min-width: 640px){
+                    left: calc( 145px / 2 );
+                }
+
+
+                @media(min-width: 900px){
+                    left: calc( 175px / 2 );
+                }
+            }*/
+
         }
     }
 
-    &.selected{
+    &.bookmark-mode{
         .category-content-container{
             width: 100%;
         }
@@ -268,7 +299,12 @@ a.category{
             }
         }
 
-        .category-count{
+        /*&:after{
+            content: '';
+            background-image: url('assets/icons/loading.svg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 32px;
             position: absolute;
             top: 60%;
             left: 50%!important; // calc( 175px / 2 );
@@ -289,6 +325,83 @@ a.category{
             @media(min-width: 900px){
                 left: calc( 175px / 2 );
             }
+        }*/
+
+    }
+}
+
+.category-content-container{
+    position: absolute;
+    right: 0;
+    width: 145px;
+    height: 100%;
+    background-color: rgba(darken($color-blue-1, 12%), .9);
+    transition: width 650ms;
+
+    @media(min-width: 480px){
+        width: 175px;
+    }
+
+    @media(min-width: 640px){
+        width: 145px;
+    }
+
+
+    @media(min-width: 900px){
+        width: 175px;
+    }
+
+    .category-title{
+        position: absolute;
+        top: 25px;
+        left: 50%!important; // calc( 175px / 2 );
+        transform: translate( -50%, 0 );
+        width: 100%;
+        color: white;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 11px;
+
+        @media(min-width: 480px){
+            top: 45px;
+            font-size: 14px;
+            left: calc( 175px / 2 );
+        }
+
+        @media(min-width: 640px){
+            top: 25px;
+            font-size: 11px;
+            left: calc( 145px / 2 );
+        }
+
+
+        @media(min-width: 900px){
+            top: 45px;
+            font-size: 14px;
+            left: calc( 175px / 2 );
+        }
+    }
+
+    .category-count{
+        position: absolute;
+        top: 60%;
+        left: 50%!important; // calc( 175px / 2 );
+        transform: translate(-50%, -50%);
+        width: 40px;
+        height: 40px;
+        background-color: white;
+        color: $color-blue-1;
+        text-align: center;
+        line-height: 40px;
+        font-size: 16px;
+
+        @media(min-width: 640px){
+            left: calc( 145px / 2 );
+        }
+
+
+        @media(min-width: 900px){
+            left: calc( 175px / 2 );
         }
     }
 }

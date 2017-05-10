@@ -54,7 +54,6 @@ class SingleViewFooter extends React.Component {
                     );
                 }
             }
-
         }
 
         if ( elem.website != null &&

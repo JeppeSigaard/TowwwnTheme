@@ -33,7 +33,8 @@ class Event extends React.Component {
                     this.props.vref.rightView,
                     this.props.vref.fromLeft,
                     this.props.vref.fromRight,
-                    false
+                    false,
+                    this.props.vref.ignoreAutoDirection
                 );
             }
         } else {
@@ -44,8 +45,8 @@ class Event extends React.Component {
                 );
             } else {
                 Globals.viewHandler.changeViewFocus(
-                    '#event-single-view',
                     '#event-calendar-view',
+                    '#event-single-view',
                     true, false, false
                 );
             }
@@ -73,20 +74,20 @@ class Event extends React.Component {
         }
 
         let xhr = new XMLHttpRequest();
-            xhr.onload = function ( data ) {
+        xhr.onload = function ( data ) {
 
-                // Resolves all locations
-                let location = JSON.parse( data.target.response )[0];
-                Globals.setMainState({
-                    'singleLocation' : location,
-                });
+            // Resolves all locations
+            let location = JSON.parse( data.target.response )[0];
+            Globals.setMainState({
+                'singleLocation' : location,
+            });
 
-                // Push to browser history
-                Globals.history.push(this.props.elem);
+            // Push to browser history
+            Globals.history.push(this.props.elem);
 
-                Globals.setMainState({ from : this.props.name });
+            Globals.setMainState({ from : this.props.name });
 
-            }.bind(this);
+        }.bind(this);
 
             // Sends request
             xhr.open( 'GET', app_data.rest_api + 'svendborg/locations/' + this.props.elem.parentid );
@@ -136,8 +137,9 @@ class Event extends React.Component {
     render( ) {
 
         // Fields
-        let elem = this.props.elem,
-            semanticTime = DataFormatters.formatDate( elem.start_time, true, true, true, false, true ),
+        let helpFunctions = require( '../../../../js/modules/tools/help_functions.js' ),
+            elem = this.props.elem,
+            semanticTime = helpFunctions.formatDate( elem.start_time, false, true, true, false, true ),
 
             title = this.formatTitle( this.props.elem ),
             image = this.extractImageUrl( this.props.elem );
@@ -151,13 +153,13 @@ class Event extends React.Component {
                     </div>
                 </div>
 
-                <div className="eventtext">
+                <div className="eventtext" onClick={ this.eventRefClick.bind(this) } >
                     <div className="ripple"></div>
                     <div className="title">{ title }</div>
                     <div className="start_time">{ semanticTime }</div>
                 </div>
 
-                <div className="eventlocation-container" >
+                <div className="eventlocation-container" onClick={ this.locationRefClick.bind(this) } >
                     <div className="eventblackbar"></div>
                     <div className="eventlocation">{ elem.parentname }</div>
                 </div>

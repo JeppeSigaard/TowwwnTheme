@@ -13,23 +13,28 @@ class Location extends React.Component {
     // Handle Click
     handleClick( e ) {
         e.preventDefault();
-        this.props.setMainState({
+        Globals.setMainState({
             'singleLocation' : this.props.elem,
         });
 
         Globals.history.push(this.props.elem);
 
         Globals.setMainState({ from : this.props.name });
-
         if ( _('body').hasClass('mobile') ) {
             Globals.viewHandler.changeMobileViewFocus(
                 '#location-single-view',
                 false, true
             );
+        } else if ( this.props.name === 'search-results-view' ) {
+            Globals.viewHandler.changeViewFocus(
+                '#search-results-view',
+                '#location-single-view',
+                false, true, false, true
+            );
         } else {
             Globals.viewHandler.changeViewFocus(
-                '#location-list-view',
                 '#location-single-view',
+                '#location-list-view',
                 false, true, false
             );
         }

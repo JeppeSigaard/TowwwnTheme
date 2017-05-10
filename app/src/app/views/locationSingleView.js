@@ -2,8 +2,9 @@
 
 // Location Single view
 const React = require( 'react' ),
-      LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       Globals = require( '../globals.js' ),
+      BehaviourDataHandler = require( '../../modules/handlers/behaviourHandler/dataHandler.js' ),
+      LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       SingleLocation = require( '../components/singleLocation.js' ),
       BannerCommercials = require( '../components/bannerCommercials.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
@@ -12,6 +13,7 @@ const React = require( 'react' ),
 class LocationSingleView extends React.Component{
 
     // Ctor
+
     constructor() {
         super();
         this.startTime = 0;
@@ -19,8 +21,8 @@ class LocationSingleView extends React.Component{
 
         // Standard close properties
         this.standardclose = {
-            leftview: '#location-category-view',
-            rightview: '#location-list-view',
+            leftview: '#location-list-view',
+            rightview: '#location-category-view',
             fromLeft: true,
             fromRight: false,
             mobile: {
@@ -32,7 +34,7 @@ class LocationSingleView extends React.Component{
 
         // Close properties when coming from event
         this.fromeventclose = {
-            leftview: '#event-single-view',
+            leftview: '#event-calendar-view',
             rightview: '#event-calendar-view',
             fromLeft: false,
             fromRight: true,
@@ -43,10 +45,23 @@ class LocationSingleView extends React.Component{
             }
         };
 
-        // CLose properties when coming from calendar
+        // From search close
+        this.fromsearchclose = {
+            leftview : '#search-view',
+            rightview : '#search-results-view',
+            fromLeft : true,
+            fromRight: true,
+            mobile : {
+                view : '#search-results-view',
+                fromLeft : true,
+                fromRight : false
+            }
+        };
+
+        // Close properties when coming from calendar
         this.fromeventCalendarclose = {
-            leftview: '#event-calendar-view',
-            rightview: '#location-category-view',
+            leftview: '#location-category-view',
+            rightview: '#event-calendar-view',
             fromLeft: false,
             fromRight: true,
             mobile: {
@@ -66,7 +81,13 @@ class LocationSingleView extends React.Component{
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
         if ( nextProps.elem != this.lastElem ) {
+
+            BehaviourDataHandler.parseData( 'location', nextProps.elem );
             this.lastElem = nextProps.elem;
+
+            if ( this.props.elem != null ) {
+                BehaviourDataHandler.parseTimeData( 'location', this.props.elem.id, new Date().getTime() - this.startTime );
+            } this.startTime = new Date().getTime();
         }
 
         // Sets close state
@@ -86,6 +107,15 @@ class LocationSingleView extends React.Component{
 
             this.setState({
                 closeviewstate : this.fromeventCalendarclose,
+            });
+
+        } else if ( nextProps.from === 'search-results-view' ) {
+
+            Globals.relations[ nextProps.name ].canright = false;
+            Globals.relations[ nextProps.name ].canleft = true;
+
+            this.setState({
+                closeviewstate : this.fromsearchclose,
             });
 
         } else {
@@ -118,7 +148,6 @@ class LocationSingleView extends React.Component{
         return (
             <section className="container-section" id="location-single-view">
                 <ViewTopBar standard={ true } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } />
-
                 <div className="scroll-container">
                     <div className="content">
                         { this.props.elem != null &&

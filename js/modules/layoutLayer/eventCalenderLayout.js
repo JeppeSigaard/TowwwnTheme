@@ -23,7 +23,11 @@ var EventCalenderModule = {
         $(window).on('resize', function() {
             EventCalenderModule.setEventCalendarWidth();
         });
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> origin/internalscroll
         $(document).on( 'mouseup', '.event', function( e ) {
             if ( !$('.eventtext', this).hasClass('filled') ) {
                 $('.filled').css({ 'background-color' : 'transparent' });

@@ -5,6 +5,7 @@ const React = require( 'react' ),
     Globals = require( '../globals.js' ),
 
     // Data Handlers
+    User = require( '../../modules/handlers/dataHandlers/userDataHandler.js' ),
     EventDataHandler = require( '../../modules/handlers/dataHandlers/eventDataHandler.js' ),
     CategoryDataHandler = require( '../../modules/handlers/dataHandlers/categoryDataHandler.js' ),
     LocationDataHandler = require( '../../modules/handlers/dataHandlers/locationDataHandler.js' ),
@@ -12,7 +13,12 @@ const React = require( 'react' ),
     // API Handlers
     FBHandler = require( '../../modules/handlers/apihandlers/fbhandler.js' ),
 
+    // Deep Learning
+    NeuralNetwork = require( '../../modules/deepLearning/neuralNetwork.js' ),
+
     // Views
+    SearchView = require( '../views/searchView.js' ),
+    SearchResultView = require( '../views/searchResultView.js' ),
     EventSingleView = require( '../views/eventSingleView.js' ),
     EventCalendarView = require( '../views/eventCalendarView.js' ),
     LocationCategoryView = require( '../views/locationCategoryView.js' ),
@@ -39,6 +45,9 @@ const React = require( 'react' ),
     // Polyfills
     PositionSticky = require ('sticky-position');
 
+// Automatic classes
+const EffectHandler = require( '../../modules/handlers/effectHandler.js' );
+
 class TowwwnApp extends React.Component {
 
     // Ctor
@@ -62,42 +71,36 @@ class TowwwnApp extends React.Component {
 
         // Relations
         Globals.relations = {
-
             'event-single-view' : {
                 left: null,
                 right: 'event-calendar-view',
                 canleft: false,
                 canright: true,
             },
-
             'event-calendar-view' : {
                 left: null,
                 right: 'location-category-view',
                 canleft: false,
                 canright: true,
             },
-
             'location-category-view' : {
                 left: 'event-calendar-view',
                 right: null,
                 canleft: true,
                 canright: false,
             },
-
             'location-list-view' : {
                 left: 'location-category-view',
                 right: null,
                 canleft: true,
                 canright: false,
             },
-
             'location-single-view' : {
                 left: 'location-list-view',
                 right: null,
                 canleft: true,
                 canright: false,
             },
-
         };
 
         // Gets event data
@@ -118,14 +121,14 @@ class TowwwnApp extends React.Component {
         });
 
         // Gets category data
-        let categoryData = new CategoryDataHandler();
-        categoryData.getFeaturedCategories().then((resp) => {
+        Globals.categoryDataHandler = new CategoryDataHandler();
+        Globals.categoryDataHandler.getFeaturedCategories().then((resp) => {
             this.setState({
                 'featuredCategoriesData' : resp,
             });
         });
 
-        categoryData.getAllCategories(false, false).then(( resp ) => {
+        Globals.categoryDataHandler.getAllCategories(false, false).then(( resp ) => {
 
             let categoriesData = [];
             for (let category of resp){
@@ -148,44 +151,6 @@ class TowwwnApp extends React.Component {
         if ( _([this]).attr('href') === '#' ||
              _([this]).hasAttr('data-prevent') )
             e.preventDefault();
-
-        _('.header-bar-nav-icon').removeClass('active');
-
-        if(_([this]).hasClass('goto-events')){
-
-            _([this]).addClass('active');
-
-            if ( _('body').hasClass('mobile') ) {
-                Globals.viewHandler.changeMobileViewFocus(
-                    '#event-calendar-view',
-                    true, false
-                );
-            } else {
-                Globals.viewHandler.changeViewFocus(
-                    '#event-calendar-view',
-                    '#location-category-view',
-                    true, false, false
-                );
-            }
-        }
-
-         if(_([this]).hasClass('goto-locations')){
-
-            _([this]).addClass('active');
-
-            if ( _('body').hasClass('mobile') ) {
-                Globals.viewHandler.changeMobileViewFocus(
-                    '#location-category-view',
-                    false, true
-                );
-            } else {
-                Globals.viewHandler.changeViewFocus(
-                    '#event-calendar-view',
-                    '#location-category-view',
-                    false, true, false
-                );
-            }
-        }
     }
 
     // ParsedSetState
@@ -213,9 +178,45 @@ class TowwwnApp extends React.Component {
 
     // Component did mount
     componentDidMount() {
-        document.body.classList.remove('loading');
+_('body').removeClass('loading');
+        _('body').addClass('loaded');
 
+        Globals.user = new User();
         this.viewSlider = new ViewSlider();
+
+        _( '.nav-locations' ).on( 'click', () => {
+
+            if ( _('.search-nav-container .bookmark-mode') !== false )
+                _('.search-nav-container .bookmark-mode').removeClass('bookmark-mode');
+
+            _('.nav-elem').removeClass('bookmark-mode');
+            _( '.nav-locations' ).addClass('bookmark-mode');
+            if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
+
+            Globals.viewHandler.changeViewFocus(
+                '#location-category-view',
+                '#search-view',
+                true, false, false
+            );
+        });
+
+        _( '.nav-events' ).on( 'click', () => {
+            if ( _('.category.bookmark-mode') !== false ) _('.category.bookmark-mode').removeClass('bookmark-mode');
+
+            if ( _('.search-nav-container .bookmark-mode') !== false )
+                _('.search-nav-container .bookmark-mode').removeClass('bookmark-mode');
+
+            _('.nav-elem').removeClass('bookmark-mode');
+            _( '.nav-events' ).addClass('bookmark-mode');
+            if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
+
+            Globals.viewHandler.changeViewFocus(
+                '#search-view',
+                '#event-calendar-view',
+                false, true, false
+            );
+        });
+
         Globals.viewHandler = null;
 
         // Render 404
@@ -290,11 +291,9 @@ class TowwwnApp extends React.Component {
             request.send();
         }
 
-
         // Handle anchor click
         _('a').off( 'click', this.handleAnchorClick );
         _('a').on( 'click', this.handleAnchorClick );
-
     }
 
     // Render
@@ -302,6 +301,9 @@ class TowwwnApp extends React.Component {
         return (
             <div className="content-container" id="page-content">
                 <div className="content-container-inner">
+                    <SearchView />
+                    <SearchResultView result={ this.state.searchResult } />
+
                     <EventSingleView name="event-single-view" from={ this.state.from } event={ this.state.singleevent } setMainState={ this.parsedSetState.bind(this) } />
                     <EventCalendarView name="event-calendar-view" from={ this.state.from } events={ this.state.jsxEvents } setMainState={ this.parsedSetState.bind(this) } />
                     <LocationCategoryView name="location-category-view" from={ this.state.from } categories={ this.state.featuredCategoriesData } allCategories={ this.state.categoriesData } setMainState={ this.parsedSetState.bind(this) } />

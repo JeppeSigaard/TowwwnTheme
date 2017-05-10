@@ -15,7 +15,6 @@
     z-index: 10;
     top: $header-bar-height;
     border-bottom: 1px solid rgba(0,0,0,.3);
-    // border-right: 1px solid rgba(0,0,0,.2);
 
     #eventslayoutbtns{
         position: relative;
@@ -394,10 +393,6 @@
             font-size: 9px;
             color: $color-blue-1;
             line-height: 11px;
-
-            &:hover{
-                text-decoration: underline;
-            }
         }
     }
 }

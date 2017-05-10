@@ -8,7 +8,6 @@ class ViewSlider {
 
     // Constructor
     constructor() {
-
         // Memebers
         this.swiping = false;
         this.canMove = true;
@@ -54,7 +53,6 @@ class ViewSlider {
 
     // Touch Move
     onTouchMove(e) {
-
         // Sets a few new fields
         let deltax = e.touches[0].clientX - this.start.x,
             deltay = e.touches[0].clientY - this.start.y,

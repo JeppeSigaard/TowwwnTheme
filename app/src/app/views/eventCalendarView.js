@@ -57,7 +57,6 @@ class EventCalendarView extends React.Component {
 
         // document.getElementById( 'eventcv-load-more' ).innerHTML = 'Indlæser...';
         Globals.eventDataHandler.getFutureEvents( 24, true ).then((resp) => {
-
             if ( resp.length > this.eventsLength && resp.length % 24 === 0 ) {
                 document.getElementById( 'eventcv-load-more' ).classList.add('loading');
             } else {
@@ -114,7 +113,6 @@ class EventCalendarView extends React.Component {
                        Begivenheder
                    </div>
                </div>
-
                 <div className="scroll-container">
                     <div className="content">
                         <div className={ this.state.containerClasses + '-outer' } >

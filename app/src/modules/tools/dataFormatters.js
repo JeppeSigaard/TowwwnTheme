@@ -18,7 +18,7 @@ class DataFormatters {
 
             // Same day
             if(parseInt(date.getDate()) === parseInt(now.getDate()) && parseInt(date.getMonth()) === parseInt(now.getMonth())){
-                var minutesTill = Math.floor((date - now) / 1000 / 60 ) - 120;
+                var minutesTill = Math.floor((date - now) / 1000 / 60 ) - 60;
                 if(minutesTill <= 0) return 'Nu';
                 else if(minutesTill < 60) return minutesTill + ' minut' + (minutesTill === 1 ? '': 'ter');
                 else return Math.floor(minutesTill / 60) + ' time' + (Math.floor(minutesTill / 60) === 1 ? '' : 'r');
@@ -26,7 +26,7 @@ class DataFormatters {
 
             // Tomorrow
             if(parseInt(date.getDate()) === parseInt(now.getDate()) +1 && parseInt(date.getMonth()) === parseInt(now.getMonth())){
-                response += 'I morgen'; includeDay = false; includeDate = false; includeYear = false; includeHour = true; }
+                response += 'I morgen'; includeDay = false; ncludeDate = false; includeYear = false; includeHour = true; }
         }
 
         if (typeof includeDay === 'undefined' || includeDay ) {
@@ -42,12 +42,11 @@ class DataFormatters {
         }
 
 
-        if (typeof includeHour === 'undefined' || includeHour ) {
-
+        if (typeof includeHour === 'undefined' || includeHour ) {1
             if ( date.getMinutes() < 10 ) {
-                response += ' '+(date.getHours()-2)+'.0'+date.getMinutes();
+                response += ' '+(date.getHours()-1)+'.0'+date.getMinutes();
             } else {
-                response += ' '+(date.getHours()-2)+'.'+date.getMinutes();
+                response += ' '+(date.getHours()-1)+'.'+date.getMinutes();
             }
         }
 

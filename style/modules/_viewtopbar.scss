@@ -33,7 +33,8 @@
         position: absolute;
         top: 50%;
         right: 0px;
-        width: $menu-bar-height + 5;
+        height: 100%;
+        width: $menu-bar-height * 1.2;
         text-align: center;
         transform: translate(0,-50%);
         color: white;

@@ -99,7 +99,6 @@ p a{
     border-bottom: none;
 }
 
-
 $horizontal-bezier: cubic-bezier(.6, 0, .4, 1);
 .content-container{
     position: fixed;
@@ -109,6 +108,7 @@ $horizontal-bezier: cubic-bezier(.6, 0, .4, 1);
     background-color: white;
     z-index: 1;
     min-height: 100vh;
+    background-color: #fff;
 
     .content-container-inner{
         position: fixed;
@@ -138,7 +138,6 @@ $horizontal-bezier: cubic-bezier(.6, 0, .4, 1);
     }
     
     &.poly-view .content{ height: auto!important; }
-
 
     .loader{
         position: absolute;
@@ -218,25 +217,34 @@ $horizontal-bezier: cubic-bezier(.6, 0, .4, 1);
     &.slowtrans .container-section{
         transition: 50000000ms!important;
     }
+
+    // Event single view
+    #event-single-view {
+    }
     
+    #search-view{
+        left: 0;
+        width: 50%;
+    }
+
     // Location categories
     #location-category-view{
         background-color: white;
-        transition: 500ms, width 400ms;
-        transition-timing-function: $horizontal-bezier;
-        left: 50%;
 
-        @media screen and ( max-width: $bp-m ) {
-            left: -100%;
+        @media screen and ( min-width: 640px ) {
+            width: 50%;
         }
     }
 
 
     // Event Calender
     #event-calendar-view{
-        transition: 500ms, width 400ms;
-        transition-timing-function: $horizontal-bezier;
-        left: 0%;
+        background-color: #f0f0f0;
+
+        @media screen and ( min-width: 640px ) {
+            left: 50%;
+            width: 50%;
+        }
 
         .content{
             min-height: calc(100vh - #{$menu-bar-height});

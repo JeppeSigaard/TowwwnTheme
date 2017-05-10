@@ -35,8 +35,8 @@ class LocationCategoryView extends React.Component {
             );
         } else {
             Globals.viewHandler.changeViewFocus(
-                '#location-category-view',
                 '#location-list-view',
+                '#location-category-view',
                 false, true, false
             );
         }
@@ -53,7 +53,6 @@ class LocationCategoryView extends React.Component {
     toggleSubCategories() {
         let sc = _( '#location-category-view .scroll-container' );
         if ( sc !== false ) { sc = sc.get(0).scrollTop = 0; }
-
         let inner = document.getElementsByClassName( 'sub-category-inner' )[0];
         if ( this.state.subCatHeight !== '0px' ) this.setState({ 'subCatHeight' : '0px' });
         else this.setState({ 'subCatHeight' : inner.clientHeight + 'px' });
@@ -74,6 +73,7 @@ class LocationCategoryView extends React.Component {
     // Component did mount
     componentDidMount() {
         this.userHook.call(this);
+        this.lazyLoad = new LazyLoadHandler( '#location-category-view .scroll-container' );
     }
 
     // User Hook
@@ -107,11 +107,6 @@ class LocationCategoryView extends React.Component {
         }
     }
 
-    // Component did mount
-    componentDidMount() {
-         this.lazyLoad = new LazyLoadHandler( '#location-category-view .scroll-container' );
-    }
-
     // Component did update
     componentDidUpdate() {
         if ( this.state.jsxCategories != null ) {
@@ -134,6 +129,21 @@ class LocationCategoryView extends React.Component {
                         <SubCategories subCategories={ this.props.allCategories } outerHeight={ this.state.subCatHeight } clickEvent={ this.handleCategoryClick } />
 
                         <div className="category-container">
+                            { this.state.suggestedCategories != null &&
+                                (<div className="suggested-cats">
+                                    <h2>Foreslået Kategorier</h2>
+                                    <div className="breakline" ></div>
+                                    { this.state.suggestedCategories }
+                                    <div className="breakline" ></div>
+                                </div>)
+                            }
+
+                            { this.state.suggestedCategories != null &&
+                                (<div className="categories-header">
+                                    Svendborg i udvalg
+                                </div>)
+                            }
+
                             { this.state.jsxCategories != null &&
                               this.state.jsxCategories }
                         </div>
