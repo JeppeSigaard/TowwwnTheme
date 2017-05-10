@@ -68,7 +68,7 @@ class CategoryDataHandler {
             }.bind(this);
 
             // Sends request
-            request.open( 'GET', app_data.rest_api + 'svendborg/categories' );
+            request.open( 'GET', app_data.rest_api + 'svendborg/categories?per_page=100' );
             request.send();
 
         });

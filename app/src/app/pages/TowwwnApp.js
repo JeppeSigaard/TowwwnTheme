@@ -125,15 +125,22 @@ class TowwwnApp extends React.Component {
             });
         });
 
-        categoryData.getAllCategories(false, true).then(( resp ) => {
+        categoryData.getAllCategories(false, false).then(( resp ) => {
+
+            let categoriesData = [];
+            for (let category of resp){
+                if (category.location_count > 2){
+                    categoriesData.push(category);
+                }
+            }
+
             this.setState({
-                'categoriesData' : resp,
+                'categoriesData' : categoriesData,
             });
         });
 
         // Set main state
         Globals.setMainState = this.parsedSetState.bind(this);
-
     }
 
     // Handle anchor click

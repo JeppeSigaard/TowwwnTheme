@@ -19,10 +19,11 @@ class EventCalendarView extends React.Component {
     }
 
     // In view
-    isInView(element) {
+    isInView(element, preloadDistance) {
         let elemTop = element.getBoundingClientRect().top,
             elemBottom = element.getBoundingClientRect().bottom,
-            isVisibleY = (elemTop >= 0) && (elemBottom <= window.innerHeight),
+            preload = ( preloadDistance != null ) ? preloadDistance : 0,
+            isVisibleY = (elemTop >= 0 - preload) && (elemBottom <= window.innerHeight + element.offsetHeight + preload),
             isVisibleX = element.offsetLeft >= 0 && element.offsetLeft < window.innerWidth - 200;
 
         return isVisibleY && isVisibleX;
@@ -31,15 +32,16 @@ class EventCalendarView extends React.Component {
     // Scroll event
     onscroll(){
         let loadMoreBtn = document.getElementById('eventcv-load-more');
-        if( this.isInView( loadMoreBtn ) && this.loadReturned ) {
+        if( this.isInView( loadMoreBtn, 100 ) && this.loadReturned ) {
             setTimeout(() => {
-                if ( this.isInView( loadMoreBtn ) && this.loadReturned ) this.loadMore();
-            }, 500);
+                if ( this.isInView( loadMoreBtn, 100 ) && this.loadReturned ) this.loadMore();
+            }, 200);
         }
     }
 
     // Set event layout
-    setEventLayout( ) {
+    setEventLayout() {
+
         if ( this.state.containerClasses.includes('lineLayout') )
             this.setState({ containerClasses : 'eventscontainer' });
         else if ( !this.state.containerClasses.includes('lineLayout') )
@@ -97,12 +99,16 @@ class EventCalendarView extends React.Component {
             <section className="container-section" id="event-calendar-view">
                <div id="eventsbar">
                    <div id="eventslayoutbtns">
-                       <svg viewBox="0 0 32 32" className="blocklayoutbtn" onClick={ this.setEventLayout.bind(this) } >
-                           <use xlinkHref="#icon-block-layout"></use>
-                       </svg>
-                       <svg viewBox="0 0 32 32" className="linelayoutbtn" onClick={ this.setEventLayout.bind(this) } >
-                           <use xlinkHref="#icon-list-layout"></use>
-                       </svg>
+                        <a className="layoutbtn" href="#" onClick={ this.setEventLayout.bind(this) }>
+                            <svg viewBox="0 0 32 32" className="blocklayoutbtn">
+                                <use xlinkHref="#icon-block-layout"></use>
+                            </svg>
+                        </a>
+                        <a className="layoutbtn" href="#" onClick={ this.setEventLayout.bind(this) }>
+                            <svg viewBox="0 0 32 32" className="linelayoutbtn">
+                                <use xlinkHref="#icon-list-layout"></use>
+                            </svg>
+                        </a>
                    </div>
                    <div className="title">
                        Begivenheder

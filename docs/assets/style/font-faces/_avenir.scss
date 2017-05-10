@@ -3,19 +3,19 @@
     font-family: 'Avenir';
     font-style: normal;
     font-weight: normal;
-    src: local('assets/font-faces/AvenirNextLTPro-Regular.woff'), url('assets/font-faces/AvenirNextLTPro-Regular.woff') format('woff');
+    src: local('font-faces/AvenirNextLTPro-Regular.woff'), url('font-faces/AvenirNextLTPro-Regular.woff') format('woff');
 }
 
 @font-face {
     font-family: 'Avenir Bold';
     font-style: normal;
     font-weight: normal;
-    src: local('assets/font-faces/AvenirNextLTPro-Bold.woff'), url('assets/font-faces/AvenirNextLTPro-Bold.woff') format('woff');
+    src: local('font-faces/AvenirNextLTPro-Bold.woff'), url('font-faces/AvenirNextLTPro-Bold.woff') format('woff');
 }
 
 @font-face {
     font-family: 'Avenir  Italic';
     font-style: normal;
     font-weight: normal;
-    src: local('assets/font-faces/AvenirNextLTPro-It.woff'), url('/assets/font-faces/AvenirNextLTPro-It.woff') format('woff');
+    src: local('font-faces/AvenirNextLTPro-It.woff'), url('font-faces/AvenirNextLTPro-It.woff') format('woff');
 }

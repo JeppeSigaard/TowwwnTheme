@@ -13,7 +13,8 @@ add_action('wp_head',function(){
         }
 
         if(isset($wp_query->query['category'])){
-            $app_id = get_cat_ID( $wp_query->query['category'] );
+            $app_cat = get_term_by('slug', $wp_query->query['category'], 'category' );
+            $app_id = ($app_cat) ? $app_cat->term_id : '0';
             $app_type = 'category';
         }
 
@@ -27,6 +28,7 @@ add_action('wp_head',function(){
             'commercial_link' => get_theme_mod('commercial_link'),
             'type' => $app_type,
             'id' => $app_id,
+            'app_name' => (isset($wp_query->query['category'])) ? $wp_query->query['category'] : 'no',
         ));
     }
     else{
@@ -43,7 +45,7 @@ add_action( 'wp_enqueue_scripts', function() {
     
     // Scripts
     // wp_enqueue_script( 'jQuery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js' );
-    wp_register_script( 'docs-script', get_template_directory_uri() . '/docs/assets/js/main-min.js' );
+    wp_register_script( 'docs-script', get_template_directory_uri() . '/docs/assets/script/main-min.js' );
     //wp_enqueue_script( 'swiper', 'https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.1/js/swiper.jquery.min.js' );
     // wp_enqueue_script( 'flickityScript', 'https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js' );
     

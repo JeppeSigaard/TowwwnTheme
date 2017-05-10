@@ -46,7 +46,7 @@ class SingleEvent extends React.Component {
                         <div className="es-btns" >
                             <a className="status-btn share fb-xfbml-parse-ignore"
                                href={ "https://www.facebook.com/sharer/sharer.php?u="+
-                                    encodeURI( 'https://www.facebook.com/events/' + this.props.elem.fbid ).replace( /%5B/g, '[' ).replace( /%5D/g, ']') +"&amp;src=sdkpreparse" }
+                                    encodeURI( app_data.main_path + '/event/' + this.props.elem.slug ).replace( /%5B/g, '[' ).replace( /%5D/g, ']') +"&amp;src=sdkpreparse" }
                                onClick={ this.share.bind(this) } data-prevent>
                                 <div className="icon">
                                     <svg viewBox="0 0 32 32" >

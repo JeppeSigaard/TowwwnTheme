@@ -124,9 +124,9 @@ class LocationCategoryView extends React.Component {
     render() {
         return (
             <section className="container-section" id="location-category-view">
-               <div className="category-bar">
+               <div className="category-bar" onClick={ this.toggleSubCategories.bind(this) }>
                     Steder
-                    <div className="sub-categories-title" onClick={ this.toggleSubCategories.bind(this) } ></div>
+                    <div className="sub-categories-title" ></div>
                 </div>
 
                 <div className="scroll-container">

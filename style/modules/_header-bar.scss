@@ -10,7 +10,7 @@
         position: absolute;
         left: 0;
         width: auto;
-        padding-right: 20px;
+        padding-right: 10px;
         height: 100%;
         z-index: 30;
         cursor: pointer;
@@ -61,7 +61,7 @@
             position: relative;
             fill: #f0f0f0;
             height: $header-bar-height;
-            border-left: 1px solid white;
+            border-left: 1px solid rgba(white,.5);
             width: $header-bar-height * 1.15;
             transition: background-color 120ms, fill 120ms;
         }

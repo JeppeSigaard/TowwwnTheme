@@ -40,6 +40,7 @@ class SingleLocation extends React.Component {
     // Load events
     loadEvents( nextProps ) {
         if ( nextProps.elem !== this.lastLoaded ) {
+            this.setState({ 'jsxEvents' : null });
             this.lastLoaded = nextProps.elem;
             Globals.eventDataHandler.getEvents({
                 'parent' : nextProps.elem.id,
@@ -47,18 +48,37 @@ class SingleLocation extends React.Component {
                 'after' : 'now'
             }).then(( resp ) => {
 
-                // Generates elems
-                let jsxEvents = [];
-                for ( let eventData of resp ) {
-                    jsxEvents.push( <Event elem={ eventData } key={ 'eventslide-'+eventData.id } name={ this.props.name } vref={ this.state.eventVref } style={{ width : (100/resp.length) + '%' }} /> );
+                if(resp.length > 0){
+                    this.setEvents(resp);
+                    return;
                 }
 
-                // Sets state
-                if ( jsxEvents <= 0 ) jsxEvents = null;
-                this.setState({ 'jsxEvents' : jsxEvents });
+                Globals.eventDataHandler.getEvents({
+                    'parent' : nextProps.elem.id,
+                    'per_page' : '1000',
+                    'before' : 'now'
+                }).then(( resp ) => {
+
+                    this.setEvents(resp);
+                    return;
+
+                });
 
             });
         }
+    }
+
+    // Set events
+    setEvents(resp){
+        // Generates elems
+        let jsxEvents = [];
+        for ( let eventData of resp ) {
+            jsxEvents.push( <Event elem={ eventData } key={ 'eventslide-'+eventData.id } name={ this.props.name } vref={ this.state.eventVref } style={{ width : (100/resp.length) + '%' }} /> );
+        }
+
+        // Sets state
+        if ( jsxEvents <= 0 ) jsxEvents = null;
+        this.setState({ 'jsxEvents' : jsxEvents });
     }
 
     // Resize
@@ -93,7 +113,8 @@ class SingleLocation extends React.Component {
 
     // Render
     render() {
-        let elem = this.props.elem;
+        let elem = this.props.elem,
+            description = (elem.description != null && elem.description.length > 10) ? elem.description : elem.about;
         return (
             <div className="location-singleview-content" >
                 <div className="photo-container">
@@ -133,28 +154,14 @@ class SingleLocation extends React.Component {
                     }
                 </div>
                 <div className="breakline"></div>
-
-                { elem.description != null &&
                 <div className="description-container">
                     <div className="description">
                         <Linkify>
-                            { TextPreproccesors.nl2p( TextPreproccesors.ripRep( elem.description ) ) }
+                            { TextPreproccesors.nl2p( TextPreproccesors.ripRep( description ) ) }
                         </Linkify>
                     </div>
                 </div>
-                }
-
-                { (elem.description == null && elem.about != null)  &&
-                <div className="description-container">
-                    <div className="description">
-                        <Linkify>
-                            { TextPreproccesors.nl2p( TextPreproccesors.ripRep( elem.about ) ) }
-                        </Linkify>
-                    </div>
-                </div>
-                }
                 <div className="breakline"></div>
-
                 { this.state.jsxEvents != null &&
                     <div className="event-slider">
                         <div className="prevButton button">

@@ -19,37 +19,40 @@
 
     #eventslayoutbtns{
         position: relative;
-        width: 115px;
+        font-size: 0;
         height: 100%;
-        border-right: 1px solid #CDCDCD;
+        vertical-align: top;
+        border-right: 1px solid rgba(white,.5);
         transition: 300ms;
+        padding: 0px 15px;
         display: inline-block;
 
         &:hover {
             background-color: darken($color-blue-2, 2%);
         }
 
-        svg{
-            position: absolute;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: auto;
-            height: 18px;
-            width: 18px;
-            cursor: pointer;
+        .layoutbtn{
+            position: relative;
+            vertical-align: top;
+            display: inline-block;
+            height:$menu-bar-height;
+            width: $menu-bar-height * .7 ;
             fill: rgba(white,.9);
             transition: fill 120ms;
-            &:hover{
-                fill: white;
+            cursor: pointer;
+
+            &:hover {
+               fill: white;
             }
         }
 
-        .blocklayoutbtn{
-            left: 30%;
-        }
-
-        .linelayoutbtn{
-            left: 66%;
+        svg{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 14px;
+            width: 14px;
         }
     }
     
