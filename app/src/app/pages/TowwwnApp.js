@@ -3,20 +3,22 @@
 require( '../../modules/tools/textPreproccesors.js' );
 const React = require( 'react' ),
     Globals = require( '../globals.js' ),
-    
+
     // Data Handlers
     User = require( '../../modules/handlers/dataHandlers/userDataHandler.js' ),
     EventDataHandler = require( '../../modules/handlers/dataHandlers/eventDataHandler.js' ),
     CategoryDataHandler = require( '../../modules/handlers/dataHandlers/categoryDataHandler.js' ),
     LocationDataHandler = require( '../../modules/handlers/dataHandlers/locationDataHandler.js' ),
-      
+
     // API Handlers
     FBHandler = require( '../../modules/handlers/apihandlers/fbhandler.js' ),
-      
+
     // Deep Learning
     NeuralNetwork = require( '../../modules/deepLearning/neuralNetwork.js' ),
 
     // Views
+    SearchView = require( '../views/searchView.js' ),
+    SearchResultView = require( '../views/searchResultView.js' ),
     EventSingleView = require( '../views/eventSingleView.js' ),
     EventCalendarView = require( '../views/eventCalendarView.js' ),
     LocationCategoryView = require( '../views/locationCategoryView.js' ),
@@ -170,6 +172,39 @@ class TowwwnApp extends React.Component {
         Globals.user = new User();
         this.viewSlider = new ViewSlider(); 
         
+        _( '.nav-locations' ).on( 'click', () => {
+
+            if ( _('.search-nav-container .bookmark-mode') !== false )
+                _('.search-nav-container .bookmark-mode').removeClass('bookmark-mode');
+
+            _('.nav-elem').removeClass('bookmark-mode');
+            _( '.nav-locations' ).addClass('bookmark-mode');
+            if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
+
+            Globals.viewHandler.changeViewFocus(
+                '#location-category-view',
+                '#search-view',
+                true, false, false
+            );
+        });
+
+        _( '.nav-events' ).on( 'click', () => {
+            if ( _('.category.bookmark-mode') !== false ) _('.category.bookmark-mode').removeClass('bookmark-mode');
+
+            if ( _('.search-nav-container .bookmark-mode') !== false )
+                _('.search-nav-container .bookmark-mode').removeClass('bookmark-mode');
+
+            _('.nav-elem').removeClass('bookmark-mode');
+            _( '.nav-events' ).addClass('bookmark-mode');
+            if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
+
+            Globals.viewHandler.changeViewFocus(
+                '#search-view',
+                '#event-calendar-view',
+                false, true, false
+            );
+        });
+
         // Handle anchor click
         _('a').off( 'click', this.handleAnchorClick );
         _('a').on( 'click', this.handleAnchorClick );
@@ -180,6 +215,9 @@ class TowwwnApp extends React.Component {
         return (
             <div className="content-container" id="page-content">
                 <div className="content-container-inner">
+                    <SearchView />
+                    <SearchResultView result={ this.state.searchResult } />
+
                     <EventSingleView name="event-single-view" from={ this.state.from } event={ this.state.singleevent } setMainState={ this.parsedSetState.bind(this) } />
                     <EventCalendarView name="event-calendar-view" from={ this.state.from } events={ this.state.jsxEvents } setMainState={ this.parsedSetState.bind(this) } />
                     <LocationCategoryView name="location-category-view" from={ this.state.from } categories={ this.state.featuredCategoriesData } allCategories={ this.state.categoriesData } setMainState={ this.parsedSetState.bind(this) } />

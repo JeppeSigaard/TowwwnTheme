@@ -32,12 +32,12 @@ class User {
         };
 
         // Login button
-        _('.login-btn').on( 'click', ( e ) => {
-            if ( this.state.loggedIn ) return;
-            Globals.fb.login().then(() => {
-                _('.login-btn').text( this.state.fbData.name.split(' ')[0] );
-            });
-        });
+//        _('.login-btn').on( 'click', ( e ) => {
+//            if ( this.state.loggedIn ) return;
+//            Globals.fb.login().then(() => {
+//                _('.login-btn').text( this.state.fbData.name.split(' ')[0] );
+//            });
+//        });
         
         // On load, get behaviour statistics from cookie
         window.onload = (() => {
@@ -79,7 +79,7 @@ class User {
                 request.onload = (( data ) => { });
 
                 // Opens request & sets headers
-                request.open( 'POST', 'http://towwwn.dk/api/svendborg/user/' + this.state.dbData.id, true );
+                request.open( 'POST', rest_api+'svendborg/user/' + this.state.dbData.id, true );
                 request.setRequestHeader("Content-type", "application/json");
 
                 // Sends request
@@ -218,7 +218,7 @@ class User {
                         });
 
                         // Sends request
-                        request.open( 'GET', 'http://towwwn.dk/api/svendborg/user/'+this.state.dbData.id+
+                        request.open( 'GET', rest_api+'svendborg/user/'+this.state.dbData.id+
                                       '?user='+ this.state.dbData.id +
                                       '&token='+ this.state.accessToken.token +
                                       '&fields=behaviour_statistics' );
@@ -229,7 +229,7 @@ class User {
                     });
 
                     // Opens request & sets headers
-                    request.open( 'POST', 'http://towwwn.dk/api/svendborg/user/signon', true );
+                    request.open( 'POST', rest_api+'svendborg/user/signon', true );
                     request.setRequestHeader("Content-type", "application/json");
 
                     // Sends request
@@ -317,7 +317,7 @@ class User {
                 });
 
                 // Sends request
-                request.open( 'GET', 'http://towwwn.dk/api/svendborg/user/'+this.state.dbData.id+
+                request.open( 'GET', rest_api+'svendborg/user/'+this.state.dbData.id+
                              '?user='+ this.state.dbData.id +
                              '&token='+ this.state.accessToken.token +
                              '&fields=behaviour_statistics' );
@@ -328,7 +328,7 @@ class User {
             });
 
             // Opens request & sets headers
-            request.open( 'POST', 'http://towwwn.dk/api/svendborg/user/signon', true );
+            request.open( 'POST', rest_api+'svendborg/user/signon', true );
             request.setRequestHeader("Content-type", "application/json");
 
             // Sends request
@@ -355,7 +355,7 @@ class User {
         request.onload = (( data ) => { });
 
         // Opens request & sets headers
-        request.open( 'POST', 'http://towwwn.dk/api/svendborg/user/' + this.state.dbData.id, true );
+        request.open( 'POST', rest_api+'svendborg/user/' + this.state.dbData.id, true );
         request.setRequestHeader("Content-type", "application/json");
 
         // Sends request

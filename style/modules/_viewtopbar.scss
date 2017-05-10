@@ -1,14 +1,14 @@
 .viewbar{
     position: relative;
     width: 100%;
-    height: $menu-bar-height;
+    height: calc( #{$menu-bar-height} + 10px );
     padding-left: 20px;
-    line-height: $menu-bar-height;
+    line-height: calc( #{$menu-bar-height} + 10px );
     color: white;
     text-transform: uppercase;
     font-size: 12px;
     background-color: $color-blue-2;
-    top: 55px;
+    top: $menu-bar-height;
     border-bottom: 1px solid rgba(0,0,0,.3);
 
     &.dark{
@@ -31,7 +31,8 @@
         position: absolute;
         top: 50%;
         right: 0px;
-        width: $menu-bar-height + 5;
+        height: 100%;
+        width: calc( #{$menu-bar-height} + 10px + 5px );
         text-align: center;
         transform: translate(0,-50%);
         color: white;

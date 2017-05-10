@@ -19,7 +19,7 @@ class CommercialDataHandler {
             };
 
             // Sends request
-            request.open( 'GET', 'http://towwwn.dk/api/svendborg/commercials' );
+            request.open( 'GET', rest_api+'svendborg/commercials' );
             request.send();
 
         });

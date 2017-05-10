@@ -36,10 +36,10 @@ class EventDataHandler{
 
             // Sends request 
             if ( cont ) {
-                xhr.open( 'GET', 'http://towwwn.dk/api/svendborg/events?per_page='+getNum+'&page='+this.futurePage+'&after=now' );
+                xhr.open( 'GET', rest_api+'svendborg/events?per_page='+getNum+'&page='+this.futurePage+'&after=now' );
                 this.futurePage ++;
             } else {
-                xhr.open( 'GET', 'http://towwwn.dk/api/svendborg/events?per_page='+getNum+'&page=1&after=now' );
+                xhr.open( 'GET', rest_api+'svendborg/events?per_page='+getNum+'&page=1&after=now' );
             }
                 
             xhr.send();
@@ -76,7 +76,7 @@ class EventDataHandler{
                 });
                 
                 // Sends request
-                request.open( 'GET', 'http://towwwn.dk/api/svendborg/events?' + str );
+                request.open( 'GET', rest_api+'svendborg/events?' + str );
                 request.send();
                 
             } else {

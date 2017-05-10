@@ -6,44 +6,34 @@
     z-index: 20;
     overflow: hidden;
     
+    .logo{
+        position: absolute;
+        left: 11px; top: 56%;
+        transform: translate(0, -50%);
+
+        svg{
+            fill: #fff;
+            width: 28px;
+            height: 28px;
+        }
+    }
+
     .logo-container{
         position: absolute;
         left: 0;
-        width: 97px;
         height: 100%;
         z-index: 30;
         cursor: pointer;
-        background-color: darken($color-grey-1, 10%);
-        
-        &::before{
-            content: '';
-            position: absolute;
-            right: -18px;
-            border-top: $menu-bar-height / 2 solid transparent;
-            border-bottom: $menu-bar-height / 2 solid darken($color-grey-1, 10%);
-            border-left: 9px solid darken($color-grey-1, 10%);
-            border-right: 9px solid transparent;
-        }
-        
-        .logo{
-            position: absolute;
-            width: 60px;
-            height: auto;
-            top: 12px;
-            left: 50%;
-            fill: rgba(white,.9);
-            transform: translate(-50%,0);
-        }
         
         .city{
             color: white;
             position: absolute;
-            left: 50%;
-            bottom: 8px;
-            transform: translate(-50%, 0);
+            left: 80px;
+            top: 50%;
+            transform: translate(-50%, -50%);
             width: auto;
             text-align: center;
-            font-size: 9px;
+            font-size: 10px;
             text-transform: uppercase;
         }
     }
@@ -58,15 +48,31 @@
         .nav-elem{
             position: relative;
             flex-grow: 1;
-            border-left: 1px solid #eee;
+            border-left: 1px solid #CCC;
+            width: $menu-bar-height;
+            cursor: pointer;
+            transition: 80ms cubic-bezier(.72, 0, .28, 1);
+
+            &.bookmark-mode{
+                background-color: $color-blue-2;
+            }
+
+            &.nav-user{
+                &:hover{
+                    svg{
+                        transform: translate(-50%,-50%) rotate(45deg);
+                    }
+                }
+            }
             
             svg{
                 position: absolute;
                 top: 50%; left: 50%;
                 transform: translate( -50%, -50% );
-                fill: #fff;
-                width: 32px;
-                height: 32px;
+                fill: #EEE;
+                width: 14px;
+                height: 14px;
+                transition: 120ms cubic-bezier(.72, 0, .28, 1);
             }
         }
     }

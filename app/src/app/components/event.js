@@ -30,7 +30,8 @@ class Event extends React.Component {
                     this.props.vref.rightView,
                     this.props.vref.fromLeft,
                     this.props.vref.fromRight,
-                    false
+                    false,
+                    this.props.vref.ignoreAutoDirection
                 );
             }
         } else {
@@ -40,9 +41,9 @@ class Event extends React.Component {
                     true, false
                 );
             } else {
-                Globals.viewHandler.changeViewFocus(  
-                    '#event-single-view',
+                Globals.viewHandler.changeViewFocus(
                     '#event-calendar-view',
+                    '#event-single-view',
                     true, false, false
                 ); 
             }

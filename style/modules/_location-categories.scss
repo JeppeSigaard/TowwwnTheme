@@ -22,23 +22,23 @@
 .category-bar{
     position: relative;
     width: 100%;
-    height: $menu-bar-height;
+    height: calc( #{$menu-bar-height} + 10px );
     background-color: $color-blue-2;
-    line-height: $menu-bar-height;
+    line-height: calc( #{$menu-bar-height} + 10px );
     font-size: 12px;
     text-transform: uppercase;
     padding-left: 20px;
     color: white;
     cursor: pointer;
-    top: 55px;
+    top: $menu-bar-height;
     border-bottom: 1px solid rgba(0,0,0,.3);
 
     .sub-categories-title{
         position: absolute;
         right: 0;
         top: 0;
-        height: $menu-bar-height;
-        min-width: $menu-bar-height + 5;
+        height: calc( #{$menu-bar-height} + 10px );
+        min-width: 80px;
         border-left: 1px solid rgba(white,.5);
         background: transparent;
         transition: background 120ms;
@@ -50,8 +50,8 @@
         &:after{
             content: '';
             position: absolute;
-            top: 50%; right:( $menu-bar-height + 5) / 2;
-            transform: translate(50%,-50%);
+            top: 50%; left: 50%;
+            transform: translate(-50%,-50%);
             width: 0; height: 0;
             margin-top: 4px;
             border: 6px solid transparent;

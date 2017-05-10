@@ -18,10 +18,10 @@ class LocationListView extends React.Component {
         this.lastElem = null;
         this.state = {
             'closeviewstate' : {
-                'leftview' : '#event-calendar-view',
-                'rightview' : '#location-category-view',
+                'leftview' : '#location-category-view',
+                'rightview' : '#search-view',
                 'fromLeft' : true,
-                'fromRigth' : false,
+                'fromRight' : false,
                 mobile: {
                     view: '#location-category-view',
                     fromLeft: true, fromRight: false,
@@ -30,7 +30,7 @@ class LocationListView extends React.Component {
         };
     }
     // On close
-    onClose() { _( '.category.bookmark-mode' ).removeClass('bookmark-mode'); }
+    onClose() { if( _( '.category.bookmark-mode' ) ) _( '.category.bookmark-mode' ).removeClass('bookmark-mode'); }
 
     // Component will receive props
     componentWillReceiveProps( nextProps ) {

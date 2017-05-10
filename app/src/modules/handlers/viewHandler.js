@@ -6,17 +6,16 @@ const _ = require( '../libaries/underscore/underscore_main.js' ),
 class ViewHandler {
     
     // Ctor
-    constructor( syncScrollHandler ) {
-        this.focusedViews = [ '#event-calendar-view', '#location-category-view' ];
+    constructor( ) {
+        this.focusedViews = [ '#search-view', '#event-calendar-view' ];
         this.mobileFocusedView = _('#event-calendar-view').get();
         
         if ( _('body').hasClass('mobile') ) this.changeMobileViewFocus( this.mobileFocusedView, true, false );
         else this.changeViewFocus( this.focusedViews[0], this.focusedViews[1], true, false, true );
-        if ( syncScrollHandler != null ) this.syncScroll = syncScrollHandler;
     }
     
     // Change view focus
-    changeViewFocus( leftView, rightView, fromLeft, fromRight, notrans, leftSize, rightSize ) {
+    changeViewFocus( leftView, rightView, fromLeft, fromRight, notrans, ignoreAutoDirection, leftSize, rightSize ) {
         if ( _('body').hasClass('mobile') ) {
             this.changeMobileViewFocus( leftView, fromLeft, fromRight );
             return;
@@ -25,6 +24,8 @@ class ViewHandler {
         if ( this.focusedViews.includes( leftView ) &&
              this.focusedViews.includes( rightView ) ) return;
         
+        if ( ignoreAutoDirection ) { this.manualChangeViewFocus( leftView, rightView ); return; }
+
         _('.container-section').css({ 'width' : '50%' });
 
         if ( leftSize == null ) leftSize = 50;
@@ -49,18 +50,26 @@ class ViewHandler {
             if ( this.focusedViews[0] === leftView ) { 
                 fromLeft = true; fromRight = false; 
                 rightFocused = true;
+
+                let copy = leftView;
+                leftView = rightView;
+                rightView = copy;
             }
-            
+
             if ( this.focusedViews[0] === rightView ) {
                 fromLeft = true; fromRight = false;
                 rightFocused = true;
             }
-            
+
             if ( this.focusedViews[1] === rightView ) { 
                 fromLeft = false; fromRight = true; 
                 leftFocused = true;
+
+                let copy = leftView;
+                leftView = rightView;
+                rightView = copy;
             }
-            
+
             if ( this.focusedViews[1] === leftView ) {
                 fromLeft = false; fromRight = true; 
                 leftFocused = true;
@@ -144,6 +153,11 @@ class ViewHandler {
 
         _( leftView ).get(0).offsetHeight;
         _( rightView ).get(0).offsetHeight;
+//
+//        if ( _( leftView ) !== _( '#search-view' ) && _( rightView ) !== _( '#search-view' ) ) {
+//            if ( _( this.focusedViews[1] ) === _( '#search-view' ) ) _( '#search-view' ).css({ left: '50%' });
+//            else _( '#search-view' ).css({ left: '0' });
+//        }
 
         this.focusedViews[0] = leftView;
         this.focusedViews[1] = rightView;
@@ -160,6 +174,51 @@ class ViewHandler {
             
     }
     
+    // Manual change view focus
+    manualChangeViewFocus( leftView, rightView ) {
+        if ( this.focusedViews[0] === leftView ) {
+
+            // Prepositions views and sets z-index
+            _( this.focusedViews[0] ).css({ 'z-index' : '10' }).get(0).offsetHeight;
+            _( rightView ).addClass( 'notrans' ).css({ 'z-index' : '9', 'left' : '0' }).get(0).offsetHeight;
+            _( rightView ).removeClass('notrans').get(0).offsetHeight;
+
+            // Transitions views into right positions
+            _( rightView ).css({ 'left' : '50%' });
+            _( this.focusedViews[1] ).css({ 'left' : '100%' });
+
+            // Resets prev focusedViews position
+            setTimeout((( prevView ) => {
+                _( prevView ).addClass( 'notrans' ).css({ 'left' : '-50%' }).get(0).offsetHeight;
+                _( prevView ).removeClass( 'notrans' );
+            }).bind( this, this.focusedViews[1] ), parseFloat( _( this.focusedViews[1] ).style()[0].transitionDuration ) * 1000);
+
+        } else if ( this.focusedViews[1] === rightView ) {
+
+            // Prepositions views and sets z-index
+            _( this.focusedViews[1] ).css({ 'z-index' : '10' }).get(0).offsetHeight;
+            _( leftView ).addClass( 'notrans' ).css({ 'left' : '-50%' }).get(0).offsetHeight;
+            _( this.focusedViews[0] ).css({ 'z-index' : '9' }).get(0).offsetHeight;
+
+            // Transitions views into right positions
+            _( leftView ).css({ 'left' : '0' });
+            _( this.focusedViews[0] ).css({ 'left' : '50%' });
+
+            // Resets prev focusedViews position
+            setTimeout((( prevView ) => {
+                _( prevView ).addClass( 'notrans' ).css({ 'left' : '-50%' }).get(0).offsetHeight;
+                _( prevView ).removeClass( 'notrans' );
+            }).bind(this, this.focusedViews[0]), parseFloat( _( this.focusedViews[0] ).style()[0].transitionDuration ) * 1000);
+
+        } else {
+            this.changeViewFocus( leftView, rightView, true, false, false, false );
+            return;
+        }
+
+        this.focusedViews[0] = leftView;
+        this.focusedViews[1] = rightView;
+    }
+
     // Change mobile view focus
     changeMobileViewFocus( activeView, fromLeft, fromRight ) {
         

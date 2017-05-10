@@ -9,10 +9,10 @@ class EffectHandler {
     constructor() {
         if ( efh != null ) return efh;
         else efh = this;
-        this.buttonBounce(
+        /*this.buttonBounce(
             _('.login-btn'),
             350, 4000, true
-        );
+        );*/
     }
 
     /* ---- CTA Button Bounce ---- */

@@ -34,8 +34,8 @@ class LocationCategoryView extends React.Component {
             );
         } else {
             Globals.viewHandler.changeViewFocus(
-                '#location-category-view',
                 '#location-list-view',
+                '#location-category-view',
                 false, true, false
             );
         }

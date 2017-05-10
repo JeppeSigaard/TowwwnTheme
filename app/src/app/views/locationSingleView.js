@@ -20,8 +20,8 @@ class LocationSingleView extends React.Component{
             
         // Standard close properties
         this.standardclose = {
-            leftview: '#location-category-view',
-            rightview: '#location-list-view',
+            leftview: '#location-list-view',
+            rightview: '#location-category-view',
             fromLeft: true,
             fromRight: false,
             mobile: {
@@ -33,7 +33,7 @@ class LocationSingleView extends React.Component{
 
         // Close properties when coming from event
         this.fromeventclose = {
-            leftview: '#event-single-view',
+            leftview: '#event-calendar-view',
             rightview: '#event-calendar-view',
             fromLeft: false,
             fromRight: true,
@@ -44,10 +44,23 @@ class LocationSingleView extends React.Component{
             }
         };
 
+        // From search close
+        this.fromsearchclose = {
+            leftview : '#search-view',
+            rightview : '#search-results-view',
+            fromLeft : true,
+            fromRight: true,
+            mobile : {
+                view : '#search-results-view',
+                fromLeft : true,
+                fromRight : false
+            }
+        };
+
         // Close properties when coming from calendar
         this.fromeventCalendarclose = {
-            leftview: '#event-calendar-view',
-            rightview: '#location-category-view',
+            leftview: '#location-category-view',
+            rightview: '#event-calendar-view',
             fromLeft: false,
             fromRight: true,
             mobile: {
@@ -94,6 +107,15 @@ class LocationSingleView extends React.Component{
                 closeviewstate : this.fromeventCalendarclose,
             });
             
+        } else if ( nextProps.from === 'search-results-view' ) {
+
+            Globals.relations[ nextProps.name ].canright = false;
+            Globals.relations[ nextProps.name ].canleft = true;
+
+            this.setState({
+                closeviewstate : this.fromsearchclose,
+            });
+
         } else {
             
             Globals.relations[ nextProps.name ].canright = false;

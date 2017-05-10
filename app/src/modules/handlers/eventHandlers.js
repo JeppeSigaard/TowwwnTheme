@@ -1,7 +1,9 @@
 
 
 // Event Handler
-const _ = require( '../libaries/underscore/underscore_main.js' );
+const _ = require( '../libaries/underscore/underscore_main.js' ),
+      Globals = require( '../../app/globals.js' );
+
 class ExtraEventHandlers {
     
     // Ctor
