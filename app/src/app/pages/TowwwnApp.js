@@ -193,11 +193,20 @@ _('body').removeClass('loading');
             _( '.nav-locations' ).addClass('bookmark-mode');
             if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
 
-            Globals.viewHandler.changeViewFocus(
-                '#location-category-view',
-                '#search-view',
-                true, false, false
-            );
+            if(_('body').hasClass('mobile')){
+                Globals.viewHandler.changeMobileViewFocus(
+                    '#location-category-view',
+                    false, true
+                );
+            }
+
+            else{
+                Globals.viewHandler.changeViewFocus(
+                    '#event-calendar-view',
+                    '#location-category-view',
+                    true, false, false
+                );
+            }
         });
 
         _( '.nav-events' ).on( 'click', () => {
@@ -210,23 +219,61 @@ _('body').removeClass('loading');
             _( '.nav-events' ).addClass('bookmark-mode');
             if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
 
-            Globals.viewHandler.changeViewFocus(
-                '#search-view',
-                '#event-calendar-view',
-                false, true, false
-            );
+             if(_('body').hasClass('mobile')){
+                Globals.viewHandler.changeMobileViewFocus(
+                    '#event-calendar-view',
+                    true, false
+                );
+            }
+
+            else{
+                Globals.viewHandler.changeViewFocus(
+                    '#event-calendar-view',
+                    '#location-category-view',
+                    false, true, false
+                );
+            }
+
+
+        });
+
+        _( '.nav-search' ).on( 'click', () => {
+
+            if ( _('.search-nav-container .bookmark-mode') !== false )
+                _('.search-nav-container .bookmark-mode').removeClass('bookmark-mode');
+
+            _('.nav-elem').removeClass('bookmark-mode');
+            _( '.nav-search' ).addClass('bookmark-mode');
+            if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
+
+            if(_('body').hasClass('mobile')){
+                Globals.viewHandler.changeMobileViewFocus(
+                    '#search-view',
+                    true, false
+                );
+            }
+
+            else{
+                Globals.viewHandler.changeViewFocus(
+                    '#search-view',
+                    Globals.viewHandler.focusedViews[0],
+                    true, false, false
+                );
+            }
+
+            document.getElementById('search-bar').focus();
         });
 
         Globals.viewHandler = null;
 
         // Render 404
-        if ( app_data.type == '404'){
-            Globals.viewHandler = new ViewHandler();
+        if ( app_data.type == '404' || app_data.id == null){
+            Globals.viewHandler = new ViewHandler('#event-calendar-view', '#location-category-view', '#event-calendar-view');
         }
 
         // Render Front page
         if ( app_data.type == 'page' || app_data.type == 'post' ){
-            Globals.viewHandler = new ViewHandler();
+            Globals.viewHandler = new ViewHandler('#event-calendar-view', '#location-category-view', '#event-calendar-view');
             Globals.history.replace({'type' : 'home', 'name' : 'Towwwn'});
         }
 

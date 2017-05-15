@@ -18,8 +18,8 @@ class LocationListView extends React.Component {
         this.lastElem = null;
         this.state = {
             'closeviewstate' : {
-                'leftview' : '#location-category-view',
-                'rightview' : '#search-view',
+                'leftview' : '#event-calendar-view',
+                'rightview' : '#location-category-view',
                 'fromLeft' : true,
                 'fromRight' : false,
                 mobile: {

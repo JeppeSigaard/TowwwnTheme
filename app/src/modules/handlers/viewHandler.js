@@ -12,9 +12,14 @@ class ViewHandler {
               initialRightView = ( right != null ) ? right : '#location-category-view',
               initialMobileView = (mobile != null ) ? mobile : '#event-calendar-view';
 
-        this.focusedViews = [ '#event-calendar-view', '#location-category-view' ];
-        this.mobileFocusedView = '#event-calendar-view';
-        this.changeViewFocus( initialLeftView, initialRightView, true, true, true);
+        this.focusedViews = [];
+        this.mobileFocusedView = initialMobileView;
+        if(_('body').hasClass('mobile')){
+            this.changeMobileViewFocus( initialMobileView, true, true, true);
+        }
+        else{
+            this.changeViewFocus( initialLeftView, initialRightView, true, true, true);
+        }
     }
 
     // Change view focus
@@ -240,7 +245,7 @@ class ViewHandler {
         Globals.setMainState({ currentMobileView : activeView });
 
         // Adds needed classes
-        _(this.mobileFocusedView).removeClass('active notrans');
+        if (null != this.mobileFocusedView ) _(this.mobileFocusedView).removeClass('active notrans');
         _(activeView).addClass('notrans active');
 
         // Sets starting position for new view
@@ -252,8 +257,8 @@ class ViewHandler {
             _(activeView).removeClass('notrans');
 
             // Translates view in
-            if ( fromLeft ) _(this.mobileFocusedView).css({ left : '100%' });
-            if ( fromRight ) _(this.mobileFocusedView).css({ left : '-100%' });
+            if ( fromLeft && null != this.mobileFocusedView  ) _(this.mobileFocusedView).css({ left : '100%' });
+            if ( fromRight && null != this.mobileFocusedView  ) _(this.mobileFocusedView).css({ left : '-100%' });
             _(activeView).css({ left : '0' });
 
             // Sets new focused view

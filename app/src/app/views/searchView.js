@@ -14,7 +14,11 @@ class SearchView extends React.Component {
     // Ctor
     constructor() {
         super();
-        this.state = { };
+        this.state = {
+            background : 'https://scontent-arn2-1.xx.fbcdn.net/v/t31.0-8/15235783_819639251509309_4689912872243390735_o.jpg?oh=b25910009f9397382b9f9e0891896f1d&oe=597D070E',
+        };
+
+        this.setCommercialImage();
     }
 
     // On key down
@@ -34,28 +38,32 @@ class SearchView extends React.Component {
         }
     }
 
+
+    setCommercialImage(){
+
+        // Opens new request
+        let request = new XMLHttpRequest();
+        request.addEventListener( 'load', ( resp ) => {
+            let data = JSON.parse( resp.target.response );
+            for (var r in data){
+                if (data.hasOwnProperty(r) && data[r].commercial_tn_search != null){
+                    this.setState({background : data[r].commercial_tn_search });
+                    return;
+                }
+            }
+        });
+
+        request.open( 'GET', app_data.rest_api + 'svendborg/commercials?orderby=rand&fields=commercial_tn_search' );
+        request.send();
+    }
+
     // Render
     render() {
         return (
             <section className="container-section" id="search-view">
-                <div className="content">
-                    <div className="search-nav-container">
-                        <div className="nav-locations">
-                            <svg viewBox="0 0 32 32">
-                                <use xlinkHref="#icon-location">
-                                </use>
-                            </svg>
-                        </div>
-                        <div className="nav-events bookmark-mode">
-                            <svg viewBox="0 0 32 32">
-                                <use xlinkHref="#icon-event"></use>
-                            </svg>
-                        </div>
-                    </div>
-
+                <div className="content" style={{ 'backgroundImage' : 'url(' + this.state.background }}>
                     <div className="search-bar-container">
                         <input type="text" id="search-bar" onKeyDown={ this.onkeydown.bind(this) } placeholder="Søg"></input>
-
                         <svg className="search-icon" viewBox="0 0 32 32">
                             <use xlinkHref="#icon-search"></use>
                         </svg>

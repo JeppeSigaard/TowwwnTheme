@@ -120,14 +120,6 @@ $horizontal-bezier: cubic-bezier(.6, 0, .4, 1);
         transition: 400ms;
         transition-timing-function: $horizontal-bezier;
 
-        &:before{
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: $menu-bar-height;
-            background: $color-blue-2;
-        }
-
         &.notrans{
             transition: 0ms!important;
         }
@@ -221,11 +213,7 @@ $horizontal-bezier: cubic-bezier(.6, 0, .4, 1);
     // Event single view
     #event-single-view {
     }
-    
-    #search-view{
-        left: 0;
-        width: 50%;
-    }
+
 
     // Location categories
     #location-category-view{
@@ -253,6 +241,11 @@ $horizontal-bezier: cubic-bezier(.6, 0, .4, 1);
 
     // Location List View
     #location-list-view{
+    }
+
+    // Location Single View
+    #location-single-view{
+        background: white;
     }
 
 }

@@ -14,33 +14,38 @@
             <header id="site-header" class="site-header">
                 <div class="header-container">
                     <div id="headerbar">
-                        <div class="logo">
+                        <a class="logo" href="<?php bloginfo('url'); ?>">
                             <svg viewBox="0 0 32 32">
                                 <use xlink:href="#towwwn-logo">
                                 </use>
                             </svg>
-                        </div>
+                        </a>
                         <a href="<?php echo get_bloginfo('url'); ?>" class="logo-container">
                             <div class="city"><?php echo get_theme_mod('city'); ?></div>
                         </a>
 
                         <div id="top-nav-icons">
+                            <div class="nav-search nav-elem">
+                                <svg viewBox="0 0 32 32">
+                                    <use xlink:href="#icon-search"></use>
+                                </svg>
+                            </div>
+                            <div class="nav-events nav-elem">
+                                <svg viewBox="0 0 32 32">
+                                    <use xlink:href="#icon-event"></use>
+                                </svg>
+                            </div>
                             <div class="nav-locations nav-elem">
                                 <svg viewBox="0 0 32 32">
                                     <use xlink:href="#icon-location"></use>
                                 </svg>
                             </div>
-                            <div class="nav-events nav-elem bookmark-mode">
+                            <a class="nav-info nav-elem" href="<?php bloginfo('url'); ?>/docs/">
                                 <svg viewBox="0 0 32 32">
-                                    <use xlink:href="#icon-event"></use>
-                                </svg>
-                            </div>
-                            <div class="nav-user nav-elem">
-                                <svg viewBox="0 0 32 32">
-                                    <use xlink:href="#icon-user">
+                                    <use xlink:href="#icon-info">
                                     </use>
                                 </svg>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>

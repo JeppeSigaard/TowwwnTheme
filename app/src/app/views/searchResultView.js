@@ -16,8 +16,8 @@ class SearchResultView extends React.Component {
         super();
         this.state = {
             closeviewstate : {
-                leftview : '#search-view',
-                rightview : '#event-calendar-view',
+                leftview : '#event-calendar-view',
+                rightview : '#location-category-view',
                 fromLeft : false,
                 fromRight : true,
                 ignoreAutoDirection: true,
