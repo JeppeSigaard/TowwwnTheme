@@ -202,7 +202,7 @@ _('body').removeClass('loading');
 
             else{
                 Globals.viewHandler.changeViewFocus(
-                    '#event-calendar-view',
+                    Globals.viewHandler.focusedViews[0],
                     '#location-category-view',
                     true, false, false
                 );
@@ -231,7 +231,7 @@ _('body').removeClass('loading');
             else{
                 Globals.viewHandler.changeViewFocus(
                     '#event-calendar-view',
-                    '#location-category-view',
+                    Globals.viewHandler.focusedViews[1],
                     false, true, false
                 );
             }

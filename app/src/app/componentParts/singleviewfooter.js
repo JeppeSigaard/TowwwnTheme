@@ -96,7 +96,7 @@ class SingleViewFooter extends React.Component {
                     </a>
 
                     {/* Website */}
-                    { website !== null &&
+                    { website != null &&
                         <a className="sv-footer-block clickable" target="_blank" href={ website + '?ref="towwwn"'} >
                             <div className="icon">
                                 <svg viewBox="0 0 32 32">
@@ -110,7 +110,7 @@ class SingleViewFooter extends React.Component {
                     }
 
                     {/* Phone */}
-                    { phone !== null &&
+                    { phone != null &&
                         <a className="sv-footer-block clickable" href={phone_link} >
                             <div className="icon">
                                 <svg viewBox="0 0 32 32">
@@ -124,7 +124,7 @@ class SingleViewFooter extends React.Component {
                     }
 
                     {/* Hours */}
-                    { hours !== null &&
+                    { hours != null &&
                         <div className="sv-footer-block" >
                             <div className="icon topaligned">
                                 <svg viewBox="0 0 32 32">
@@ -138,7 +138,7 @@ class SingleViewFooter extends React.Component {
                     }
 
                     {/* Adress */}
-                    { phone !== null &&
+                    { adress != null &&
                         <a className="sv-footer-block clickable" target="_blank" href={ 'https://google.dk/maps/search/'+adress+',svendborg' } >
                             <div className="icon">
                                 <svg viewBox="0 0 32 32">
