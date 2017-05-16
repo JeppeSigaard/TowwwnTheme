@@ -26,15 +26,22 @@ class SearchView extends React.Component {
         if ( e.keyCode === 13 ) {
             Globals.setMainState({ searchResult: null });
             let search = new SearchDataHandler();
+            Globals.setMainState({ searchResult: 'loading' });
             search.getSearchResults( _( '#search-bar' ).get(0).value ).then(( resp ) => {
                 Globals.setMainState({ searchResult: resp });
             });
 
-            Globals.viewHandler.changeViewFocus(
-                '#search-view',
-                '#search-results-view',
-                true, false, false, true
-            );
+            if(_('body').hasClass('mobile')){
+                Globals.viewHandler.changeMobileViewFocus('#search-results-view', false, true);
+            }
+            else{
+                Globals.viewHandler.changeViewFocus(
+                    '#search-view',
+                    '#search-results-view',
+                    true, false, false, true
+                );
+            }
+
         }
     }
 

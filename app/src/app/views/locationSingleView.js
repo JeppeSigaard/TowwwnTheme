@@ -154,8 +154,6 @@ class LocationSingleView extends React.Component{
                             <SingleLocation elem={ this.props.elem } name={ this.props.name } /> }
                         { this.props.elem == null &&
                             <Loader /> }
-
-                        <BannerCommercials />
                     </div>
                 </div>
             </section>

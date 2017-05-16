@@ -139,8 +139,6 @@ class EventSingleView extends React.Component {
 
                         { this.state.jsxEvent != null &&
                           this.state.jsxEvent }
-
-                        <BannerCommercials />
                     </div>
                 </div>
             </section>
