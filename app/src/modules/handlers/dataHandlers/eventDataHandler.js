@@ -36,10 +36,10 @@ class EventDataHandler{
 
             // Sends request
             if ( cont ) {
-                xhr.open( 'GET', app_data.rest_api + 'svendborg/events?per_page='+getNum+'&page='+this.futurePage+'&after=now' );
+                xhr.open( 'GET', app_data.rest_api + '/events?per_page='+getNum+'&page='+this.futurePage+'&after=now' );
                 this.futurePage ++;
             } else {
-                xhr.open( 'GET', app_data.rest_api + 'svendborg/events?per_page='+getNum+'&page=1&after=now' );
+                xhr.open( 'GET', app_data.rest_api + '/events?per_page='+getNum+'&page=1&after=now' );
             }
 
             xhr.send();
@@ -55,13 +55,16 @@ class EventDataHandler{
             if ( typeof properties === 'object' ||
                  properties.length < 1 ) {
 
-                let str = [];
-                for ( let key in properties ) {
-                    str.push( key+'='+properties[key] ); }
-
-                if ( str.length > 0 ) {
-                    str.join(':');
-                } else reject();
+                // Set query string
+                let c = 0, query = '';
+                if(properties != null){
+                    for(var k in properties){
+                        c++; query += (c > 1) ? '&' : '?';
+                        if(properties.hasOwnProperty(k)){
+                            query += encodeURIComponent(k) + '=' + encodeURIComponent(properties[k]);
+                        }
+                    }
+                }
 
                 // Opens new request
                 let request = new XMLHttpRequest();
@@ -76,7 +79,7 @@ class EventDataHandler{
                 });
 
                 // Sends request
-                request.open( 'GET', app_data.rest_api + 'svendborg/events?' + str );
+                request.open( 'GET', app_data.rest_api + '/events' + query );
                 request.send();
 
             } else {

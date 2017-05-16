@@ -90,7 +90,7 @@ class Event extends React.Component {
         }.bind(this);
 
             // Sends request
-            xhr.open( 'GET', app_data.rest_api + 'svendborg/locations/' + this.props.elem.parentid );
+            xhr.open( 'GET', app_data.rest_api + '/locations/' + this.props.elem.parentid );
             xhr.send();
     }
 

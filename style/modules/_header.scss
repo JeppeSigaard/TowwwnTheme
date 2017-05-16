@@ -21,16 +21,9 @@
     }
 }
 
-@media screen and (max-width: $bp-1) {
-    .header-container{
-        max-width: $main-container-width-bp-1!important;
-    }
-}
-
 
 .header-container{
     width: 100%;
-    max-width: $main-container-width;
     transition: 200ms;
     height: auto;
     z-index: 100000;

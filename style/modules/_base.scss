@@ -32,30 +32,6 @@ body {
             }
         }
     }
-
-    @media(min-width:#{$bp-1}){
-        &:before, &:after{
-            content: '';
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            background-color: inherit;
-            width: calc((100% - #{$bp-1}) / 2);
-            z-index: 100;
-        }
-
-        &:after{
-            left: auto;
-            right: 0;
-        }
-    }
-
-    @media(min-width:#{$bp-2}){
-        &:before, &:after{
-            width: calc((100% - #{$bp-2}) / 2);
-        }
-    }
 }
 
 p a{

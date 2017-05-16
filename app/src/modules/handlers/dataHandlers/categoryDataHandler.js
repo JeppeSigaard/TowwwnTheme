@@ -31,7 +31,7 @@ class CategoryDataHandler {
             }.bind(this);
 
             // Sends request
-            request.open( 'GET', app_data.rest_api + 'svendborg/categories?featured=1' );
+            request.open( 'GET', app_data.rest_api + '/categories?featured=1' );
             request.send();
 
         });
@@ -68,7 +68,7 @@ class CategoryDataHandler {
             }.bind(this);
 
             // Sends request
-            request.open( 'GET', app_data.rest_api + 'svendborg/categories?per_page=100' );
+            request.open( 'GET', app_data.rest_api + '/categories?per_page=100' );
             request.send();
 
         });

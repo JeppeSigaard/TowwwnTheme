@@ -24,9 +24,20 @@ class SearchView extends React.Component {
     // On key down
     onkeydown( e ) {
         if ( e.keyCode === 13 ) {
-            Globals.setMainState({ searchResult: null });
-            let search = new SearchDataHandler();
+            this.submitSearch( e );
+        }
+    }
+
+    submitSearch( e ){
+        e.preventDefault();
+
+        const keyword =  _( '#search-bar' ).get(0).value;
+        if (null != keyword && keyword.length > 2){
+            document.getElementById('search-bar').blur();
+
             Globals.setMainState({ searchResult: 'loading' });
+
+            let search = new SearchDataHandler();
             search.getSearchResults( _( '#search-bar' ).get(0).value ).then(( resp ) => {
                 Globals.setMainState({ searchResult: resp });
             });
@@ -34,14 +45,10 @@ class SearchView extends React.Component {
             if(_('body').hasClass('mobile')){
                 Globals.viewHandler.changeMobileViewFocus('#search-results-view', false, true);
             }
-            else{
-                Globals.viewHandler.changeViewFocus(
-                    '#search-view',
-                    '#search-results-view',
-                    true, false, false, true
-                );
-            }
 
+            else{
+                Globals.viewHandler.changeViewFocus( '#search-view', '#search-results-view', true, false, false, true );
+            }
         }
     }
 
@@ -60,7 +67,7 @@ class SearchView extends React.Component {
             }
         });
 
-        request.open( 'GET', app_data.rest_api + 'svendborg/commercials?orderby=rand&fields=commercial_tn_search' );
+        request.open( 'GET', app_data.rest_api + '/commercials?orderby=rand&fields=commercial_tn_search' );
         request.send();
     }
 
@@ -69,12 +76,13 @@ class SearchView extends React.Component {
         return (
             <section className="container-section" id="search-view">
                 <div className="content" style={{ 'backgroundImage' : 'url(' + this.state.background }}>
-                    <div className="search-bar-container">
-                        <input type="text" id="search-bar" onKeyDown={ this.onkeydown.bind(this) } placeholder="Søg"></input>
+                    <form action="/" method="get" className="search-bar-container" onSubmit={ this.submitSearch.bind(this) }>
+                        <input name="s" type="text" id="search-bar" onKeyDown={ this.onkeydown.bind(this) } placeholder="Søg"></input>
+                        <input name="submit" type="submit" id="search-submit" value="søg"/>
                         <svg className="search-icon" viewBox="0 0 32 32">
                             <use xlinkHref="#icon-search"></use>
                         </svg>
-                    </div>
+                    </form>
                 </div>
             </section>
         );

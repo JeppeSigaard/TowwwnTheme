@@ -79,14 +79,14 @@ class SearchResultView extends React.Component {
                 let jsxLocations = [];
                 for ( let obj of nextProps.result.locations ) {
                     jsxLocations.push( <Location name="search-results-view" key={ 'search-location-'+obj.id } elem={ obj } /> );
-                } this.setState({ jsxLocations: jsxLocations.slice(0,4), allJsxLocations: jsxLocations });
+                } this.setState({ jsxLocations: jsxLocations.slice(0,6), allJsxLocations: jsxLocations });
             }
 
             if ( nextProps.result.events != null ) {
                 let jsxEvents = [];
                 for ( let obj of nextProps.result.events ) {
                     jsxEvents.push( <Event name="search-results-view" vref={ this.eventVref } key={ 'search-event-'+obj.id } elem={ obj } /> );
-                } this.setState({ jsxEvents : jsxEvents.splice(0,6), allJsxEvents : jsxEvents });
+                } this.setState({ jsxEvents : jsxEvents.splice(0,12), allJsxEvents : jsxEvents });
             }
         } else if (nextProps.result != this.state.result) {
             this.setState({

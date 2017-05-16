@@ -261,7 +261,10 @@ _('body').removeClass('loading');
                 );
             }
 
-            document.getElementById('search-bar').focus();
+            // Focus search bar (if not mobile)
+            if(!_('body').hasClass('mobile')){
+                document.getElementById('search-bar').focus();
+            }
         });
 
         Globals.viewHandler = null;
@@ -288,7 +291,7 @@ _('body').removeClass('loading');
                 Globals.history.replace(singleEvent[0]);
             });
 
-            request.open( 'GET', app_data.rest_api + 'svendborg/events/' + app_data.id );
+            request.open( 'GET', app_data.rest_api + '/events/' + app_data.id );
             request.send();
 
         }
@@ -310,7 +313,7 @@ _('body').removeClass('loading');
 
             });
 
-            request.open( 'GET', app_data.rest_api + 'svendborg/categories/' + app_data.id );
+            request.open( 'GET', app_data.rest_api + '/categories/' + app_data.id );
             request.send();
         }
 
@@ -334,7 +337,7 @@ _('body').removeClass('loading');
 
             });
 
-            request.open( 'GET', app_data.rest_api + 'svendborg/locations/' + app_data.id );
+            request.open( 'GET', app_data.rest_api + '/locations/' + app_data.id );
             request.send();
         }
 

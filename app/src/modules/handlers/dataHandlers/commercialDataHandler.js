@@ -7,17 +7,17 @@ class CommercialDataHandler {
     constructor() { this.commercials = null }
 
     // Get Commercials
-    getCommercials( vars ) {
+    getCommercials( properties ) {
         return new Promise(( resolve, reject) => {
             if ( this.commercials != null ) return this.commercials;
 
             // Set query string
             let c = 0, query = '';
-            if(vars != null){
-                for(var k in vars){
+            if(properties != null){
+                for(var k in properties){
                     c++; query += (c > 1) ? '&' : '?';
-                    if(obj.hasOwnProperty(k)){
-                        str += encodeURIComponent(k) + '=' + encodeURIComponent(obj[k]);
+                    if(properties.hasOwnProperty(k)){
+                        query += encodeURIComponent(k) + '=' + encodeURIComponent(properties[k]);
                     }
                 }
             }
@@ -31,7 +31,7 @@ class CommercialDataHandler {
             };
 
             // Sends request
-            request.open( 'GET', app_data.rest_api + 'svendborg/commercials?' + vars );
+            request.open( 'GET', app_data.rest_api + '/commercials' + query );
             request.send();
 
         });

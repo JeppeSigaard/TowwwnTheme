@@ -24,7 +24,7 @@ class SearchDataHandler {
                 } resolve( resp );
             });
 
-            request.open( 'GET', 'https://towwwn.dk/api/svendborg/discover/'+keyword + '?orderby=ID&order=desc');
+            request.open( 'GET', app_data.rest_api + '/discover/'+keyword + '?orderby=ID&order=desc');
             request.send();
         });
     }
