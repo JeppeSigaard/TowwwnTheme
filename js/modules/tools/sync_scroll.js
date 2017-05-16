@@ -260,7 +260,7 @@ var syncScroll = {
         this.rescaleContainer(function(){
             var goTopSide = false;
 
-            if($(window).width <= 640){
+            if($(window).width <= 769){
                 goTopSide = true;
             }
 

@@ -230,9 +230,9 @@ class ViewHandler {
     // Change mobile view focus
     changeMobileViewFocus( activeView, fromLeft, fromRight ) {
 
-        // Error if screen is less than 640px wide
+        // Error if screen is less than 769px wide
         if ( !_('body').hasClass('mobile') ) {
-            throw "ViewHandler: Using change mobile focus on screen with a width of more than 640px";
+            throw "ViewHandler: Using change mobile focus on screen with a width of more than 769px";
             return;
         }
 

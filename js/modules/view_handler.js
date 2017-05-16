@@ -57,7 +57,7 @@ var ViewHandler = {
         // Reloads current view to fit mobile screen sizes
         var lastSize = $(window).innerWidth();
         $(window).on( 'resize', function() {
-            if ( ( $(window).innerWidth() <= 640 && lastSize > 640 ) || ( $(window).innerWidth() > 640 && lastSize <= 640 ) ) {
+            if ( ( $(window).innerWidth() <= 769 && lastSize > 769 ) || ( $(window).innerWidth() > 769 && lastSize <= 769 ) ) {
                 setTimeout( function() {
                     this.change_view_focus( this.settings.currentIndex, this.settings.forcedLeft, this.settings.forcedRight );
                 }.bind(this), 400);
@@ -72,7 +72,7 @@ var ViewHandler = {
         // Reloads current view to fit mobile screen sizes
         var lastSize = $(window).innerWidth();
         $(window).on( 'resize', function() {
-            if ( ( $(window).innerWidth() <= 640 && lastSize > 640 ) || ( $(window).innerWidth() > 640 && lastSize <= 640 ) ) {
+            if ( ( $(window).innerWidth() <= 769 && lastSize > 769 ) || ( $(window).innerWidth() > 769 && lastSize <= 769 ) ) {
                 setTimeout( function() {
                     this.change_view_focus( this.settings.currentIndex, this.settings.forcedLeft, this.settings.forcedRight );
                 }.bind(this), 400);

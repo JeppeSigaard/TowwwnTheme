@@ -201,7 +201,7 @@ $horizontal-bezier: cubic-bezier(.6, 0, .4, 1);
             display: none;
         }
 
-        @media(min-width:640px){
+        @media(min-width:769px){
             width: 50%;
         }
     }
@@ -219,7 +219,7 @@ $horizontal-bezier: cubic-bezier(.6, 0, .4, 1);
     #location-category-view{
         background-color: white;
 
-        @media screen and ( min-width: 640px ) {
+        @media screen and ( min-width: 769px ) {
             width: 50%;
         }
     }
@@ -229,7 +229,7 @@ $horizontal-bezier: cubic-bezier(.6, 0, .4, 1);
     #event-calendar-view{
         background-color: #f0f0f0;
 
-        @media screen and ( min-width: 640px ) {
+        @media screen and ( min-width: 769px ) {
             left: 50%;
             width: 50%;
         }

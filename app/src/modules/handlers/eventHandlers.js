@@ -14,7 +14,7 @@ class ExtraEventHandlers {
 
     // On resize
     onResize() {
-        if ( _(window).width() <= 640 ) _('body').addClass('mobile');
+        if ( _(window).width() <= 769 ) _('body').addClass('mobile');
         else _('body').removeClass('mobile');
     }
 

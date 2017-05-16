@@ -52,7 +52,7 @@
         width: 100%;
         height: auto;
 
-        @media (min-width: 640px){
+        @media (min-width: 769px){
             padding: 16px 16px 0px;
         }
 
@@ -160,7 +160,7 @@
 
         .event-sv-desc{
             padding-bottom: 30px;
-            max-width: 640px;
+            max-width: 769px;
             word-wrap: break-word;
             * {
                 font-family: 'Avenir';

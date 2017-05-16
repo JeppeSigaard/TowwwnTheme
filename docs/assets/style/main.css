@@ -43,7 +43,7 @@ main, aside {
   padding: 10px; }
 
 aside .inner {
-  max-width: 640px;
+  max-width: 769px;
   margin: auto; }
 
 svg {
@@ -64,7 +64,7 @@ svg {
   .docs-content {
     padding: 46px 10px 10px; } }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
   .docs-content {
     background: #f3f3f3;
     font-size: 0; }
@@ -160,7 +160,7 @@ header.docs-header {
     width: 14px; }
 
 article, aside .inner {
-  max-width: 640px;
+  max-width: 769px;
   margin: auto;
   line-height: 1.5; }
   article p a, aside .inner p a {

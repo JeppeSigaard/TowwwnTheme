@@ -55,7 +55,7 @@ class TowwwnApp extends React.Component {
         super();
 
         // Checks if mobile
-        if ( _(window).width() <= 640 ) _('body').addClass('mobile');
+        if ( _(window).width() <= 769 ) _('body').addClass('mobile');
 
         // Instances
         this.eventHandlers = new EventHandlers();

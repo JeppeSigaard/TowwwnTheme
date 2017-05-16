@@ -103,7 +103,7 @@
     height: auto;
     padding: 0;
 
-    @media(min-width: 640px){
+    @media(min-width: 769px){
        padding: 0;
     }
 
@@ -172,7 +172,7 @@
                 }
             }
 
-            @media(min-width:640px){
+            @media(min-width:769px){
                 min-height: 110px;
 
                 .imgcontainer{
@@ -221,7 +221,7 @@
         background-color: #fff;
     }
 
-    @media(min-width:640px){
+    @media(min-width:769px){
         width: 165px;
         margin: 6px;
         border: 1px solid $color-blue-1;
@@ -265,7 +265,7 @@
             }
         }
 
-        @media(min-width:640px){
+        @media(min-width:769px){
             padding-bottom: 90px;
             border-bottom: 1px solid $color-blue-1;
         }
@@ -343,7 +343,7 @@
         }
 
 
-        @media(min-width:640px){
+        @media(min-width:769px){
             height: 160px;
             padding: 10px;
             padding-top: 15px;
