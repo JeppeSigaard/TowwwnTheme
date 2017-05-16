@@ -121,6 +121,8 @@ class EventSingleView extends React.Component {
             Globals.setMainState({
                 'singleLocation' : data[0],
             });
+
+            Globals.history.push(data[0]);
         });
 
         request.open( 'GET', app_data.rest_api + '/locations/'+this.props.event.parentid );
