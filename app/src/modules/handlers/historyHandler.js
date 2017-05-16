@@ -4,6 +4,7 @@ const _ = require( '../libaries/underscore/underscore_main.js' ),
           event : 'event',
           location : 'location',
           category : 'category',
+          main_title : 'Towwwn',
       };
 
 class historyHandler {
@@ -27,17 +28,26 @@ class historyHandler {
 
     // Add new history state
     push( obj ){
+
+        const objName = (obj.type == 'category') ? obj.category_name + ' · Kategorier' : obj.name;
+
         const path = (obj.type == 'home') ? app_data.main_path + '/' : app_data.main_path + '/' + typeslugs[obj.type] + '/' + obj.slug + '/';
-        history.pushState(obj, obj.name, path );
+
+        history.pushState(obj, objName, path );
 
         // Google analytics send pageview
         if(typeof ga == 'function'){
             ga('send', 'pageview', path);
         }
+
+        // Set title
+        document.title = (obj.type == 'home') ? objName : objName + ' · ' + typeslugs.main_title ;
     }
 
     // handles pop state
     pop( event ){
+
+        const eventName = (event.state.type == 'category') ? event.state.category_name + ' · Kategorier' : event.state.name;
 
         // To events
         if(event.state.type == 'event'){
@@ -84,6 +94,9 @@ class historyHandler {
         if(typeof ga == 'function'){
             ga('send', 'pageview', event.state.path);
         }
+
+        // Set title
+        document.title = (event.state.type == 'home') ? eventName : eventName + ' · ' + typeslugs.main_title ;
     }
 
 } module.exports = historyHandler;

@@ -207,6 +207,8 @@ _('body').removeClass('loading');
                     true, false, false
                 );
             }
+
+            Globals.history.push({'type' : 'home', 'name' : 'Steder · Towwwn'});
         });
 
         _( '.nav-events' ).on( 'click', () => {
@@ -234,6 +236,7 @@ _('body').removeClass('loading');
                 );
             }
 
+            Globals.history.push({'type' : 'home', 'name' : 'Begivenheder · Towwwn'});
 
         });
 
@@ -265,6 +268,8 @@ _('body').removeClass('loading');
             if(!_('body').hasClass('mobile')){
                 document.getElementById('search-bar').focus();
             }
+
+            Globals.history.push({'type' : 'home', 'name' : 'Søg · Towwwn'});
         });
 
         Globals.viewHandler = null;
