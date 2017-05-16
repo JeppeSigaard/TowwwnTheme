@@ -59,6 +59,12 @@ class ViewTopBar extends React.Component {
         }
     }
 
+    // Heart
+    heart() {
+        if ( this.props.heartFunc != null ) this.props.heartFunc();
+        else console.log( 'No heart func set' );
+    }
+
     // Component Will Receive Props
     componentWillReceiveProps( nextProps ) {
         let classes = 'viewbar';
@@ -76,6 +82,15 @@ class ViewTopBar extends React.Component {
                 }
                 
                 { this.props.other }
+                { this.props.heart &&
+                    <div className="heart" onClick={ this.heart.bind(this) } >
+                        <svg viewBox="0 0 32 32">
+                            <use xlinkHref="#icon-heart" >
+                            </use>
+                        </svg>
+                    </div>
+                }
+
                 { this.props.standard &&
                     <div className="close-button" onClick={ this.closeView.bind(this) } >&times;</div>
                 }

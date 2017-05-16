@@ -30,6 +30,11 @@ class LocationCategory extends React.Component {
                 <div className="category-content-container" >
                     <div className="category-title" >{ elem.category_name }</div>
                     <div className="category-count" >{ elem.location_count }</div>
+                    <div className="category-heart-counter" >
+                        <svg viewBox="0 0 32 32">
+                            <use xlinkHref="#icon-heart"></use>
+                        </svg>
+                    </div>
                 </div>
             </div>
         );

@@ -187,10 +187,13 @@ class ViewHandler {
             _( rightView ).css({ 'left' : '50%' });
             _( this.focusedViews[1] ).css({ 'left' : '100%' });
 
+            _( this.focusedViews[0] ).css({ 'box-shadow' : '2px 0px 4px rgba(0,0,0,.2)' });
+
             // Resets prev focusedViews position
             setTimeout((( prevView ) => {
                 _( prevView ).addClass( 'notrans' ).css({ 'left' : '-50%' }).get(0).offsetHeight;
                 _( prevView ).removeClass( 'notrans' );
+                _( this.focusedViews[0] ).css({ 'box-shadow' : '0px 0px 0px rgba(0,0,0,0)' });
             }).bind( this, this.focusedViews[1] ), parseFloat( _( this.focusedViews[1] ).style()[0].transitionDuration ) * 1000);
 
         } else if ( this.focusedViews[1] === rightView ) {
@@ -204,10 +207,13 @@ class ViewHandler {
             _( leftView ).css({ 'left' : '0' });
             _( this.focusedViews[0] ).css({ 'left' : '50%' });
 
+            _( this.focusedViews[1] ).css({ 'box-shadow' : '-2px 0px 4px rgba(0,0,0,.2)' });
+
             // Resets prev focusedViews position
             setTimeout((( prevView ) => {
                 _( prevView ).addClass( 'notrans' ).css({ 'left' : '-50%' }).get(0).offsetHeight;
                 _( prevView ).removeClass( 'notrans' );
+                _( this.focusedViews[1] ).css({ 'box-shadow' : '0px 0px 0px rgba(0,0,0,0)' });
             }).bind(this, this.focusedViews[0]), parseFloat( _( this.focusedViews[0] ).style()[0].transitionDuration ) * 1000);
 
         } else {

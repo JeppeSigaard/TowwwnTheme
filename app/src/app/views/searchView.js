@@ -19,19 +19,22 @@ class SearchView extends React.Component {
 
     // On key down
     onkeydown( e ) {
-        if ( e.keyCode === 13 ) {
-            Globals.setMainState({ searchResult: null });
-            let search = new SearchDataHandler();
-            search.getSearchResults( _( '#search-bar' ).get(0).value ).then(( resp ) => {
-                Globals.setMainState({ searchResult: resp });
-            });
+        if ( e.keyCode === 13 ) this.search();
+    }
 
-            Globals.viewHandler.changeViewFocus(
-                '#search-view',
-                '#search-results-view',
-                true, false, false, true
-            );
-        }
+    // Search
+    search() {
+        Globals.setMainState({ searchResult: null });
+        let search = new SearchDataHandler();
+        search.getSearchResults( _( '#search-bar' ).get(0).value ).then(( resp ) => {
+            Globals.setMainState({ searchResult: resp });
+        });
+
+        Globals.viewHandler.changeViewFocus(
+            '#search-view',
+            '#search-results-view',
+            true, false, false, true
+        );
     }
 
     // Render
@@ -56,7 +59,7 @@ class SearchView extends React.Component {
                     <div className="search-bar-container">
                         <input type="text" id="search-bar" onKeyDown={ this.onkeydown.bind(this) } placeholder="Søg"></input>
 
-                        <svg className="search-icon" viewBox="0 0 32 32">
+                        <svg className="search-icon" onClick={ this.search.bind(this) } viewBox="0 0 32 32">
                             <use xlinkHref="#icon-search"></use>
                         </svg>
                     </div>

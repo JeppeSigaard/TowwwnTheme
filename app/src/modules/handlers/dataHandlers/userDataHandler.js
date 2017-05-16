@@ -28,6 +28,10 @@ class User {
                     location: { },
                     locationcategory: { },
                 }
+            },
+            hearts: {
+                events: [],
+                locations: []
             }
         };
 
@@ -41,7 +45,10 @@ class User {
         
         // On load, get behaviour statistics from cookie
         window.onload = (() => {
-            let data = window._cookielib.read( 'data' );
+
+            // Uncomment this... i mean it.. Right now
+
+            /*let data = window._cookielib.read( 'data' );
             
             if ( data != '' ) {
                 data = JSON.parse( data );
@@ -57,7 +64,7 @@ class User {
                     _('.login-btn').text( this.state.fbData.name.split(' ')[0] );
                     this.loginToDB();
                 }
-            }
+            }*/
         });
 
         // Before unload, uploads behaviour statistics
@@ -71,6 +78,7 @@ class User {
                     token : this.state.accessToken.token,
                     meta_data : {
                         behaviour_statistics : this.state.behaviourData,
+                        hearts : this.state.hearts
                     },
                 };
 
@@ -175,6 +183,8 @@ class User {
                             let json = JSON.parse( data.target.response ),
                                 obj = json.behaviour_statistics;
                             
+                            console.log( json );
+
                             // Converts arrays back into objects
                             let timeData = obj.timeData,
                                 types = [ 'event', 'location', 'locationcategory' ];
@@ -221,7 +231,7 @@ class User {
                         request.open( 'GET', rest_api+'svendborg/user/'+this.state.dbData.id+
                                       '?user='+ this.state.dbData.id +
                                       '&token='+ this.state.accessToken.token +
-                                      '&fields=behaviour_statistics' );
+                                      '&fields=behaviour_statistics,hearts' );
 
                         request.send();
                         resolve( data );

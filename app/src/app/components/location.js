@@ -22,8 +22,10 @@ class Location extends React.Component {
             Globals.viewHandler.changeMobileViewFocus(
                 '#location-single-view',
                 false, true
-            );
-        } else if ( this.props.name === 'search-results-view' ) {
+            ); return;
+        }
+
+        if ( this.props.name === 'search-results-view' ) {
             Globals.viewHandler.changeViewFocus(
                 '#search-results-view',
                 '#location-single-view',

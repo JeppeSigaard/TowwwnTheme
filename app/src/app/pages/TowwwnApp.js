@@ -24,6 +24,7 @@ const React = require( 'react' ),
     LocationCategoryView = require( '../views/locationCategoryView.js' ),
     LocationListView = require( '../views/locationListView.js' ),
     LocationSingleView = require( '../views/locationSingleView.js' ),
+    UserView = require( '../views/userView.js' ),
 
     // Components
     Event = require( '../components/event.js' ),
@@ -217,6 +218,7 @@ class TowwwnApp extends React.Component {
                 <div className="content-container-inner">
                     <SearchView />
                     <SearchResultView result={ this.state.searchResult } />
+                    <UserView />
 
                     <EventSingleView name="event-single-view" from={ this.state.from } event={ this.state.singleevent } setMainState={ this.parsedSetState.bind(this) } />
                     <EventCalendarView name="event-calendar-view" from={ this.state.from } events={ this.state.jsxEvents } setMainState={ this.parsedSetState.bind(this) } />

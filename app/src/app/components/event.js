@@ -142,6 +142,10 @@ class Event extends React.Component {
         return (
             <a className="event" style={ this.props.style != null ? this.props.style : {} } >
                 <div className="imgcontainer" data-image-src={ image } onClick={ this.eventRefClick.bind(this) } >
+                    {/*<svg viewBox="0 0 32 32" className="heart">
+                        <use xlinkHref="#icon-heart"></use>
+                    </svg>*/}
+
                     <div className="loader">
                         <img src={ template_uri + '/style/assets/icons/loading-white.svg' } />
                     </div>

@@ -55,24 +55,28 @@ class SearchResultView extends React.Component {
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
         if ( nextProps.result != null ) {
-            if ( nextProps.result.events.length === 0 && nextProps.result.locations.length === 0 ) {
-                this.setState({ noResults: true });
-            } else this.setState({ noResults: false });
+            if ( nextProps.result !== this.prevResult ) {
+                this.prevResult = nextProps.result;
 
-            this.setState({ result: nextProps.result });
+                if ( nextProps.result.events.length === 0 && nextProps.result.locations.length === 0 ) {
+                    this.setState({ noResults: true });
+                } else this.setState({ noResults: false });
 
-            if ( nextProps.result.locations != null ) {
-                let jsxLocations = [];
-                for ( let obj of nextProps.result.locations ) {
-                    jsxLocations.push( <Location name="search-results-view" key={ 'search-location-'+obj.id } elem={ obj } /> );
-                } this.setState({ jsxLocations: jsxLocations.slice(0,4), allJsxLocations: jsxLocations });
-            }
+                this.setState({ result: nextProps.result });
 
-            if ( nextProps.result.events != null ) {
-                let jsxEvents = [];
-                for ( let obj of nextProps.result.events ) {
-                    jsxEvents.push( <Event name="search-results-view" vref={ this.eventVref } key={ 'search-event-'+obj.id } elem={ obj } /> );
-                } this.setState({ jsxEvents : jsxEvents.splice(0,6), allJsxEvents : jsxEvents });
+                if ( nextProps.result.locations != null ) {
+                    let jsxLocations = [];
+                    for ( let obj of nextProps.result.locations ) {
+                        jsxLocations.push( <Location name="search-results-view" key={ 'search-location-'+obj.id } elem={ obj } /> );
+                    } this.setState({ jsxLocations: jsxLocations.slice(0,4), allJsxLocations: jsxLocations });
+                }
+
+                if ( nextProps.result.events != null ) {
+                    let jsxEvents = [];
+                    for ( let obj of nextProps.result.events ) {
+                        jsxEvents.push( <Event name="search-results-view" vref={ this.eventVref } key={ 'search-event-'+obj.id } elem={ obj } /> );
+                    } this.setState({ jsxEvents : jsxEvents.splice(0,6), allJsxEvents : jsxEvents });
+                }
             }
         } else {
             this.setState({
@@ -115,7 +119,7 @@ class SearchResultView extends React.Component {
     render() {
         return (
             <section className="container-section" id="search-results-view">
-                <ViewTopBar standard={ true } title={ this.props.keyword == null ? 'Søge resultater' : 'Søge resultater: ' + this.props.keyword } onClose={ this.onClose.bind(this) } closeviewstate={ this.state.closeviewstate } name={ 'search-results-view' } />
+                <ViewTopBar standard={ true } darken={ true } title={ this.props.keyword == null ? 'Søge resultater' : 'Søge resultater: ' + this.props.keyword } onClose={ this.onClose.bind(this) } closeviewstate={ this.state.closeviewstate } name={ 'search-results-view' } />
 
                 <div className="scroll-container" >
                     <div className="content">

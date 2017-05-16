@@ -3,6 +3,7 @@
 // Location Single view
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
+      _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
       BehaviourDataHandler = require( '../../modules/handlers/behaviourHandler/dataHandler.js' ),
       LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       SingleLocation = require( '../components/singleLocation.js' ),
@@ -34,7 +35,7 @@ class LocationSingleView extends React.Component{
         // Close properties when coming from event
         this.fromeventclose = {
             leftview: '#event-calendar-view',
-            rightview: '#event-calendar-view',
+            rightview: '#event-single-view',
             fromLeft: false,
             fromRight: true,
             mobile: {
@@ -77,9 +78,65 @@ class LocationSingleView extends React.Component{
         
     }
     
+    // Heart
+    heart() {
+       if ( Globals.user != null && !Globals.user.state.loggedIn ) {
+            Globals.setMainState({ from: 'location-single-view' });
+            Globals.lastViewState = [ Globals.viewHandler.focusedViews[0], Globals.viewHandler.focusedViews[1] ];
+            Globals.viewHandler.changeViewFocus(
+                '#user-view',
+                '#location-single-view',
+                false, true, false, true
+            );
+       } else {
+            let heart = _('#location-single-view .heart');
+            if ( heart.hasClass('anim') || heart.hasClass('animback') ) return;
+            if ( Globals.user.state.hearts.locations[ this.props.elem.id ] != true ) {
+                heart.addClass('anim');
+                Globals.user.state.hearts.locations[ this.props.elem.id ] = true;
+
+                setTimeout(() => {
+                    heart.removeClass('anim');
+                    heart.addClass('active');
+                }, 400 );
+
+            } else {
+                heart.addClass('animback');
+                Globals.user.state.hearts.locations[ this.props.elem.id ] = false;
+
+                setTimeout(() => {
+                    heart.removeClass('animback');
+                    heart.removeClass('active');
+                }, 400);
+
+            }
+       }
+    }
+
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
         if ( nextProps.elem != this.lastElem ) {
+            let heart = _('#location-single-view .heart');
+
+            if ( Globals.user.state.hearts.locations[ nextProps.elem.id ] == true && !heart.hasClass('active') ) {
+                heart.removeClass('animback');
+                heart.addClass('anim');
+
+                setTimeout(() => {
+                    heart.removeClass('anim');
+                    heart.addClass('active');
+                }, 400);
+
+            } else if ( Globals.user.state.hearts.locations[ nextProps.elem.id ] != true && heart.hasClass( 'active' ) ) {
+                heart.removeClass('anim');
+                heart.addClass('animback');
+
+                setTimeout(() => {
+                    heart.removeClass('animback');
+                    heart.removeClass('active');
+                }, 400);
+            }
+
             BehaviourDataHandler.parseData( 'location', nextProps.elem );
             this.lastElem = nextProps.elem;
 
@@ -141,11 +198,15 @@ class LocationSingleView extends React.Component{
         }
     }
 
+    onClose() {
+
+    }
+
     // Render
     render() {
         return (
             <section className="container-section" id="location-single-view">
-                <ViewTopBar standard={ true } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } />
+                <ViewTopBar standard={ true } onClose={ this.onClose.bind(this) } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } heart={ true } heartFunc={ this.heart.bind(this) } />
                 
                 <div className="scroll-container">
                     <div className="content">            

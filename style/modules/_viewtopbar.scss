@@ -11,6 +11,97 @@
     top: $menu-bar-height;
     border-bottom: 1px solid rgba(0,0,0,.3);
 
+    .heart{
+        position: absolute;
+        right: calc( #{$menu-bar-height} + 15px );
+        top: 0;
+        width: calc( #{$menu-bar-height} + 15px );
+        height: calc( #{$menu-bar-height} + 10px );
+        border-left: 1px solid white;
+        cursor: pointer;
+        animation-duration: 400ms;
+
+        &.active{
+            svg{
+                fill: #fff;
+            }
+        }
+
+        &.anim{
+            svg{
+                animation: 400ms anim forwards;
+            }
+        }
+
+        &.animback{
+            svg{
+                animation: 400ms animBack forwards;
+            }
+        }
+
+        @keyframes anim{
+            0% {
+                width: 24px;
+                height: 24px;
+                fill: transparent;
+            }
+
+            40% {
+                width: 28px;
+                height: 28px;
+                // fill: lighten( red, 25% );
+            }
+
+            60% {
+                width: 28px;
+                height: 28px;
+            }
+
+            100% {
+                width: 24px;
+                height: 24px;
+                fill: #fff;
+            }
+        }
+
+        @keyframes animBack{
+            0% {
+                width: 24px;
+                height: 24px;
+                fill: #fff;
+            }
+
+            40% {
+                width: 28px;
+                height: 28px;
+            }
+
+            60% {
+                width: 28px;
+                height: 28px;
+                // fill: lighten( red, 25% );
+            }
+
+            100% {
+                width: 24px;
+                height: 24px;
+                fill: transparent;
+            }
+        }
+
+        svg{
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate( -50%, -50% );
+            fill: transparent;
+            stroke: white;
+            stroke-width: 4px;
+            padding: 4px;
+            width: 24px;
+            height: 24px;
+        }
+    }
+
     &.dark{
         background-color: darken( $color-blue-2, 5% );
     }
