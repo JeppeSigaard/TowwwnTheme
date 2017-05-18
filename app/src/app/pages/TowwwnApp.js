@@ -128,7 +128,7 @@ class TowwwnApp extends React.Component {
             });
         });
 
-        Globals.categoryDataHandler.getAllCategories(false, false).then(( resp ) => {
+        Globals.categoryDataHandler.getAllCategories(false, true).then(( resp ) => {
 
             let categoriesData = [];
             for (let category of resp){

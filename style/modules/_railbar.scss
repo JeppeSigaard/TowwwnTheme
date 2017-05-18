@@ -56,6 +56,7 @@
 $rail-bar-button-height: $menu-bar-height - 8;
 $rail-bar-svg-height: 12px;
 .rail-bar-menu-button{
+    white-space: nowrap;
     height: $rail-bar-button-height;
     line-height: $rail-bar-button-height - 2;
     font-size: 10px;

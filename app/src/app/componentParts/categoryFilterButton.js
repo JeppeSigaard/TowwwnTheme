@@ -7,20 +7,21 @@ const React = require( 'react' ),
 class Loader extends React.Component {
 
     // Ctor
-    constructor() { super(); }
+    constructor() {
+        super();
+    }
 
 
     handleClick( e ){
         if(Globals.navigationBlocker) return;
 
         // Set bookmark
-        _('.filter-button.bookmark-mode').removeClass('bookmark-mode');
+        _('.filter-button').removeClass('bookmark-mode');
         e.target.classList.add('bookmark-mode');
 
         // Set category globals
-        Globals.locationDataHandler.getCategorySpecificLocation( this.props.category.category_id ).then(( resp ) => {
+        Globals.locationDataHandler.getCategorySpecificLocation( this.props.elem.category_id ).then(( resp ) => {
             Globals.setMainState({
-                'currentLocationsCategory' : this.props.category,
                 'currentLocations' : resp,
             });
         });
@@ -29,8 +30,11 @@ class Loader extends React.Component {
     // Render
     render() {
 
+        let className = 'rail-bar-menu-button filter-button';
+        if(this.props.active != null && this.props.active) className += ' bookmark-mode';
+
         return (
-            <div category={this.props.category} onClick={this.handleClick.bind(this)} className="rail-bar-menu-button filter-button">
+            <div onClick={this.handleClick.bind(this)} className={className}>
                 {this.props.name != null && this.props.name}
                 { ( this.props.icon != null && this.props.viewBox !=null ) &&
                     <svg viewBox={this.props.viewBox}><use xlinkHref={this.props.icon}></use></svg>

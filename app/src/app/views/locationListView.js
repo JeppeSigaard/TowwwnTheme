@@ -52,20 +52,44 @@ class LocationListView extends React.Component {
             this.setState({ 'jsxLocations' : null });
         }
 
-        if(nextProps.category != null){
+        if(nextProps.category != null && nextProps.category.category_parent != null){
             let jsxCategoryList = [];
-            console.log(nextProps.category);
-            if(nextProps.category.category_parent == 0){
-                jsxCategoryList.push(<CategoryFilterButton category={nextProps.category} name='Alle' />);
 
-                /*for(let cat of nextProps.category.children){
-                    jsxCategoryList.push(<CategoryFilterButton category={cat} name={cat.category_name} />);
-                }*/
-            }
-            this.setState({ 'jsxCategoryList' : jsxCategoryList });
+            const getID = (nextProps.category.category_parent == 0 ) ? nextProps.category.category_id : nextProps.category.category_parent ;
+
+
+            Globals.categoryDataHandler.getCategory( getID ).then(( resp ) => {
+
+                if(resp.children.length == 0){this.setState({ 'jsxCategoryList' : null, 'jsxCategoryListHead' : getID }); return;}
+
+                jsxCategoryList.push(<CategoryFilterButton
+                    active={ resp.category_id == nextProps.category.category_id}
+                    count={resp.category_count}
+                    key={'filter-button-' + resp.category_id}
+                    elem={resp}
+                    name='Alle'
+                />);
+
+                if(resp.children != null){
+                    for(let cat of resp.children){
+                        jsxCategoryList.push(<CategoryFilterButton
+                            active={ cat.category_id == nextProps.category.category_id}
+                            count={cat.category_count}
+                            key={'filter-button-' + cat.category_id}
+                            elem={cat}
+                            name={cat.category_name}
+                        />);
+                    }
+                }
+
+                this.setState({ 'jsxCategoryList' : jsxCategoryList, 'jsxCategoryListHead' : getID });
+
+            });
+
         }
 
-        else this.setState({ 'jsxCategoryList' : null });
+        else this.setState({ 'jsxCategoryList' : null, 'jsxCategoryListHead' : null });
+
     }
 
     // Render
