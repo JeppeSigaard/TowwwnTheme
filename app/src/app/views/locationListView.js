@@ -4,10 +4,14 @@
 const React = require( 'react' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
       BehaviourDataHandler = require( '../../modules/handlers/behaviourHandler/dataHandler.js' ),
+      CategoryDataHandler = require( '../../modules/handlers/dataHandlers/categoryDataHandler.js' ),
       LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
+      CategoryFilterButton  = require( '../componentParts/categoryFilterButton.js' ),
       Location = require( '../components/location.js' ),
-      Loader = require( '../componentParts/loader.js' );
+      Loader = require( '../componentParts/loader.js' ),
+      Railbar = require( '../componentParts/railbar.js' ),
+      Globals = require( '../globals.js' );
 
 class LocationListView extends React.Component {
 
@@ -47,19 +51,22 @@ class LocationListView extends React.Component {
         } else {
             this.setState({ 'jsxLocations' : null });
         }
-    }
 
-//    // Component did mount
-//    componentDidMount() {
-//        this.lazyLoad = new LazyLoadHandler( '#location-list-view .scroll-container' );
-//    }
-//
-//    // Component did update
-//    componentDidUpdate() {
-//        if ( this.state.jsxLocations != null ) {
-//            this.lazyLoad.triggerload();
-//        }
-//    }
+        if(nextProps.category != null){
+            let jsxCategoryList = [];
+            console.log(nextProps.category);
+            if(nextProps.category.category_parent == 0){
+                jsxCategoryList.push(<CategoryFilterButton category={nextProps.category} name='Alle' />);
+
+                /*for(let cat of nextProps.category.children){
+                    jsxCategoryList.push(<CategoryFilterButton category={cat} name={cat.category_name} />);
+                }*/
+            }
+            this.setState({ 'jsxCategoryList' : jsxCategoryList });
+        }
+
+        else this.setState({ 'jsxCategoryList' : null });
+    }
 
     // Render
     render() {
@@ -71,10 +78,15 @@ class LocationListView extends React.Component {
 
                 <div className="scroll-container">
                     <div className="content">
+                        { this.state.jsxCategoryList != null &&
+                        <Railbar name="sub-cat-bar" >
+                            {this.state.jsxCategoryList}
+                        </Railbar> }
+                        { this.state.jsxLocations != null &&
                         <div className="location-list" >
                             { this.state.jsxLocations != null && this.state.jsxLocations }
                             { this.state.jsxLocations == null && <Loader /> }
-                        </div>
+                        </div>}
                     </div>
                 </div>
             </section>

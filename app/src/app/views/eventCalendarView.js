@@ -3,6 +3,7 @@
 // Event Calendar View
 const React = require( 'react' ),
       Event = require( '../components/event.js' ),
+      Railbar = require( '../componentParts/railbar.js' ),
       Globals = require( '../globals.js' ),
       LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' );

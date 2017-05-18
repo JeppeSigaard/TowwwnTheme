@@ -9,8 +9,8 @@ const React = require( 'react' ),
 class Event extends React.Component {
 
     // Click Handlers
-    eventRefClick( e ) {
-        e.preventDefault();
+    eventRefClick( e ) { e.preventDefault(); if(!Globals.navigationBlocker){
+
         Globals.setMainState({ from : this.props.name });
         Globals.setMainState(
             'singleevent',
@@ -51,7 +51,7 @@ class Event extends React.Component {
                 );
             }
         }
-    }
+    }}
 
     locationRefClick( e ) {
         e.preventDefault();

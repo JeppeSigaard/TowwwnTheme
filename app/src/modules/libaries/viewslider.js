@@ -23,7 +23,7 @@ class ViewSlider {
     // Handlers
     // Touch Start
     onTouchStart(e) {
-
+        if(Globals.navigationBlocker) return;
         // Sets basic fields
         this.currentView = _('.content-container-inner > .active').addClass('notrans').attr('id');
         this.start = {
@@ -53,6 +53,7 @@ class ViewSlider {
 
     // Touch Move
     onTouchMove(e) {
+        if(Globals.navigationBlocker) return;
         // Sets a few new fields
         let deltax = e.touches[0].clientX - this.start.x,
             deltay = e.touches[0].clientY - this.start.y,
@@ -85,6 +86,7 @@ class ViewSlider {
 
     // Touch End
     onTouchEnd(e) {
+        if(Globals.navigationBlocker) return;
         if ( this.distance < 30 ) return;
 
         _('#'+this.currentView).removeClass('notrans scroll-lock');

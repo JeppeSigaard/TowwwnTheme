@@ -112,93 +112,55 @@
 
     .event-slider{
         position: relative;
-        width: 100%;
-        height: 260px;
         overflow: hidden;
+        background: white;
         margin-top: 32px;
+        margin-left: -10px;
+        margin-right: -10px;
 
-        .button{
+        &:before,
+        &:after{
+            content: '';
             position: absolute;
-            bottom: 16px;
-            width: 48px;
-            height: 48px;
-            background-color: darken( $color-blue-1, 10% );
-            z-index: 10;
-            cursor: pointer;
-            border: 1px solid darken( $color-blue-1, 15% );
-            color: white;
-            line-height: 48px;
-            text-align: center;
-            font-family: 'Lato';
-            font-size: 22px;
+            width: 10px;
+            height: 100%;
+            top: 0;
+            background: inherit;
+            z-index: 6;
+        }
+
+        &:before{left: 0;}
+        &:after{right: 0;}
+
+        .event{
+            width: 200px;
+            height: 240px;
+            margin: 10px;
+            flex-grow: 0;
+        }
+
+        .rail-bar-button-left,
+        .rail-bar-button-right{
+            height: $menu-bar-height;
+            width: $menu-bar-height;
+            top: auto;
+            bottom: 20%;
+            fill: white;
+            background: $color-blue-1;
+            opacity: 1;
 
             svg{
-                fill: white;
-                position: absolute;
-                top: 50%; left: 50%;
-                transform: translate(-50%, -50%);
-                width: 14px; height: 14px;
+                height: 14px;
+                width: 14px;
             }
         }
 
-        .prevButton{ left: 0; }
-        .nextButton{ right: 0; }
-        .inner{
-            position: absolute;
-            height: 100%;
-            top: 0; left: 0;
-            display: flex;
-            transition: 280ms;
-            z-index: 1;
-            cursor: grab;
+        .rail-bar-button-left{
+            left: 0px;
+        }
 
-            &.notrans{
-                transition: 0ms;
-                cursor: grabbing;
-            }
-
-            .item{
-                margin: 0 8px;
-                height: 100%;
-
-                .event{
-                    width: 100%!important;
-                    height: 100%!important;
-                    margin: 0!important;
-                }
-            }
-
-            .item-something{
-                position: relative;
-                height: 100%;
-                margin: 0 16px;
-                //background-color: #eee;
-                //border: 1px solid $color-blue-2;
-                z-index: 1;
-
-                .imgcontainer{
-                    position: relative;
-                    width: 100%;
-                    height: 96px;
-                    background-size: cover;
-                    background-position: 20% center;
-                    border: none;
-                    border-bottom: 1px solid $color-blue-2;
-                }
-
-                .textcontainer{
-                    width: 100%;
-                    height: auto;
-                    padding: 16px;
-
-                    .location-sv-title{
-                        margin: 0;
-                        color: #292929;
-                        font-size: 14px;
-                        text-transform: uppercase;
-                    }
-                }
-            }
+        .rail-bar-button-right{
+            right: 0px;
         }
     }
 
