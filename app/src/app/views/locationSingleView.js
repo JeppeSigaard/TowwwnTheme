@@ -110,6 +110,8 @@ class LocationSingleView extends React.Component{
                 }, 400);
 
             }
+
+            Globals.hooks.trigger( 'ls-hearted', this.props.elem );
        }
     }
 
@@ -189,6 +191,17 @@ class LocationSingleView extends React.Component{
     // Component did mount
     componentDidMount() {
         this.lazyLoad = new LazyLoadHandler( '#location-single-view .scroll-container' );
+
+        Globals.user.hooks.add( 'onlogin', () => {
+            if ( this.props.elem != null && Globals.user.state.hearts.locations[ this.props.elem.id ] == true ) {
+                let heart = _('#location-single-view .heart');
+                heart.addClass('anim');
+                setTimeout(() => {
+                    heart.removeClass('anim');
+                    heart.addClass('active');
+                }, 400 );
+            }
+        });
     }
 
     // Component did update
@@ -198,15 +211,11 @@ class LocationSingleView extends React.Component{
         }
     }
 
-    onClose() {
-
-    }
-
     // Render
     render() {
         return (
             <section className="container-section" id="location-single-view">
-                <ViewTopBar standard={ true } onClose={ this.onClose.bind(this) } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } heart={ true } heartFunc={ this.heart.bind(this) } />
+                <ViewTopBar standard={ true } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } heart={ true } heartFunc={ this.heart.bind(this) } />
                 
                 <div className="scroll-container">
                     <div className="content">            

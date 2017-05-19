@@ -30,6 +30,7 @@ const React = require( 'react' ),
     Event = require( '../components/event.js' ),
     LocationCategory = require( '../components/locationCategory.js' ),
     ViewSliderDots = require('../components/viewsliderdots.js'),
+    Hamburger = require( '../components/hamburger.js' ),
 
     // Plugins
     _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
@@ -47,6 +48,17 @@ const React = require( 'react' ),
 // Automatic classes
 const EffectHandler = require( '../../modules/handlers/effectHandler.js' );
 
+(() => {
+
+    // Move this somewhere else... RIGHT NOW!!!! :((
+    Array.prototype.changeIndex = (( oldIndex, newIndex ) => {
+        let elem = this[ oldIndex ];
+        this.splice( oldIndex, 1 );
+        this.splice( newIndex, 0, elem );
+    });
+
+})();
+
 class TowwwnApp extends React.Component {
 
     // Ctor
@@ -63,6 +75,7 @@ class TowwwnApp extends React.Component {
         Globals.viewHandler = null;
         Globals.locationDataHandler = new LocationDataHandler();
         Globals.fb = new FBHandler();
+        Globals.user = new User();
         
         this.hasMounted = false;
         this.state = { from: null, currentView: null, };
@@ -169,8 +182,6 @@ class TowwwnApp extends React.Component {
     componentDidMount() {
         _('body').removeClass('loading');
         _('body').addClass('loaded');
-        
-        Globals.user = new User();
         this.viewSlider = new ViewSlider(); 
         
         _( '.nav-locations' ).on( 'click', () => {
@@ -227,6 +238,8 @@ class TowwwnApp extends React.Component {
                     <LocationSingleView name="location-single-view" from={ this.state.from } elem={ this.state.singleLocation } setMainState={ this.parsedSetState.bind(this) } />
                 </div>
                 
+                <Hamburger />
+
                 { this.state.currentMobileView != null &&
                   _('body').hasClass('mobile') &&
                     <ViewSliderDots currentView={ this.state.currentMobileView } />

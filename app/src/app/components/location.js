@@ -8,7 +8,18 @@ const React = require( 'react' ),
 class Location extends React.Component {
     
     // Ctor
-    constructor() { super(); }
+    constructor() {
+        super();
+        this.state = {};
+    }
+
+    // Check if hearted
+    checkIfHearted() {
+        if ( this.props.elem == null || this.unmounted ) return;
+        if ( Globals.user.state.hearts.locations[ this.props.elem.id ] === true ) {
+            this.setState({ hearted : true });
+        } else { this.setState({ hearted : false }); }
+    }
 
     // Handle Click
     handleClick( e ) {
@@ -40,6 +51,23 @@ class Location extends React.Component {
         }
     }
 
+    // Component did mount
+    componentDidMount() {
+        this.unmounted = false;
+        this.checkIfHearted();
+        Globals.hooks.add('ls-hearted', this.checkIfHearted.bind(this));
+        Globals.hooks.add('onlogin', this.checkIfHearted.bind(this));
+        Globals.hooks.add('category-change', this.checkIfHearted.bind(this));
+    }
+
+    // Component will unmount
+    componentWillUnmount() {
+        this.unmounted = true;
+        Globals.hooks.remove('ls-hearted', this.checkIfHearted.bind(this));
+        Globals.hooks.remove('onlogin', this.checkIfHearted.bind(this));
+        Globals.hooks.remove('category-change', this.checkIfHearted.bind(this));
+    }
+
     // Render
     render() {
         let elem = this.props.elem;
@@ -48,7 +76,13 @@ class Location extends React.Component {
                 <a className="location-container" onClick={ this.handleClick.bind(this) } >
                     <span className="location-picture" style={{ 'backgroundImage' : 'url(' + elem.picture + ')' }} ></span>
                     <span className="location-description">
-                        <h2 className="location-title">{ elem.name }</h2>
+                        <h2 className="location-title">
+                            { this.state.hearted &&
+                                <svg className="heart anim" viewBox="0 0 32 32">
+                                    <use xlinkHref="#icon-heart"></use>
+                                </svg>
+                            } { elem.name }
+                        </h2>
                         <p className="location-about">{ elem.about }</p>
                     </span>
                 </a>

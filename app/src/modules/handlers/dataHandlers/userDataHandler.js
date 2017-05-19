@@ -183,7 +183,7 @@ class User {
                             let json = JSON.parse( data.target.response ),
                                 obj = json.behaviour_statistics;
                             
-                            console.log( json );
+                            this.state.hearts = json.hearts;
 
                             // Converts arrays back into objects
                             let timeData = obj.timeData,
@@ -224,6 +224,7 @@ class User {
                                     ( obj, this.state.behaviourData );
                             
                             this.hooks.trigger( 'onlogin' );
+                            Globals.hooks.trigger( 'onlogin' );
                             
                         });
 
@@ -231,7 +232,7 @@ class User {
                         request.open( 'GET', rest_api+'svendborg/user/'+this.state.dbData.id+
                                       '?user='+ this.state.dbData.id +
                                       '&token='+ this.state.accessToken.token +
-                                      '&fields=behaviour_statistics,hearts' );
+                                      '&fields=hearts,behaviour_statistics' );
 
                         request.send();
                         resolve( data );

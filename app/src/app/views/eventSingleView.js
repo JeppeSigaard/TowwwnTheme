@@ -184,6 +184,20 @@ class EventSingleView extends React.Component {
        }
     }
 
+    // Component did mount
+    componentDidMount() {
+        Globals.user.hooks.add( 'onlogin', () => {
+            if ( this.props.event != null && Globals.user.state.hearts.events[ this.props.event.id ] == true ) {
+                let heart = _('#event-single-view .heart');
+                heart.addClass('anim');
+                setTimeout(() => {
+                    heart.removeClass('anim');
+                    heart.addClass('active');
+                }, 400 );
+            }
+        });
+    }
+
     // Render
     render() {
         let elem = this.props.event;

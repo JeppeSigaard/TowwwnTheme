@@ -128,19 +128,7 @@ class LocationCategoryView extends React.Component {
 
                         <div className="category-container">
                             { this.state.suggestedCategories != null &&
-                                (<div className="suggested-cats">
-                                    <h2>Foreslået Kategorier</h2>
-                                    <div className="breakline" ></div>
-                                    { this.state.suggestedCategories } 
-                                    <div className="breakline" ></div>
-                                </div>)
-                            }
-
-                            { this.state.suggestedCategories != null &&
-                                (<div className="categories-header">
-                                    Svendborg i udvalg
-                                </div>)
-                            }
+                                this.state.suggestedCategories }
 
                             { this.state.jsxCategories != null &&
                               this.state.jsxCategories }
