@@ -33,17 +33,13 @@ const React = require( 'react' ),
 
     // Plugins
     _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
-    Slider = require( '../../modules/libaries/slider.js' ),
     ViewHandler = require( '../../modules/handlers/viewHandler.js' ),
     ViewSlider = require( '../../modules/libaries/viewslider.js' ),
     EventHandlers = require( '../../modules/handlers/eventHandlers.js' ),
     historyHandler = require('../../modules/handlers/historyHandler.js'),
 
     // TMP
-    SingleEvent = require( '../components/singleEvent.js' ),
-
-    // Polyfills
-    PositionSticky = require ('sticky-position');
+    SingleEvent = require( '../components/singleEvent.js' );
 
 // Automatic classes
 const EffectHandler = require( '../../modules/handlers/effectHandler.js' );

@@ -130,7 +130,9 @@ class EventCalendarView extends React.Component {
                         </div>
                         { ( typeof this.props.events == 'undefined' || this.props.events == null ) && <Loader/> }
                     </div>
-                    <div id="eventcv-load-more" className="loading" onClick={ this.loadMore.bind(this) } ></div>
+                    { typeof this.props.events !== 'undefined' &&
+                      this.props.events !== null && <div id="eventcv-load-more" className="loading" onClick={ this.loadMore.bind(this) } ></div>
+                    }
                 </div>
             </section>
         );
