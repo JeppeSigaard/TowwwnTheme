@@ -5,6 +5,7 @@ const React = require( 'react' ),
       LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       LocationCategory = require( '../components/locationCategory.js' ),
       SubCategories = require( '../components/subcategories.js' ),
+      Loader = require( '../componentParts/loader.js' ),
       Globals = require( '../globals.js' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
       _Array = require( '../../modules/libaries/underscore/underscore_array.js' );
@@ -129,23 +130,9 @@ class LocationCategoryView extends React.Component {
                         <SubCategories subCategories={ this.props.allCategories } outerHeight={ this.state.subCatHeight } clickEvent={ this.handleCategoryClick } />
 
                         <div className="category-container">
-                            { this.state.suggestedCategories != null &&
-                                (<div className="suggested-cats">
-                                    <h2>Foreslået Kategorier</h2>
-                                    <div className="breakline" ></div>
-                                    { this.state.suggestedCategories }
-                                    <div className="breakline" ></div>
-                                </div>)
-                            }
-
-                            { this.state.suggestedCategories != null &&
-                                (<div className="categories-header">
-                                    Svendborg i udvalg
-                                </div>)
-                            }
-
-                            { this.state.jsxCategories != null &&
-                              this.state.jsxCategories }
+                            { this.state.suggestedCategories != null && this.state.suggestedCategories }
+                            { this.state.jsxCategories != null && this.state.jsxCategories }
+                            { this.state.suggestedCategories == null && this.state.jsxCategories == null && <Loader/> }
                         </div>
                     </div>
                 </div>

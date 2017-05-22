@@ -6,6 +6,7 @@ const React = require( 'react' ),
       Globals = require( '../globals.js' ),
       Event = require( './event.js' ),
       SingleViewFooter = require( '../componentParts/singleviewfooter.js' ),
+      Railbar = require( '../componentParts/railbar.js' ),
 
       Linkify = require( 'react-linkify' ).default,
       TextPreproccesors = require( '../../modules/tools/textPreproccesors.js' ),
@@ -33,8 +34,6 @@ class SingleLocation extends React.Component {
             },
         };
 
-        // Event Handlers
-        _(window).on( 'resize', this.onResize.bind(this) );
     }
 
     // Load events
@@ -72,7 +71,7 @@ class SingleLocation extends React.Component {
         // Generates elems
         let jsxEvents = [];
         for ( let eventData of resp ) {
-            jsxEvents.push( <Event elem={ eventData } key={ 'eventslide-'+eventData.id } name={ this.props.name } vref={ this.state.eventVref } style={{ width : (100/resp.length) + '%' }} /> );
+            jsxEvents.push( <Event elem={ eventData } key={ 'eventslide-'+eventData.id } name={ this.props.name } vref={ this.state.eventVref } /> );
         }
 
         // Sets state
@@ -80,40 +79,25 @@ class SingleLocation extends React.Component {
         this.setState({ 'jsxEvents' : jsxEvents });
     }
 
-    // Resize
-    onResize() {
-        if ( _(window).width() <= 1000 ) this.setState({ smallscreen: true });
-        else this.setState({ smallscreen: false });
-    }
-
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
-        this.loadEvents( nextProps );
 
-        if( nextProps.elem !== this.lastElem ){
+        if( this.lastElem == null || nextProps.elem !== this.lastElem ){
+            this.loadEvents( nextProps );
             _('#location-single-view .scroll-container').get()[0].scrollTop = 0;
-            this.lastElem = nextProps.elem
+            this.lastElem = nextProps.elem;
         }
     }
-    componentDidMount() { this.onResize(); this.loadEvents( this.props ); }
+    componentDidMount() { this.loadEvents( this.props ); }
 
     // Component did update
-    componentDidUpdate() {
-
-        // Inits slider
-        this.state.slider.initSlider({
-            outer : '.location-singleview-content .event-slider',
-            prevButtonClass : 'prevButton',
-            nextButtonClass : 'nextButton',
-            innerClass : 'inner',
-        });
-
-    }
+    componentDidUpdate() {}
 
     // Render
     render() {
         let elem = this.props.elem,
-            description = (elem.description != null && elem.description.length > 10) ? elem.description : elem.about;
+            description = (elem.description != null && elem.description.length > 10) ? elem.description : elem.about,
+            railSizes = {0 : 2, 640 : 3, 768 : 2, 1080 : 3, 1600 : 4};
         return (
             <div className="location-singleview-content" >
                 <div className="photo-container">
@@ -153,36 +137,19 @@ class SingleLocation extends React.Component {
                     }
                 </div>
                 <div className="breakline"></div>
-                <div className="description-container">
+                {description != null && description.length > 50 && <div className="description-container">
                     <div className="description">
                         <Linkify>
                             { TextPreproccesors.nl2p( TextPreproccesors.ripRep( description ) ) }
                         </Linkify>
                     </div>
                 </div>
-                <div className="breakline"></div>
-
-                { this.state.jsxEvents != null &&
-                    <div className="event-slider">
-                        <div className="prevButton button">
-                            <svg viewBox="0 0 20 20">
-                                <use xlinkHref="#chevron-left"></use>
-                            </svg>
-                        </div>
-                        <div className="nextButton button">
-                            <svg viewBox="0 0 20 20">
-                                <use xlinkHref="#chevron-right"></use>
-                            </svg>
-                        </div>
-
-                        <div className="inner" style={{ width : ( this.state.smallscreen ?
-                                                                    (this.state.jsxEvents.length/2*100) :
-                                                                    (this.state.jsxEvents.length/3*100) ) +'%' }} >
-                            { this.state.jsxEvents }
-                        </div>
-                    </div>
                 }
-
+                {description != null && description.length > 50 && <div className="breakline"></div> }
+                { this.state.jsxEvents != null &&
+                <Railbar name="event-slider" sizes={railSizes} snap>
+                    { this.state.jsxEvents }
+                </Railbar> }
                 <SingleViewFooter elem={ elem } type="location" />
             </div>
         );

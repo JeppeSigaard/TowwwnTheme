@@ -161,6 +161,7 @@ $horizontal-bezier: cubic-bezier(.6, 0, .4, 1);
 
 
         .scroll-container{
+            will-change: scroll-position;
             overflow-y: auto;
             overflow-x: hidden;
             height:100%;
@@ -194,25 +195,12 @@ $horizontal-bezier: cubic-bezier(.6, 0, .4, 1);
     // Location categories
     #location-category-view{
         background-color: white;
-
-        @media screen and ( min-width: 769px ) {
-            width: 50%;
-        }
     }
 
 
     // Event Calender
     #event-calendar-view{
         background-color: #f0f0f0;
-
-        @media screen and ( min-width: 769px ) {
-            left: 50%;
-            width: 50%;
-        }
-
-        .content{
-            min-height: calc(100vh - #{$menu-bar-height});
-        }
     }
 
     // Location List View
@@ -221,7 +209,7 @@ $horizontal-bezier: cubic-bezier(.6, 0, .4, 1);
 
     // Location Single View
     #location-single-view{
-        background: white;
+        background: #f9f9f9;
     }
 
 }

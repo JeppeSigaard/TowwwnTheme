@@ -29,6 +29,10 @@ class historyHandler {
     // Add new history state
     push( obj ){
 
+        // Return if not new
+        if(obj.id != null && history.state.id != null && history.state.id === obj.id) return;
+        if(obj.category_id != null && history.state.category_id != null && history.state.category_id === obj.category_id) return;
+
         const objName = (obj.type == 'category') ? obj.category_name + ' · Kategorier' : obj.name;
 
         const path = (obj.type == 'home') ? app_data.main_path + '/' : app_data.main_path + '/' + typeslugs[obj.type] + '/' + obj.slug + '/';

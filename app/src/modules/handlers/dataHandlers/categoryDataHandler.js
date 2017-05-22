@@ -85,7 +85,7 @@ class CategoryDataHandler {
             }.bind(this);
 
             // Sends request
-            request.open( 'GET', rest_api+'svendborg/categories/'+id );
+            request.open( 'GET', app_data.rest_api + '/categories/'+id );
             request.send();
 
         });
