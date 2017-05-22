@@ -7,10 +7,10 @@ const React = require( 'react' ),
       CategoryDataHandler = require( '../../modules/handlers/dataHandlers/categoryDataHandler.js' ),
       LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
-      CategoryFilterButton  = require( '../componentParts/categoryFilterButton.js' ),
+      Button  = require( '../componentParts/categoryFilterButton.js' ),
+      Railbar = require( '../componentParts/railbar.js' ),
       Location = require( '../components/location.js' ),
       Loader = require( '../componentParts/loader.js' ),
-      Railbar = require( '../componentParts/railbar.js' ),
       Globals = require( '../globals.js' );
 
 class LocationListView extends React.Component {
@@ -38,6 +38,7 @@ class LocationListView extends React.Component {
 
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
+
         if ( nextProps.category != this.lastElem ) {
             BehaviourDataHandler.parseData( 'location-category', nextProps.category );
             this.lastElem = nextProps.category;
@@ -57,35 +58,44 @@ class LocationListView extends React.Component {
 
             const getID = (nextProps.category.category_parent == 0 ) ? nextProps.category.category_id : nextProps.category.category_parent ;
 
+            if(getID != this.state.jsxCategoryListHead){
+                this.setState({ catFilterIndex : null, 'jsxCategoryList' : null, 'jsxCategoryListHead' : getID, 'locationListHeading' : 'Indlæser...' });
 
-            Globals.categoryDataHandler.getCategory( getID ).then(( resp ) => {
+                Globals.categoryDataHandler.getCategory( getID ).then(( resp ) => {
 
-                if(resp.children.length == 0){this.setState({ 'jsxCategoryList' : null, 'jsxCategoryListHead' : getID }); return;}
+                    if(resp.children.length == 0){this.setState({ 'jsxCategoryList' : null, 'jsxCategoryListHead' : getID, 'locationListHeading' : resp.category_name }); return;}
 
-                jsxCategoryList.push(<CategoryFilterButton
-                    active={ resp.category_id == nextProps.category.category_id}
-                    count={resp.category_count}
-                    key={'filter-button-' + resp.category_id}
-                    elem={resp}
-                    name='Alle'
-                />);
+                    jsxCategoryList.push(<Button
+                        active={ resp.category_id == nextProps.category.category_id}
+                        count={resp.location_count}
+                        key={'filter-button-' + resp.category_id}
+                        elem={resp}
+                        name='Alle'
+                        locations={resp.locations}
+                    />);
 
-                if(resp.children != null){
-                    for(let cat of resp.children){
-                        jsxCategoryList.push(<CategoryFilterButton
-                            active={ cat.category_id == nextProps.category.category_id}
-                            count={cat.category_count}
-                            key={'filter-button-' + cat.category_id}
-                            elem={cat}
-                            name={cat.category_name}
-                        />);
+                    if(resp.category_id == nextProps.category.category_id) this.setState({catFilterIndex : 0});
+
+
+                    if(resp.children != null){
+                        let i = 0;
+                        for(let cat of resp.children){
+                            i ++;
+                            if(cat.category_id == nextProps.category.category_id) this.setState({catFilterIndex : i});
+
+                            jsxCategoryList.push(<Button
+                                active={ cat.category_id == nextProps.category.category_id}
+                                count={cat.category_count}
+                                key={'filter-button-' + cat.category_id}
+                                elem={cat}
+                                name={cat.category_name}
+                            />);
+                        }
                     }
-                }
 
-                this.setState({ 'jsxCategoryList' : jsxCategoryList, 'jsxCategoryListHead' : getID });
-
-            });
-
+                    this.setState({ 'jsxCategoryList' : jsxCategoryList, 'jsxCategoryListHead' : getID, 'locationListHeading' : resp.category_name });
+                });
+            }
         }
 
         else this.setState({ 'jsxCategoryList' : null, 'jsxCategoryListHead' : null });
@@ -94,23 +104,24 @@ class LocationListView extends React.Component {
 
     // Render
     render() {
+
         return (
             <section className="container-section" id="location-list-view">
                { this.props.category != null &&
-                    <ViewTopBar closeviewstate={ this.state.closeviewstate } title={ this.props.category.category_name } darken={ true } standard={ true } name={ this.props.name } onClose={ this.onClose.bind(this) } />
+                    <ViewTopBar closeviewstate={ this.state.closeviewstate } title={ this.state.locationListHeading } darken={ true } standard={ true } name={ this.props.name } onClose={ this.onClose.bind(this) } />
                 }
 
                 <div className="scroll-container">
                     <div className="content">
                         { this.state.jsxCategoryList != null &&
-                        <Railbar name="sub-cat-bar" >
+                        <Railbar name="sub-cat-bar" railIndex={this.state.catFilterIndex} snap>
                             {this.state.jsxCategoryList}
                         </Railbar> }
                         { this.state.jsxLocations != null &&
                         <div className="location-list" >
                             { this.state.jsxLocations != null && this.state.jsxLocations }
-                            { this.state.jsxLocations == null && <Loader /> }
                         </div>}
+                        { this.state.jsxLocations == null && <Loader /> }
                     </div>
                 </div>
             </section>

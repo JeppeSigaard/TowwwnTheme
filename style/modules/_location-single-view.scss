@@ -1,3 +1,10 @@
+#location-single-view{
+    .content,
+    .location-singleview-content,
+    .scroll-container{
+        background: inherit;
+    }
+}
 
 .location-singleview-bar{
     position: relative;
@@ -111,47 +118,55 @@
     }
 
     .event-slider{
-        position: relative;
-        overflow: hidden;
-        background: white;
+        background: inherit;
         margin-top: 32px;
         margin-left: -10px;
         margin-right: -10px;
 
-        &:before,
-        &:after{
-            content: '';
-            position: absolute;
-            width: 10px;
-            height: 100%;
-            top: 0;
+        .rail-bar-wrapper{
             background: inherit;
-            z-index: 6;
+            left: 4px;
+            right: 4px;
+
+            &:before,
+            &:after{
+                background: inherit;
+                content: '';
+                position: absolute;
+                height: 100%;
+                width: 6px;
+                left: -1px;
+                top: 0;
+                z-index: 2;
+            }
+
+            &:after{
+                left: auto;
+                right: -1px;
+            }
         }
 
-        &:before{left: 0;}
-        &:after{right: 0;}
-
-        .event{
-            width: 200px;
-            height: 240px;
-            margin: 10px;
-            flex-grow: 0;
-        }
 
         .rail-bar-button-left,
         .rail-bar-button-right{
-            height: $menu-bar-height;
-            width: $menu-bar-height;
+            height: 36px;
+            width: 36px;
             top: auto;
             bottom: 20%;
             fill: white;
             background: $color-blue-1;
             opacity: 1;
+            box-shadow: 1px 2px 3px 0px rgba(black,.05);
 
             svg{
                 height: 14px;
                 width: 14px;
+            }
+
+            &.disabled{
+                opacity: .2;
+                pointer-events: all;
+                background: #d0d0d0;
             }
         }
 
@@ -163,14 +178,16 @@
             right: 0px;
         }
     }
+}
 
-    .imgcontainer{
-        box-sizing: border-box;
-        width: 100%;
-        padding-bottom: 56.25%;
-        border: 1px solid rgba($color-blue-1,1 );
-        background-size: cover;
-        background-position: 20% center;
+#location-single-view .sv-footer{
+    margin-left:-12px;
+    margin-right:-12px;
+    width: auto;
+
+    @media(min-width: 769px){
+        margin-left: -16px;
+        margin-right: -16px;
     }
 }
 

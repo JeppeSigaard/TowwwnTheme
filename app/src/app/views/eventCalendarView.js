@@ -4,6 +4,8 @@
 const React = require( 'react' ),
       Event = require( '../components/event.js' ),
       Railbar = require( '../componentParts/railbar.js' ),
+      EventFilterButton  = require( '../componentParts/eventFilterButton.js' ),
+      Loader  = require( '../componentParts/loader.js' ),
       Globals = require( '../globals.js' ),
       LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' );
@@ -126,6 +128,7 @@ class EventCalendarView extends React.Component {
 
                             </div>
                         </div>
+                        { ( typeof this.props.events == 'undefined' || this.props.events == null ) && <Loader/> }
                     </div>
                     <div id="eventcv-load-more" className="loading" onClick={ this.loadMore.bind(this) } ></div>
                 </div>

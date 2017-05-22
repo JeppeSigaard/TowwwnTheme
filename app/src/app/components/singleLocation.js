@@ -96,7 +96,8 @@ class SingleLocation extends React.Component {
     // Render
     render() {
         let elem = this.props.elem,
-            description = (elem.description != null && elem.description.length > 10) ? elem.description : elem.about;
+            description = (elem.description != null && elem.description.length > 10) ? elem.description : elem.about,
+            railSizes = {0 : 2, 640 : 3, 768 : 2, 1080 : 3, 1600 : 4};
         return (
             <div className="location-singleview-content" >
                 <div className="photo-container">
@@ -136,16 +137,17 @@ class SingleLocation extends React.Component {
                     }
                 </div>
                 <div className="breakline"></div>
-                <div className="description-container">
+                {description != null && description.length > 50 && <div className="description-container">
                     <div className="description">
                         <Linkify>
                             { TextPreproccesors.nl2p( TextPreproccesors.ripRep( description ) ) }
                         </Linkify>
                     </div>
                 </div>
-                <div className="breakline"></div>
+                }
+                {description != null && description.length > 50 && <div className="breakline"></div> }
                 { this.state.jsxEvents != null &&
-                <Railbar name="event-slider">
+                <Railbar name="event-slider" sizes={railSizes} snap>
                     { this.state.jsxEvents }
                 </Railbar> }
                 <SingleViewFooter elem={ elem } type="location" />

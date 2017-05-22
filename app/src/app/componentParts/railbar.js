@@ -1,4 +1,3 @@
-
 // Rail bar
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
@@ -8,7 +7,6 @@ class Railbar extends React.Component {
 
     // Ctor
     constructor() {
-
         super();
 
         // Add Event listeners
@@ -36,7 +34,6 @@ class Railbar extends React.Component {
     // Mouse up event (mirror touch end)
     handleMouseUp(e){
 
-        // Remove Event Listeners
         document.removeEventListener('mouseup', this.mouseupfunct);
         document.removeEventListener('mousemove', this.mousemovefunct);
 
@@ -54,7 +51,7 @@ class Railbar extends React.Component {
         // Set x
         let x = ('touchstart' == e.type) ? e.touches[0].clientX : e.pageX;
 
-        this.setState({x : Math.round(x), maxDelta : _('#' + this.props.name).width() - _('#' + this.props.name + '-inner').width()});
+        this.setState({x : Math.round(x), maxDelta : _('#' + this.props.name + '-wrapper').width() - _('#' + this.props.name + '-inner').width()});
     }
 
     // Movement goes on
@@ -71,11 +68,12 @@ class Railbar extends React.Component {
 
         this.setState({moveX : Math.round(x)});
 
-        // Don't go below zero
-        if (deltaX > 0) deltaX = 0 + (deltaX / moveBuffer);
 
         // Don't go above length
         if (deltaX <= this.state.maxDelta) deltaX = this.state.maxDelta - ((this.state.maxDelta - deltaX) / moveBuffer);
+
+        // Don't go below zero
+        if (deltaX > 0) deltaX = 0 + (deltaX / moveBuffer);
 
         if((Math.round(x) - this.state.x) > 5 || (Math.round(x) - this.state.x) < -5){
 
@@ -103,11 +101,12 @@ class Railbar extends React.Component {
 
         if(this.state.clicked) return;
 
-        let deltaX = Math.round(this.state.moveX - this.state.x + this.state.translateX);
+        let x = ('touchend' == e.type) ? e.changedTouches[0].clientX : e.pageX,
+            deltaX = Math.round(x) - this.state.x + this.state.translateX;
 
         // Snap to rails if snap
         if (this.props.snap != null && this.props.snap) {
-            this.setState({translateX : deltaX, mobing : false}); this.snapToIndex();
+            this.setState({translateX : deltaX, moving : false}, () => {this.snapToIndex()});
         }
 
         // Add a bit if no snap
@@ -115,13 +114,13 @@ class Railbar extends React.Component {
             if(deltaX <= this.state.translateX - 5) deltaX -= 20;
             if(deltaX >= this.state.translateX + 5) deltaX += 20;
 
-            // Don't go below zero
-            if (deltaX > 0) deltaX = 0;
-
             // Don't go above length
             if (deltaX <= this.state.maxDelta) deltaX = this.state.maxDelta;
 
-            this.setState({translateX : deltaX, moving : false}); this.snapToIndex(false);
+            // Don't go below zero
+            if (deltaX > 0) deltaX = 0;
+
+            this.setState({translateX : deltaX, moving : false}, () => {this.snapToIndex(false)});
         }
 
         setTimeout(function(){
@@ -134,8 +133,10 @@ class Railbar extends React.Component {
 
         let deltaX = 0,
             rails = _('#' + this.props.name + '-inner').get()[0].children, arr = [];
-            for (var rail of rails){
-                arr.push(0 - _(rail).state.domnode.offsetLeft);
+            for (let rail in rails){
+                if(rails.hasOwnProperty(rail)){
+                    arr.push(0 - _(rails[rail]).state.domnode.offsetLeft);
+                }
             }
 
         let indexArr = arr.map(function(k) { return Math.abs(k - this.state.translateX) }.bind(this)),
@@ -147,23 +148,24 @@ class Railbar extends React.Component {
         if (i == null) deltaX = closestRail + this.state.marginLeft;
 
         // If next, set to the one after closest
-        else if(i == 'next') deltaX = (nextRail != null) ? nextRail + this.state.marginLeft : closestRail + this.state.marginLeft;
+        else if(i == 'next') deltaX = (nextRail != null) ? nextRail + this.state.marginLeft: closestRail + this.state.marginLeft;
 
         // If prev, set to the one before closest
-        else if(i == 'prev') deltaX = (prevRail != null) ? prevRail + this.state.marginLeft : closestRail + this.state.marginLeft;
+        else if(i == 'prev') deltaX = (prevRail != null) ? prevRail + this.state.marginLeft: closestRail + this.state.marginLeft;
 
         // If index is set, return index
-        else if(Number.isInteger(i)) deltaX = rails[i] + this.state.marginLeft;
+        else if(Number.isInteger(i)) deltaX = arr[i] + this.state.marginLeft;
 
         // If snap is false, set delta to translateX
-        else if(i == false){deltaX = this.state.translateX;}
-
-        // Don't go below zero + fallback
-        if (deltaX == null || deltaX > this.state.marginLeft) deltaX = this.state.marginLeft;
+        else{ deltaX = this.state.translateX; }
 
         // Don't go above length
-        if (deltaX <= this.state.maxDelta) deltaX = this.state.maxDelta;
+        if (deltaX <= this.state.maxDelta + 10) deltaX = this.state.maxDelta;
 
+        // Don't go below zero + fallback
+        if (deltaX == null || deltaX >= 0) deltaX = 0;
+
+        // Set railbar to rail
         _('#' + this.props.name + '-inner').css({
             '-webkit-transform' : 'translateX('+deltaX+'px',
             '-moz-transform' : 'translateX('+deltaX+'px',
@@ -172,31 +174,101 @@ class Railbar extends React.Component {
             'transform': 'translateX('+deltaX+'px'
         });
 
-        this.setState({translateX : deltaX});
+        // enable or disable prev button?
+        if(deltaX >= 0 - this.state.marginLeft) _('#' + this.props.name + ' .rail-bar-button-left').addClass('disabled');
+        else _('#' + this.props.name + ' .rail-bar-button-left').removeClass('disabled');
+
+        // enable or disable prev button?
+        if(deltaX <= this.state.maxDelta + 20) _('#' + this.props.name + ' .rail-bar-button-right').addClass('disabled');
+        else _('#' + this.props.name + ' .rail-bar-button-right').removeClass('disabled');
+
+        // Set Snap state
+        this.setState({translateX : deltaX, maxDelta : _('#' + this.props.name + '-wrapper').width() - _('#' + this.props.name + '-inner').width()});
+    }
+
+    // Set railbar height
+    setRailbarHeight(){
+        const firstChild = _('#' + this.props.name + '-inner >*:first-child');
+        if(firstChild != null){
+            const styles = window.getComputedStyle(firstChild.get(0)),
+                margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom']),
+                marginLeft = parseFloat(styles['marginLeft']) * 2,
+                height = Math.ceil(firstChild.height() + margin);
+
+            _('#' + this.props.name).css({'height' : height + 'px'});
+            this.setState({marginLeft : marginLeft});
+        }
+    }
+
+    // Set slide sizes
+    setSlideSizes(){
+
+        if(this.debounceSize) return;
+        this.debounceSize = true;
+
+        let num = null,
+            count = _('#' + this.props.name + '-inner >*').get().length,
+            outerWidth = _('#' + this.props.name + '-wrapper').width(),
+            firstChild = _('#' + this.props.name + '-inner >*:first-child'),
+            styles = window.getComputedStyle(firstChild.get(0)),
+            margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom']),
+            marginLeft = parseFloat(styles['marginLeft']) + parseFloat(styles['borderLeft']),
+            height = Math.ceil(firstChild.height() + margin);
+
+        for (let size in this.props.sizes){
+            if(this.props.sizes.hasOwnProperty(size)){
+                if ( parseInt(size) > parseInt(_(window).width()) ) break;
+                num = this.props.sizes[size];
+            }
+        }
+
+        this.setState({marginLeft : marginLeft, maxDelta : _('#' + this.props.name + '-wrapper').width() - _('#' + this.props.name + '-inner').width()}, function(){
+            setTimeout(function(){
+                if (count <= num){
+                    _('#' + this.props.name + '-inner >*').css({'max-width' : Math.floor(100 / num) + '%'});
+                    _('#' + this.props.name + '-inner').css({'width' : '100%'});
+                }
+                else{
+                    _('#' + this.props.name + '-inner >*').css({'max-width' : Math.floor(100 / count * num) + '%'});
+                    _('#' + this.props.name + '-inner').css({'width' : Math.floor(outerWidth / num * count) + 'px'});
+                }
+
+                _('#' + this.props.name).css({'height' : height + 'px'});
+
+                if(this.props.snap != null){this.snapToIndex();}
+                this.debounceSize = false;
+
+            }.bind(this),50);
+        }.bind(this));
     }
 
     // Click on buttons
     handleButtonPrevClick(){this.snapToIndex('prev');}
     handleButtonNextClick(){this.snapToIndex('next');}
 
+    // Component did mount
     componentDidMount(){
 
-        Globals.navigationBlocker = false;
-
-        const firstChild = _('#' + this.props.name + '-inner >*:first-child');
-        if(firstChild != null){
-            const styles = window.getComputedStyle(firstChild.get(0)),
-                margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom']),
-                marginLeft = parseFloat(styles['marginLeft']),
-                height = Math.ceil(firstChild.height() + margin);
-
-            _('#' + this.props.name).css({'height' : height + 'px'});
-            this.setState({marginLeft : marginLeft});
-        }
-
+        // Rail bar requires a name
         if (this.props.name == null) throw "Please specify name for this rail bar";
 
+        // Remove navigation blocker (for some reason, waaa?)
+        Globals.navigationBlocker = false;
+
+        // Prepare debouncers
         this.debounceMove = false;
+        this.debounceSize = false;
+
+        // Set slide sizes
+        if(this.props.sizes != null){
+            this.setSlideSizes();
+            window.addEventListener('resize', this.setSlideSizes.bind(this));
+        }
+
+        else{
+            // Set Rail bar height
+            this.setRailbarHeight();
+        }
 
         // Set initial state
         this.setState({
@@ -204,23 +276,35 @@ class Railbar extends React.Component {
             clicked : false,
             x : 0,
             translateX : 0,
-            maxDelta : _('#' + this.props.name).width() - _('#' + this.props.name + '-inner').width()
+            maxDelta : _('#' + this.props.name + '-wrapper').width() - _('#' + this.props.name + '-inner').width(),
+        },function(){
+
+            // Initial snap
+            if (this.props.railIndex != null) this.snapToIndex(this.props.railIndex);
+            else this.snapToIndex(0);
         });
+    }
+
+    // Component will unmount
+    componentWillUnmount(){
+        window.removeEventListener('resize', this.setSlideSizes);
     }
 
     // Render
     render() {
         if(this.props.name != null){return (
             <div className={'rail-bar ' + this.props.name} name={this.props.name} id={this.props.name} >
-                <div className="rail-bar-inner" id={ this.props.name + '-inner' }
-                    onMouseDown = { this.handleMouseDown.bind(this) }
-                    onTouchStart = { this.handleTouchStart.bind(this) }
-                    onTouchMove = { this.handleTouchMove.bind(this) }
-                    onTouchEnd = { this.handleTouchEnd.bind(this) } >
-                    {this.props.children}
+                <div className="rail-bar-wrapper" id={ this.props.name + '-wrapper' }>
+                    <div className="rail-bar-inner" id={ this.props.name + '-inner' }
+                        onMouseDown = { this.handleMouseDown.bind(this) }
+                        onTouchStart = { this.handleTouchStart.bind(this) }
+                        onTouchMove = { this.handleTouchMove.bind(this) }
+                        onTouchEnd = { this.handleTouchEnd.bind(this) } >
+                        {this.props.children}
+                    </div>
                 </div>
-                { this.props.buttons != false && <div className="rail-bar-button-left" onClick={this.handleButtonPrevClick.bind(this)}><svg viewBox="0 0 20 20"><use xlinkHref="#chevron-left"></use></svg></div> }
-                { this.props.buttons != false && <div className="rail-bar-button-right" onClick={this.handleButtonNextClick.bind(this)}><svg viewBox="0 0 20 20"><use xlinkHref="#chevron-right"></use></svg></div> }
+                { this.props.buttons != false && <div className="rail-bar-button-left disabled" onClick={this.handleButtonPrevClick.bind(this)}><svg viewBox="0 0 20 20"><use xlinkHref="#chevron-left"></use></svg></div> }
+                { this.props.buttons != false && <div className="rail-bar-button-right disabled" onClick={this.handleButtonNextClick.bind(this)}><svg viewBox="0 0 20 20"><use xlinkHref="#chevron-right"></use></svg></div> }
             </div>
     );}
 

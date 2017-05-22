@@ -309,6 +309,7 @@ _('body').removeClass('loading');
             request.addEventListener( 'load', ( data ) => {
                 let category = JSON.parse( data.target.response );
                 Globals.history.replace(category);
+
                 Globals.locationDataHandler.getCategorySpecificLocation( category.category_id ).then(( resp ) => {
                     Globals.setMainState({
                         'currentLocationsCategory' : category,
@@ -362,7 +363,7 @@ _('body').removeClass('loading');
                     <EventSingleView name="event-single-view" from={ this.state.from } event={ this.state.singleevent } setMainState={ this.parsedSetState.bind(this) } />
                     <EventCalendarView name="event-calendar-view" from={ this.state.from } events={ this.state.jsxEvents } setMainState={ this.parsedSetState.bind(this) } />
                     <LocationCategoryView name="location-category-view" from={ this.state.from } categories={ this.state.featuredCategoriesData } allCategories={ this.state.categoriesData } setMainState={ this.parsedSetState.bind(this) } />
-                    <LocationListView name="location-list-view" from={ this.state.from } elems={ this.state.currentLocations } category={ this.state.currentLocationsCategory } setMainState={ this.parsedSetState.bind(this) } />
+                    <LocationListView name="location-list-view" from={ this.state.from } elems={ this.state.currentLocations } category={ this.state.currentLocationsCategory } heading={this.state.locationListHeading} setMainState={ this.parsedSetState.bind(this) } />
                     <LocationSingleView name="location-single-view" from={ this.state.from } elem={ this.state.singleLocation } setMainState={ this.parsedSetState.bind(this) } />
                 </div>
                 <CookiePolicy name="towwwn-cookie"/>
