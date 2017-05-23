@@ -147,7 +147,7 @@ class LocationSingleView extends React.Component{
     render() {
         return (
             <section className="container-section" id="location-single-view">
-                <ViewTopBar standard={ true } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } />
+                <ViewTopBar icon="#icon-location" viewBox="0 0 32 32" standard={ true } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } />
                 <div className="scroll-container">
                     <div className="content">
                         { this.props.elem != null &&

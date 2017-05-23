@@ -108,7 +108,7 @@ class LocationListView extends React.Component {
         return (
             <section className="container-section" id="location-list-view">
                { this.props.category != null &&
-                    <ViewTopBar closeviewstate={ this.state.closeviewstate } title={ this.state.locationListHeading } darken={ true } standard={ true } name={ this.props.name } onClose={ this.onClose.bind(this) } />
+                    <ViewTopBar icon="#icon-location" viewBox="0 0 32 32" closeviewstate={ this.state.closeviewstate } title={ this.state.locationListHeading } darken={ true } standard={ true } name={ this.props.name } onClose={ this.onClose.bind(this) } />
                 }
 
                 <div className="scroll-container">
