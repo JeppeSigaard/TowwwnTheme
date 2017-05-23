@@ -113,6 +113,11 @@ class EventCalendarView extends React.Component {
                         </a>
                    </div>
                    <div className="title">
+                       <i className="viewbar-title-icon">
+                            <svg viewBox="0 0 32 32">
+                                <use xlinkHref="#icon-star"></use>
+                            </svg>
+                       </i>
                        Begivenheder
                    </div>
                </div>

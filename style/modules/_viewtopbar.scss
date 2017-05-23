@@ -49,3 +49,23 @@
         }
     }
 }
+
+.viewbar-title-icon {
+    display: inline-block;
+    float: left;
+    position: relative;
+    width: 16px;
+    height: $menu-bar-height;
+    margin-right: 6px;
+
+    svg{
+        position: absolute;
+        top: 50%;
+        LEFT: 50%;
+        height: 16px;
+        width: 16px;
+        transform: translate(-50%,-50%);
+        fill: rgba(white,.8);
+        stroke: darken($color-blue-2, 5);
+    }
+}

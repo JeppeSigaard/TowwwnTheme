@@ -121,6 +121,11 @@ class LocationCategoryView extends React.Component {
         return (
             <section className="container-section" id="location-category-view">
                <div className="category-bar" onClick={ this.toggleSubCategories.bind(this) }>
+                   <i className="viewbar-title-icon">
+                        <svg viewBox="0 0 32 32">
+                            <use xlinkHref="#icon-location"></use>
+                        </svg>
+                   </i>
                     Steder
                     <div className="sub-categories-title" ></div>
                 </div>

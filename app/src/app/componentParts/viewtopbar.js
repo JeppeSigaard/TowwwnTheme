@@ -72,7 +72,15 @@ class ViewTopBar extends React.Component {
         return (
             <div className={ this.state.classes != null ? this.state.classes : "viewbar" }>
                 { this.props.standard &&
-                    <a onClick={ this.props.vref != null ? this.changeView.bind(this) : function() {} }>{ this.props.title }</a>
+                    <a onClick={ this.props.vref != null ? this.changeView.bind(this) : function() {} }>
+                    {this.props.icon !=null && this.props.viewBox != null &&
+                        <i className="viewbar-title-icon">
+                            <svg viewBox={this.props.viewBox}><use xlinkHref={this.props.icon}></use></svg>
+                        </i>
+                    }
+                    { this.props.title }
+
+                    </a>
                 }
 
                 { this.props.other }
