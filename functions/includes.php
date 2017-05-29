@@ -6,6 +6,7 @@ add_action('wp_head',function(){
     echo '<script> 
     var rest_api = "' . get_theme_mod('rest_api_url') . '"; 
     var main_path = "' . site_url() . '";
+    var city = "' . get_theme_mod('city') . '";
     var template_uri = "' . get_template_directory_uri() . '";
     var commercial_image_url = "'. get_theme_mod('commercial') .'";
     var commercial_link = "'. get_theme_mod('commercial_link') .'";

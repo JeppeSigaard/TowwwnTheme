@@ -10,38 +10,3 @@
     <body <?php body_class('loading') ?>>
         <?php get_template_part('svg'); ?>
         <div class="main-container">
-
-            <header id="site-header" class="site-header">
-                <div class="header-container">
-                    <div id="headerbar">
-                        <div class="logo">
-                            <svg viewBox="0 0 32 32">
-                                <use xlink:href="#towwwn-logo">
-                                </use>
-                            </svg>
-                        </div>
-                        <a href="<?php echo get_bloginfo('url'); ?>" class="logo-container">
-                            <div class="city"><?php echo get_theme_mod('city'); ?></div>
-                        </a>
-
-                        <div id="top-nav-icons">
-                            <div class="nav-locations nav-elem">
-                                <svg viewBox="0 0 32 32">
-                                    <use xlink:href="#icon-location"></use>
-                                </svg>
-                            </div>
-                            <div class="nav-events nav-elem bookmark-mode">
-                                <svg viewBox="0 0 32 32">
-                                    <use xlink:href="#icon-event"></use>
-                                </svg>
-                            </div>
-                            <div class="nav-user nav-elem">
-                                <svg viewBox="0 0 32 32">
-                                    <use xlink:href="#icon-user">
-                                    </use>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>

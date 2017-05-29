@@ -27,6 +27,7 @@ const React = require( 'react' ),
     UserView = require( '../views/userView.js' ),
 
     // Components
+    Header = require( '../components/header.js' ),
     Event = require( '../components/event.js' ),
     LocationCategory = require( '../components/locationCategory.js' ),
     ViewSliderDots = require('../components/viewsliderdots.js'),
@@ -78,7 +79,8 @@ class TowwwnApp extends React.Component {
         Globals.user = new User();
         
         this.hasMounted = false;
-        this.state = { from: null, currentView: null, };
+        this.state = { from: null, currentView: null, navelems: [] };
+        Globals.navelemscopy = this.state.navelems;
         
         // Relations
         Globals.relations = {
@@ -182,40 +184,7 @@ class TowwwnApp extends React.Component {
     componentDidMount() {
         _('body').removeClass('loading');
         _('body').addClass('loaded');
-        this.viewSlider = new ViewSlider(); 
-        
-        _( '.nav-locations' ).on( 'click', () => {
-
-            if ( _('.search-nav-container .bookmark-mode') !== false )
-                _('.search-nav-container .bookmark-mode').removeClass('bookmark-mode');
-
-            _('.nav-elem').removeClass('bookmark-mode');
-            _( '.nav-locations' ).addClass('bookmark-mode');
-            if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
-
-            Globals.viewHandler.changeViewFocus(
-                '#location-category-view',
-                '#search-view',
-                true, false, false
-            );
-        });
-
-        _( '.nav-events' ).on( 'click', () => {
-            if ( _('.category.bookmark-mode') !== false ) _('.category.bookmark-mode').removeClass('bookmark-mode');
-
-            if ( _('.search-nav-container .bookmark-mode') !== false )
-                _('.search-nav-container .bookmark-mode').removeClass('bookmark-mode');
-
-            _('.nav-elem').removeClass('bookmark-mode');
-            _( '.nav-events' ).addClass('bookmark-mode');
-            if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
-
-            Globals.viewHandler.changeViewFocus(
-                '#search-view',
-                '#event-calendar-view',
-                false, true, false
-            );
-        });
+        this.viewSlider = new ViewSlider();
 
         // Handle anchor click
         _('a').off( 'click', this.handleAnchorClick );
@@ -225,25 +194,30 @@ class TowwwnApp extends React.Component {
     // Render
     render() {
         return (
-            <div className="content-container" id="page-content">
-                <div className="content-container-inner">
-                    <SearchView />
-                    <SearchResultView result={ this.state.searchResult } />
-                    <UserView />
+            <div>
+                <Header />
+                <div className="content-container" id="page-content">
+                    <div className="content-container-inner">
+                        <div id="general-overlay" ></div>
 
-                    <EventSingleView name="event-single-view" from={ this.state.from } event={ this.state.singleevent } setMainState={ this.parsedSetState.bind(this) } />
-                    <EventCalendarView name="event-calendar-view" from={ this.state.from } events={ this.state.jsxEvents } setMainState={ this.parsedSetState.bind(this) } />
-                    <LocationCategoryView name="location-category-view" from={ this.state.from } categories={ this.state.featuredCategoriesData } allCategories={ this.state.categoriesData } setMainState={ this.parsedSetState.bind(this) } />
-                    <LocationListView name="location-list-view" from={ this.state.from } elems={ this.state.currentLocations } category={ this.state.currentLocationsCategory } setMainState={ this.parsedSetState.bind(this) } />
-                    <LocationSingleView name="location-single-view" from={ this.state.from } elem={ this.state.singleLocation } setMainState={ this.parsedSetState.bind(this) } />
+                        <SearchView />
+                        <SearchResultView result={ this.state.searchResult } />
+                        <UserView from={ this.state.from } />
+
+                        <EventSingleView name="event-single-view" from={ this.state.from } event={ this.state.singleevent } setMainState={ this.parsedSetState.bind(this) } />
+                        <EventCalendarView name="event-calendar-view" from={ this.state.from } events={ this.state.jsxEvents } setMainState={ this.parsedSetState.bind(this) } />
+                        <LocationCategoryView name="location-category-view" from={ this.state.from } categories={ this.state.featuredCategoriesData } allCategories={ this.state.categoriesData } setMainState={ this.parsedSetState.bind(this) } />
+                        <LocationListView name="location-list-view" from={ this.state.from } elems={ this.state.currentLocations } category={ this.state.currentLocationsCategory } setMainState={ this.parsedSetState.bind(this) } />
+                        <LocationSingleView name="location-single-view" from={ this.state.from } elem={ this.state.singleLocation } setMainState={ this.parsedSetState.bind(this) } />
+                    </div>
+
+                    <Hamburger />
+
+                    { this.state.currentMobileView != null &&
+                      _('body').hasClass('mobile') &&
+                        <ViewSliderDots currentView={ this.state.currentMobileView } />
+                    }
                 </div>
-                
-                <Hamburger />
-
-                { this.state.currentMobileView != null &&
-                  _('body').hasClass('mobile') &&
-                    <ViewSliderDots currentView={ this.state.currentMobileView } />
-                }
             </div>
         );
     }

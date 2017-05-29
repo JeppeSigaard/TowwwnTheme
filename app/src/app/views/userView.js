@@ -61,8 +61,8 @@ class UserView extends React.Component {
                         </svg>
 
                         <div className="login-btn">
-                            <h2>Du har fundet en funktion, der kræver at du er logget ind</h2>
-                            <h1>Så log ind med facebook!</h1>
+                            <h2>{ this.props.from !== 'sidenav' && "Du har fundet en funktion, der kræver at du er logget ind" }</h2>
+                            <h1>{ this.props.from !== 'sidenav' ? "Så l" : "L" }og ind med facebook!</h1>
                             <h3>Klik i det blå område for at acceptere</h3>
                         </div>
                     </div>

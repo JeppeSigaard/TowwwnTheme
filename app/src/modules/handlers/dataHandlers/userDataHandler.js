@@ -34,14 +34,6 @@ class User {
                 locations: []
             }
         };
-
-        // Login button
-//        _('.login-btn').on( 'click', ( e ) => {
-//            if ( this.state.loggedIn ) return;
-//            Globals.fb.login().then(() => {
-//                _('.login-btn').text( this.state.fbData.name.split(' ')[0] );
-//            });
-//        });
         
         // On load, get behaviour statistics from cookie
         window.onload = (() => {

@@ -125,8 +125,12 @@ $horizontal-bezier: cubic-bezier(.6, .0, .4, 1);
         position: absolute;
         top: 0; left: 0%;
         font-size: 0;
-        transition: 400ms;
+        transition: 400ms, transform 180ms;
         transition-timing-function: $horizontal-bezier;
+
+        &.aside{
+            transform: translateX( -$sidebar-width );
+        }
 
         &:before{
             content: '';
@@ -141,7 +145,33 @@ $horizontal-bezier: cubic-bezier(.6, .0, .4, 1);
         }
 
         &.transition{
-            transition: 250ms;
+            transition: 250ms, left 180ms $horizontal-bezier;
+        }
+
+        #general-overlay{
+            position: absolute;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,.45);
+            z-index: 99999;
+            opacity: 0;
+            transition: 180ms $horizontal-bezier;
+            pointer-events: none;
+
+            &:after{
+                content: '';
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 4px;
+                height: 100%;
+                background: linear-gradient(to right, rgba(0,0,0,0.0) 0%,rgba(0,0,0,.1) 100%);
+            }
+
+            &.active{
+                pointer-events: all;
+                opacity: 1;
+            }
         }
     }
     
