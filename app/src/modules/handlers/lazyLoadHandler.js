@@ -11,7 +11,6 @@ class LazyLoadHandler {
         // Actually handling stuff
         this.selector = selector;
         _( selector ).on( 'scroll', this.onscroll.bind(this) );
-
     }
 
     // Trigger load
@@ -42,7 +41,6 @@ class LazyLoadHandler {
                 imgPlaceholder.src = imgSrc;
             }
         }
-
     }
 
     // In view

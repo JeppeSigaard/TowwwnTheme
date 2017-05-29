@@ -3,7 +3,7 @@
     z-index: 2;
     width: 100%;
     height: $menu-bar-height;
-    padding-left: 20px;
+    padding-left: 12px;
     line-height: $menu-bar-height;
     color: white;
     text-transform: uppercase;
@@ -21,12 +21,16 @@
         a{ cursor: pointer; }
     }
 
+    @media(min-width:769px){padding-left:20px;}
+
     a{
        color: white;
         text-decoration: none;
         height: inherit;
         line-height: inherit;
         display: inline-block;
+        width: calc(100% - #{$menu-bar-height});
+        overflow: hidden;
     }
 
     .close-button{

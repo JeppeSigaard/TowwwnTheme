@@ -213,7 +213,7 @@ class Railbar extends React.Component {
             styles = window.getComputedStyle(firstChild.get(0)),
             margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom']),
             marginLeft = parseFloat(styles['marginLeft']) + parseFloat(styles['borderLeft']),
-            height = Math.ceil(firstChild.height() + margin);
+            height = Math.ceil(firstChild.height() + margin + 5);
 
         for (let size in this.props.sizes){
             if(this.props.sizes.hasOwnProperty(size)){
