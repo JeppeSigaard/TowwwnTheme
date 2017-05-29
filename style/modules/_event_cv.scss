@@ -236,7 +236,8 @@
         border-bottom: 1px solid rgba($color-blue-1, .6);
 
         @media(min-width:769px){
-            padding-bottom: 90px;
+            padding-bottom: 0;
+            height: 90px;
             border-bottom: 1px solid $color-blue-1;
         }
     }

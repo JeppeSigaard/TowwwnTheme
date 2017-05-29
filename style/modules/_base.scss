@@ -183,6 +183,7 @@ $horizontal-bezier-mobile: cubic-bezier(0, 0, 0, 1);
 
         @media(min-width:769px){
             width: 50%;
+            left: -50%;
         }
     }
 

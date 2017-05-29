@@ -31,7 +31,9 @@ class SingleEvent extends React.Component {
                     <div className="event-singleview">
 
                         {/* Image */}
-                        <div className="event-sv-img" style={{ 'backgroundImage' : 'url(' + this.state.imgurl }} ></div>
+                        { this.state.imgurl != '' && <div className="event-sv-img" style={{ 'backgroundImage' : 'url(' + this.state.imgurl }} ></div> }
+
+                         {/* Title */}
                         <div className="event-sv-title" >
                             { elem.name }
                         </div>
