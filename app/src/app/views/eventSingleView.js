@@ -13,17 +13,17 @@ const React = require( 'react' ),
 class EventSingleView extends React.Component {
 
     // Ctor
-    constructor() { 
-        super(); 
-        
+    constructor() {
+        super();
+
         this.lastElem = null;
         this.startTime = null;
         this.state = {
             'closeviewstate' : { },
 
             'standardclose' : {
-                'leftview' : '#search-view',
-                'rightview' : '#event-calendar-view',
+                'leftview' : '#event-calendar-view',
+                'rightview' : '#location-category-view',
                 'fromLeft' : false,
                 'fromRight' : true,
                 'notrans': false,
@@ -77,7 +77,7 @@ class EventSingleView extends React.Component {
             jsxEvent : null,
         };
     }
-    
+
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
         if ( nextProps.event != this.lastElem ) {
@@ -133,8 +133,9 @@ class EventSingleView extends React.Component {
 
     // Will change view
     willChangeView() {
+
         Globals.setMainState({ singleLocation : null });
-        
+
         // Opens new request
         let request = new XMLHttpRequest();
         request.addEventListener( 'load', ( resp ) => {
@@ -142,11 +143,12 @@ class EventSingleView extends React.Component {
             Globals.setMainState({
                 'singleLocation' : data[0],
             });
+
+            Globals.history.push(data[0]);
         });
 
-        request.open( 'GET', 'http://towwwn.dk/api/svendborg/locations/'+this.props.event.parentid );
+        request.open( 'GET', app_data.rest_api + '/locations/'+this.props.event.parentid );
         request.send();
-
     }
 
     // heart
@@ -203,15 +205,13 @@ class EventSingleView extends React.Component {
         let elem = this.props.event;
         return (
             <section className="container-section" id="event-single-view">
-                <ViewTopBar standard={ true } heart={ true } heartFunc={ this.heart.bind(this) } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
-                
+                <ViewTopBar icon="#icon-star" viewBox="0 0 32 32" standard={ true } heart={ true } heartFunc={ this.heart.bind(this) } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
+
                 <div className="scroll-container">
                     <div className="content">
 
                         { this.state.jsxEvent != null &&
                           this.state.jsxEvent }
-
-                        <BannerCommercials />
                     </div>
                 </div>
             </section>

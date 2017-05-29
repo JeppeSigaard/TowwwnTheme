@@ -22,6 +22,8 @@ class Header extends React.Component {
             '#search-view',
             true, false, false
         );
+
+        Globals.history.push({'type' : 'home', 'name' : 'Steder · Towwwn'});
     }
 
     // On nav event click
@@ -40,6 +42,8 @@ class Header extends React.Component {
             '#event-calendar-view',
             false, true, false
         );
+
+        Globals.history.push({'type' : 'home', 'name' : 'Begivenheder · Towwwn'});
     }
 
     // Render
@@ -54,8 +58,8 @@ class Header extends React.Component {
                                 </use>
                             </svg>
                         </div>
-                        <a href="<?php echo get_bloginfo('url'); ?>" className="logo-container">
-                            <div className="city">{ city }</div>
+                        <a href="#" className="logo-container">
+                            <div className="city">{ app_data.city }</div>
                         </a>
 
                         <div id="top-nav-icons">

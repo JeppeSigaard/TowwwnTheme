@@ -40,7 +40,7 @@ let UnderScore = ( selector ) => {
 
 // Towwwwn Selector Elem
 class UnderScoreElem {
-    
+
     // Get
     get( index ) {
         if ( index != null &&
@@ -120,7 +120,7 @@ class UnderScoreElem {
 
         return this;
     }
-    
+
     // Off
     off( event, func ) {
         if ( typeof event !== 'string' || typeof func !== 'function' ) return;
@@ -231,7 +231,7 @@ class UnderScoreElem {
             return this;
         }
     }
-    
+
     // ComputedStyle
     style() {
         if ( this.state.domnode.constructor.name === 'HTMLElement' ||
@@ -281,6 +281,7 @@ class UnderScoreElem {
     attr( attr ) {
         window.domnode = this.state.domnode;
         if ( this.state.domnode.constructor.name === 'HTMLElement' ||
+             this.state.domnode.constructor.name === 'HTMLAnchorElement' ||
              this.state.domnode.constructor.name === 'HTMLDivElement' ) {
             this.state.domnode = [ this.state.domnode ];
         } return this.state.domnode[0].getAttribute(attr);
@@ -289,6 +290,7 @@ class UnderScoreElem {
     // Has Attribute
     hasAttr( attr ) {
         if ( this.state.domnode.constructor.name === 'HTMLElement' ||
+             this.state.domnode.constructor.name === 'HTMLAnchorElement' ||
              this.state.domnode.constructor.name === 'HTMLDivElement' ) {
             this.state.domnode = [ this.state.domnode ];
         } return this.state.domnode[0].getAttribute( attr ) != null ? true : false;
@@ -297,6 +299,7 @@ class UnderScoreElem {
     // Remove Attribute
     removeAttr( attr ) {
         if ( this.state.domnode.constructor.name === 'HTMLElement' ||
+             this.state.domnode.constructor.name === 'HTMLAnchorElement' ||
              this.state.domnode.constructor.name === 'HTMLDivElement' ) {
             this.state.domnode = [ this.state.domnode ];
         }

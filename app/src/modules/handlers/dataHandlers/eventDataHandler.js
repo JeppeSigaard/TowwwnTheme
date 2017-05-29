@@ -3,8 +3,8 @@
 class EventDataHandler{
 
     // Ctor
-    constructor() { 
-        this.futureEvents = []; 
+    constructor() {
+        this.futureEvents = [];
         this.futurePage = 1;
     }
 
@@ -22,8 +22,8 @@ class EventDataHandler{
                     if ( a.start_time < b.start_time ) return -1;
                     if ( a.start_time > b.start_time ) return 1;
                     return 0;
-                }); 
-                
+                });
+
                 if ( cont ) {
                     for ( var elem of tmp ) {
                         this.futureEvents.push( elem );
@@ -34,35 +34,38 @@ class EventDataHandler{
 
             }.bind(this);
 
-            // Sends request 
+            // Sends request
             if ( cont ) {
-                xhr.open( 'GET', rest_api+'svendborg/events?per_page='+getNum+'&page='+this.futurePage+'&after=now' );
+                xhr.open( 'GET', app_data.rest_api + 'svendborg/events?per_page='+getNum+'&page='+this.futurePage+'&after=now' );
                 this.futurePage ++;
             } else {
-                xhr.open( 'GET', rest_api+'svendborg/events?per_page='+getNum+'&page=1&after=now' );
+                xhr.open( 'GET', app_data.rest_api + 'svendborg/events?per_page='+getNum+'&page=1&after=now' );
             }
-                
+
             xhr.send();
 
         });
     }
-    
+
     // Get events
     getEvents( properties ) {
         return new Promise(( resolve, reject ) => {
-            
+
             // Sets get params using properties
             if ( typeof properties === 'object' ||
                  properties.length < 1 ) {
-                
-                let str = [];
-                for ( let key in properties ) {
-                    str.push( key+'='+properties[key] ); } 
 
-                if ( str.length > 0 ) {
-                    str.join(':');
-                } else reject();
-                
+                // Set query string
+                let c = 0, query = '';
+                if(properties != null){
+                    for(var k in properties){
+                        c++; query += (c > 1) ? '&' : '?';
+                        if(properties.hasOwnProperty(k)){
+                            query += encodeURIComponent(k) + '=' + encodeURIComponent(properties[k]);
+                        }
+                    }
+                }
+
                 // Opens new request
                 let request = new XMLHttpRequest();
                 request.addEventListener( 'load', ( data ) => {
@@ -74,15 +77,15 @@ class EventDataHandler{
                         });
                     resolve ( resp );
                 });
-                
+
                 // Sends request
-                request.open( 'GET', rest_api+'svendborg/events?' + str );
+                request.open( 'GET', app_data.rest_api + 'svendborg/events' + query );
                 request.send();
-                
+
             } else {
-                reject( 'When no propeties needed, use other event data handler method' );    
+                reject( 'When no propeties needed, use other event data handler method' );
             }
-            
+
         });
     }
 

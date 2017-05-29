@@ -5,10 +5,10 @@ const React = require( 'react' ),
       Globals = require( '../globals.js' );
 
 class SubCategory extends React.Component {
-    
+
     // Ctor
     constructor() { super(); }
-    
+
     // Render
     render() {
         return (
@@ -20,5 +20,5 @@ class SubCategory extends React.Component {
             </div>
         );
     }
-    
+
 } module.exports = SubCategory;

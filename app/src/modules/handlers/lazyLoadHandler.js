@@ -27,27 +27,30 @@ class LazyLoadHandler {
         else elems = elems.get();
 
         for ( let elem of elems ) {
-            if ( this.isInView( elem ) ) {
+            if ( this.isInView( elem, 200 ) ) {
                 let uElem = _( elem ),
-                    request = new XMLHttpRequest();
+                    imgSrc = uElem.attr('data-image-src'),
+                    imgPlaceholder = new Image();
 
-                request.onload = (( response ) => {
-                    uElem.css({ 'background-image' : 'url('+ response.target.responseURL +')' });
-                    uElem.addClass( 'imgloaded' ).removeAttr( 'data-image-src' );
-                });
+                imgPlaceholder.onload = function() {
+                    uElem.css({ 'background-image' : 'url('+ imgSrc +')' });
+                    uElem.removeClass('loading-image', '1');
+                }
 
-                request.open( 'GET', uElem.attr('data-image-src') );
-                request.send();
+                uElem.removeAttr( 'data-image-src' );
+                uElem.addClass('loading-image', '1');
+                imgPlaceholder.src = imgSrc;
             }
         }
 
     }
 
     // In view
-    isInView(element) {
+    isInView(element, preloadDistance) {
         let elemTop = element.getBoundingClientRect().top,
             elemBottom = element.getBoundingClientRect().bottom,
-            isVisibleY = (elemTop >= 0) && (elemBottom <= window.innerHeight),
+            preload = ( preloadDistance != null ) ? preloadDistance : 0,
+            isVisibleY = (elemTop >= 0 - preload) && (elemBottom <= window.innerHeight + element.offsetHeight + preload),
             isVisibleX = element.offsetLeft >= 0 && element.offsetLeft < window.innerWidth - 200;
 
         return isVisibleY && isVisibleX;

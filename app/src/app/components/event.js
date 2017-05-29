@@ -9,14 +9,17 @@ const React = require( 'react' ),
 class Event extends React.Component {
 
     // Click Handlers
-    eventRefClick( e ) {
-        e.preventDefault();
+    eventRefClick( e ) { e.preventDefault(); if(!Globals.navigationBlocker){
+
         Globals.setMainState({ from : this.props.name });
-        Globals.setMainState( 
-            'singleevent', 
+        Globals.setMainState(
+            'singleevent',
             this.props.elem
         );
-        
+
+        // Push to browser history
+        Globals.history.push(this.props.elem);
+
         if ( this.props.vref != null ) {
             if ( _('body').hasClass('mobile') ) {
                 Globals.viewHandler.changeMobileViewFocus( // Tmp
@@ -45,10 +48,10 @@ class Event extends React.Component {
                     '#event-calendar-view',
                     '#event-single-view',
                     true, false, false
-                ); 
+                );
             }
         }
-    }
+    }}
 
     locationRefClick( e ) {
         e.preventDefault();
@@ -79,13 +82,16 @@ class Event extends React.Component {
                 'singleLocation' : location,
             });
 
+            // Push to browser history
+            Globals.history.push(this.props.elem);
+
             Globals.setMainState({ from : this.props.name });
 
         }.bind(this);
 
-        // Sends request
-        xhr.open( 'GET', 'http://towwwn.dk/api/svendborg/locations/' + this.props.elem.parentid );
-        xhr.send();
+            // Sends request
+            xhr.open( 'GET', app_data.rest_api + '/locations/' + this.props.elem.parentid );
+            xhr.send();
     }
 
     // Format title
@@ -121,7 +127,7 @@ class Event extends React.Component {
             response = elem.imgurl; }
 
         // If none found, use placeholder
-        else { response = 'http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png'; }
+        else { response = app_data.template_uri + '/style/assets/images/placeholder-camera-green.png'; }
 
         return response;
 
@@ -140,23 +146,14 @@ class Event extends React.Component {
 
         // Html
         return (
-            <a className="event" style={ this.props.style != null ? this.props.style : {} } >
-                <div className="imgcontainer" data-image-src={ image } onClick={ this.eventRefClick.bind(this) } >
-                    {/*<svg viewBox="0 0 32 32" className="heart">
-                        <use xlinkHref="#icon-heart"></use>
-                    </svg>*/}
-
-                    <div className="loader">
-                        <img src={ template_uri + '/style/assets/icons/loading-white.svg' } />
-                    </div>
-                </div>
-
+            <a className="event" href={ app_data.main_path + '/event/' + this.props.elem.slug } style={ this.props.style != null ? this.props.style : {} } onClick={ this.eventRefClick.bind(this) }  >
+                <div className="imgcontainer" data-image-src={ image } ></div>
                 <div className="eventtext" onClick={ this.eventRefClick.bind(this) } >
                     <div className="ripple"></div>
                     <div className="title">{ title }</div>
                     <div className="start_time">{ semanticTime }</div>
                 </div>
-                
+
                 <div className="eventlocation-container" onClick={ this.locationRefClick.bind(this) } >
                     <div className="eventblackbar"></div>
                     <div className="eventlocation">{ elem.parentname }</div>

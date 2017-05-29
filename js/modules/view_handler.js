@@ -8,7 +8,7 @@ var ViewHandler = {
         poly_view: false,
         content_container: $('.content-container'),
 <<<<<<< HEAD
-        
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -18,7 +18,7 @@ var ViewHandler = {
         location_listview: $('#section3 .content'),
         location_singleview: $('#section4 .content'),
 <<<<<<< HEAD
-        
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -27,9 +27,9 @@ var ViewHandler = {
         location_categories_outer: $('#section2'),
         location_listview_outer: $('#section3'),
 <<<<<<< HEAD
-        location_singleview_outer: $('#section4'),  
-        
-        views: [], 
+        location_singleview_outer: $('#section4'),
+
+        views: [],
 =======
         location_singleview_outer: $('#section4'),
 
@@ -50,14 +50,14 @@ var ViewHandler = {
             this.settings.views.push( $(elem) );
         }.bind(this));
 <<<<<<< HEAD
-        
+
         // Loads swipe functionality
         this.swipe();
 
         // Reloads current view to fit mobile screen sizes
         var lastSize = $(window).innerWidth();
         $(window).on( 'resize', function() {
-            if ( ( $(window).innerWidth() <= 640 && lastSize > 640 ) || ( $(window).innerWidth() > 640 && lastSize <= 640 ) ) {
+            if ( ( $(window).innerWidth() <= 769 && lastSize > 769 ) || ( $(window).innerWidth() > 769 && lastSize <= 769 ) ) {
                 setTimeout( function() {
                     this.change_view_focus( this.settings.currentIndex, this.settings.forcedLeft, this.settings.forcedRight );
                 }.bind(this), 400);
@@ -72,7 +72,7 @@ var ViewHandler = {
         // Reloads current view to fit mobile screen sizes
         var lastSize = $(window).innerWidth();
         $(window).on( 'resize', function() {
-            if ( ( $(window).innerWidth() <= 640 && lastSize > 640 ) || ( $(window).innerWidth() > 640 && lastSize <= 640 ) ) {
+            if ( ( $(window).innerWidth() <= 769 && lastSize > 769 ) || ( $(window).innerWidth() > 769 && lastSize <= 769 ) ) {
                 setTimeout( function() {
                     this.change_view_focus( this.settings.currentIndex, this.settings.forcedLeft, this.settings.forcedRight );
                 }.bind(this), 400);
@@ -105,7 +105,7 @@ var ViewHandler = {
         var cls = -( $('.content-container-inner').position().left ),
             crs = cls + $('.content-container').innerWidth();
 <<<<<<< HEAD
-        
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -114,7 +114,7 @@ var ViewHandler = {
                 elem_ls = elem.position().left,
                 elem_rs = elem.position().left + elem.innerWidth();
 <<<<<<< HEAD
-            
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -132,14 +132,14 @@ var ViewHandler = {
                 $('.content-container-inner').css({ 'left': this.settings.ls + '%' });
             }
 <<<<<<< HEAD
-            
+
         } else if ( typeof viewIndex === 'object' ) {
-            viewIndex.sort(function( a, b ) { 
+            viewIndex.sort(function( a, b ) {
                 if ( a < b ) return -1;
                 if ( a > b ) return 1;
                 return 0;
-            }); 
-            
+            });
+
 =======
 
         } else if ( typeof viewIndex === 'object' ) {
@@ -156,7 +156,7 @@ var ViewHandler = {
                 to = highElem.position().left + highElem.innerWidth(),
                 width = Math.abs( to - from );
 <<<<<<< HEAD
-            
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -172,10 +172,10 @@ var ViewHandler = {
         }, 420);
     },
 <<<<<<< HEAD
-    
+
     // Swipe functionlaity
     swipe: function() {
-        
+
 =======
 
     // Swipe functionlaity
@@ -204,7 +204,7 @@ var ViewHandler = {
             viewLocked = false,
             too_fast = false;
 <<<<<<< HEAD
-        
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -225,7 +225,7 @@ var ViewHandler = {
         $('.content-container').on( 'touchmove', function( e ) {
           if ( touchstartX !== null && touchstartY !== null ) {
 <<<<<<< HEAD
-            var distanceX = touchstartX - e.touches[0].pageX , 
+            var distanceX = touchstartX - e.touches[0].pageX ,
 =======
             var distanceX = touchstartX - e.touches[0].pageX ,
 >>>>>>> origin/internalscroll
@@ -259,7 +259,7 @@ var ViewHandler = {
 
           if( -($('.content-container-inner').position().left) < 0 ) {
 <<<<<<< HEAD
-            $('.content-container-inner').css({ 'left': 0 });    
+            $('.content-container-inner').css({ 'left': 0 });
 =======
             $('.content-container-inner').css({ 'left': 0 });
 >>>>>>> origin/internalscroll
@@ -306,7 +306,7 @@ var ViewHandler = {
 
           }, 250);
 <<<<<<< HEAD
-          
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -315,9 +315,9 @@ var ViewHandler = {
           too_fast = false;
         });
 <<<<<<< HEAD
-        
+
     },
-    
+
 =======
 
     },

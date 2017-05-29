@@ -36,7 +36,7 @@ var HeaderModule = {
         // Set menu position
         this.settings.menu_ready = false;
 
-        if ( $(window).innerWidth() <= 640 ) {
+        if ( $(window).innerWidth() <= 769 ) {
             $('.header-container').hide().addClass( 'fixed' ).show();
             $('.menu-show-btns').addClass( 'show' );
         }
@@ -91,7 +91,7 @@ var HeaderModule = {
                 this.settings.menu_ready = false;
             }
 
-            if ( $(window).innerWidth() <= 640 ) {
+            if ( $(window).innerWidth() <= 769 ) {
                 $('.header-container').hide().addClass( 'fixed' ).show();
                 $('.menu-show-btns').addClass( 'show' );
                 this.settings.menu_ready = true;

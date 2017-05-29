@@ -6,16 +6,17 @@ const React = require( 'react' ),
       Globals = require( '../globals.js' ),
       Event = require( './event.js' ),
       SingleViewFooter = require( '../componentParts/singleviewfooter.js' ),
-      
+      Railbar = require( '../componentParts/railbar.js' ),
+
       Linkify = require( 'react-linkify' ).default,
       TextPreproccesors = require( '../../modules/tools/textPreproccesors.js' ),
       TowwwnSlider = require( '../../modules/libaries/slider.js' );
 
 class SingleLocation extends React.Component {
-    
+
     // Ctor
-    constructor() { 
-        super(); 
+    constructor() {
+        super();
         this.state = {
             jsxEvents : null,
             smallscreen : false,
@@ -32,66 +33,78 @@ class SingleLocation extends React.Component {
                 }
             },
         };
-        
-        // Event Handlers
-        _(window).on( 'resize', this.onResize.bind(this) );
+
     }
-    
+
     // Load events
     loadEvents( nextProps ) {
-        if ( nextProps.elem !== this.props.elem ) {
+        if ( nextProps.elem !== this.lastLoaded ) {
             this.setState({ 'jsxEvents' : null });
+            this.lastLoaded = nextProps.elem;
             Globals.eventDataHandler.getEvents({
-                'parent' : nextProps.elem.id
+                'parent' : nextProps.elem.id,
+                'per_page' : '1000',
+                'after' : 'now'
             }).then(( resp ) => {
-                
-                // Generates elems
-                let jsxEvents = [];
-                for ( let eventData of resp ) {
-                    jsxEvents.push( <Event elem={ eventData } key={ 'eventslide-'+eventData.id } name={ this.props.name } vref={ this.state.eventVref } style={{ width : (100/resp.length) + '%' }} /> );
+                if(resp.length > 0){
+                    this.setEvents(resp);
+                    return;
                 }
-                
-                // Sets state
-                if ( jsxEvents <= 0 ) jsxEvents = null;
-                this.setState({ 'jsxEvents' : jsxEvents });
-                
+
+                Globals.eventDataHandler.getEvents({
+                    'parent' : nextProps.elem.id,
+                    'per_page' : '1000',
+                    'before' : 'now'
+                }).then(( resp ) => {
+
+                    this.setEvents(resp);
+                    return;
+
+                });
+
             });
         }
     }
-    
-    // Resize
-    onResize() {
-        if ( _(window).width() <= 1000 ) this.setState({ smallscreen: true });
-        else this.setState({ smallscreen: false });
-    }
-    
-    // Component will receive props
-    componentWillReceiveProps( nextProps ) { this.loadEvents( nextProps ); }
-    componentWillMount() { this.onResize(); this.loadEvents( this.props ); }
-    
-    // Component did update
-    componentDidUpdate() {
-        
-        // Inits slider
-        this.state.slider.initSlider({
-            outer : '.location-singleview-content .event-slider',
-            prevButtonClass : 'prevButton',
-            nextButtonClass : 'nextButton',
-            innerClass : 'inner',
-        });
 
+    // Set events
+    setEvents(resp){
+        // Generates elems
+        let jsxEvents = [];
+        for ( let eventData of resp ) {
+            jsxEvents.push( <Event elem={ eventData } key={ 'eventslide-'+eventData.id } name={ this.props.name } vref={ this.state.eventVref } /> );
+        }
+
+        // Sets state
+        if ( jsxEvents <= 0 ) jsxEvents = null;
+        this.setState({ 'jsxEvents' : jsxEvents });
     }
-    
+
+    // Component will receive props
+    componentWillReceiveProps( nextProps ) {
+
+        if( this.lastElem == null || nextProps.elem !== this.lastElem ){
+            this.loadEvents( nextProps );
+            _('#location-single-view .scroll-container').get()[0].scrollTop = 0;
+            this.lastElem = nextProps.elem;
+        }
+    }
+    componentDidMount() { this.loadEvents( this.props ); }
+
+    // Component did update
+    componentDidUpdate() {}
+
     // Render
     render() {
-        let elem = this.props.elem;
+        let elem = this.props.elem,
+            description = (elem.description != null && elem.description.length > 10) ? elem.description : elem.about,
+            railSizes = {0 : 2, 640 : 3, 768 : 2, 1080 : 3, 1600 : 4};
         return (
             <div className="location-singleview-content" >
                 <div className="photo-container">
                     <div className="coverphoto cta-icon" style={{ 'backgroundImage' : 'url('+ elem.coverphoto +')' }} ></div>
                     <div className="picture" style={{ 'backgroundImage' : 'url('+ elem.picture +')' }} ></div>
                 </div>
-                
+
                 <div className="cta-icons">
                     { elem.phone != null &&
                         <a className="cta-phone cta-icon" href={'tel://' + elem.phone} data-link={ 'tel://' + elem.phone } >
@@ -102,7 +115,7 @@ class SingleLocation extends React.Component {
                             </div>
                         </a>
                     }
-                    
+
                     { elem.website != null &&
                         <a className="cta-website cta-icon" href={elem.website} data-link={ elem.website } >
                             <div className="icon">
@@ -112,7 +125,7 @@ class SingleLocation extends React.Component {
                             </div>
                         </a>
                     }
-                    
+
                     { elem.fbid != null &&
                         <a className="cta-fb cta-icon" href={'http://fb.com/' + elem.fbid} data-link={ 'http://fb.com/' + elem.fbid } >
                             <div className="icon">
@@ -124,55 +137,22 @@ class SingleLocation extends React.Component {
                     }
                 </div>
                 <div className="breakline"></div>
-                
-                { elem.description != null &&
-                <div className="description-container">
-                    <div className="title">{ elem.name }</div>
+                {description != null && description.length > 50 && <div className="description-container">
                     <div className="description">
                         <Linkify>
-                            { TextPreproccesors.nl2p( TextPreproccesors.ripRep( elem.description ) ) }
+                            { TextPreproccesors.nl2p( TextPreproccesors.ripRep( description ) ) }
                         </Linkify>
                     </div>
                 </div>
                 }
-
-                { elem.description == null &&
-                  elem.about != null &&
-                <div className="description-container">
-                    <div className="title">{ elem.name }</div>
-                    <div className="description">
-                        <Linkify>
-                            { TextPreproccesors.nl2p( TextPreproccesors.ripRep( elem.about ) ) }
-                        </Linkify>
-                    </div>
-                </div>
-                }
-                <div className="breakline"></div>
-                
+                {description != null && description.length > 50 && <div className="breakline"></div> }
                 { this.state.jsxEvents != null &&
-                    <div className="event-slider">
-                        <div className="prevButton button">
-                            <svg viewBox="0 0 20 20">
-                                <use xlinkHref="#chevron-left"></use>
-                            </svg>
-                        </div>
-                        <div className="nextButton button">
-                            <svg viewBox="0 0 20 20">
-                                <use xlinkHref="#chevron-right"></use>
-                            </svg>
-                        </div>
-                        
-                        <div className="inner" style={{ width : ( this.state.smallscreen ? 
-                                                                    (this.state.jsxEvents.length/2*100) :
-                                                                    (this.state.jsxEvents.length/3*100) ) +'%' }} >
-                            { this.state.jsxEvents }
-                        </div>
-                    </div>
-                }
-                
+                <Railbar name="event-slider" sizes={railSizes} snap>
+                    { this.state.jsxEvents }
+                </Railbar> }
                 <SingleViewFooter elem={ elem } type="location" />
             </div>
         );
     }
-    
+
 } module.exports = SingleLocation;

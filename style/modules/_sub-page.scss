@@ -1,5 +1,5 @@
 .sub-page-article{
-    max-width: 640px;
+    max-width: 769px;
     padding: 10px;
     min-height: 100vh;
 
@@ -12,7 +12,7 @@
          max-width: 680px;
     }
 
-    @media (min-width:640px){
+    @media (min-width:769px){
          padding: 20px;
          font-size: 15px;
     }
@@ -65,7 +65,7 @@ body.sub-page .poly-view{
         }
     }
 
-    @media( min-width: 640px){
+    @media( min-width: 769px){
 
         .left-container{
 
@@ -77,7 +77,7 @@ body.sub-page .poly-view{
         }
     }
 
-    @media( min-width: 768px){
+    @media( min-width: 769px){
 
          .left-container{
             width: 320px;

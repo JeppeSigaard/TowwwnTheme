@@ -4,10 +4,10 @@
 // FB Handler
 const Globals = require( '../../../app/globals.js' );
 class FBHandler {
-    
+
     // Constructor
     constructor() {
-        
+
         // Retrieves the facebook sdk
         window.fbAsyncInit = function() {
             FB.init({
@@ -25,9 +25,9 @@ class FBHandler {
             js.src = "//connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
-        
+
     }
-    
+
     // Login
     login( scope ) {
 
@@ -52,8 +52,8 @@ class FBHandler {
             method: 'share',
             display: 'popup',
             href: href,
-        }, response => { 
-            return response; 
+        }, response => {
+            return response;
         });
     }
 
@@ -63,5 +63,5 @@ class FBHandler {
             FB.api( ref , response => { resolve(response); });
         });
     }
-    
+
 } module.exports = FBHandler;

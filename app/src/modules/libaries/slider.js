@@ -5,7 +5,7 @@
 //      tselem = require( './towwwnSelector.js' ).tselem;
 
 class TowwwnSlider {
-    
+
     // Constructor
     constructor( ) {
     }
@@ -38,9 +38,9 @@ class TowwwnSlider {
                 nextButtonElem = nextButtonElem[0];
                 innerElem = innerElem[0];
                 slides = innerElem.childNodes;
-                
+
                 if ( this.ready ) resolve();
-                
+
                 elem.classList.add( 'towwwnslider-outer' );
                 innerElem.classList.add( 'towwwnslider-inner' );
 
@@ -80,7 +80,7 @@ class TowwwnSlider {
             if ( typeof outerElem === 'object' ) {
                 for ( let outer of outerElem ) assignmentLoop( outer );
             } else assignmentLoop( outerElem );
-            
+
             this.ready = true;
             resolve ();
 

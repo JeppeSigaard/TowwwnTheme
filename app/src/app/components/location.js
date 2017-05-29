@@ -6,7 +6,7 @@ const React = require( 'react' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' );
 
 class Location extends React.Component {
-    
+
     // Ctor
     constructor() {
         super();
@@ -27,7 +27,9 @@ class Location extends React.Component {
         Globals.setMainState({
             'singleLocation' : this.props.elem,
         });
-        
+
+        Globals.history.push(this.props.elem);
+
         Globals.setMainState({ from : this.props.name });
         if ( _('body').hasClass('mobile') ) {
             Globals.viewHandler.changeMobileViewFocus(
@@ -47,8 +49,9 @@ class Location extends React.Component {
                 '#location-single-view',
                 '#location-list-view',
                 false, true, false
-            );    
+            );
         }
+
     }
 
     // Component did mount
@@ -73,7 +76,7 @@ class Location extends React.Component {
         let elem = this.props.elem;
         if ( elem != null ) {
             return (
-                <a className="location-container" onClick={ this.handleClick.bind(this) } >
+                <a href={ app_data.main_path + '/location/' + elem.slug }  className="location-container" onClick={ this.handleClick.bind(this) } >
                     <span className="location-picture" style={{ 'backgroundImage' : 'url(' + elem.picture + ')' }} ></span>
                     <span className="location-description">
                         <h2 className="location-title">
@@ -89,5 +92,5 @@ class Location extends React.Component {
             );
         } else return <a className="location-container"></a>
     }
-    
+
 } module.exports = Location;

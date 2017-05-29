@@ -101,7 +101,7 @@ var SearchModule = {
             return 0;
         });
 <<<<<<< HEAD
-        
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -160,8 +160,8 @@ var SearchModule = {
 
             // Generates categories html
 <<<<<<< HEAD
-            var response = '<div class="search-container">'; 
-            
+            var response = '<div class="search-container">';
+
 =======
             var response = '<div class="search-container">';
 
@@ -174,16 +174,16 @@ var SearchModule = {
                 } response += '</div></div>';
             }
 <<<<<<< HEAD
-            
+
             if ( locations.length > 0 ) {
                 response += '<div class="search-category-container">Steder:<div class="breakline"></div>';
                 response += '<div class="unflex">';
-                
+
                 locations.forEach(function( item, index ) {
                     console.log( item );
                     response += LocationListModule.generateLocationElemHtml( item );
-                }); 
-                
+                });
+
 =======
 
             if ( locations.length > 0 ) {
@@ -202,7 +202,7 @@ var SearchModule = {
 
             if ( events.length > 0 ) {
 <<<<<<< HEAD
-            
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -211,9 +211,9 @@ var SearchModule = {
                 response += '<div class="flex">';
                 for ( var iter = 0; iter < events.length; iter++ ) {
 <<<<<<< HEAD
-                    response += EventCalenderModule.generateEventHtml( events[iter] ); 
+                    response += EventCalenderModule.generateEventHtml( events[iter] );
                 } response += '</div>';
-            
+
 =======
                     response += EventCalenderModule.generateEventHtml( events[iter] );
                 } response += '</div>';

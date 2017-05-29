@@ -12,14 +12,14 @@ let UnderScore = ( selector ) => {
          selector.constructor.name === 'NodeList' ) ||
          typeof selector === 'object' )
         elem.state = { domnode: selector };
-    
+
     // Gets dom node(s)
     if ( elem.state == null ) {
         if ( selector === document ) elem.state = { domnode : document, };
         else if ( selector === window ) elem.state = { domnode : window, };
         else elem.state = { domnode : document.querySelectorAll( selector ) };
     }
-        
+
     // Checks if any elems where found
     if ( elem.state.domnode.length != null && elem.state.domnode.length <= 0 &&
          elem.state.domnode !== window && elem.state.domnode !== document ) {
@@ -34,7 +34,7 @@ let UnderScore = ( selector ) => {
 
 // Towwwwn Selector Elem
 class UnderScoreElem {
-    
+
     // Get
     get( index ) {
         if ( index != null &&
@@ -42,7 +42,7 @@ class UnderScoreElem {
             return this.state.domnode[ index ];
         } else return this.state.domnode;
     }
-    
+
     // Add Class
     addClass( className ) {
         if ( className.includes(' ') ) {
@@ -59,7 +59,7 @@ class UnderScoreElem {
             }
         } return this;
     }
-    
+
     // Remove class
     removeClass( className ) {
         if ( className.includes(' ') ) {
@@ -188,7 +188,7 @@ class UnderScoreElem {
                     elem.style[ key ] = styling[ key ]; } }
         } else throw "TowwwnSelector, css: Param needs to be of type object";
     }
-    
+
     // ComputedStyle
     style() {
         let resp = [];
@@ -203,7 +203,7 @@ class UnderScoreElem {
         let left = this.offset().left - this.parent().offset().left;
         return { top: top, left: left };
     }
-    
+
     // Offset
     offset() {
         let node = this.state.domnode[0];
@@ -223,9 +223,9 @@ class UnderScoreElem {
         if ( node.constructor.name === 'NodeList' ) node = node[0];
         return node.innerHeight || node.clientHeight;
     }
-    
+
     // Attribute
-    attr( attr ) { 
+    attr( attr ) {
         return this.state.domnode[0].getAttribute( attr );
     }
 

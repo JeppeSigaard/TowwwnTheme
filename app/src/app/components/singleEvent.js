@@ -4,6 +4,7 @@ const React = require( 'react' ),
       DataFormatters = require( '../../modules/tools/dataFormatters.js' ),
       TextPreproccesors = require( '../../modules/tools/textPreproccesors.js' ),
       Globals = require( '../globals.js' ),
+      _ = require('../../modules/libaries/underscore/underscore_main.js'),
 
       // Component parts
       SingleViewFooter = require('../componentParts/singleviewfooter.js');
@@ -43,10 +44,9 @@ class SingleEvent extends React.Component {
 
                         {/* CTA Btns */}
                         <div className="es-btns" >
-                            <a className="status-btn share fb-xfbml-parse-ignore" 
-                               href={ "https://www.facebook.com/sharer/sharer.php?u="+ 
-                                    encodeURI( 'https://www.facebook.com/events/' + this.props.elem.fbid ).replace( /%5B/g, '[' ).replace( /%5D/g, ']') +"&amp;src=sdkpreparse" } 
-
+                            <a className="status-btn share fb-xfbml-parse-ignore"
+                               href={ "https://www.facebook.com/sharer/sharer.php?u="+
+                                    encodeURI( app_data.main_path + '/event/' + this.props.elem.slug ).replace( /%5B/g, '[' ).replace( /%5D/g, ']') +"&amp;src=sdkpreparse" }
                                onClick={ this.share.bind(this) } data-prevent>
                                 <div className="icon">
                                     <svg viewBox="0 0 32 32" >
@@ -85,14 +85,20 @@ class SingleEvent extends React.Component {
             </div>
         );
     }
-    
+
     // Share
     share() { if ( this.sharelink != null ) Globals.fb.share( this.sharelink ); }
-    
+
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
+
+        if( nextProps.elem !== this.lastElem ){
+            _('#event-single-view .scroll-container').get()[0].scrollTop = 0;
+            this.lastElem = nextProps.elem;
+        }
+
         this.sharelink = 'https://www.facebook.com/events/' + nextProps.elem.fbid;
-        
+
         // Extracts img url
         let imgurl = null;
         if ( nextProps.elem.imgurl !== '' &&
@@ -109,5 +115,5 @@ class SingleEvent extends React.Component {
         });
 
     }
-    
+
 } module.exports = SingleEvent;

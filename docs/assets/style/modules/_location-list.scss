@@ -1,0 +1,21 @@
+.location-list{
+
+    ul{
+        list-style: none;
+        padding: 0;
+    }
+
+    .letter-list{
+        margin-bottom: 20px;
+    }
+
+    li{
+        line-height: 2;
+    }
+
+    .letter{
+        text-transform: uppercase;
+        font-size: 140%;
+        font-weight: bold;
+    }
+}

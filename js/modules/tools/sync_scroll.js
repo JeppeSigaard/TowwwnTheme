@@ -245,7 +245,7 @@ var syncScroll = {
         this.settings.canFixedScroll = true;
         $('.sync-outer').removeAttr('style');
         $('body').removeClass('no-scroll').removeAttr('style');
-        
+
 =======
 
         this.settings.canFixedScroll = true;
@@ -260,7 +260,7 @@ var syncScroll = {
         this.rescaleContainer(function(){
             var goTopSide = false;
 
-            if($(window).width <= 640){
+            if($(window).width <= 769){
                 goTopSide = true;
             }
 

@@ -36,16 +36,18 @@ class BehaviourDataHandler{
 
             let request = new XMLHttpRequest();
             request.onload = (( resp ) => {
-                let json = JSON.parse( resp.target.response )[0],
-                    cats = json.categories;
+                if(resp.currentTarget.status != 404){
+                    let json = JSON.parse( resp.target.response )[0],
+                        cats = json.categories;
 
-                for ( let iter = 0; iter < cats.length; iter++ ) {
-                    if ( catsRef[ cats[ iter ].category_id ] != null ) catsRef[ cats[ iter ].category_id ]++;
-                    else catsRef[ cats[ iter ].category_id ] = 1;
+                    for ( let iter = 0; iter < cats.length; iter++ ) {
+                        if ( catsRef[ cats[ iter ].category_id ] != null ) catsRef[ cats[ iter ].category_id ]++;
+                        else catsRef[ cats[ iter ].category_id ] = 1;
+                    }
                 }
             });
 
-            request.open( 'GET', 'http://towwwn.dk/api/svendborg/locations/' + data.parentid );
+            request.open( 'GET', app_data.rest_api + '/locations/' + data.parentid );
             request.send();
 
         }
@@ -53,16 +55,16 @@ class BehaviourDataHandler{
 
     // Parse time data
     parseTimeData( type, id, time, parentid ) {
-        
+
         let timeData = Globals.user.state.behaviourData.timeData;
         if ( timeData[ type ][ id ] == null ) timeData[ type ][ id ] = 0;
         timeData[ type ][ id ] += time;
-        
+
         if ( type === 'event' ) {
-            
+
             let request = new XMLHttpRequest();
             request.onload = (( resp ) => {
-                
+
                 let json = JSON.parse( resp.target.response )[0],
                     cats = json.categories;
 
@@ -71,12 +73,12 @@ class BehaviourDataHandler{
                         timeData.locationcategory[ cats[ iter ].category_id ] = time;
                     else timeData.locationcategory[ cats[ iter ].category_id ] += time;
                 }
-                
+
             });
 
-            request.open( 'GET', 'http://towwwn.dk/api/svendborg/locations/' + parentid );
+            request.open( 'GET', app_data.rest_api + '/locations/' + parentid );
             request.send();
-            
+
         }
     }
 

@@ -1,0 +1,148 @@
+.rail-bar{
+    position: relative;
+    overflow: visible;
+    height: 0px;
+    transition: height 150ms;
+    transition-timing-function: cubic-bezier(.5, .0, .5, 1);
+    background: $color-grey-2;
+}
+
+.rail-bar-wrapper{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+.rail-bar-inner{
+    left: 0;
+    padding: 0px;
+    position: absolute;
+    height: 100%;
+    width: auto;
+    min-width: 100%;
+    display: flex;
+    flex-direction: row;
+    transition: transform 250ms;
+    transition-timing-function: cubic-bezier(0, .5, .5, 1);
+    will-change: transform;
+
+    >*{
+        flex: 1;
+        flex-grow: 1;
+        align-self: flex-start;
+    }
+}
+
+.rail-bar-button-left,
+.rail-bar-button-right{
+    position: absolute;
+    height: 100%;
+    width: 20px;
+    top: 0;
+    z-index: 10;
+    cursor: pointer;
+    fill: white;
+    background: rgba(black,.4);
+    opacity: 0;
+    transition: opacity 120ms;
+
+    &:hover{
+        opacity: 1;
+    }
+
+    &.disabled{
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    svg{
+        height: 10px;
+        width: 10px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+}
+
+.rail-bar-button-left{
+    left: 0;
+}
+
+.rail-bar-button-right{
+    right: 0;
+}
+
+$rail-bar-button-height: $menu-bar-height - 8;
+$rail-bar-svg-height: 12px;
+.rail-bar-menu-button{
+    flex-grow: 0;
+    white-space: nowrap;
+    height: $rail-bar-button-height;
+    line-height: $rail-bar-button-height - 1;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: rgba(white,.8);
+    padding: 0px 20px;
+    cursor: pointer;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background: transparent;
+    transition: background 100ms, color 100ms;
+    border-right: 1px solid transparent;
+
+    &:after{
+        content: '';
+        position: absolute;
+        left: 50%; right: 50%; bottom: 0;
+        height: 3px;
+        background: $color-blue-2;
+        transition: right 150ms, left 150ms;
+    }
+
+    &:hover{
+        background: rgba(white,.04);
+        color: rgba(white,.9);
+    }
+
+    &.bookmark-mode{
+        border-right-color: darken($color-grey-2,3);
+        background: rgba(white,.05);
+        color: white;
+
+        &:after{
+            right: 0;
+            left: 0;
+        }
+    }
+
+    .button-term{
+        pointer-events: none;
+    }
+
+    .button-count{
+        pointer-events: none;
+        font-style: normal;
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 5px;
+
+        &:before{content: '(';margin-right: 2px;}
+        &:after{content: ')';;margin-left: 2px;}
+    }
+
+    svg{
+        pointer-events: none;
+        display: inline-block;
+        height: $rail-bar-svg-height;
+        width: $rail-bar-svg-height;
+        margin-top: calc((#{$rail-bar-button-height} - #{$rail-bar-svg-height}) / 2.2);
+        fill: white;
+    }
+}

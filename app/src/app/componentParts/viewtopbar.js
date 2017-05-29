@@ -7,13 +7,13 @@ const React = require( 'react' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' );
 
 class ViewTopBar extends React.Component {
-    
+
     // Ctor
-    constructor() { 
+    constructor() {
         super();
         this.state = { };
     }
-    
+
     // Close View
     closeView() {
         if ( _('body').hasClass('mobile') &&
@@ -27,8 +27,8 @@ class ViewTopBar extends React.Component {
             Globals.viewHandler.changeViewFocus(
                 this.props.closeviewstate.leftview,
                 this.props.closeviewstate.rightview,
-                this.props.closeviewstate.fromLeft, 
-                this.props.closeviewstate.fromRight, 
+                this.props.closeviewstate.fromLeft,
+                this.props.closeviewstate.fromRight,
                 false,
                 this.props.closeviewstate.ignoreAutoDirection,
                 this.props.closeviewstate.leftSize,
@@ -72,15 +72,23 @@ class ViewTopBar extends React.Component {
         if ( nextProps.clickable ) classes += ' clickable';
         this.setState({ classes : classes });
     }
-    
+
     // Render
     render() {
         return (
             <div className={ this.state.classes != null ? this.state.classes : "viewbar" }>
                 { this.props.standard &&
-                    <a onClick={ this.props.vref != null ? this.changeView.bind(this) : function() {} }>{ this.props.title }</a>
+                    <a onClick={ this.props.vref != null ? this.changeView.bind(this) : function() {} }>
+                    {this.props.icon !=null && this.props.viewBox != null &&
+                        <i className="viewbar-title-icon">
+                            <svg viewBox={this.props.viewBox}><use xlinkHref={this.props.icon}></use></svg>
+                        </i>
+                    }
+                    { this.props.title }
+
+                    </a>
                 }
-                
+
                 { this.props.other }
                 { this.props.heart &&
                     <div className="heart" onClick={ this.heart.bind(this) } >

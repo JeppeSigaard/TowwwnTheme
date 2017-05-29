@@ -10,7 +10,7 @@ class User {
 
     // Constructor
     constructor() {
-        
+
         this.hooks = new HookHandler();
         this.state = {
             loggedIn: false,
@@ -45,14 +45,14 @@ class User {
             if ( data != '' ) {
                 data = JSON.parse( data );
                 this.state.behaviourData = data.behaviourData;
-                
+
                 if ( data.loggedIn ) {
                     this.state.loggedIn = true;
                     this.state.userFbid = data.userFbid;
                     this.state.accessToken = data.accessToken;
                     this.state.fbData = data.fbData;
                     this.state.dbData = data.dbData;
-                    
+
                     _('.login-btn').text( this.state.fbData.name.split(' ')[0] );
                     this.loginToDB();
                 }
@@ -89,11 +89,11 @@ class User {
         });
 
     }
-    
+
     // Log cat connections, for testing purposes
     predictBehaviour( ) {
         return new Promise(( resolve, reject ) => {
-            
+
             // Start new request
             let request = new XMLHttpRequest();
             request.onload = (( resp ) => {
@@ -123,7 +123,7 @@ class User {
             request.send( 'action=towwwn_ub_predict&'
                          +'catRelatedClicks='+arr1
                          +'&catRelatedTimes='+arr2);
-            
+
         });
     }
 
@@ -171,31 +171,31 @@ class User {
                         // Opens new request to get user behaviour statistics
                         let request = new XMLHttpRequest();
                         request.onload = (( data ) => {
-                            
+
                             let json = JSON.parse( data.target.response ),
                                 obj = json.behaviour_statistics;
-                            
+
                             this.state.hearts = json.hearts;
 
                             // Converts arrays back into objects
                             let timeData = obj.timeData,
                                 types = [ 'event', 'location', 'locationcategory' ];
-                                
+
                             for ( let key of types ) {
                                 if ( timeData[ key ].constructor.name === 'Array' ) {
                                     var tmpObject = { };
                                     for (var iter = 0; iter < timeData[ key ].length; iter++ ) {
-                                        if ( timeData[ key ][ iter ] != null ) tmpObject[ iter ] 
+                                        if ( timeData[ key ][ iter ] != null ) tmpObject[ iter ]
                                             = timeData[ key ][ iter ];
                                     } timeData[ key ] = tmpObject;
                                 }
                             }
-                            
+
                             // Adds new behaviour data from login, to old loaded from cookie
                             let recursiveObjectAddition = (( newobj, oldobj ) => {
                                 let response = { };
                                 for ( let key of Object.keys( newobj ) ) {
-                                    if ( newobj[ key ] == null || 
+                                    if ( newobj[ key ] == null ||
                                         oldobj == null ) continue;
                                     if ( typeof newobj[ key ] === 'object' &&
                                          typeof oldobj[ key ] === 'object' ) {
@@ -210,11 +210,11 @@ class User {
                                         }
                                     }
                                 } return response;
-                            }); 
-                            
+                            });
+
                             this.state.behaviourData = recursiveObjectAddition
                                     ( obj, this.state.behaviourData );
-                            
+
                             this.hooks.trigger( 'onlogin' );
                             Globals.hooks.trigger( 'onlogin' );
                             
@@ -246,11 +246,11 @@ class User {
             }
         });
     }
-    
+
     // Login to db
     loginToDB( ) {
         return new Promise((resolve,reject) => {
-                    
+
             // Request Param
             let data = {
 
@@ -285,7 +285,7 @@ class User {
                         if ( timeData[ key ].constructor.name === 'Array' ) {
                             var tmpObject = { };
                             for (var iter = 0; iter < timeData[ key ].length; iter++ ) {
-                                if ( timeData[ key ][ iter ] != null ) tmpObject[ iter ] 
+                                if ( timeData[ key ][ iter ] != null ) tmpObject[ iter ]
                                     = timeData[ key ][ iter ];
                             } timeData[ key ] = tmpObject;
                         }
@@ -295,7 +295,7 @@ class User {
                     let recursiveObjectAddition = (( newobj, oldobj ) => {
                         let response = { };
                         for ( let key of Object.keys( newobj ) ) {
-                            if ( newobj[ key ] == null || 
+                            if ( newobj[ key ] == null ||
                                 oldobj == null ) continue;
                             if ( typeof newobj[ key ] === 'object' &&
                                  typeof oldobj[ key ] === 'object' ) {
@@ -310,11 +310,11 @@ class User {
                                 }
                             }
                         } return response;
-                    }); 
+                    });
 
                     this.state.behaviourData = recursiveObjectAddition
                             ( obj, this.state.behaviourData );
-                    
+
                     this.hooks.trigger( 'onlogin' );
 
                 });
@@ -338,12 +338,12 @@ class User {
             request.send( JSON.stringify( data ) );
 
         });
-        
+
     }
-    
+
     // Reset Behaviour Data
     resetBehaviourStatistics() {
-        
+
         // Request Param
         let data = {
             id : this.state.dbData.id,
@@ -363,9 +363,9 @@ class User {
 
         // Sends request
         request.send( JSON.stringify( data ) )
-        
+
     }
-    
+
 
 } module.exports = User;
 

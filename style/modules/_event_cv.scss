@@ -10,45 +10,48 @@
     position: relative;
     z-index: 100!important;
     width: 100%;
-    height: calc( #{$menu-bar-height} + 10px );
+    height: $menu-bar-height;
     background-color: darken($color-blue-2, 5%);
     z-index: 10;
-    top: $menu-bar-height;
+    top: $header-bar-height;
     border-bottom: 1px solid rgba(0,0,0,.3);
 
     #eventslayoutbtns{
         position: relative;
-        width: 128px;
+        font-size: 0;
         height: 100%;
-        border-right: 1px solid #CDCDCD;
+        vertical-align: top;
+        border-right: 1px solid rgba(white,.5);
         transition: 300ms;
+        padding: 0px 15px;
         display: inline-block;
 
         &:hover {
             background-color: darken($color-blue-2, 2%);
         }
 
-        svg{
-            position: absolute;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: auto;
-            height: 22px;
-            width: 22px;
-            cursor: pointer;
+        .layoutbtn{
+            position: relative;
+            vertical-align: top;
+            display: inline-block;
+            height:$menu-bar-height;
+            width: $menu-bar-height * .7 ;
             fill: rgba(white,.9);
             transition: fill 120ms;
-            &:hover{
-                fill: white;
+            cursor: pointer;
+
+            &:hover {
+               fill: white;
             }
         }
 
-        .blocklayoutbtn{
-            left: 30%;
-        }
-
-        .linelayoutbtn{
-            left: 66%;
+        svg{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 14px;
+            width: 14px;
         }
     }
     
@@ -59,7 +62,7 @@
         transform: translate(0,-50%);
         color: white;
         text-transform: uppercase;
-        font-size: 12px;
+        font-size: 11px;
     }
 
     .monthSelector{
@@ -100,7 +103,7 @@
     height: auto;
     padding: 0;
 
-    @media(min-width: 640px){
+    @media(min-width: 769px){
        padding: 0;
     }
 
@@ -121,7 +124,7 @@
 
     &.lineLayout{
         padding-top: 12px;
-        
+
         .event{
             width: 100%;
             min-height: 110px;
@@ -169,7 +172,7 @@
                 }
             }
 
-            @media(min-width:640px){
+            @media(min-width:769px){
                 min-height: 110px;
 
                 .imgcontainer{
@@ -201,6 +204,8 @@
 }
 
 .event {
+    color: inherit;
+    text-decoration: none;
     box-sizing: border-box;
     position: relative;
     display: inline-block;
@@ -216,7 +221,7 @@
         background-color: #fff;
     }
 
-    @media(min-width:640px){
+    @media(min-width:769px){
         width: 165px;
         margin: 6px;
         border: 1px solid $color-blue-1;
@@ -246,7 +251,7 @@
             position: absolute;
             top: 50%; left: 50%;
             width: 100%; height: 100%;
-            background-color: rgba(0,0,0,.75);
+            background-color: rgba($color-blue-1, .8);
             opacity: 0;
             transition: 250ms;
             z-index: 19;
@@ -260,19 +265,16 @@
             }
         }
 
-        &.loading{
+        &[data-image-src],
+        &.loading-image{
             background-repeat: no-repeat;
             background-size: 30px;
             background-position: center;
+
+            .loader{opacity: 1;}
         }
 
-        &.loadingsv{
-            .loader{
-                opacity: 1;
-            }
-        }
-
-        @media(min-width:640px){
+        @media(min-width:769px){
             padding-bottom: 90px;
             border-bottom: 1px solid $color-blue-1;
         }
@@ -285,12 +287,12 @@
         padding-top: 10px;
         width: 100%;
         height: 140px;
-        text-transform: uppercase;    
+        text-transform: uppercase;
         transition: 500ms;
 
-        * { 
+        * {
             z-index: 10;
-            transition: 200ms; 
+            transition: 200ms;
             position: relative;
         }
 
@@ -350,7 +352,7 @@
         }
 
 
-        @media(min-width:640px){
+        @media(min-width:769px){
             height: 160px;
             padding: 10px;
             padding-top: 15px;
@@ -458,7 +460,7 @@
         &:after,&:before{
             display: none;
         }
-        
+
         background: url(assets/icons/loading.svg) center no-repeat;
         background-size: 32px;
     }

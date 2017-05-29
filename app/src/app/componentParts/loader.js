@@ -3,10 +3,10 @@
 // Loader
 const React = require( 'react' );
 class Loader extends React.Component {
-    
+
     // Ctor
     constructor() { super(); }
-    
+
     // Render
     render() {
         return (

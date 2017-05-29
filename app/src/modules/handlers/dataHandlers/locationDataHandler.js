@@ -4,8 +4,8 @@
 class LocationDataHandler{
 
     // Ctor
-    constructor() { 
-        this.locations = []; 
+    constructor() {
+        this.locations = [];
     }
 
     // Get future events
@@ -22,27 +22,27 @@ class LocationDataHandler{
 
             }.bind(this);
 
-            // Sends request 
-            xhr.open( 'GET', rest_api+'svendborg/locations?per_page=100000000&page=1' );
+            // Sends request
+            xhr.open( 'GET', app_data.rest_api + 'svendborg/locations?per_page=100000000&page=1' );
             xhr.send();
 
         });
     }
-    
+
     // Get Category specific locations
     getCategorySpecificLocation( catID ) {
         return new Promise(( resolve, reject ) => {
-            
+
             // Opens new request
             let xhr = new XMLHttpRequest();
             xhr.onload = function ( data ) {
                 resolve( JSON.parse( data.target.response ) )
             }.bind(this);
-            
+
             // Sends request
-            xhr.open( 'GET', rest_api+'svendborg/locations?per_page=100000000&page=1&cat='+catID );
+            xhr.open( 'GET', app_data.rest_api + 'svendborg/locations?per_page=100000000&page=1&cat='+catID );
             xhr.send();
-            
+
         });
     }
 

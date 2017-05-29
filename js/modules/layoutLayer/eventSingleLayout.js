@@ -49,7 +49,7 @@ var EventSingleModule = {
         if ( event.imgurl !== '' && event.imgurl !== null && typeof event.imgurl !== 'undefined' ) {
             response += '<a href="'+event.imgurl+'" target="_blank" class="event-sv-img" style="background-image:url('+event.imgurl+');"></a>';
         } else {
-            response += '<div class="event-sv-img" style="background-image:url(http://www-mtl.mit.edu/wpmu/marc2016/files/2015/08/placeholder-camera-green.png);"></div>';
+            response += '<div class="event-sv-img" style="background-image:url(' + app_data.template_uri + '/style/assets/images/placeholder-camera-green.png);"></div>';
         }
 
         response += '<div class="event-sv-title">'+event.name+'</div>';

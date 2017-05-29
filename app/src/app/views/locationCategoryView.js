@@ -2,12 +2,13 @@
 
 // Location Category view
 const React = require( 'react' ),
-      _Array = require( '../../modules/libaries/underscore/underscore_array.js' ),
       LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       LocationCategory = require( '../components/locationCategory.js' ),
       SubCategories = require( '../components/subcategories.js' ),
+      Loader = require( '../componentParts/loader.js' ),
       Globals = require( '../globals.js' ),
-      _ = require( '../../modules/libaries/underscore/underscore_main.js' );
+      _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
+      _Array = require( '../../modules/libaries/underscore/underscore_array.js' );
 
 class LocationCategoryView extends React.Component {
 
@@ -26,6 +27,7 @@ class LocationCategoryView extends React.Component {
             'currentLocations' : null,
         });
 
+        Globals.history.push(this.props.elem);
         Globals.setMainState({ from : this.props.name });
         if ( _('body').hasClass('mobile') ) {
             Globals.viewHandler.changeMobileViewFocus(
@@ -65,21 +67,21 @@ class LocationCategoryView extends React.Component {
                 jsxCategories.push( <LocationCategory key={ 'category-'+category['category_id'] } elem={ category } name={ nextProps.name } clickEvent={ this.handleCategoryClick } /> );
             } this.setState({ 'jsxCategories' : jsxCategories });
         }
-        
+
         this.userHook.call(this);
     }
-    
+
     // Component did mount
     componentDidMount() {
         this.userHook.call(this);
         this.lazyLoad = new LazyLoadHandler( '#location-category-view .scroll-container' );
     }
-    
+
     // User Hook
     userHook() {
         if ( this.hookedIntoUser == null && Globals.user != null ) {
             this.hookedIntoUser = true;
-            
+
             Globals.user.hooks.add( 'onlogin', ( ) => {
                 Globals.user.predictBehaviour().then(( data ) => {
                     let jsxCats = new _Array([ ]);
@@ -100,7 +102,7 @@ class LocationCategoryView extends React.Component {
                         Globals.categoryDataHandler.getCategory( data[ iter ].id ).then(( resp ) => {
                             jsxCats.push( <LocationCategory key={ 'predicted-category-'+data[ iter ].id } elem={ resp } name={ this.props.name } clickEvent={ this.handleCategoryClick } /> );
                         });
-                    } 
+                    }
                 });
             });
         }
@@ -109,6 +111,7 @@ class LocationCategoryView extends React.Component {
     // Component did update
     componentDidUpdate() {
         if ( this.state.jsxCategories != null ) {
+            if ( this.lazyLoad == null ) this.lazyLoad = new LazyLoadHandler( '#location-category-view .scroll-container' );
             this.lazyLoad.triggerload();
         }
     }
@@ -117,21 +120,24 @@ class LocationCategoryView extends React.Component {
     render() {
         return (
             <section className="container-section" id="location-category-view">
-               <div className="category-bar">
+               <div className="category-bar" onClick={ this.toggleSubCategories.bind(this) }>
+                   <i className="viewbar-title-icon">
+                        <svg viewBox="0 0 32 32">
+                            <use xlinkHref="#icon-location"></use>
+                        </svg>
+                   </i>
                     Steder
-                    <div className="sub-categories-title" onClick={ this.toggleSubCategories.bind(this) } ></div>
+                    <div className="sub-categories-title" ></div>
                 </div>
-                
+
                 <div className="scroll-container">
                     <div className="content">
                         <SubCategories subCategories={ this.props.allCategories } outerHeight={ this.state.subCatHeight } clickEvent={ this.handleCategoryClick } />
 
                         <div className="category-container">
-                            { this.state.suggestedCategories != null &&
-                                this.state.suggestedCategories }
-
-                            { this.state.jsxCategories != null &&
-                              this.state.jsxCategories }
+                            { this.state.suggestedCategories != null && this.state.suggestedCategories }
+                            { this.state.jsxCategories != null && this.state.jsxCategories }
+                            { this.state.suggestedCategories == null && this.state.jsxCategories == null && <Loader/> }
                         </div>
                     </div>
                 </div>

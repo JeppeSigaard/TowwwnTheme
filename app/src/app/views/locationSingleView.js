@@ -12,13 +12,14 @@ const React = require( 'react' ),
       Loader = require( '../componentParts/loader.js' );
 
 class LocationSingleView extends React.Component{
-    
+
     // Ctor
-    constructor() { 
-        super(); 
+
+    constructor() {
+        super();
         this.startTime = 0;
         this.lastElem = null;
-            
+
         // Standard close properties
         this.standardclose = {
             leftview: '#location-list-view',
@@ -34,8 +35,8 @@ class LocationSingleView extends React.Component{
 
         // Close properties when coming from event
         this.fromeventclose = {
-            leftview: '#event-calendar-view',
-            rightview: '#event-single-view',
+            leftview: '#event-single-view',
+            rightview: '#event-calendar-view',
             fromLeft: false,
             fromRight: true,
             mobile: {
@@ -73,9 +74,9 @@ class LocationSingleView extends React.Component{
 
         // State
         this.state = {
-            closeviewstate: this.standardclose, 
+            closeviewstate: this.standardclose,
         };
-        
+
     }
     
     // Heart
@@ -146,26 +147,26 @@ class LocationSingleView extends React.Component{
                 BehaviourDataHandler.parseTimeData( 'location', this.props.elem.id, new Date().getTime() - this.startTime );
             } this.startTime = new Date().getTime();
         }
-        
+
         // Sets close state
         if ( nextProps.from === 'event-single-view' ) {
-            
+
             Globals.relations[ nextProps.name ].canright = true;
             Globals.relations[ nextProps.name ].canleft = false;
-            
+
             this.setState({
                 closeviewstate : this.fromeventclose,
             });
-            
+
         } else if ( nextProps.from === 'event-calendar-view' ) {
-            
+
             Globals.relations[ nextProps.name ].canright = false;
             Globals.relations[ nextProps.name ].canleft = false;
-            
+
             this.setState({
                 closeviewstate : this.fromeventCalendarclose,
             });
-            
+
         } else if ( nextProps.from === 'search-results-view' ) {
 
             Globals.relations[ nextProps.name ].canright = false;
@@ -176,16 +177,16 @@ class LocationSingleView extends React.Component{
             });
 
         } else {
-            
+
             Globals.relations[ nextProps.name ].canright = false;
             Globals.relations[ nextProps.name ].canleft = true;
-            
+
             this.setState({
                 closeviewstate : this.standardclose,
             });
-            
+
         }
-        
+
     }
 
     // Component did mount
@@ -215,16 +216,14 @@ class LocationSingleView extends React.Component{
     render() {
         return (
             <section className="container-section" id="location-single-view">
-                <ViewTopBar standard={ true } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } heart={ true } heartFunc={ this.heart.bind(this) } />
-                
+                <ViewTopBar icon="#icon-location" viewBox="0 0 32 32" standard={ true } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } heart={ true } heartFunc={ this.heart.bind(this) } />
+
                 <div className="scroll-container">
-                    <div className="content">            
+                    <div className="content">
                         { this.props.elem != null &&
                             <SingleLocation elem={ this.props.elem } name={ this.props.name } /> }
                         { this.props.elem == null &&
                             <Loader /> }
-
-                        <BannerCommercials />
                     </div>
                 </div>
             </section>

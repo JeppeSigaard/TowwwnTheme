@@ -7,16 +7,16 @@ const React = require( 'react' ),
       SubCategory = require( '../componentParts/subcategory.js' );
 
 class SubCategories extends React.Component {
-    
+
     // Ctor
-    constructor() { 
-        super(); 
+    constructor() {
+        super();
         this.state = { };
     }
-    
+
     // Component Will Update
     componentWillReceiveProps( nextProps, nextState ) {
-        
+
         // Generates subcat jsx
         if ( nextProps.subCategories != null ) {
             let cats = [];
@@ -24,9 +24,9 @@ class SubCategories extends React.Component {
                 cats.push( <SubCategory elem={ subCat } key={ 'subcategory-' + subCat.category_id } clickEvent={ this.props.clickEvent } /> );
             } this.setState({ 'jsxCats' : cats });
         }
-        
+
     }
-    
+
     // Render
     render() {
         return (
@@ -39,5 +39,5 @@ class SubCategories extends React.Component {
             </div>
         );
     }
-    
+
 } module.exports = SubCategories;

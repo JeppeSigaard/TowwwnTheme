@@ -1,7 +1,7 @@
 // Smamo slider, as jquery prototype function.
 jQuery.prototype.smamo_slider = function( params ) {
 <<<<<<< HEAD
-    
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -10,46 +10,46 @@ jQuery.prototype.smamo_slider = function( params ) {
         nextButton = typeof params.nextButton !== 'undefined' ? $(params.nextButton, this) : null,
         wrapAround = typeof params.wrapAround !== 'undefined' ? params.wrapAround : false,
 <<<<<<< HEAD
-        
+
         outer = $(this),
         inner = $('.inner', this).length > 0 ? $('.inner', this) : null,
         elems = [],
-        
+
         currentIndex = 0;
-    
+
     // Error if .inner is not found
     if ( inner !== null ) {
-        
+
         // Generates elems array
         $('.item', this).each( function( index, item ) {
             elems.push( $(item) ); });
-        
-        
+
+
         /* --------------------------------------- */
         // Functions
-        
+
         // Moves item to different location
         $(this).__proto__.smamo_moveItem = function( elem, insertAfter, cb ) {
-            
+
             // Sets vars
             elem = typeof elem === 'number' ? elems[ elem ] : elem;
             insertAfter = typeof insertAfter === 'number' && insertAfter !== -1 ? elems[ insertAfter ] : insertAfter;
-            
+
             // Insert elem copy
             if ( insertAfter === -1 ) elem.clone().insertBefore( elems[ 0 ] );
             else elem.clone().insertAfter( insertAfter );
-            
+
             // Resets elems array
             $('.item', this).each( function( index, item ) {
                 elems.push( $(item) ); });
-            
+
         };
-        
+
         // Change Index function, 'snap to'.
         inner.__proto__.smamo_changeIndex = function( index ) {
-            
+
             if ( wrapAround ) {
-                
+
 =======
 
         outer = $(this),
@@ -100,31 +100,31 @@ jQuery.prototype.smamo_slider = function( params ) {
                     $(this).smamo_moveItem(elems.length-1,-1);
                 }
 <<<<<<< HEAD
-                
+
                 // Resets inner
                 currentIndex = index;
-                
+
             } else {
-                
+
                 // Loops around, without cloning
                 var maxIndex = ( elems.length - Math.floor( outer.innerWidth() / elems[0].outerWidth() ) );
-                currentIndex = index < 0 ? maxIndex : 
+                currentIndex = index < 0 ? maxIndex :
                         ( index > maxIndex ? 0 : index );
-            
+
             }
-                
+
             // Changes left pos of inner
             inner.css({ 'left' : -( elems[ currentIndex ].position().left ) + 'px', });
-            
+
         }; // inner.changeIndex( currentIndex );
-        
+
         // Functions end
         /* --------------------------------------- */
-        
+
         // Button action!
         prevButton.on( 'click', function() { currentIndex--; inner.smamo_changeIndex( currentIndex ); });
         nextButton.on( 'click', function() { currentIndex++; inner.smamo_changeIndex( currentIndex ); });
-        
+
 =======
 
                 // Resets inner
@@ -163,7 +163,7 @@ jQuery.prototype.smamo_slider = function( params ) {
         inner.on( 'mousedown', function( e ) {
             inner.addClass('notrans');
 <<<<<<< HEAD
-            
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -172,16 +172,16 @@ jQuery.prototype.smamo_slider = function( params ) {
             innerStartX = inner.position().left;
             startPositionX = e.pageX; // - inner.offset().left;
 <<<<<<< HEAD
-            
+
         });
-            
+
         // Mousemove
         $('.content-container').on( 'mousemove', function( e ) {
             if ( !clicking ) return;
-            
+
             // Sets fields
             distanceX = e.pageX - startPositionX;
-            
+
 =======
 
         });
@@ -199,14 +199,14 @@ jQuery.prototype.smamo_slider = function( params ) {
                 'left' : innerStartX + distanceX + 'px',
             });
 <<<<<<< HEAD
-            
+
             if( -(inner.position().left) < 0 ) inner.css( 'left', '0px' );
             if( inner.position().left < -(inner.outerWidth() - outer.innerWidth()) ) inner.css( 'left', -( inner.outerWidth() - outer.innerWidth() ) );
-            
+
             history.push([ inner.position().left, new Date().getTime() ]);
-            
+
         });
-        
+
 =======
 
             if( -(inner.position().left) < 0 ) inner.css( 'left', '0px' );
@@ -222,10 +222,10 @@ jQuery.prototype.smamo_slider = function( params ) {
         inner.on( 'mouseup', function( e ) {
             inner.removeClass( 'notrans' );
 <<<<<<< HEAD
-            
+
             // Sets fields
             clicking = false;
-            
+
 =======
 
             // Sets fields
@@ -240,7 +240,7 @@ jQuery.prototype.smamo_slider = function( params ) {
                 if ( now - history[index][1] > timing ) { break; }
             }
 <<<<<<< HEAD
-            
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -255,7 +255,7 @@ jQuery.prototype.smamo_slider = function( params ) {
                 }
             });
 <<<<<<< HEAD
-            
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -264,17 +264,17 @@ jQuery.prototype.smamo_slider = function( params ) {
             else if( -lowestDistElem.position().left < -($(this).outerWidth() - outer.innerWidth()) ) loc = -( $(this).outerWidth() - outer.innerWidth() );
             else loc = -lowestDistElem.position().left;
 <<<<<<< HEAD
-            
+
             inner.css({ 'left' : loc + 'px' });
             currentIndex = lowestDistIndex;
-            
+
             // Clears history, optimization
             while ( history.length > 0 ) history.pop();
-            
+
         });
-        
+
     } else { return -1; }
-    
+
 =======
 
             inner.css({ 'left' : loc + 'px' });

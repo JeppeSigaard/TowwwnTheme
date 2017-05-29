@@ -88,11 +88,11 @@
                 opacity: 0;
             }
         }
-        
+
         &.animate{
             animation: ripple 300ms ease-in forwards;
         }
-        
+
         &.animateBack{
             animation: rippleBack 300ms ease-in forwards;
         }

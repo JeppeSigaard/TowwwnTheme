@@ -1,5 +1,6 @@
 .locations-bar{
-    position: relative;
+    position: absolute;
+    z-index: 2;
     width: 100%;
     height: $menu-bar-height;
 
@@ -21,24 +22,25 @@
 
 .category-bar{
     position: relative;
+    z-index: 10;
     width: 100%;
-    height: calc( #{$menu-bar-height} + 10px );
+    height: $menu-bar-height;
     background-color: $color-blue-2;
-    line-height: calc( #{$menu-bar-height} + 10px );
-    font-size: 12px;
+    line-height: $menu-bar-height;
+    font-size: 11px;
     text-transform: uppercase;
     padding-left: 20px;
     color: white;
     cursor: pointer;
-    top: $menu-bar-height;
-    border-bottom: 1px solid rgba(0,0,0,.3);
+    top: $header-bar-height;
+    border-bottom: 1px solid #292929;
 
     .sub-categories-title{
         position: absolute;
         right: 0;
         top: 0;
-        height: calc( #{$menu-bar-height} + 10px );
-        min-width: 80px;
+        height: $menu-bar-height;
+        min-width: $menu-bar-height * 1.2;
         border-left: 1px solid rgba(white,.5);
         background: transparent;
         transition: background 120ms;
@@ -105,19 +107,19 @@
     height: auto;
     box-sizing: border-box;
     * { box-sizing: border-box; }
-    
+
     .suggested-cats{
         position: relative;
         padding: 63px 0px 0px 0x;
-        
-        h2 { 
+
+        h2 {
             margin-bottom: 16px;
             width: 100%; height: 45px;
             line-height: 45px;
             z-index: 9;
             background-color: #494950;
             box-shadow: 0px 2px 1px rgba(0,0,0,.1);
-            font-size: 12px; 
+            font-size: 12px;
             text-transform: uppercase;
             text-align: center;
             color: white;
@@ -138,8 +140,9 @@
     }
 }
 
-.category{
+a.category{
     position: relative;
+    display: block;
     width: 100%;
     min-width: 200px;
     height: 125px;
@@ -147,18 +150,23 @@
     border: 1px solid $color-blue-1;
     background-color: $color-blue-2;
     background-image: url(assets/icons/loading-white.svg);
-    background-size: 32px;
     background-position: center;
-    padding-right: 175px;
+    background-size: cover;
     background-origin: content-box;
     margin-bottom: 16px;
     cursor: pointer;
+
+    &[data-image-src],
+    &.loading-image{
+        background-size: 32px;
+        background-position: center;
+    }
 
     @media(min-width: 480px){
         height: 175px;
     }
 
-    @media(min-width: 640px){
+    @media(min-width: 769px){
         height: 125px;
     }
 
@@ -178,7 +186,7 @@
         }
     }
 
-    &.loadingsv{
+    &.loadingsv, &.bookmark-mode{
         .category-content-container{
 
              background-color: rgba(darken($color-blue-1, 22%), .9);

@@ -7,7 +7,8 @@ const React = require( 'react' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
       Event = require( '../components/event.js' ),
       Location = require( '../components/location.js' ),
-      LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' );
+      LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
+      Loader = require( '../componentParts/loader.js' );
 
 class SearchResultView extends React.Component {
 
@@ -16,8 +17,8 @@ class SearchResultView extends React.Component {
         super();
         this.state = {
             closeviewstate : {
-                leftview : '#search-view',
-                rightview : '#event-calendar-view',
+                leftview : '#event-calendar-view',
+                rightview : '#location-category-view',
                 fromLeft : false,
                 fromRight : true,
                 ignoreAutoDirection: true,
@@ -54,36 +55,47 @@ class SearchResultView extends React.Component {
 
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
-        if ( nextProps.result != null ) {
-            if ( nextProps.result !== this.prevResult ) {
-                this.prevResult = nextProps.result;
+        if(nextProps.result == 'loading'){
+            this.setState({
+                allJsxLocations: null,
+                jsxLocations: null,
+                allJsxEvents: null,
+                jsxEvents: null,
+                jsxLoader : <Loader/>
+            });
+        }
+
+        else if ( nextProps.result != null && nextProps.result != this.state.result ) {
+            this.setState({ jsxLoader: null });
+
+            if ( nextProps.result.events.length === 0 && nextProps.result.locations.length === 0 ) {
+                this.setState({ noResults: true });
+            } else this.setState({ noResults: false });
 
                 if ( nextProps.result.events.length === 0 && nextProps.result.locations.length === 0 ) {
                     this.setState({ noResults: true });
                 } else this.setState({ noResults: false });
 
-                this.setState({ result: nextProps.result });
-
-                if ( nextProps.result.locations != null ) {
-                    let jsxLocations = [];
-                    for ( let obj of nextProps.result.locations ) {
-                        jsxLocations.push( <Location name="search-results-view" key={ 'search-location-'+obj.id } elem={ obj } /> );
-                    } this.setState({ jsxLocations: jsxLocations.slice(0,4), allJsxLocations: jsxLocations });
-                }
-
-                if ( nextProps.result.events != null ) {
-                    let jsxEvents = [];
-                    for ( let obj of nextProps.result.events ) {
-                        jsxEvents.push( <Event name="search-results-view" vref={ this.eventVref } key={ 'search-event-'+obj.id } elem={ obj } /> );
-                    } this.setState({ jsxEvents : jsxEvents.splice(0,6), allJsxEvents : jsxEvents });
-                }
+            if ( nextProps.result.locations != null ) {
+                let jsxLocations = [];
+                for ( let obj of nextProps.result.locations ) {
+                    jsxLocations.push( <Location name="search-results-view" key={ 'search-location-'+obj.id } elem={ obj } /> );
+                } this.setState({ jsxLocations: jsxLocations.slice(0,6), allJsxLocations: jsxLocations });
             }
-        } else {
+
+            if ( nextProps.result.events != null ) {
+                let jsxEvents = [];
+                for ( let obj of nextProps.result.events ) {
+                    jsxEvents.push( <Event name="search-results-view" vref={ this.eventVref } key={ 'search-event-'+obj.id } elem={ obj } /> );
+                } this.setState({ jsxEvents : jsxEvents.splice(0,12), allJsxEvents : jsxEvents });
+            }
+        } else if (nextProps.result != this.state.result) {
             this.setState({
                 allJsxLocations: null,
                 jsxLocations: null,
                 allJsxEvents: null,
-                jsxEvents: null
+                jsxEvents: null,
+                jsxLoader: null,
             });
         }
     }
@@ -119,10 +131,15 @@ class SearchResultView extends React.Component {
     render() {
         return (
             <section className="container-section" id="search-results-view">
-                <ViewTopBar standard={ true } darken={ true } title={ this.props.keyword == null ? 'Søge resultater' : 'Søge resultater: ' + this.props.keyword } onClose={ this.onClose.bind(this) } closeviewstate={ this.state.closeviewstate } name={ 'search-results-view' } />
+                <ViewTopBar icon="#icon-search" viewBox="0 0 32 32" standard={ true } title={ this.props.keyword == null ? 'Søgeresultater' : 'Søgeresultater: ' + this.props.keyword } onClose={ this.onClose.bind(this) } closeviewstate={ this.state.closeviewstate } name={ 'search-results-view' } />
 
                 <div className="scroll-container" >
                     <div className="content">
+
+                        { this.state.jsxLoader != null &&
+                            this.state.jsxLoader
+                        }
+
                         { this.state.allJsxEvents != null && this.state.allJsxLocations.length > 0 &&
                             <div className="locations">
                                 <div className="locations-title section-title">Steder</div>

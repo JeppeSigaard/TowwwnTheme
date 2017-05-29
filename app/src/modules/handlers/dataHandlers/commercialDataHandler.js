@@ -7,9 +7,21 @@ class CommercialDataHandler {
     constructor() { this.commercials = null }
 
     // Get Commercials
-    getCommercials() {
+    getCommercials( properties ) {
         return new Promise(( resolve, reject) => {
             if ( this.commercials != null ) return this.commercials;
+
+            // Set query string
+            let c = 0, query = '';
+            if(properties != null){
+                for(var k in properties){
+                    c++; query += (c > 1) ? '&' : '?';
+                    if(properties.hasOwnProperty(k)){
+                        query += encodeURIComponent(k) + '=' + encodeURIComponent(properties[k]);
+                    }
+                }
+            }
+
 
             // Opens a new request
             let request = new XMLHttpRequest();
@@ -19,7 +31,7 @@ class CommercialDataHandler {
             };
 
             // Sends request
-            request.open( 'GET', rest_api+'svendborg/commercials' );
+            request.open( 'GET', app_data.rest_api + 'svendborg/commercials' + query );
             request.send();
 
         });

@@ -2,7 +2,7 @@
 .search-container{
     max-width: none!important;
     width: 100%;
-    
+
     &:nth-child(2n) {
         background-color: white!important;
     }
@@ -35,7 +35,7 @@
     .flex{
         display: flex;
         flex-wrap: wrap;
-        
+
         .category{
             flex-grow: 1;
             width: 33%;
@@ -45,5 +45,5 @@
                 width: 100%!important;
             }
         }
-    }    
+    }
 }

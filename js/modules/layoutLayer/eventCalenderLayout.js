@@ -24,7 +24,7 @@ var EventCalenderModule = {
             EventCalenderModule.setEventCalendarWidth();
         });
 <<<<<<< HEAD
-        
+
 =======
 
 >>>>>>> origin/internalscroll

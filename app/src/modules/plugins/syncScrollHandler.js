@@ -58,15 +58,15 @@ class SyncScrollHandler {
     // Rescales the container
     rescaleContainer( fv ) {
         if ( _('body').hasClass('mobile') ) return;
-        
+
         let focusedViews = null,
             oldHeight = window.innerHeight;
 
-        if ( fv != null ) { 
+        if ( fv != null ) {
             this.focusedViews = fv;
             focusedViews = fv;
         } else focusedViews = this.focusedViews;
-        
+
         return new Promise((resolve, reject) => {
             if ( this.container !== null ) {
 
@@ -78,7 +78,7 @@ class SyncScrollHandler {
                 }
 
                 this.containerHeight = 0; let highestElem = null;
-                
+
                 if ( focusedViews != null ) {
 
                     for ( let view of focusedViews ) {
@@ -93,7 +93,7 @@ class SyncScrollHandler {
                                     }
                                 } break;
                             }
-                        } 
+                        }
                     }
                 } else {
                     let syncInners = document.getElementsByClassName('sync-inner');

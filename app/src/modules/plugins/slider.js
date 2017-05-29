@@ -5,7 +5,7 @@
 //      tselem = require( './towwwnSelector.js' ).tselem;
 
 class TowwwnSlider {
-    
+
     // Constructor
     constructor( ) {
     }
@@ -38,25 +38,25 @@ class TowwwnSlider {
                 nextButtonElem = nextButtonElem[0];
                 innerElem = innerElem[0];
                 slides = innerElem.childNodes;
-                
+
                 if ( this.ready ) resolve();
-                
+
                 elem.classList.add( 'towwwnslider-outer' );
                 innerElem.classList.add( 'towwwnslider-inner' );
 
                 // Event Handlers
                 if ( !prevButtonElem.classList.contains( 'towwwnslider-button' ) ) {
                     window.addEventListener( 'click', e => {
-                        if ( e.target === prevButtonElem || e.target.parentNode === prevButtonElem || 
-                             e.target.parentNode.parentNode === prevButtonElem ) 
+                        if ( e.target === prevButtonElem || e.target.parentNode === prevButtonElem ||
+                             e.target.parentNode.parentNode === prevButtonElem )
                             innerElem.changeSlide( currentIndex-1 ); });
                     prevButtonElem.classList.add( 'towwwnslider-button' );
                 }
 
                 if ( !nextButtonElem.classList.contains( 'towwwnslider-button' ) ) {
                     window.addEventListener( 'click', e => {
-                        if ( e.target === nextButtonElem || e.target.parentNode === nextButtonElem || 
-                             e.target.parentNode.parentNode === nextButtonElem ) 
+                        if ( e.target === nextButtonElem || e.target.parentNode === nextButtonElem ||
+                             e.target.parentNode.parentNode === nextButtonElem )
                             innerElem.changeSlide( currentIndex+1 ); });
                     nextButtonElem.classList.add( 'towwwnslider-button' );
                 }
@@ -84,7 +84,7 @@ class TowwwnSlider {
             if ( typeof outerElem === 'object' ) {
                 for ( let outer of outerElem ) assignmentLoop( outer );
             } else assignmentLoop( outerElem );
-            
+
             this.ready = true;
             resolve ();
 

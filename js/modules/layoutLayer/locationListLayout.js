@@ -1,10 +1,10 @@
 
 var LocationListModule = {
 <<<<<<< HEAD
-    
+
     // Settings
     settings: { },
-    
+
 =======
 
     // Settings
@@ -25,7 +25,7 @@ var LocationListModule = {
             $('.category-container .selected').removeClass('selected');
         });
 <<<<<<< HEAD
-        
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -34,14 +34,14 @@ var LocationListModule = {
             var outer = $('.sub-category-outer'),
                 inner = $('.sub-category-inner');
 <<<<<<< HEAD
-            
+
             if ( outer.hasClass('open') ) outer.css('height', '0px').removeClass('open');
             else outer.css('height', inner.outerHeight() + 'px').addClass('open');
         });
-        
+
         // Animates ripple
         $(document).on( 'click', '.location-container', function( e ) {
-            
+
 =======
 
             if ( outer.hasClass('open') ) outer.css('height', '0px').removeClass('open');
@@ -61,7 +61,7 @@ var LocationListModule = {
             });
             $('.filled').removeClass('filled');
 <<<<<<< HEAD
-            
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -73,7 +73,7 @@ var LocationListModule = {
                 'left': ( e.pageX - $(this).offset().left - $('.ripple', this).outerWidth() / 2 ) + 'px',
             });
 <<<<<<< HEAD
-            
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -84,17 +84,17 @@ var LocationListModule = {
                 $(this).addClass('filled');
             }.bind(this), 300);
 <<<<<<< HEAD
-            
+
         });
-        
+
     },
-    
+
     // Render Locatiions
     renderLocationList: function( data, cb ) {
         let ViewHandler = require( './../view_handler.js' );
-        
+
         var html = '<div class="locationlist-bar">'+data.category_name+'<div class="close-button">&times;</div></div>';
-        
+
 =======
 
         });
@@ -125,7 +125,7 @@ var LocationListModule = {
 
     },
 <<<<<<< HEAD
-    
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -134,7 +134,7 @@ var LocationListModule = {
         var response = '<a href="#" class="location-container" data-type="location" data-id="'+location.id+'">',
             about = typeof location.about !== 'undefined' && location.about !== null ? location.about : '';
 <<<<<<< HEAD
-        
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -147,7 +147,7 @@ var LocationListModule = {
         return response + '</a>';
     },
 <<<<<<< HEAD
-    
+
 =======
 
 >>>>>>> origin/internalscroll

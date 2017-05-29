@@ -18,13 +18,12 @@ class ViewSlider {
         _(window).on('touchstart', this.onTouchStart.bind(this));
         _(window).on('touchmove', this.onTouchMove.bind(this));
         _(window).on('touchend', this.onTouchEnd.bind(this));
-
     }
 
     // Handlers
     // Touch Start
     onTouchStart(e) {
-                
+        if(Globals.navigationBlocker) return;
         // Sets basic fields
         this.currentView = _('.content-container-inner > .active').addClass('notrans').attr('id');
         this.start = {
@@ -54,6 +53,7 @@ class ViewSlider {
 
     // Touch Move
     onTouchMove(e) {
+        if(Globals.navigationBlocker) return;
         // Sets a few new fields
         let deltax = e.touches[0].clientX - this.start.x,
             deltay = e.touches[0].clientY - this.start.y,
@@ -73,8 +73,7 @@ class ViewSlider {
             if ( this.distance * this.cos <= bleft &&
                  this.distance * this.cos >= bright ) {
                 let ntrans = ( ( this.distance * this.cos ) / sw ) * 100;
-                
-                _('#'+this.currentView).css({ left : ntrans+'%' });
+                _('#'+this.currentView).addClass('scroll-lock').css({ left : ntrans+'%' });
                 if ( this.canLeft ) _('#'+this.relations.left).css({ left : ( -100 + ntrans )+'%' });
                 if ( this.canRight ) _('#'+this.relations.right).css({ left : ( 100 + ntrans )+'%' });
             }
@@ -87,9 +86,10 @@ class ViewSlider {
 
     // Touch End
     onTouchEnd(e) {
+        if(Globals.navigationBlocker) return;
         if ( this.distance < 30 ) return;
 
-        _('#'+this.currentView).removeClass('notrans');
+        _('#'+this.currentView).removeClass('notrans scroll-lock');
         if ( this.canLeft && _('#'+this.relations.left) !== false ) _('#'+this.relations.left).removeClass('notrans');
         if ( this.canRight && _('#'+this.relations.right) !== false ) _('#'+this.relations.right).removeClass('notrans');
 
@@ -138,7 +138,7 @@ class ViewSlider {
             }
 
         }
-        
+
         // Resets fields
         this.swiping = false;
         this.canMove = true;

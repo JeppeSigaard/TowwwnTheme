@@ -4,26 +4,34 @@
 const _ = require( '../libaries/underscore/underscore_main.js' ),
       Globals = require( '../../app/globals.js' );
 class ViewHandler {
-    
+
     // Ctor
-    constructor( ) {
-        this.focusedViews = [ '#search-view', '#event-calendar-view' ];
-        this.mobileFocusedView = _('#event-calendar-view').get();
-        
-        if ( _('body').hasClass('mobile') ) this.changeMobileViewFocus( this.mobileFocusedView, true, false );
-        else this.changeViewFocus( this.focusedViews[0], this.focusedViews[1], true, false, true );
+    constructor( left, right, mobile ) {
+
+        const initialLeftView = ( left != null ) ?  left : '#event-calendar-view',
+              initialRightView = ( right != null ) ? right : '#location-category-view',
+              initialMobileView = (mobile != null ) ? mobile : '#event-calendar-view';
+
+        this.focusedViews = [];
+        this.mobileFocusedView = initialMobileView;
+        if(_('body').hasClass('mobile')){
+            this.changeMobileViewFocus( initialMobileView, true, true, true);
+        }
+        else{
+            this.changeViewFocus( initialLeftView, initialRightView, true, true, true);
+        }
     }
-    
+
     // Change view focus
     changeViewFocus( leftView, rightView, fromLeft, fromRight, notrans, ignoreAutoDirection, leftSize, rightSize ) {
         if ( _('body').hasClass('mobile') ) {
             this.changeMobileViewFocus( leftView, fromLeft, fromRight );
             return;
         }
-        
+
         if ( this.focusedViews.includes( leftView ) &&
              this.focusedViews.includes( rightView ) ) return;
-        
+
         if ( ignoreAutoDirection ) { this.manualChangeViewFocus( leftView, rightView ); return; }
 
         _('.container-section').css({ 'width' : '50%' });
@@ -46,9 +54,9 @@ class ViewHandler {
 
         let leftFocused = false, rightFocused = false;
         if ( this.focusedViews.length > 1 ) {
-            
-            if ( this.focusedViews[0] === leftView ) { 
-                fromLeft = true; fromRight = false; 
+
+            if ( this.focusedViews[0] === leftView ) {
+                fromLeft = true; fromRight = false;
                 rightFocused = true;
 
                 let copy = leftView;
@@ -61,8 +69,8 @@ class ViewHandler {
                 rightFocused = true;
             }
 
-            if ( this.focusedViews[1] === rightView ) { 
-                fromLeft = false; fromRight = true; 
+            if ( this.focusedViews[1] === rightView ) {
+                fromLeft = false; fromRight = true;
                 leftFocused = true;
 
                 let copy = leftView;
@@ -71,7 +79,7 @@ class ViewHandler {
             }
 
             if ( this.focusedViews[1] === leftView ) {
-                fromLeft = false; fromRight = true; 
+                fromLeft = false; fromRight = true;
                 leftFocused = true;
             }
 
@@ -84,7 +92,7 @@ class ViewHandler {
                 _( this.focusedViews[0] ).css({ 'left': '-100%' });
                 _( this.focusedViews[1] ).css({ 'left': '-50%' });
             }
-            
+
             if ( leftFocused ) { _( this.focusedViews[0] ).css({ 'left': '-50%' }); }
             if ( rightFocused ) { _( this.focusedViews[1] ).css({ 'left': '100%' }); }
 
@@ -108,7 +116,7 @@ class ViewHandler {
 
             window.cs = window.getComputedStyle( _( this.focusedViews[1] ).get(0) );
         }
-       
+
         if ( !notrans ) {
             _( leftView ).addClass('notrans');
             _( rightView ).addClass('notrans');
@@ -123,7 +131,7 @@ class ViewHandler {
                 // _( rightView ).css({ 'left' : '0' });
             }
         }
-        
+
         if ( fromRight ) {
             if ( !leftFocused ) {
                 _( leftView ).css({ 'left' : '100%' });
@@ -133,11 +141,11 @@ class ViewHandler {
                 _( rightView ).css({ 'left' : '100%' });
             }
         }
-        
+
         // Forces the browser to run the css queue
         _( leftView ).get(0).offsetHeight;
         _( rightView ).get(0).offsetHeight;
-        
+
         if ( this.focusedViews.length > 1 ) {
             _( this.focusedViews[0] ).get(0).offsetHeight;
             _( this.focusedViews[1] ).get(0).offsetHeight;
@@ -171,9 +179,9 @@ class ViewHandler {
                 _( this.focusedViews[1] ).removeClass('notrans');
             }
         } return;
-            
+
     }
-    
+
     // Manual change view focus
     manualChangeViewFocus( leftView, rightView ) {
         if ( this.focusedViews[0] === leftView ) {
@@ -227,44 +235,44 @@ class ViewHandler {
 
     // Change mobile view focus
     changeMobileViewFocus( activeView, fromLeft, fromRight ) {
-        
-        // Error if screen is less than 640px wide
+
+        // Error if screen is less than 769px wide
         if ( !_('body').hasClass('mobile') ) {
-            throw "ViewHandler: Using change mobile focus on screen with a width of more than 640px";
+            throw "ViewHandler: Using change mobile focus on screen with a width of more than 769px";
             return;
         }
-        
+
         // Checks if the new views is already is in focus
         if ( _(activeView).hasClass('active') ) {
             throw "ViewHandler: View is already in focus";
             return;
         }
-        
+
         Globals.setMainState({ currentMobileView : activeView });
-        
+
         // Adds needed classes
-        _(this.mobileFocusedView).removeClass('active notrans');
+        if (null != this.mobileFocusedView ) _(this.mobileFocusedView).removeClass('active notrans');
         _(activeView).addClass('notrans active');
-        
+
         // Sets starting position for new view
         if ( fromLeft ) _(activeView).css({ left : '-100%' });
         if ( fromRight ) _(activeView).css({ left : '100%' });
-        
+
         // Timeout
         setTimeout(() => {
             _(activeView).removeClass('notrans');
-        
+
             // Translates view in
-            if ( fromLeft ) _(this.mobileFocusedView).css({ left : '100%' });
-            if ( fromRight ) _(this.mobileFocusedView).css({ left : '-100%' });
+            if ( fromLeft && null != this.mobileFocusedView  ) _(this.mobileFocusedView).css({ left : '100%' });
+            if ( fromRight && null != this.mobileFocusedView  ) _(this.mobileFocusedView).css({ left : '-100%' });
             _(activeView).css({ left : '0' });
 
             // Sets new focused view
             this.mobileFocusedView = activeView;
         }, 10);
-        
+
     }
-    
+
 } module.exports = ViewHandler;
 
 

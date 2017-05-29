@@ -1,10 +1,10 @@
 
 var LocationSingleViewModule = {
 <<<<<<< HEAD
-    
+
     // Settings
     settings: {},
-    
+
 =======
 
     // Settings
@@ -27,7 +27,7 @@ var LocationSingleViewModule = {
         });
     },
 <<<<<<< HEAD
-    
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -37,9 +37,9 @@ var LocationSingleViewModule = {
         let EventCalenderModule = require( './eventCalenderLayout.js' );
         let HelpFunctions = require( './../tools/help_functions.js' );
 <<<<<<< HEAD
-        
+
         $.get( rest_api+'events?parent='+obj.id, {}, function( data ) {
-            
+
 =======
 
         $.get( rest_api+'events?parent='+obj.id, {}, function( data ) {
@@ -144,7 +144,7 @@ var LocationSingleViewModule = {
                 'nextButton' : '.nextButton',
             });
 <<<<<<< HEAD
-            
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -154,7 +154,7 @@ var LocationSingleViewModule = {
         });
     },
 <<<<<<< HEAD
-    
+
 =======
 
 >>>>>>> origin/internalscroll
@@ -163,7 +163,7 @@ var LocationSingleViewModule = {
         // Do stuff
     },
 <<<<<<< HEAD
-    
+
 =======
 
 >>>>>>> origin/internalscroll
