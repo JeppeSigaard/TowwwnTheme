@@ -21,6 +21,17 @@ add_action('wp_head','towwwn_og_meta');
 function towwwn_og_meta(){
 
     global $post;
+
+    if(is_category()){
+        global $wp_query;
+        $term = get_term_by('slug', $wp_query->query['category'], 'category' );
+        $post = new stdClass;
+        $post->ID = $term->ID;
+        $post->post_title = $term->name;
+        $post->post_content = $term->description;
+        $post->post_excerpt = $term->description;
+    }
+
     if($post){
         // Billede
         $meta_img = false;
@@ -76,6 +87,11 @@ function towwwn_og_meta(){
 
         // Link
         $meta_url = get_the_permalink();
+
+        if(!$meta_url && is_category()){
+            $meta_url = get_term_link($term,'category');
+        }
+
         if (!$meta_url || is_home() || is_front_page()){
             $meta_url = get_bloginfo('url');
         }

@@ -81,11 +81,11 @@ class Railbar extends React.Component {
             Globals.navigationBlocker = true;
 
             _('#' + this.props.name + '-inner').css({
-                '-webkit-transform' : 'translateX('+deltaX+'px',
-                '-moz-transform' : 'translateX('+deltaX+'px',
-                '-o-transform' : 'translateX('+deltaX+'px',
-                '-ms-transform' : 'translateX('+deltaX+'px',
-                'transform': 'translateX('+deltaX+'px'
+                '-webkit-transform' : 'translateX('+deltaX+'px)',
+                '-moz-transform' : 'translateX('+deltaX+'px)',
+                '-o-transform' : 'translateX('+deltaX+'px)',
+                '-ms-transform' : 'translateX('+deltaX+'px)',
+                'transform': 'translateX('+deltaX+'px)'
             });
 
         }
@@ -167,11 +167,11 @@ class Railbar extends React.Component {
 
         // Set railbar to rail
         _('#' + this.props.name + '-inner').css({
-            '-webkit-transform' : 'translateX('+deltaX+'px',
-            '-moz-transform' : 'translateX('+deltaX+'px',
-            '-o-transform' : 'translateX('+deltaX+'px',
-            '-ms-transform' : 'translateX('+deltaX+'px',
-            'transform': 'translateX('+deltaX+'px'
+            '-webkit-transform' : 'translateX('+deltaX+'px)',
+            '-moz-transform' : 'translateX('+deltaX+'px)',
+            '-o-transform' : 'translateX('+deltaX+'px)',
+            '-ms-transform' : 'translateX('+deltaX+'px)',
+            'transform': 'translateX('+deltaX+'px)'
         });
 
         // enable or disable prev button?
