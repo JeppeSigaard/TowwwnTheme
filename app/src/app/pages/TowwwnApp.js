@@ -193,38 +193,6 @@ class TowwwnApp extends React.Component {
         _('body').addClass('loaded');
         this.viewSlider = new ViewSlider();
 
-        _( '.nav-search' ).on( 'click', () => {
-
-            if ( _('.search-nav-container .bookmark-mode') !== false )
-                _('.search-nav-container .bookmark-mode').removeClass('bookmark-mode');
-
-            _('.nav-elem').removeClass('bookmark-mode');
-            _( '.nav-search' ).addClass('bookmark-mode');
-            if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
-
-            if(_('body').hasClass('mobile')){
-                Globals.viewHandler.changeMobileViewFocus(
-                    '#search-view',
-                    true, false
-                );
-            }
-
-            else{
-                Globals.viewHandler.changeViewFocus(
-                    '#search-view',
-                    Globals.viewHandler.focusedViews[0],
-                    true, false, false
-                );
-            }
-
-            // Focus search bar (if not mobile)
-            if(!_('body').hasClass('mobile')){
-                document.getElementById('search-bar').focus();
-            }
-
-            Globals.history.push({'type' : 'home', 'name' : 'Søg · Towwwn'});
-        });
-
         Globals.viewHandler = null;
 
         // Render 404
@@ -299,6 +267,10 @@ class TowwwnApp extends React.Component {
             request.open( 'GET', app_data.rest_api + '/locations/' + app_data.id );
             request.send();
         }
+
+        // yups
+        _( '.nav-search' ).on( 'click', () => {
+        });
 
         // Handle anchor click
         _('a').off( 'click', this.handleAnchorClick );

@@ -11,6 +11,8 @@ class Hamburger extends React.Component {
     // Constructor
     constructor() {
         super();
+
+        this.prevBookmark = null;
         this.state = {
             navelems: [
 
@@ -77,11 +79,17 @@ class Hamburger extends React.Component {
             _('.content-container-inner').removeClass('aside');
             _('#general-overlay').removeClass('active');
 
+            this.prevBookmark.addClass('bookmark-mode');
+            _('.nav-user').removeClass('bookmark-mode');
+
         } else {
 
             _('.hamburger').addClass('active');
             _('.content-container-inner').addClass('aside');
             _('#general-overlay').addClass('active');
+
+            this.prevBookmark = _('.nav-elem.bookmark-mode').removeClass('bookmark-mode');
+            _('.nav-user').addClass('bookmark-mode');
 
         }
     }

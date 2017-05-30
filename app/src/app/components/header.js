@@ -8,6 +8,38 @@ const React = require( 'react' ),
 
 class Header extends React.Component {
 
+    // On nav search click
+    navSearchClick() {
+        if ( _('.search-nav-container .bookmark-mode') !== false )
+            _('.search-nav-container .bookmark-mode').removeClass('bookmark-mode');
+
+        _('.nav-elem').removeClass('bookmark-mode');
+        _( '.nav-search' ).addClass('bookmark-mode');
+        if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
+
+        if(_('body').hasClass('mobile')){
+            Globals.viewHandler.changeMobileViewFocus(
+                '#search-view',
+                true, false
+            );
+        }
+
+        else{
+            Globals.viewHandler.changeViewFocus(
+                '#search-view',
+                Globals.viewHandler.focusedViews[0],
+                true, false, false
+            );
+        }
+
+        // Focus search bar (if not mobile)
+        if(!_('body').hasClass('mobile')){
+            document.getElementById('search-bar').focus();
+        }
+
+        Globals.history.push({'type' : 'home', 'name' : 'Søg · Towwwn'});
+    }
+
     // On nav location click
     navLocationClick() {
         if ( _('.search-nav-container .bookmark-mode') !== false )
@@ -63,14 +95,22 @@ class Header extends React.Component {
                         </a>
 
                         <div id="top-nav-icons">
+                            <div className="nav-search nav-elem" onClick={ this.navSearchClick.bind(this) } >
+                                <svg viewBox="0 0 32 32">
+                                    <use xlinkHref="#icon-search">
+                                    </use>
+                                </svg>
+                            </div>
                             <div className="nav-locations nav-elem" onClick={ this.navLocationClick.bind(this) } >
                                 <svg viewBox="0 0 32 32">
-                                    <use xlinkHref="#icon-location"></use>
+                                    <use xlinkHref="#icon-location">
+                                    </use>
                                 </svg>
                             </div>
                             <div className="nav-events nav-elem bookmark-mode" onClick={ this.navEventClick.bind(this) } >
                                 <svg viewBox="0 0 32 32">
-                                    <use xlinkHref="#icon-event"></use>
+                                    <use xlinkHref="#icon-event">
+                                    </use>
                                 </svg>
                             </div>
                             <div className="nav-user nav-elem">
