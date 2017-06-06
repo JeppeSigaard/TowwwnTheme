@@ -23,6 +23,7 @@ class ViewSlider {
     // Handlers
     // Touch Start
     onTouchStart(e) {
+
         if(window.innerWidth > 768) return;
         if(Globals.navigationBlocker) return;
 
@@ -70,6 +71,11 @@ class ViewSlider {
         if ( (( Math.abs( this.distance ) >= 30 && Math.abs( this.cos ) >= threshold )
               || this.swiping )
               && this.canMove ) {
+
+
+            if(_('.viewsliderdots') != false){
+                _('.viewsliderdots').removeClass('hidden');
+            };
 
             this.swiping = true;
             let bleft = this.canLeft ? sw : 0,

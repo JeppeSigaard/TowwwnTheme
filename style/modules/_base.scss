@@ -14,8 +14,7 @@ body {
     height: 100vh;
     width:100vw;
     pointer-events: none;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
 
     * {
         font-family: inherit;

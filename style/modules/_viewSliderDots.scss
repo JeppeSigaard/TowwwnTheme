@@ -34,4 +34,14 @@
             opacity: .9;
         }
     }
+
+    @media(min-width: 640px){
+        padding: 10px;
+
+        .viewsliderdot{
+            width: 10px;
+            height: 10px;
+            margin: 0px 4px;
+        }
+    }
 }
