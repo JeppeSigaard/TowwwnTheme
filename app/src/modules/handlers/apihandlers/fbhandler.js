@@ -32,7 +32,7 @@ class FBHandler {
     login( scope ) {
 
         Globals.user.hooks.trigger( 'initlogin' );
-        scope = scope == null ? 'email,user_birthday,user_location' :
+        scope = scope == null ? 'email' :
             ( typeof scope === 'object' ? scope.join(',') : scope );
 
         return new Promise(( resolve, reject ) => {

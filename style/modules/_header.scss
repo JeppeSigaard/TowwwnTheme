@@ -6,12 +6,8 @@
     width: 100%;
     background-color: $color-grey-1;
     height: $header-bar-height;
-    background-image: url(assets/images/header-bg.jpg);
-    background-size: cover;
-    background-position: center;
     transform: translateY(0px);
     transition: transform 200ms;
-    border-bottom:$header-bar-height solid $color-grey-1;
 
     &.fixed{
 

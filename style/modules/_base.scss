@@ -106,14 +106,6 @@ $horizontal-bezier-mobile: cubic-bezier(0, 0, 0, 1);
             transform: translateX( -$sidebar-width );
         }
 
-        &:before{
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: $menu-bar-height;
-            background: $color-blue-2;
-        }
-
         &.notrans{
             transition: 0ms!important;
         }

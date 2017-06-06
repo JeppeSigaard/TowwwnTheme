@@ -13,6 +13,7 @@ class ViewSlider {
         this.canMove = true;
         this.canLeft = false;
         this.canRight = false;
+        this.relations = null;
 
         // Event Handlers
         _(window).on('touchstart', this.onTouchStart.bind(this));
@@ -51,7 +52,6 @@ class ViewSlider {
                 elem.css({ 'left' : '100%' });
             }
         }
-
     }
 
     // Touch Move
@@ -96,6 +96,7 @@ class ViewSlider {
 
     // Touch End
     onTouchEnd(e) {
+        console.log(Globals.navigationBlocker);
 
         if(window.innerWidth > 768) return;
         if(Globals.navigationBlocker) return;
@@ -111,9 +112,9 @@ class ViewSlider {
             // Snap right
             _('#'+this.currentView).removeClass('notrans').removeClass('active').css({ left: '-100%' });
             _('#'+this.relations.right).removeClass('notrans').addClass('active').css({ left: '0' });
-            Globals.viewHandler.mobileFocusedView = _('#'+this.relations.right).get();
+            Globals.viewHandler.mobileFocusedView = '#'+this.relations.right;
 
-            Globals.setMainState({ currentMobileView : _('#'+this.relations.right) });
+            Globals.setMainState({ currentMobileView : '#'+this.relations.right });
 
         } else if ( this.distance * this.cos >= _(window).width() / 3 * 1 && this.canLeft ) {
 
@@ -127,7 +128,7 @@ class ViewSlider {
                 setTimeout(() => { _('#'+this.currentView).removeClass('notrans'); }, 40);
             }, parseFloat( window.getComputedStyle( _('#'+this.currentView).get(0) ).transitionDuration ) * 1000);
 
-            Globals.setMainState({ currentMobileView : _('#'+this.relations.left) });
+            Globals.setMainState({ currentMobileView : '#'+this.relations.left });
 
         } else {
 

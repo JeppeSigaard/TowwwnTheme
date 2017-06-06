@@ -82,6 +82,12 @@ class TowwwnApp extends React.Component {
 
         // Relations
         Globals.relations = {
+            'search-view' : {
+                left: null,
+                right: 'event-calendar-view',
+                canleft: false,
+                canright: true,
+            },
             'event-single-view' : {
                 left: null,
                 right: 'event-calendar-view',
@@ -89,9 +95,9 @@ class TowwwnApp extends React.Component {
                 canright: true,
             },
             'event-calendar-view' : {
-                left: null,
+                left: 'search-view',
                 right: 'location-category-view',
-                canleft: false,
+                canleft: true,
                 canright: true,
             },
             'location-category-view' : {
@@ -306,7 +312,6 @@ class TowwwnApp extends React.Component {
 
                 </div>
                 <CookiePolicy name="towwwn-cookie"/>
-                {window.innerWidth < 769 && <ViewSliderDots/>}
             </div>
         );
     }

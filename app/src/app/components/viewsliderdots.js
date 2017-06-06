@@ -31,14 +31,16 @@ class ViewSliderDots extends React.Component {
             lastLeft = null, lastRight = null,
             keepLooping = true;
 
-        if ( currentView == null ) return;
+        if ( currentView == null || !currentView ) return;
         lastLeft = currentView;
         lastRight = currentView;
+
+
 
         // Checks dots left
         while( keepLooping ) {
             let relations = Globals.relations[ lastLeft.attr( 'id' ) ];
-            if ( relations.left != null && relations.left != '' && relations.canleft ) {
+            if ( relations != null && relations.left != null && relations.left != '' && relations.canleft ) {
                 dotsLeft++; lastLeft = _( '#'+relations.left );
             } else { keepLooping = false; }
         } keepLooping = true;
@@ -46,7 +48,7 @@ class ViewSliderDots extends React.Component {
         // Checks dots right
         while( keepLooping ) {
             let relations = Globals.relations[ lastRight.attr( 'id' ) ];
-            if ( relations.right != null && relations.right != '' && relations.canright ) {
+            if ( relations != null && relations.right != null && relations.right != '' && relations.canright ) {
                 dotsRight++; lastRight = _( '#'+relations.right );
             } else { keepLooping = false; }
         }

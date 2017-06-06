@@ -104,7 +104,7 @@ class LocationListView extends React.Component {
         if(nextProps.category != null && nextProps.category.category_parent != null){
             let jsxCategoryList = [];
 
-            const getID = (nextProps.category.category_parent == 0 ) ? nextProps.category.category_id : nextProps.category.category_parent ;
+            const getID = (nextProps.category.category_parent == 0 ) ? nextProps.category.category_id : nextProps.category.category_parent;
 
             if(getID != this.state.jsxCategoryListHead){
                 this.setState({ catFilterIndex : null, 'jsxCategoryList' : null, 'jsxCategoryListHead' : getID, 'locationListHeading' : 'Indlæser...' });

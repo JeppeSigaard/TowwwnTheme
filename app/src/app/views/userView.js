@@ -86,9 +86,9 @@ class UserView extends React.Component {
                         { this.state.notLoggedIn &&
                             <div className="notloggedin">
                                 <div className="title">Hjerter er nyttige</div>
-                                <div className="subtitle">Dine hjerter kan være med til at give dig et bedre overblik - og dit login indeholder alle dem du har brug for.</div>
+                                <div className="subtitle">Dine hjerter kan være med til at give dig et bedre overblik - og dit login indeholder alle dem du har brug for. Log ind for at tildele hjerter.</div>
                                 <div className="login-btn">Log ind med Facebook</div>
-                                <div className="notification">I denne version af Towwwn kan du logge ind med Facebook. Hvis du ikke har en Facebook-konto, vil du snart kunne oprette en konto på Towwwn.</div>
+                                <div className="notification">I denne version af Towwwn kan du logge ind med Facebook. Hvis du ikke har en Facebook-konto, må du vente lidt endnu for at få et Towwwn-login.</div>
                             </div>
                         }
 

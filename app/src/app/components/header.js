@@ -17,20 +17,9 @@ class Header extends React.Component {
         _( '.nav-search' ).addClass('bookmark-mode');
         if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
 
-        if(_('body').hasClass('mobile')){
-            Globals.viewHandler.changeMobileViewFocus(
-                '#search-view',
-                true, false
-            );
-        }
 
-        else{
-            Globals.viewHandler.changeViewFocus(
-                '#search-view',
-                Globals.viewHandler.focusedViews[0],
-                true, false, false
-            );
-        }
+        Globals.viewHandler.changeViewFocus( '#search-view', Globals.viewHandler.focusedViews[0], true, false, false );
+
 
         // Focus search bar (if not mobile)
         if(!_('body').hasClass('mobile')){
@@ -49,11 +38,7 @@ class Header extends React.Component {
         _( '.nav-locations' ).addClass('bookmark-mode');
         if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
 
-        Globals.viewHandler.changeViewFocus(
-            '#location-category-view',
-            Globals.viewHandler.focusedViews[0],
-            true, false, false
-        );
+        Globals.viewHandler.changeViewFocus( '#location-category-view', Globals.viewHandler.focusedViews[0], false, true, false );
 
         Globals.history.push({'type' : 'home', 'name' : 'Steder · Towwwn'});
     }
@@ -69,28 +54,33 @@ class Header extends React.Component {
         _( '.nav-events' ).addClass('bookmark-mode');
         if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
 
-        Globals.viewHandler.changeViewFocus(
-            Globals.viewHandler.focusedViews[1],
-            '#event-calendar-view',
-            false, true, false
-        );
+
+        Globals.viewHandler.changeViewFocus( '#event-calendar-view', Globals.viewHandler.focusedViews[1], true, false, false );
 
         Globals.history.push({'type' : 'home', 'name' : 'Begivenheder · Towwwn'});
+    }
+
+    handleTouchStart(){
+        Globals.navigationBlocker = true;
+    }
+
+    handleTouchEnd(){
+        setTimeout(function(){Globals.navigationBlocker = false;},100);
     }
 
     // Render
     render() {
         return (
-            <header id="site-header" className="site-header">
+            <header id="site-header" className="site-header" onTouchStart={this.handleTouchStart.bind(this)} onTouchEnd={this.handleTouchEnd.bind(this)}>
                 <div className="header-container">
                     <div id="headerbar">
-                        <div className="logo">
-                            <svg viewBox="0 0 32 32">
-                                <use xlinkHref="#towwwn-logo">
-                                </use>
-                            </svg>
-                        </div>
-                        <a href="#" className="logo-container">
+                        <a href={app_data.main_path} className="logo-container">
+                           <div className="logo">
+                                <svg viewBox="0 0 32 32">
+                                    <use xlinkHref="#towwwn-logo">
+                                    </use>
+                                </svg>
+                            </div>
                             <div className="city">{ app_data.city }</div>
                         </a>
 
@@ -101,15 +91,15 @@ class Header extends React.Component {
                                     </use>
                                 </svg>
                             </div>
-                            <div className="nav-locations nav-elem" onClick={ this.navLocationClick.bind(this) } >
-                                <svg viewBox="0 0 32 32">
-                                    <use xlinkHref="#icon-location">
-                                    </use>
-                                </svg>
-                            </div>
                             <div className="nav-events nav-elem bookmark-mode" onClick={ this.navEventClick.bind(this) } >
                                 <svg viewBox="0 0 32 32">
                                     <use xlinkHref="#icon-event">
+                                    </use>
+                                </svg>
+                            </div>
+                            <div className="nav-locations nav-elem" onClick={ this.navLocationClick.bind(this) } >
+                                <svg viewBox="0 0 32 32">
+                                    <use xlinkHref="#icon-location">
                                     </use>
                                 </svg>
                             </div>

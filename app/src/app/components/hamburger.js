@@ -32,9 +32,24 @@ class Hamburger extends React.Component {
                         }
                     },
                 },
+
+                { // Info
+                    title: 'Information',
+                    order : 2,
+                    id: 'docs',
+                    href: app_data.main_path + '/docs/',
+                },
+
+                { // Hvem er med?
+                    title: 'Hvem er med?',
+                    order : 5,
+                    id: 'hvem-er-med',
+                    href: app_data.main_path + '/hvem-er-med/',
+                },
+
                 { // Cookie
                     title: 'Cookie- og privatlivspolitik',
-                    order : 2,
+                    order : 10,
                     id: 'cookie',
                     href: app_data.main_path + '/cookie/',
                 }

@@ -147,7 +147,7 @@ class User {
                     expires: data.authResponse.expiresIn,
                 };
 
-                Globals.fb.get('/me?fields=name,birthday,email,location').then( resp => {
+                Globals.fb.get('/me?fields=name,email').then( resp => {
 
                     this.state.fbData = {
                         name : resp.name,
