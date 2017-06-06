@@ -23,6 +23,7 @@ add_action('wp_head',function(){
             'ajax_url' => admin_url( 'admin-ajax.php' ),
             'rest_api' => get_theme_mod('rest_api_url'),
             'main_path' => site_url(),
+            'city' => get_theme_mod('city'),
             'template_uri' => get_template_directory_uri(),
             'commercial_image_url' => get_theme_mod('commercial'),
             'commercial_link' => get_theme_mod('commercial_link'),

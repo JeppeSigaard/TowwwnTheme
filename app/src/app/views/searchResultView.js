@@ -55,7 +55,6 @@ class SearchResultView extends React.Component {
 
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
-
         if(nextProps.result == 'loading'){
             this.setState({
                 allJsxLocations: null,
@@ -73,7 +72,9 @@ class SearchResultView extends React.Component {
                 this.setState({ noResults: true });
             } else this.setState({ noResults: false });
 
-            this.setState({ result: nextProps.result });
+                if ( nextProps.result.events.length === 0 && nextProps.result.locations.length === 0 ) {
+                    this.setState({ noResults: true });
+                } else this.setState({ noResults: false });
 
             if ( nextProps.result.locations != null ) {
                 let jsxLocations = [];

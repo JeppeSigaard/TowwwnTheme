@@ -24,11 +24,14 @@ const React = require( 'react' ),
     LocationCategoryView = require( '../views/locationCategoryView.js' ),
     LocationListView = require( '../views/locationListView.js' ),
     LocationSingleView = require( '../views/locationSingleView.js' ),
+    UserView = require( '../views/userView.js' ),
 
     // Components
+    Header = require( '../components/header.js' ),
     Event = require( '../components/event.js' ),
     LocationCategory = require( '../components/locationCategory.js' ),
     ViewSliderDots = require('../components/viewsliderdots.js'),
+    Hamburger = require( '../components/hamburger.js' ),
     CookiePolicy = require('../components/cookiePolicy.js'),
 
     // Plugins
@@ -43,6 +46,17 @@ const React = require( 'react' ),
 
 // Automatic classes
 const EffectHandler = require( '../../modules/handlers/effectHandler.js' );
+
+(() => {
+
+    // Move this somewhere else... RIGHT NOW!!!! :((
+    Array.prototype.changeIndex = (( oldIndex, newIndex ) => {
+        let elem = this[ oldIndex ];
+        this.splice( oldIndex, 1 );
+        this.splice( newIndex, 0, elem );
+    });
+
+})();
 
 class TowwwnApp extends React.Component {
 
@@ -60,10 +74,11 @@ class TowwwnApp extends React.Component {
         Globals.viewHandler = null;
         Globals.locationDataHandler = new LocationDataHandler();
         Globals.fb = new FBHandler();
+        Globals.user = new User();
         Globals.history = new historyHandler();
 
+        this.state = { from: null, currentView: null, navelems: [] };
         this.hasMounted = false;
-        this.state = { from: null, currentView: null, };
 
         // Relations
         Globals.relations = {
@@ -174,99 +189,9 @@ class TowwwnApp extends React.Component {
 
     // Component did mount
     componentDidMount() {
-_('body').removeClass('loading');
+        _('body').removeClass('loading');
         _('body').addClass('loaded');
-
-        Globals.user = new User();
         this.viewSlider = new ViewSlider();
-
-        _( '.nav-locations' ).on( 'click', () => {
-
-            if ( _('.search-nav-container .bookmark-mode') !== false )
-                _('.search-nav-container .bookmark-mode').removeClass('bookmark-mode');
-
-            _('.nav-elem').removeClass('bookmark-mode');
-            _( '.nav-locations' ).addClass('bookmark-mode');
-            if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
-
-            if(_('body').hasClass('mobile')){
-                Globals.viewHandler.changeMobileViewFocus(
-                    '#location-category-view',
-                    false, true
-                );
-            }
-
-            else{
-                Globals.viewHandler.changeViewFocus(
-                    Globals.viewHandler.focusedViews[0],
-                    '#location-category-view',
-                    true, false, false
-                );
-            }
-
-            Globals.history.push({'type' : 'home', 'name' : 'Steder · Towwwn'});
-        });
-
-        _( '.nav-events' ).on( 'click', () => {
-            if ( _('.category.bookmark-mode') !== false ) _('.category.bookmark-mode').removeClass('bookmark-mode');
-
-            if ( _('.search-nav-container .bookmark-mode') !== false )
-                _('.search-nav-container .bookmark-mode').removeClass('bookmark-mode');
-
-            _('.nav-elem').removeClass('bookmark-mode');
-            _( '.nav-events' ).addClass('bookmark-mode');
-            if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
-
-             if(_('body').hasClass('mobile')){
-                Globals.viewHandler.changeMobileViewFocus(
-                    '#event-calendar-view',
-                    true, false
-                );
-            }
-
-            else{
-                Globals.viewHandler.changeViewFocus(
-                    '#event-calendar-view',
-                    Globals.viewHandler.focusedViews[1],
-                    false, true, false
-                );
-            }
-
-            Globals.history.push({'type' : 'home', 'name' : 'Begivenheder · Towwwn'});
-
-        });
-
-        _( '.nav-search' ).on( 'click', () => {
-
-            if ( _('.search-nav-container .bookmark-mode') !== false )
-                _('.search-nav-container .bookmark-mode').removeClass('bookmark-mode');
-
-            _('.nav-elem').removeClass('bookmark-mode');
-            _( '.nav-search' ).addClass('bookmark-mode');
-            if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
-
-            if(_('body').hasClass('mobile')){
-                Globals.viewHandler.changeMobileViewFocus(
-                    '#search-view',
-                    true, false
-                );
-            }
-
-            else{
-                Globals.viewHandler.changeViewFocus(
-                    '#search-view',
-                    Globals.viewHandler.focusedViews[0],
-                    true, false, false
-                );
-            }
-
-            // Focus search bar (if not mobile)
-            if(!_('body').hasClass('mobile')){
-                document.getElementById('search-bar').focus();
-            }
-
-            Globals.history.push({'type' : 'home', 'name' : 'Søg · Towwwn'});
-        });
 
         Globals.viewHandler = null;
 
@@ -343,6 +268,10 @@ _('body').removeClass('loading');
             request.send();
         }
 
+        // yups
+        _( '.nav-search' ).on( 'click', () => {
+        });
+
         // Handle anchor click
         _('a').off( 'click', this.handleAnchorClick );
         _('a').on( 'click', this.handleAnchorClick );
@@ -351,16 +280,30 @@ _('body').removeClass('loading');
     // Render
     render() {
         return (
-            <div className="content-container" id="page-content">
-                <div className="content-container-inner">
-                    <SearchView />
-                    <SearchResultView result={ this.state.searchResult } />
+            <div>
+                <Header />
+                <div className="content-container" id="page-content">
 
-                    <EventSingleView name="event-single-view" from={ this.state.from } event={ this.state.singleevent } setMainState={ this.parsedSetState.bind(this) } />
-                    <EventCalendarView name="event-calendar-view" from={ this.state.from } events={ this.state.jsxEvents } setMainState={ this.parsedSetState.bind(this) } />
-                    <LocationCategoryView name="location-category-view" from={ this.state.from } categories={ this.state.featuredCategoriesData } allCategories={ this.state.categoriesData } setMainState={ this.parsedSetState.bind(this) } />
-                    <LocationListView name="location-list-view" from={ this.state.from } elems={ this.state.currentLocations } category={ this.state.currentLocationsCategory } heading={this.state.locationListHeading} setMainState={ this.parsedSetState.bind(this) } />
-                    <LocationSingleView name="location-single-view" from={ this.state.from } elem={ this.state.singleLocation } setMainState={ this.parsedSetState.bind(this) } />
+                    <div className="content-container-inner">
+                        <div id="general-overlay" ></div>
+
+                        <SearchView />
+                        <SearchResultView result={ this.state.searchResult } />
+                        <UserView from={ this.state.from } />
+
+                        <EventSingleView name="event-single-view" from={ this.state.from } event={ this.state.singleevent } setMainState={ this.parsedSetState.bind(this) } />
+                        <EventCalendarView name="event-calendar-view" from={ this.state.from } events={ this.state.jsxEvents } setMainState={ this.parsedSetState.bind(this) } />
+                        <LocationCategoryView name="location-category-view" from={ this.state.from } categories={ this.state.featuredCategoriesData } allCategories={ this.state.categoriesData } setMainState={ this.parsedSetState.bind(this) } />
+                        <LocationListView name="location-list-view" from={ this.state.from } elems={ this.state.currentLocations } category={ this.state.currentLocationsCategory } setMainState={ this.parsedSetState.bind(this) } />
+                        <LocationSingleView name="location-single-view" from={ this.state.from } elem={ this.state.singleLocation } setMainState={ this.parsedSetState.bind(this) } />
+                    </div>
+
+                    <Hamburger />
+
+                    { this.state.currentMobileView != null &&
+                      _('body').hasClass('mobile') &&
+                        <ViewSliderDots currentView={ this.state.currentMobileView } /> }
+
                 </div>
                 <CookiePolicy name="towwwn-cookie"/>
                 {window.innerWidth < 769 && <ViewSliderDots/>}

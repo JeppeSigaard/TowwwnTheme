@@ -40,7 +40,7 @@ p a{
     color: $color-blue-1;
     text-decoration: none;
     transition: 400ms;
-    transition-timing-function: cubic-bezier(.54, 0, .18, 1.5);
+    transition-timing-function: cubic-bezier(.7, 0, .3, 1);
 
     &:hover{
         color: darken( $color-blue-1, 7% );
@@ -59,7 +59,7 @@ p a{
         width: 0; height: 1px;
         background-color: $color-blue-1;
         transition: 400ms;
-        transition-timing-function: cubic-bezier(.54, 0, .18, 1.5);
+        transition-timing-function: cubic-bezier(.7, 0, .3, 1);
     }
 }
 
@@ -99,15 +99,53 @@ $horizontal-bezier-mobile: cubic-bezier(0, 0, 0, 1);
         overflow: hidden;
         top: 0; left: 0%;
         font-size: 0;
-        transition: 400ms;
+        transition: 400ms, transform 180ms;
         transition-timing-function: $horizontal-bezier;
+
+        &.aside{
+            transform: translateX( -$sidebar-width );
+        }
+
+        &:before{
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: $menu-bar-height;
+            background: $color-blue-2;
+        }
 
         &.notrans{
             transition: 0ms!important;
         }
 
         &.transition{
-            transition: 250ms;
+            transition: 250ms, left 180ms $horizontal-bezier;
+        }
+
+        #general-overlay{
+            position: absolute;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,.45);
+            z-index: 99999;
+            opacity: 0;
+            transition: 180ms $horizontal-bezier;
+            pointer-events: none;
+
+            &:after{
+                content: '';
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 4px;
+                height: 100%;
+                background: linear-gradient(to right, rgba(0,0,0,0.0) 0%,rgba(0,0,0,.1) 100%);
+            }
+
+            &.active{
+                pointer-events: all;
+                opacity: 1;
+            }
         }
     }
     
@@ -130,9 +168,9 @@ $horizontal-bezier-mobile: cubic-bezier(0, 0, 0, 1);
         pointer-events: none;
         top: 0;
         width: 100%;
-        height: 100%;
-        min-height: calc(100vh - #{$top-area-height} - #{$menu-bar-height});
-        transition: 500ms;
+        height: 100vh;
+        min-height: calc(100vh - #{$menu-bar-height});
+        transition: 500ms, box-shadow 120ms;
         font-size: 16px;
         display: inline-block;
         vertical-align: top;

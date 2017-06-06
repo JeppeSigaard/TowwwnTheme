@@ -14,6 +14,97 @@
     z-index: 100;
     border-bottom: 1px solid #292929;
 
+    .heart{
+        position: absolute;
+        right: $menu-bar-height * 1.2;
+        top: 0;
+        width: $menu-bar-height * 1.2;
+        height: $menu-bar-height;
+        border-left: 1px solid rgba(white,.6);
+        cursor: pointer;
+        animation-duration: 400ms;
+
+        &.active{
+            svg{
+                fill: #fff;
+            }
+        }
+
+        &.anim{
+            svg{
+                animation: 400ms anim forwards;
+            }
+        }
+
+        &.animback{
+            svg{
+                animation: 400ms animBack forwards;
+            }
+        }
+
+        @keyframes anim{
+            0% {
+                width: 20px;
+                height: 20px;
+                fill: transparent;
+            }
+
+            40% {
+                width: 24px;
+                height: 24px;
+                // fill: lighten( red, 25% );
+            }
+
+            60% {
+                width: 24px;
+                height: 24px;
+            }
+
+            100% {
+                width: 20px;
+                height: 20px;
+                fill: #fff;
+            }
+        }
+
+        @keyframes animBack{
+            0% {
+                width: 20px;
+                height: 20px;
+                fill: #fff;
+            }
+
+            40% {
+                width: 24px;
+                height: 24px;
+            }
+
+            60% {
+                width: 24px;
+                height: 24px;
+                // fill: lighten( red, 25% );
+            }
+
+            100% {
+                width: 20px;
+                height: 20px;
+                fill: transparent;
+            }
+        }
+
+        svg{
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate( -50%, -50% );
+            fill: transparent;
+            stroke: white;
+            stroke-width: 4px;
+            padding: 4px;
+            width: 20px;
+            height: 20px;
+        }
+    }
+
     &.dark{
         background-color: darken( $color-blue-2, 5% );
     }

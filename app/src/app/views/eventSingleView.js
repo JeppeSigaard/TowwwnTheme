@@ -3,6 +3,7 @@
 // Event single view layout
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
+      _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
       BehaviourDataHandler = require( '../../modules/handlers/behaviourHandler/dataHandler.js' ),
       LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       SingleEvent = require( '../components/singleEvent.js' ),
@@ -80,6 +81,27 @@ class EventSingleView extends React.Component {
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
         if ( nextProps.event != this.lastElem ) {
+            let heart = _('#event-single-view .heart');
+
+            if ( Globals.user.state.hearts.events[ nextProps.event.id ] == true && !heart.hasClass('active') ) {
+                heart.removeClass('animback');
+                heart.addClass('anim');
+
+                setTimeout(() => {
+                    heart.removeClass('anim');
+                    heart.addClass('active');
+                }, 400);
+
+            } else if ( Globals.user.state.hearts.events[ nextProps.event.id ] != true && heart.hasClass( 'active' ) ) {
+                heart.removeClass('anim');
+                heart.addClass('animback');
+
+                setTimeout(() => {
+                    heart.removeClass('animback');
+                    heart.removeClass('active');
+                }, 400);
+            }
+
             BehaviourDataHandler.parseData( 'event', nextProps.event );
             this.lastElem = nextProps.event;
 
@@ -129,12 +151,61 @@ class EventSingleView extends React.Component {
         request.send();
     }
 
+    // heart
+    heart() {
+       if ( Globals.user != null && !Globals.user.state.loggedIn ) {
+            Globals.setMainState({ from: 'event-single-view' });
+            Globals.lastViewState = [ Globals.viewHandler.focusedViews[0], Globals.viewHandler.focusedViews[1] ];
+            Globals.viewHandler.changeViewFocus(
+                '#event-single-view',
+                '#user-view',
+                false, true, false, true
+            );
+       } else {
+            let heart = _('#event-single-view .heart');
+            if ( heart.hasClass('anim') || heart.hasClass('animback') ) return;
+            if ( Globals.user.state.hearts.events[ this.props.event.id ] != true ) {
+                heart.addClass('anim');
+                Globals.user.state.hearts.events[ this.props.event.id ] = true;
+
+                setTimeout(() => {
+                    heart.removeClass('anim');
+                    heart.addClass('active');
+                }, 400 );
+
+            } else {
+                heart.addClass('animback');
+                Globals.user.state.hearts.events[ this.props.event.id ] = false;
+
+                setTimeout(() => {
+                    heart.removeClass('animback');
+                    heart.removeClass('active');
+                }, 400);
+
+            }
+       }
+    }
+
+    // Component did mount
+    componentDidMount() {
+        Globals.user.hooks.add( 'onlogin', () => {
+            if ( this.props.event != null && Globals.user.state.hearts.events[ this.props.event.id ] == true ) {
+                let heart = _('#event-single-view .heart');
+                heart.addClass('anim');
+                setTimeout(() => {
+                    heart.removeClass('anim');
+                    heart.addClass('active');
+                }, 400 );
+            }
+        });
+    }
+
     // Render
     render() {
         let elem = this.props.event;
         return (
             <section className="container-section" id="event-single-view">
-                <ViewTopBar icon="#icon-star" viewBox="0 0 32 32" standard={ true } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
+                <ViewTopBar icon="#icon-star" viewBox="0 0 32 32" standard={ true } heart={ true } heartFunc={ this.heart.bind(this) } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
 
                 <div className="scroll-container">
                     <div className="content">

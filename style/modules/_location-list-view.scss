@@ -130,12 +130,21 @@
         flex-grow: 1;
 
         .location-title{
+            position: relative;
             display: block;
             font-size: 14px;
             padding: 0 0 5px;
             margin: 0;
             border-bottom: 1px solid $color-blue-1;
             text-transform: uppercase;
+
+            .heart{
+                width: 12px;
+                fill: #aaa;
+                vertical-align: top;
+                margin-right: 5px;
+                margin-top: 3px;
+            }
         }
 
         .location-about{

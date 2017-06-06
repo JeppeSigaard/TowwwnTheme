@@ -28,19 +28,17 @@ class User {
                     location: { },
                     locationcategory: { },
                 }
+            },
+            hearts: {
+                events: [],
+                locations: []
             }
         };
 
-        // Login button
-//        _('.login-btn').on( 'click', ( e ) => {
-//            if ( this.state.loggedIn ) return;
-//            Globals.fb.login().then(() => {
-//                _('.login-btn').text( this.state.fbData.name.split(' ')[0] );
-//            });
-//        });
-
         // On load, get behaviour statistics from cookie
         window.onload = (() => {
+
+            // Uncomment this... i mean it.. Right now
             let data = window._cookielib.read( 'data' );
 
             if ( data != '' ) {
@@ -60,6 +58,11 @@ class User {
             }
         });
 
+        // On login
+        this.hooks.add('onlogin', () => {
+            window._cookielib.set( 'data', JSON.stringify( this.state ), 30 );
+        });
+
         // Before unload, uploads behaviour statistics
         window.onbeforeunload = (() => {
             window._cookielib.set( 'data', JSON.stringify( this.state ), 30 );
@@ -71,6 +74,7 @@ class User {
                     token : this.state.accessToken.token,
                     meta_data : {
                         behaviour_statistics : this.state.behaviourData,
+                        hearts : this.state.hearts
                     },
                 };
 
@@ -79,7 +83,7 @@ class User {
                 request.onload = (( data ) => { });
 
                 // Opens request & sets headers
-                request.open( 'POST', rest_api+'svendborg/user/' + this.state.dbData.id, true );
+                request.open( 'POST', app_data.rest_api+'svendborg/user/' + this.state.dbData.id, true );
                 request.setRequestHeader("Content-type", "application/json");
 
                 // Sends request
@@ -118,7 +122,7 @@ class User {
                 if ( arr2[ iter2 ] == null ) arr2[ iter2 ] = 0; }
 
             // Sends request
-            request.open( 'POST', ajax_obj.ajax_url );
+            request.open( 'POST', app_data.ajax_url );
             request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             request.send( 'action=towwwn_ub_predict&'
                          +'catRelatedClicks='+arr1
@@ -129,6 +133,9 @@ class User {
 
     // Parse fb login data
     parseFbLoginData( data ) {
+        this.hooks.trigger( 'acceptedFb' );
+        Globals.hooks.trigger( 'acceptedFb' );
+
         return new Promise((resolve,reject) => {
             if ( data.status != null &&
                  data.status === 'connected' ) {
@@ -175,6 +182,8 @@ class User {
                             let json = JSON.parse( data.target.response ),
                                 obj = json.behaviour_statistics;
 
+                            this.state.hearts = json.hearts;
+
                             // Converts arrays back into objects
                             let timeData = obj.timeData,
                                 types = [ 'event', 'location', 'locationcategory' ];
@@ -214,14 +223,15 @@ class User {
                                     ( obj, this.state.behaviourData );
 
                             this.hooks.trigger( 'onlogin' );
+                            Globals.hooks.trigger( 'onlogin' );
 
                         });
 
                         // Sends request
-                        request.open( 'GET', rest_api+'svendborg/user/'+this.state.dbData.id+
+                        request.open( 'GET', app_data.rest_api+'svendborg/user/'+this.state.dbData.id+
                                       '?user='+ this.state.dbData.id +
                                       '&token='+ this.state.accessToken.token +
-                                      '&fields=behaviour_statistics' );
+                                      '&fields=hearts,behaviour_statistics' );
 
                         request.send();
                         resolve( data );
@@ -229,7 +239,7 @@ class User {
                     });
 
                     // Opens request & sets headers
-                    request.open( 'POST', rest_api+'svendborg/user/signon', true );
+                    request.open( 'POST', app_data.rest_api+'svendborg/user/signon', true );
                     request.setRequestHeader("Content-type", "application/json");
 
                     // Sends request
@@ -317,7 +327,7 @@ class User {
                 });
 
                 // Sends request
-                request.open( 'GET', rest_api+'svendborg/user/'+this.state.dbData.id+
+                request.open( 'GET', app_data.rest_api+'svendborg/user/'+this.state.dbData.id+
                              '?user='+ this.state.dbData.id +
                              '&token='+ this.state.accessToken.token +
                              '&fields=behaviour_statistics' );
@@ -328,13 +338,32 @@ class User {
             });
 
             // Opens request & sets headers
-            request.open( 'POST', rest_api+'svendborg/user/signon', true );
+            request.open( 'POST', app_data.rest_api+'svendborg/user/signon', true );
             request.setRequestHeader("Content-type", "application/json");
 
             // Sends request
             request.send( JSON.stringify( data ) );
 
         });
+
+    }
+
+    // Log out
+    logOut() {
+
+        this.state.loggedIn = false;
+        this.state.behaviourData = {
+            catRelatedClicks: { },
+            timeData: {
+                event: { },
+                location: { },
+                locationcategory: { },
+            }
+        };
+
+        window._cookielib.set( 'data', JSON.stringify( this.state ), 30 );
+        this.hooks.trigger( 'onlogout' );
+        Globals.hooks.trigger( 'onlogout' );
 
     }
 
@@ -355,7 +384,7 @@ class User {
         request.onload = (( data ) => { });
 
         // Opens request & sets headers
-        request.open( 'POST', rest_api+'svendborg/user/' + this.state.dbData.id, true );
+        request.open( 'POST', app_data.rest_api+'svendborg/user/' + this.state.dbData.id, true );
         request.setRequestHeader("Content-type", "application/json");
 
         // Sends request

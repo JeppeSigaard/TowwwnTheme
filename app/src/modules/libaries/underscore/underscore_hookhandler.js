@@ -24,4 +24,14 @@ class HookHandler {
         }
     }
 
+    /* ---- Remove ---- */
+    remove( event, func ) {
+        if ( this.hooks[event] == null ) return;
+        for ( let iter = 0; iter < this.hooks[ event ].length; iter++ ) {
+            if ( this.hooks[ event ][ iter ] === func ) {
+                this.hooks[ event ].splice( iter, 1 );
+            }
+        }
+    }
+
 } module.exports = HookHandler;
