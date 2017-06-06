@@ -47,7 +47,7 @@ class BehaviourDataHandler{
                 }
             });
 
-            request.open( 'GET', app_data.rest_api + 'svendborg/locations/' + data.parentid );
+            request.open( 'GET', app_data.rest_api + '/locations/' + data.parentid );
             request.send();
 
         }
@@ -76,7 +76,7 @@ class BehaviourDataHandler{
 
             });
 
-            request.open( 'GET', app_data.rest_api + 'svendborg/locations/' + parentid );
+            request.open( 'GET', app_data.rest_api + '/locations/' + parentid );
             request.send();
 
         }

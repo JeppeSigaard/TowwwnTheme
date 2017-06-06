@@ -67,7 +67,7 @@ class SearchView extends React.Component {
             }
         });
 
-        request.open( 'GET', app_data.rest_api + 'svendborg/commercials?orderby=rand&fields=commercial_tn_search' );
+        request.open( 'GET', app_data.rest_api + '/commercials?orderby=rand&fields=commercial_tn_search' );
         request.send();
     }
 

@@ -31,7 +31,7 @@ class CommercialDataHandler {
             };
 
             // Sends request
-            request.open( 'GET', app_data.rest_api + 'svendborg/commercials' + query );
+            request.open( 'GET', app_data.rest_api + '/commercials' + query );
             request.send();
 
         });

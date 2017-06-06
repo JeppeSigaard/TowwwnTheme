@@ -217,7 +217,7 @@ class TowwwnApp extends React.Component {
                 Globals.history.replace(singleEvent[0]);
             });
 
-            request.open( 'GET', app_data.rest_api + 'svendborg/events/' + app_data.id );
+            request.open( 'GET', app_data.rest_api + '/events/' + app_data.id );
             request.send();
 
         }
@@ -240,7 +240,7 @@ class TowwwnApp extends React.Component {
 
             });
 
-            request.open( 'GET', app_data.rest_api + 'svendborg/categories/' + app_data.id );
+            request.open( 'GET', app_data.rest_api + '/categories/' + app_data.id );
             request.send();
         }
 
@@ -264,7 +264,7 @@ class TowwwnApp extends React.Component {
 
             });
 
-            request.open( 'GET', app_data.rest_api + 'svendborg/locations/' + app_data.id );
+            request.open( 'GET', app_data.rest_api + '/locations/' + app_data.id );
             request.send();
         }
 

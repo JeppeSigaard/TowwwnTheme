@@ -1,14 +1,23 @@
 #user-view{
     background-color: #292929;
 
-    .heart-icon{
+    .content{
         position: absolute;
-        top: 190px;
+        top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        width: 100%;
+        transform: translate(-50%,-50%);
+        padding: 12px;
+        text-align: center;
+        max-width: 400px;
+    }
+
+    .heart-icon{
+        display: inline-block;
         fill: white;
         width: 32px;
         height: 32px;
+        margin-bottom: 25px;
     }
 
     .title{
@@ -16,66 +25,52 @@
         font-size: 22px;
         text-transform: uppercase;
         color: white;
-        position: absolute;
-        width: 100%;
-        top: 230px;
+        margin-bottom: 40px;
     }
 
     .subtitle{
         text-align: center;
-        width: 380px;
         color: #ccc;
         font-size: 14px;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        top: 270px;
         font-weight: 100;
         font-family: 'Avenir';
+        margin-bottom: 40px;
+        line-height: 1.5;
     }
 
     .login-btn{
-        position: absolute;
-        left: 50%;
-        top: 378px;
-        transform: translate(-50%,0);
+        display: inline-block;
         text-transform: uppercase;
-        font-size: 20px;
-        padding: 14px 32px;
+        font-size: 14px;
+        padding: 14px 12px;
         background-color: black;
         color: #fff;
         border: 1px solid white;
         border-radius: 2px;
         cursor: pointer;
+        margin-bottom: 40px;
+
+        @media(min-width:769px){font-size:20px;}
     }
 
     .notification{
         font-size: 12px;
         text-align: center;
         color: #ccc;
-        width: 380px;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        top: 520px;
         font-family: 'Avenir';
+        line-height: 1.4;
     }
 
     .loader{
-        position: absolute;
-        left: 50%;
-        top: 378px;
-        transform: translate(-50%,0);
+        display: inline-block;
     }
 
     .loggedIn .notification{
         font-size: 14px;
-        top: 390px;
     }
 
     .loggingIn{
         .notification{
-            top: 490px;
             font-size: 13px;
         }
 
@@ -84,36 +79,4 @@
         }
     }
 
-}
-
-@keyframes heartanim{
-  0% {
-    width: 128px; height: 128px;
-    fill: lighten( red, 10% );
-  }
-
-  30%{
-    width: 180px; height: 180px;
-    fill: lighten( red, 8% );
-  }
-
-  32%{
-    width: 180px; height: 180px;
-    fill: lighten( red, 8% );
-  }
-
-  50%{
-    width: 140px; height: 140px;
-    fill: lighten( red, 11% );
-  }
-
-  70%{
-    width: 170px; height: 170px;
-    fill: lighten( red, 9% );
-  }
-
-  100%{
-    width: 128px; height: 128px;
-    fill: lighten( red, 10% );
-  }
 }

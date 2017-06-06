@@ -31,6 +31,12 @@ class Hamburger extends React.Component {
                             fromRight : false
                         }
                     },
+                },
+                { // Cookie
+                    title: 'Cookie- og privatlivspolitik',
+                    order : 2,
+                    id: 'cookie',
+                    href: app_data.main_path + '/cookie/',
                 }
 
             ]
@@ -177,7 +183,7 @@ class Hamburger extends React.Component {
 
             let jsxElems = [ ];
             for ( let navelem of this.state.navelems ) {
-                jsxElems.push( <div className={ navelem.outOfService ? "navelem outofservice" : "navelem inservice" } onClick={ this.navClick.bind( this, navelem.vref != null ? navelem.vref : null, navelem.cb != null ? navelem.cb : null ) } href={ navelem.href } >{ navelem.title }</div> );
+                jsxElems.push( <a key={navelem.id} className={ navelem.outOfService ? "navelem outofservice" : "navelem inservice" } onClick={ this.navClick.bind( this, navelem.vref != null ? navelem.vref : null, navelem.cb != null ? navelem.cb : null ) } href={ navelem.href != null ? navelem.href : '#'} >{ navelem.title }</a> );
             }
 
             if ( silent ) this.state.jsxElems = jsxElems;

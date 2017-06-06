@@ -87,23 +87,23 @@ class UserView extends React.Component {
                             <div className="notloggedin">
                                 <div className="title">Hjerter er nyttige</div>
                                 <div className="subtitle">Dine hjerter kan være med til at give dig et bedre overblik - og dit login indeholder alle dem du har brug for.</div>
-                                <div className="login-btn">Login</div>
-                                <div className="notification">I første udgave af Towwwn kan du logge ind med Facebook. Til jer der ikke bruger Facebook bygges der senere et andet login.</div>
+                                <div className="login-btn">Log ind med Facebook</div>
+                                <div className="notification">I denne version af Towwwn kan du logge ind med Facebook. Hvis du ikke har en Facebook-konto, vil du snart kunne oprette en konto på Towwwn.</div>
                             </div>
                         }
 
                         { this.state.loggingIn &&
                             <div className="loggingIn">
-                                <div className="title">Vi opretter login</div>
+                                <div className="title">Et øjeblik</div>
                                 <div className="loader"><Loader /></div>
-                                <div className="notification">Vent et øjeblik...</div>
+                                <div className="notification">Vi opretter en bruger til dig i vores system</div>
                             </div>
                         }
 
                         { this.state.loggedIn &&
                             <div className="loggedIn">
                                 <div className="title">Succes</div>
-                                <div className="notification">Nu kan du begynde at bruge dine hjerter...</div>
+                                <div className="notification">Nu kan du begynde at bruge dine hjerter</div>
                             </div>
                         }
                     </div>
