@@ -39,7 +39,7 @@ p a{
     color: $color-blue-1;
     text-decoration: none;
     transition: 400ms;
-    transition-timing-function: cubic-bezier(.54, 0, .18, 1.5);
+    transition-timing-function: cubic-bezier(.7, 0, .3, 1);
 
     &:hover{
         color: darken( $color-blue-1, 7% );
@@ -58,7 +58,7 @@ p a{
         width: 0; height: 1px;
         background-color: $color-blue-1;
         transition: 400ms;
-        transition-timing-function: cubic-bezier(.54, 0, .18, 1.5);
+        transition-timing-function: cubic-bezier(.7, 0, .3, 1);
     }
 }
 

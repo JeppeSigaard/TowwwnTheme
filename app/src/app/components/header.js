@@ -51,7 +51,7 @@ class Header extends React.Component {
 
         Globals.viewHandler.changeViewFocus(
             '#location-category-view',
-            '#search-view',
+            Globals.viewHandler.focusedViews[0],
             true, false, false
         );
 
@@ -70,7 +70,7 @@ class Header extends React.Component {
         if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
 
         Globals.viewHandler.changeViewFocus(
-            '#search-view',
+            Globals.viewHandler.focusedViews[1],
             '#event-calendar-view',
             false, true, false
         );

@@ -15,11 +15,11 @@
 
     .heart{
         position: absolute;
-        right: calc( #{$menu-bar-height} + 15px );
+        right: $menu-bar-height * 1.2;
         top: 0;
-        width: calc( #{$menu-bar-height} + 15px );
-        height: calc( #{$menu-bar-height} + 10px );
-        border-left: 1px solid white;
+        width: $menu-bar-height * 1.2;
+        height: $menu-bar-height;
+        border-left: 1px solid rgba(white,.6);
         cursor: pointer;
         animation-duration: 400ms;
 
@@ -43,50 +43,50 @@
 
         @keyframes anim{
             0% {
-                width: 24px;
-                height: 24px;
+                width: 20px;
+                height: 20px;
                 fill: transparent;
             }
 
             40% {
-                width: 28px;
-                height: 28px;
+                width: 24px;
+                height: 24px;
                 // fill: lighten( red, 25% );
             }
 
             60% {
-                width: 28px;
-                height: 28px;
+                width: 24px;
+                height: 24px;
             }
 
             100% {
-                width: 24px;
-                height: 24px;
+                width: 20px;
+                height: 20px;
                 fill: #fff;
             }
         }
 
         @keyframes animBack{
             0% {
-                width: 24px;
-                height: 24px;
+                width: 20px;
+                height: 20px;
                 fill: #fff;
             }
 
             40% {
-                width: 28px;
-                height: 28px;
+                width: 24px;
+                height: 24px;
             }
 
             60% {
-                width: 28px;
-                height: 28px;
+                width: 24px;
+                height: 24px;
                 // fill: lighten( red, 25% );
             }
 
             100% {
-                width: 24px;
-                height: 24px;
+                width: 20px;
+                height: 20px;
                 fill: transparent;
             }
         }
@@ -99,8 +99,8 @@
             stroke: white;
             stroke-width: 4px;
             padding: 4px;
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
         }
     }
 

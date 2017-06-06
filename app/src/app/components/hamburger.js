@@ -26,18 +26,6 @@ class Hamburger extends React.Component {
                         fromRight: false,
                         ignoreAutoDirection: true
                     },
-                },
-
-                { // Settings
-                    title: 'Indstillinger',
-                    order: 1,
-                    id: 'settings',
-                },
-
-                { // Statistics
-                    title: 'Statistik',
-                    order: 2,
-                    id: 'statistics'
                 }
 
             ]
@@ -47,28 +35,52 @@ class Hamburger extends React.Component {
     // Bind UI Actions
     bindActions() {
 
+        // On login
         Globals.user.hooks.add( 'onlogin', () => {
-            for ( let iter = 0; iter < this.state.navelems.length; iter++ ) {
-                if ( this.state.navelems[ iter ].id == 'login' ) {
-                    this.state.navelems.splice( iter, 1 );
-                }
-            }
-
+            this.removeNavElem( 'login' );
             this.state.navelems.push({
                 title: 'Log ud',
                 order: 9999,
-                id: 'logout'
-            });
-
-            this.updateJsxElems( false );
+                id: 'logout',
+                cb: (() => { Globals.user.logOut(); })
+            }); this.updateJsxElems( false );
         });
 
+        // On login click
         Globals.user.hooks.add( 'initlogin', () => {
             this.setOutOfService( 'login' );
         });
 
+        // On logout
+        Globals.user.hooks.add( 'onlogout', () => {
+            this.removeNavElem( 'logout' );
+            this.state.navelems.push({
+                title: 'Log ind',
+                order: 0,
+                id: 'login',
+                vref: {
+                    leftview: '#user-view',
+                    fromLeft: true,
+                    fromRight: false,
+                    ignoreAutoDirection: true
+                },
+            }); this.updateJsxElems( false );
+        });
+
+        // UI Actions
         _('.nav-user').on('click', this.toggle.bind(this));
         _('#general-overlay').on('click', this.toggle.bind(this));
+
+    }
+
+    // Remove nav elem
+    removeNavElem( id ) {
+        for ( let iter = 0; iter < this.state.navelems.length; iter++ ) {
+            if ( this.state.navelems[ iter ].id == id ) {
+                this.state.navelems.splice( iter, 1 );
+                iter --;
+            }
+        }
     }
 
     // Toggle
@@ -96,6 +108,8 @@ class Hamburger extends React.Component {
 
     // Nav Click
     navClick( vref, cb ) {
+        Globals.lastViewState = [ Globals.viewHandler.focusedViews[0], Globals.viewHandler.focusedViews[1] ];
+
         if ( vref != null ) {
             if ( !_('body').hasClass('mobile') ) {
                 Globals.setMainState({ from: 'sidenav' });
@@ -161,6 +175,12 @@ class Hamburger extends React.Component {
         return (
             <div className="hamburger">
                 <div className="hamburger-inner">
+                    { Globals.user.state.loggedIn &&
+                        <div className="user-name">
+                            { Globals.user.state.fbData.name }
+                        </div>
+                    }
+
                     { this.state.jsxElems != null && this.state.jsxElems }
                 </div>
             </div>
