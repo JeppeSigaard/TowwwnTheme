@@ -58,6 +58,11 @@ class User {
             }
         });
 
+        // On login
+        this.hooks.add('onlogin', () => {
+            window._cookielib.set( 'data', JSON.stringify( this.state ), 30 );
+        });
+
         // Before unload, uploads behaviour statistics
         window.onbeforeunload = (() => {
             window._cookielib.set( 'data', JSON.stringify( this.state ), 30 );
@@ -128,6 +133,9 @@ class User {
 
     // Parse fb login data
     parseFbLoginData( data ) {
+        this.hooks.trigger( 'acceptedFb' );
+        Globals.hooks.trigger( 'acceptedFb' );
+
         return new Promise((resolve,reject) => {
             if ( data.status != null &&
                  data.status === 'connected' ) {

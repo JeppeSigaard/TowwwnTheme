@@ -1,45 +1,87 @@
 #user-view{
-    background-color: #8bb;
+    background-color: #292929;
 
     .heart-icon{
         position: absolute;
-        top: 254px;
+        top: 190px;
         left: 50%;
         transform: translate(-50%, -50%);
-        fill: rgb(255, 50, 50);
-        width: 128px;
-        height: 128px;
+        fill: white;
+        width: 32px;
+        height: 32px;
+    }
 
-        &.anim{
-            animation: heartanim 1000ms infinite;
-        }
+    .title{
+        text-align: center;
+        font-size: 22px;
+        text-transform: uppercase;
+        color: white;
+        position: absolute;
+        width: 100%;
+        top: 230px;
+    }
+
+    .subtitle{
+        text-align: center;
+        width: 380px;
+        color: #ccc;
+        font-size: 14px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 270px;
+        font-weight: 100;
+        font-family: 'Avenir';
     }
 
     .login-btn{
         position: absolute;
         left: 50%;
-        top: 347px;
+        top: 378px;
         transform: translate(-50%,0);
         text-transform: uppercase;
-        font-size: 24px;
-        text-align: center;
+        font-size: 20px;
+        padding: 14px 32px;
+        background-color: black;
         color: #fff;
+        border: 1px solid white;
+        border-radius: 2px;
+        cursor: pointer;
+    }
 
-        h1{
-            font-size: 31px;
-            margin: 0;
+    .notification{
+        font-size: 12px;
+        text-align: center;
+        color: #ccc;
+        width: 380px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 520px;
+        font-family: 'Avenir';
+    }
+
+    .loader{
+        position: absolute;
+        left: 50%;
+        top: 378px;
+        transform: translate(-50%,0);
+    }
+
+    .loggedIn .notification{
+        font-size: 14px;
+        top: 390px;
+    }
+
+    .loggingIn{
+        .notification{
+            top: 490px;
+            font-size: 13px;
         }
 
-        h2{
-            font-size: 15px;
-            margin-bottom: 10px;
+        .loader-line{
+            background-color: #ccc!important;
         }
-
-        h3{
-            margin-top: 15px;
-            font-size: 9px;
-        }
-
     }
 
 }

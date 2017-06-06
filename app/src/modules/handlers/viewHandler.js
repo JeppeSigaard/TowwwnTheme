@@ -242,34 +242,25 @@ class ViewHandler {
             return;
         }
 
-        // Checks if the new views is already is in focus
-        if ( _(activeView).hasClass('active') ) {
-            throw "ViewHandler: View is already in focus";
-            return;
-        }
-
         Globals.setMainState({ currentMobileView : activeView });
 
         // Adds needed classes
-        if (null != this.mobileFocusedView ) _(this.mobileFocusedView).removeClass('active notrans');
-        _(activeView).addClass('notrans active');
+        if (null != this.mobileFocusedView ) _(this.mobileFocusedView).removeClass('notrans');
+        _(activeView).addClass('notrans');
 
         // Sets starting position for new view
         if ( fromLeft ) _(activeView).css({ left : '-100%' });
         if ( fromRight ) _(activeView).css({ left : '100%' });
+        _(activeView).get(0).offsetHeight;
+        _(activeView).removeClass('notrans');
 
-        // Timeout
-        setTimeout(() => {
-            _(activeView).removeClass('notrans');
+        // Translates view in
+        if ( fromLeft && null != this.mobileFocusedView  ) _(this.mobileFocusedView).css({ left : '100%' });
+        if ( fromRight && null != this.mobileFocusedView  ) _(this.mobileFocusedView).css({ left : '-100%' });
+        _(activeView).css({ left : '0' });
 
-            // Translates view in
-            if ( fromLeft && null != this.mobileFocusedView  ) _(this.mobileFocusedView).css({ left : '100%' });
-            if ( fromRight && null != this.mobileFocusedView  ) _(this.mobileFocusedView).css({ left : '-100%' });
-            _(activeView).css({ left : '0' });
-
-            // Sets new focused view
-            this.mobileFocusedView = activeView;
-        }, 10);
+        // Sets new focused view
+        this.mobileFocusedView = activeView;
 
     }
 

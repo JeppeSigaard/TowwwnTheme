@@ -5,7 +5,8 @@
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
-      _ = require( '../../modules/libaries/underscore/underscore_main.js' );
+      _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
+      Loader = require( '../componentParts/loader.js' );
 
 class UserView extends React.Component {
 
@@ -13,6 +14,26 @@ class UserView extends React.Component {
     constructor() {
         super();
         this.closeViewState = {};
+        this.state = {
+            notLoggedIn : true,
+            loggingIn : false,
+            loggedIn : false,
+        };
+
+        Globals.hooks.add('acceptedFb', () => {
+            this.setState({ 'notLoggedIn' : false });
+            this.setState({ 'loggingIn' : true });
+        });
+
+        Globals.hooks.add('onlogin', () => {
+            this.setState({ 'loggingIn' : false });
+            this.setState({ 'loggedIn' : true });
+        });
+
+        Globals.hooks.add('onlogout', () => {
+            this.setState({ 'loggedIn' : false });
+            this.setState({ 'notLoggedIn' : true });
+        });
     }
 
     // On close
@@ -39,11 +60,13 @@ class UserView extends React.Component {
     handleViewClick() {
         if ( Globals.user != null && !Globals.user.loggedIn ) {
             Globals.fb.login().then(() => {
-                Globals.viewHandler.changeViewFocus(
-                    Globals.lastViewState[0],
-                    Globals.lastViewState[1],
-                    true, false, false, true
-                );
+                setTimeout(() => {
+                    Globals.viewHandler.changeViewFocus(
+                        Globals.lastViewState[0],
+                        Globals.lastViewState[1],
+                        true, false, false, true
+                    );
+                }, 2 * 1000);
             });
         }
     }
@@ -52,7 +75,7 @@ class UserView extends React.Component {
     render() {
         return (
             <section className="container-section" id="user-view" >
-                <ViewTopBar standard={ true } darken={ true } title={ ( Globals.user != null && Globals.user.state.loggedIn ) ? 'Bruger oplysninger:' : 'Log ind: ' } onClose={ this.onClose.bind(this) } closeviewstate={ this.closeviewstate != null && this.closeviewstate } name={ 'user-view' } />
+                {/*<ViewTopBar standard={ true } darken={ true } title={ ( Globals.user != null && Globals.user.state.loggedIn ) ? 'Bruger oplysninger:' : 'Log ind: ' } onClose={ this.onClose.bind(this) } closeviewstate={ this.closeviewstate != null && this.closeviewstate } name={ 'user-view' } />*/}
 
                 <div className="scroll-container" onClick={ this.handleViewClick.bind(this) } >
                     <div className="content">
@@ -60,11 +83,29 @@ class UserView extends React.Component {
                             <use xlinkHref="#icon-heart"></use>
                         </svg>
 
-                        <div className="login-btn">
-                            <h2>{ this.props.from !== 'sidenav' && "Du har fundet en funktion, der kræver at du er logget ind" }</h2>
-                            <h1>{ this.props.from !== 'sidenav' ? "Så l" : "L" }og ind med facebook!</h1>
-                            <h3>Klik i det blå område for at acceptere</h3>
-                        </div>
+                        { this.state.notLoggedIn &&
+                            <div className="notloggedin">
+                                <div className="title">Hjerter er nyttige</div>
+                                <div className="subtitle">Dine hjerter kan være med til at give dig et bedre overblik - og dit login indeholder alle dem du har brug for.</div>
+                                <div className="login-btn">Login</div>
+                                <div className="notification">I første udgave af Towwwn kan du logge ind med Facebook. Til jer der ikke bruger Facebook bygges der senere et andet login.</div>
+                            </div>
+                        }
+
+                        { this.state.loggingIn &&
+                            <div className="loggingIn">
+                                <div className="title">Vi opretter login</div>
+                                <div className="loader"><Loader /></div>
+                                <div className="notification">Vent et øjeblik...</div>
+                            </div>
+                        }
+
+                        { this.state.loggedIn &&
+                            <div className="loggedIn">
+                                <div className="title">Succes</div>
+                                <div className="notification">Nu kan du begynde at bruge dine hjerter...</div>
+                            </div>
+                        }
                     </div>
                 </div>
             </section>

@@ -24,7 +24,12 @@ class Hamburger extends React.Component {
                         leftview: '#user-view',
                         fromLeft: true,
                         fromRight: false,
-                        ignoreAutoDirection: true
+                        ignoreAutoDirection: true,
+                        mobile: {
+                            view: '#user-view',
+                            fromLeft : true,
+                            fromRight : false
+                        }
                     },
                 }
 
@@ -111,8 +116,15 @@ class Hamburger extends React.Component {
         Globals.lastViewState = [ Globals.viewHandler.focusedViews[0], Globals.viewHandler.focusedViews[1] ];
 
         if ( vref != null ) {
-            if ( !_('body').hasClass('mobile') ) {
-                Globals.setMainState({ from: 'sidenav' });
+
+            Globals.setMainState({ from: 'sidenav' });
+            if ( _('body').hasClass('mobile') ) {
+                Globals.viewHandler.changeMobileViewFocus(
+                    vref.mobile.view,
+                    vref.mobile.fromLeft,
+                    vref.mobile.fromRight
+                );
+            } else {
                 Globals.viewHandler.changeViewFocus(
                     vref.leftview != null ? vref.leftview : Globals.viewHandler.focusedViews[0],
                     vref.rightview != null ? vref.rightview : Globals.viewHandler.focusedViews[1],
@@ -121,13 +133,16 @@ class Hamburger extends React.Component {
                     false,
                     false
                 );
-
-                setTimeout(() => {
-                    this.toggle();
-                }, parseFloat( _('.container-section').style()[0].transitionDuration ) * 1000);
             }
+
+            setTimeout(() => {
+                this.toggle();
+            }, parseFloat( _('.container-section').style()[0].transitionDuration ) * 1000);
+
         } else {
+
             this.toggle();
+
         } if ( cb != null ) cb();
     }
 
