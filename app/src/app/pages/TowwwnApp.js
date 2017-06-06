@@ -363,6 +363,7 @@ _('body').removeClass('loading');
                     <LocationSingleView name="location-single-view" from={ this.state.from } elem={ this.state.singleLocation } setMainState={ this.parsedSetState.bind(this) } />
                 </div>
                 <CookiePolicy name="towwwn-cookie"/>
+                {window.innerWidth < 769 && <ViewSliderDots/>}
             </div>
         );
     }

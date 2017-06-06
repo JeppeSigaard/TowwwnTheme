@@ -12,11 +12,18 @@ class ViewSliderDots extends React.Component {
         super();
         this.state = {
             dots: [],
+            hidden : true,
         };
+
+        this.animateTimeout = null;
     }
 
     // Component will receive props
-    componentWillReceiveProps() {
+    componentWillReceiveProps(props) {
+
+        if(this.animateTimeout != null) clearTimeout(this.animateTimeout);
+        this.setState({hidden : false});
+        this.animateTimeout = setTimeout(function(){this.setState({hidden : true});}.bind(this), 1200);
 
         // Fields
         let currentView = _('.content-container-inner > .active'),
@@ -70,8 +77,12 @@ class ViewSliderDots extends React.Component {
 
     // Render
     render() {
+
+        let className = 'viewsliderdots';
+        if(this.state.hidden){className += ' hidden';}
+
         return (
-            <div className="viewsliderdots">
+            <div className={className}>
                 { this.state.dots != null && this.state.dots.length > 0 && this.state.dots }
             </div>
         );

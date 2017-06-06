@@ -8,6 +8,7 @@
 
 .location-singleview-bar{
     position: relative;
+    pointer-events: all;
     width: 100%;
     height: 60px;
     background-color: $color-blue-2;

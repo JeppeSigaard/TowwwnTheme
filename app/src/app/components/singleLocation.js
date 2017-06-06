@@ -107,7 +107,7 @@ class SingleLocation extends React.Component {
 
                 <div className="cta-icons">
                     { elem.phone != null &&
-                        <a className="cta-phone cta-icon" href={'tel://' + elem.phone} data-link={ 'tel://' + elem.phone } >
+                        <a target="_blank" className="cta-phone cta-icon" href={'tel://' + elem.phone} data-link={ 'tel://' + elem.phone } >
                             <div className="icon">
                                 <svg viewBox="0 0 32 32">
                                     <use xlinkHref="#icon-phone"></use>
@@ -117,7 +117,7 @@ class SingleLocation extends React.Component {
                     }
 
                     { elem.website != null &&
-                        <a className="cta-website cta-icon" href={elem.website} data-link={ elem.website } >
+                        <a target="_blank" className="cta-website cta-icon" href={elem.website} data-link={ elem.website } >
                             <div className="icon">
                                 <svg viewBox="0 0 32 32">
                                     <use xlinkHref="#icon-web"></use>
@@ -127,7 +127,7 @@ class SingleLocation extends React.Component {
                     }
 
                     { elem.fbid != null &&
-                        <a className="cta-fb cta-icon" href={'http://fb.com/' + elem.fbid} data-link={ 'http://fb.com/' + elem.fbid } >
+                        <a target="_blank" className="cta-fb cta-icon" href={'http://fb.com/' + elem.fbid} data-link={ 'http://fb.com/' + elem.fbid } >
                             <div className="icon">
                                 <svg viewBox="0 0 32 32">
                                     <use xlinkHref="#icon-facebook"></use>
