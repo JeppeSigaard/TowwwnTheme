@@ -27,7 +27,6 @@ class ViewHandler {
     // Change view focus
     changeViewFocus( leftView, rightView, fromLeft, fromRight, notrans, ignoreAutoDirection, leftSize, rightSize ) {
         if ( _('body').hasClass('mobile') ) {
-
             this.changeMobileViewFocus( leftView, fromLeft, fromRight );
             return;
         }

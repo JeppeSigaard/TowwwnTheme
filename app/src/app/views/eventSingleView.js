@@ -157,8 +157,8 @@ class EventSingleView extends React.Component {
             Globals.setMainState({ from: 'event-single-view' });
             Globals.lastViewState = [ Globals.viewHandler.focusedViews[0], Globals.viewHandler.focusedViews[1] ];
             Globals.viewHandler.changeViewFocus(
-                '#event-single-view',
                 '#user-view',
+                '#event-single-view',
                 false, true, false, true
             );
        } else {

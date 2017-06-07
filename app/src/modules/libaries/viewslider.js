@@ -96,7 +96,6 @@ class ViewSlider {
 
     // Touch End
     onTouchEnd(e) {
-        console.log(Globals.navigationBlocker);
 
         if(window.innerWidth > 768) return;
         if(Globals.navigationBlocker) return;

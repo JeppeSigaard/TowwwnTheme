@@ -28,6 +28,7 @@ class UserView extends React.Component {
         Globals.hooks.add('onlogin', () => {
             this.setState({ 'loggingIn' : false });
             this.setState({ 'loggedIn' : true });
+
         });
 
         Globals.hooks.add('onlogout', () => {
@@ -64,9 +65,9 @@ class UserView extends React.Component {
                     Globals.viewHandler.changeViewFocus(
                         Globals.lastViewState[0],
                         Globals.lastViewState[1],
-                        true, false, false, true
+                        true, false, false, false,
                     );
-                }, 2 * 1000);
+                }, 3 * 1000);
             });
         }
     }
@@ -77,7 +78,7 @@ class UserView extends React.Component {
             <section className="container-section" id="user-view" >
                 {/*<ViewTopBar standard={ true } darken={ true } title={ ( Globals.user != null && Globals.user.state.loggedIn ) ? 'Bruger oplysninger:' : 'Log ind: ' } onClose={ this.onClose.bind(this) } closeviewstate={ this.closeviewstate != null && this.closeviewstate } name={ 'user-view' } />*/}
 
-                <div className="scroll-container" onClick={ this.handleViewClick.bind(this) } >
+                <div className="scroll-container">
                     <div className="content">
                         <svg className="heart-icon" viewBox="0 0 32 32">
                             <use xlinkHref="#icon-heart"></use>
@@ -87,8 +88,8 @@ class UserView extends React.Component {
                             <div className="notloggedin">
                                 <div className="title">Hjerter er nyttige</div>
                                 <div className="subtitle">Dine hjerter kan være med til at give dig et bedre overblik - og dit login indeholder alle dem du har brug for. Log ind for at tildele hjerter.</div>
-                                <div className="login-btn">Log ind med Facebook</div>
-                                <div className="notification">I denne version af Towwwn kan du logge ind med Facebook. Hvis du ikke har en Facebook-konto, må du vente lidt endnu for at få et Towwwn-login.</div>
+                                <div className="login-btn" onClick={ this.handleViewClick.bind(this) }>Log ind med Facebook</div>
+                                <div className="notification"><a href={app_data.main_path + '/cookie/'}>Læs vores politik om brug af cookies og data.</a></div>
                             </div>
                         }
 
