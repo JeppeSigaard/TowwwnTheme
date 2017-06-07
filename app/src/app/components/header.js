@@ -84,7 +84,7 @@ class Header extends React.Component {
                             <div className="city">{ app_data.city }</div>
                         </a>
 
-                        <div id="top-nav-icons">
+                        <div id="top-nav-icons" >
                             <div className="nav-search nav-elem" onClick={ this.navSearchClick.bind(this) } >
                                 <svg viewBox="0 0 32 32">
                                     <use xlinkHref="#icon-search">

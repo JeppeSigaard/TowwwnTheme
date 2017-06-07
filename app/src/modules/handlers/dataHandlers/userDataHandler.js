@@ -39,7 +39,7 @@ class User {
         window.onload = (() => {
 
             // Uncomment this... i mean it.. Right now
-            let data = window._cookielib.read( 'userdata' );
+            let data = window._cookielib.read( 'data' );
 
             if ( data != '' ) {
                 data = JSON.parse( data );
@@ -60,12 +60,22 @@ class User {
 
         // On login
         this.hooks.add('onlogin', () => {
-            window._cookielib.set( 'userdata', JSON.stringify( this.state ), 30 );
+            window._cookielib.set( 'data', JSON.stringify( this.state ), 30 );
+        });
+
+        // Init login
+        this.hooks.add('initlogin', () => {
+            window._cookielib.set( 'data', JSON.stringify( this.state ), 30 );
+        });
+
+        // On logout
+        this.hooks.add('onlogout', () => {
+            window._cookielib.set( 'data', JSON.stringify( this.state ), 30 );
         });
 
         // Before unload, uploads behaviour statistics
         window.onbeforeunload = (() => {
-            window._cookielib.set( 'userdata', JSON.stringify( this.state ), 30 );
+            window._cookielib.set( 'data', JSON.stringify( this.state ), 30 );
             if ( this.state.loggedIn ) {
 
                 // Request Param
@@ -124,8 +134,8 @@ class User {
             // Sends request
             request.open( 'POST', app_data.ajax_url );
             request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            request.send( 'action=towwwn_ub_predict&'
-                         +'catRelatedClicks='+arr1
+            request.send( 'action=towwwn_ub_predict'
+                         +'&catRelatedClicks='+arr1
                          +'&catRelatedTimes='+arr2);
 
         });
@@ -222,6 +232,7 @@ class User {
                             this.state.behaviourData = recursiveObjectAddition
                                     ( obj, this.state.behaviourData );
 
+                            this.state.loggedIn = true;
                             this.hooks.trigger( 'onlogin' );
                             Globals.hooks.trigger( 'onlogin' );
 
@@ -324,6 +335,7 @@ class User {
                     this.state.behaviourData = recursiveObjectAddition
                             ( obj, this.state.behaviourData );
 
+                    this.state.loggedIn = true;
                     this.hooks.trigger( 'onlogin' );
 
                 });
