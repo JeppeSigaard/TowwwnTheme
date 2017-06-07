@@ -177,18 +177,36 @@ a.category{
         height: 175px;
     }
 
+
+    /*&::before{
+        content: '';
+        opacity: 0;
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(lighten($color-blue-2, 15%), .2);
+        transition: 120ms;
+    }*/
+
+
     &.imgloaded{
         background-size: cover;
         background-origin: padding-box;
     }
 
     &:hover{
+        &::before{
+            // opacity: 1;
+        }
+
         .category-content-container{
             background-color: rgba(darken($color-blue-1, 9.5%), .9);
         }
     }
 
-    &.loadingsv, &.bookmark-mode{
+
+    &.bookmark-mode{
         .category-content-container{
 
              background-color: rgba(darken($color-blue-1, 22%), .9);
@@ -197,80 +215,194 @@ a.category{
                 display: none;
             }
 
+            /*&:after{
+                content: '';
+                background-image: url('assets/icons/loading.svg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: 32px;
+                position: absolute;
+                top: 60%;
+                left: 50%!important; // calc( 175px / 2 );
+                transform: translate(-50%, -50%);
+                width: 40px;
+                height: 40px;
+                background-color: white;
+
+                @media(min-width: 769px){
+                    left: calc( 145px / 2 );
+                }
+
+
+                @media(min-width: 900px){
+                    left: calc( 175px / 2 );
+                }
+            }*/
+
         }
     }
 
     &.bookmark-mode{
         .category-content-container{
-            height: 100%;
+            width: 100%;
         }
+    }
+
+    .category-content-container{
+        position: absolute;
+        right: 0;
+        width: 145px;
+        height: 100%;
+        background-color: rgba(darken($color-blue-1, 12%), .9);
+        transition: width 650ms;
+
+        @media(min-width: 480px){
+            width: 175px;
+        }
+
+        @media(min-width: 769px){
+            width: 145px;
+        }
+
+
+        @media(min-width: 900px){
+            width: 175px;
+        }
+
+        .category-title{
+            position: absolute;
+            top: 25px;
+            left: 50%!important; // calc( 175px / 2 );
+            transform: translate( -50%, 0 );
+            width: 100%;
+            color: white;
+            text-transform: uppercase;
+            text-align: center;
+            font-size: 11px;
+
+            @media(min-width: 480px){
+                top: 45px;
+                font-size: 14px;
+                left: calc( 175px / 2 );
+            }
+
+            @media(min-width: 769px){
+                top: 25px;
+                font-size: 11px;
+                left: calc( 145px / 2 );
+            }
+
+
+            @media(min-width: 900px){
+                top: 45px;
+                font-size: 14px;
+                left: calc( 175px / 2 );
+            }
+        }
+
+        /*&:after{
+            content: '';
+            background-image: url('assets/icons/loading.svg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 32px;
+            position: absolute;
+            top: 60%;
+            left: 50%!important; // calc( 175px / 2 );
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            color: $color-blue-1;
+            text-align: center;
+            line-height: 40px;
+            font-size: 16px;
+
+            @media(min-width: 769px){
+                left: calc( 145px / 2 );
+            }
+
+
+            @media(min-width: 900px){
+                left: calc( 175px / 2 );
+            }
+        }*/
+
     }
 }
 
 .category-content-container{
     position: absolute;
-    left: 0; bottom: 0;
-    width: 100%;
-    height: 40px;
+    right: 0;
+    width: 145px;
+    height: 100%;
     background-color: rgba(darken($color-blue-1, 12%), .9);
-    transition: height 500ms;
+    transition: width 650ms;
+
+    @media(min-width: 480px){
+        width: 175px;
+    }
+
+    @media(min-width: 769px){
+        width: 145px;
+    }
+
+
+    @media(min-width: 900px){
+        width: 175px;
+    }
 
     .category-title{
         position: absolute;
-        top: 12px; left: 45px;
+        top: 25px;
+        left: 50%!important; // calc( 175px / 2 );
+        transform: translate( -50%, 0 );
+        width: 100%;
         color: white;
         text-transform: uppercase;
         text-align: center;
-        font-size: 13px;
+        font-size: 11px;
+
+        @media(min-width: 480px){
+            top: 45px;
+            font-size: 14px;
+            left: calc( 175px / 2 );
+        }
+
+        @media(min-width: 769px){
+            top: 25px;
+            font-size: 11px;
+            left: calc( 145px / 2 );
+        }
+
+
+        @media(min-width: 900px){
+            top: 45px;
+            font-size: 14px;
+            left: calc( 175px / 2 );
+        }
     }
 
     .category-count{
         position: absolute;
-        top: 5px; left: 4px;
-        width: 30px;
-        height: 30px;
+        top: 60%;
+        left: 50%!important; // calc( 175px / 2 );
+        transform: translate(-50%, -50%);
+        width: 40px;
+        height: 40px;
         background-color: white;
         color: $color-blue-1;
         text-align: center;
-        line-height: 30px;
-        font-size: 14px;
-    }
+        line-height: 40px;
+        font-size: 16px;
 
-    .category-heart-counter{
-        width: 40px; height: 40px;
-        position: absolute;
-        right: 0; top: 0;
-        cursor: pointer;
-        transition: 80ms;
-
-        &:hover{
-            background-color: rgba(white, .1);
+        @media(min-width: 769px){
+            left: calc( 145px / 2 );
         }
 
-        svg{
-            width: 16px;
-            height: 16px;
-            fill: white;
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate( -50%, -50% );
+
+        @media(min-width: 900px){
+            left: calc( 175px / 2 );
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

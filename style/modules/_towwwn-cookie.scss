@@ -1,6 +1,7 @@
 $towwwn-cookie-menu-width: ($menu-bar-height) * 1.1;
 
 .towwwn-cookie {
+    pointer-events: all;
     position: absolute;
     z-index: 10000;
     left: 0;
