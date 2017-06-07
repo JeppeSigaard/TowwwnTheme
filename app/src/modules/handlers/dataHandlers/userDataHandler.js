@@ -39,7 +39,7 @@ class User {
         window.onload = (() => {
 
             // Uncomment this... i mean it.. Right now
-            let data = window._cookielib.read( 'data' );
+            let data = window._cookielib.read( 'userdata' );
 
             if ( data != '' ) {
                 data = JSON.parse( data );
@@ -60,12 +60,12 @@ class User {
 
         // On login
         this.hooks.add('onlogin', () => {
-            window._cookielib.set( 'data', JSON.stringify( this.state ), 30 );
+            window._cookielib.set( 'userdata', JSON.stringify( this.state ), 30 );
         });
 
         // Before unload, uploads behaviour statistics
         window.onbeforeunload = (() => {
-            window._cookielib.set( 'data', JSON.stringify( this.state ), 30 );
+            window._cookielib.set( 'userdata', JSON.stringify( this.state ), 30 );
             if ( this.state.loggedIn ) {
 
                 // Request Param
@@ -83,7 +83,7 @@ class User {
                 request.onload = (( data ) => { });
 
                 // Opens request & sets headers
-                request.open( 'POST', app_data.rest_api+'svendborg/user/' + this.state.dbData.id, true );
+                request.open( 'POST', app_data.rest_api+'/user/' + this.state.dbData.id, true );
                 request.setRequestHeader("Content-type", "application/json");
 
                 // Sends request
@@ -228,7 +228,7 @@ class User {
                         });
 
                         // Sends request
-                        request.open( 'GET', app_data.rest_api+'svendborg/user/'+this.state.dbData.id+
+                        request.open( 'GET', app_data.rest_api+'/user/'+this.state.dbData.id+
                                       '?user='+ this.state.dbData.id +
                                       '&token='+ this.state.accessToken.token +
                                       '&fields=hearts,behaviour_statistics' );
@@ -239,7 +239,7 @@ class User {
                     });
 
                     // Opens request & sets headers
-                    request.open( 'POST', app_data.rest_api+'svendborg/user/signon', true );
+                    request.open( 'POST', app_data.rest_api+'/user/signon', true );
                     request.setRequestHeader("Content-type", "application/json");
 
                     // Sends request
@@ -284,6 +284,8 @@ class User {
                     let json = JSON.parse( data.target.response ),
                         obj = json.behaviour_statistics;
 
+                    this.state.hearts = json.hearts;
+
                     // Converts arrays back into objects
                     let timeData = obj.timeData,
                         types = [ 'event', 'location', 'locationcategory' ];
@@ -327,10 +329,10 @@ class User {
                 });
 
                 // Sends request
-                request.open( 'GET', app_data.rest_api+'svendborg/user/'+this.state.dbData.id+
+                request.open( 'GET', app_data.rest_api+'/user/'+this.state.dbData.id+
                              '?user='+ this.state.dbData.id +
                              '&token='+ this.state.accessToken.token +
-                             '&fields=behaviour_statistics' );
+                             '&fields=behaviour_statistics,hearts' );
 
                 request.send();
                 resolve( data );
@@ -338,7 +340,7 @@ class User {
             });
 
             // Opens request & sets headers
-            request.open( 'POST', app_data.rest_api+'svendborg/user/signon', true );
+            request.open( 'POST', app_data.rest_api+'/user/signon', true );
             request.setRequestHeader("Content-type", "application/json");
 
             // Sends request
@@ -384,7 +386,7 @@ class User {
         request.onload = (( data ) => { });
 
         // Opens request & sets headers
-        request.open( 'POST', app_data.rest_api+'svendborg/user/' + this.state.dbData.id, true );
+        request.open( 'POST', app_data.rest_api+'/user/' + this.state.dbData.id, true );
         request.setRequestHeader("Content-type", "application/json");
 
         // Sends request
