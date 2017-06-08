@@ -101,6 +101,12 @@ class LocationCategoryView extends React.Component {
                     for ( let iter = 0; iter < data.length; iter++ ) {
                         Globals.categoryDataHandler.getCategory( data[ iter ].id ).then(( resp ) => {
                             jsxCats.push( <LocationCategory key={ 'predicted-category-'+data[ iter ].id } elem={ resp } name={ this.props.name } clickEvent={ this.handleCategoryClick } /> );
+
+                            // Remove from jsxCategories if exists already
+                            if(_('[data-id="'+data[ iter ].id+'"]')){
+                                const elem = _('[data-id="'+data[ iter ].id+'"]').get()[0];
+                                elem.parentNode.removeChild(elem);
+                            }
                         });
                     }
                 });
