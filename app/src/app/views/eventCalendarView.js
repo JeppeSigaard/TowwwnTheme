@@ -159,6 +159,7 @@ class EventCalendarView extends React.Component {
                         <Railbar name="event-calendar-buttons" snap>
                             <EventFilterButton onClick={this.toggleFuture.bind(this)} name="Kommende" active/>
                             <EventFilterButton onClick={this.togglePast.bind(this)} name="Tidligere"/>
+                            <EventFilterButton onClick={this.toggleHeart.bind(this)}icon="#icon-heart" viewBox="0 0 32 32" />
                         </Railbar>
                         <div className={ this.state.containerClasses + '-outer' } >
                             <div className={ this.state.containerClasses }>

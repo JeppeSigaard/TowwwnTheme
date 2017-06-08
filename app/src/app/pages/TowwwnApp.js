@@ -247,13 +247,18 @@ class TowwwnApp extends React.Component {
                 Globals.setMainState( {'singleLocation' : singleLocation[0]});
                 Globals.history.replace(singleLocation[0]);
 
+                if(singleLocation[0].categories == null){
+                    Globals.viewHandler.changeViewFocus('#location-single-view', '#location-category-view');
+                }
+
+                else{
                 Globals.locationDataHandler.getCategorySpecificLocation( singleLocation[0].categories[0].category_id ).then(( resp ) => {
                     Globals.setMainState({
                         'currentLocationsCategory' : singleLocation[0].categories[0],
                         'currentLocations' : resp,
                     });
                 });
-
+                }
             });
 
             request.open( 'GET', app_data.rest_api + '/locations/' + app_data.id );
