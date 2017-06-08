@@ -81,6 +81,9 @@ class EventSingleView extends React.Component {
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
         if ( nextProps.event != this.lastElem ) {
+
+            /*
+
             let heart = _('#event-single-view .heart');
 
             if ( Globals.user.state.hearts.events[ nextProps.event.id ] == true && !heart.hasClass('active') ) {
@@ -101,6 +104,7 @@ class EventSingleView extends React.Component {
                     heart.removeClass('active');
                 }, 400);
             }
+            */
 
             BehaviourDataHandler.parseData( 'event', nextProps.event );
             this.lastElem = nextProps.event;
@@ -188,6 +192,7 @@ class EventSingleView extends React.Component {
 
     // Component did mount
     componentDidMount() {
+        /*
         Globals.user.hooks.add( 'onlogin', () => {
             if ( this.props.event != null && Globals.user.state.hearts.events[ this.props.event.id ] == true ) {
                 let heart = _('#event-single-view .heart');
@@ -198,6 +203,7 @@ class EventSingleView extends React.Component {
                 }, 400 );
             }
         });
+        */
     }
 
     // Render
