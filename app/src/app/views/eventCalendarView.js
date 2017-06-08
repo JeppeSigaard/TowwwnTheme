@@ -19,6 +19,11 @@ class EventCalendarView extends React.Component {
         this.eventsLength = 0;
         this.allLoaded = false;
         this.loadReturned = true;
+        this.properties = {
+            per_page : 24,
+            page : 1,
+            after : 'now',
+        };
     }
 
     // In view
@@ -34,11 +39,9 @@ class EventCalendarView extends React.Component {
 
     // Scroll event
     onscroll(){
-        let loadMoreBtn = document.getElementById('eventcv-load-more');
-        if( this.isInView( loadMoreBtn, 100 ) && this.loadReturned ) {
-            setTimeout(() => {
-                if ( this.isInView( loadMoreBtn, 100 ) && this.loadReturned ) this.loadMore();
-            }, 200);
+        let loadEventsBtn = document.getElementById('eventcv-load-more');
+        if( this.isInView( loadEventsBtn, 100 ) && this.loadReturned ) {
+           this.loadEvents();
         }
     }
 
@@ -51,31 +54,59 @@ class EventCalendarView extends React.Component {
             this.setState({ containerClasses : 'eventscontainer lineLayout' });
     }
 
-    // Load more
-    loadMore() {
+    toggleFuture(){
+        if( !this.loadReturned ) return;
+        Globals.setMainState({'jsxEvents' : null});
+        this.properties = {
+            per_page : 24,
+            page : 1,
+            after : 'now',
+        };
+        this.loadEvents();
+    }
+
+    togglePast(){
+        if( !this.loadReturned ) return;
+        Globals.setMainState({'jsxEvents' : null});
+        this.properties = {
+            per_page : 24,
+            page : 1,
+            before : 'now',
+        };
+        this.loadEvents();
+    }
+
+    toggleHeart(){}
+
+    // Load Events
+    loadEvents() {
 
         if ( this.allLoaded ) return;
         if( !this.loadReturned ) return;
         this.loadReturned = false;
 
-        // document.getElementById( 'eventcv-load-more' ).innerHTML = 'Indlæser...';
-        Globals.eventDataHandler.getFutureEvents( 24, true ).then((resp) => {
-            if ( resp.length > this.eventsLength && resp.length % 24 === 0 ) {
-                document.getElementById( 'eventcv-load-more' ).classList.add('loading');
+        Globals.eventDataHandler.getEvents( this.properties ).then((resp) => {
+
+            if ( resp.length > 23 ) {
+
+                if ( _( '.eventcv-load-more' )) _( '.eventcv-load-more' ).addClass('loading');
+                this.properties.page ++;
+
             } else {
-                document.getElementById( 'eventcv-load-more' ).classList.remove('loading');
+
+                if ( _( '.eventcv-load-more' )) _( '.eventcv-load-more' ).removeClass('loading');
                 this.allLoaded = true;
+
             } this.eventsLength = resp.length;
 
-            let events = [];
+            let events = this.props.events;
+            if(null == events){events = [];}
+
             resp.forEach(( item, index ) => {
                 events.push( <Event from={ this.props.name } elem={ item } key={ 'event-' + item.fbid } setMainState={ this.props.setMainState } /> );
             });
 
-            this.props.setMainState({
-                'eventsData' : resp,
-                'jsxEvents' : events,
-            });
+            Globals.setMainState({'jsxEvents' : events});
 
             this.loadReturned = true;
         });
@@ -86,6 +117,8 @@ class EventCalendarView extends React.Component {
     componentDidMount() {
         this.lazyLoad = new LazyLoadHandler( '#event-calendar-view .scroll-container' );
         _( '#event-calendar-view .scroll-container' ).on( 'scroll', this.onscroll.bind(this) );
+
+        this.loadEvents();
     }
 
     // Component did update
@@ -123,6 +156,10 @@ class EventCalendarView extends React.Component {
                </div>
                 <div className="scroll-container">
                     <div className="content">
+                        <Railbar name="event-calendar-buttons" snap>
+                            <EventFilterButton onClick={this.toggleFuture.bind(this)} name="Kommende" active/>
+                            <EventFilterButton onClick={this.togglePast.bind(this)} name="Tidligere"/>
+                        </Railbar>
                         <div className={ this.state.containerClasses + '-outer' } >
                             <div className={ this.state.containerClasses }>
 
@@ -130,13 +167,12 @@ class EventCalendarView extends React.Component {
                                 { typeof this.props.events !== 'undefined' &&
                                   this.props.events !== null &&
                                   this.props.events }
-
                             </div>
                         </div>
                         { ( typeof this.props.events == 'undefined' || this.props.events == null ) && <Loader/> }
                     </div>
                     { typeof this.props.events !== 'undefined' &&
-                      this.props.events !== null && <div id="eventcv-load-more" className="loading" onClick={ this.loadMore.bind(this) } ></div>
+                      this.props.events !== null && <div id="eventcv-load-more" className="loading"></div>
                     }
                 </div>
             </section>

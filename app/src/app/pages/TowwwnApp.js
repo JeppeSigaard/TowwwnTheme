@@ -122,20 +122,6 @@ class TowwwnApp extends React.Component {
 
         // Gets event data
         Globals.eventDataHandler = new EventDataHandler();
-        Globals.eventDataHandler.getFutureEvents( 24, true ).then((resp) => {
-
-            // Converts to jsx elements
-            let events = [];
-            resp.forEach(( item, index ) => {
-                events.push( <Event elem={ item } key={ 'event-' + item.fbid } setMainState={ this.parsedSetState.bind(this) } /> )
-            });
-
-            this.setState({
-                'eventsData' : resp,
-                'jsxEvents' : events,
-            });
-
-        });
 
         // Gets category data
         Globals.categoryDataHandler = new CategoryDataHandler();
