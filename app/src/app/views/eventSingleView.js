@@ -83,8 +83,6 @@ class EventSingleView extends React.Component {
     componentWillReceiveProps( nextProps ) {
         if ( nextProps.event != this.lastElem ) {
 
-            /*
-
             let heart = _('#event-single-view .heart');
 
             if ( Globals.user.state.hearts.events[ nextProps.event.id ] == true && !heart.hasClass('active') ) {
@@ -105,7 +103,6 @@ class EventSingleView extends React.Component {
                     heart.removeClass('active');
                 }, 400);
             }
-            */
 
             BehaviourDataHandler.parseData( 'event', nextProps.event );
             this.lastElem = nextProps.event;
@@ -193,7 +190,7 @@ class EventSingleView extends React.Component {
 
     // Component did mount
     componentDidMount() {
-        /*
+
         Globals.user.hooks.add( 'onlogin', () => {
             if ( this.props.event != null && Globals.user.state.hearts.events[ this.props.event.id ] == true ) {
                 let heart = _('#event-single-view .heart');
@@ -204,7 +201,7 @@ class EventSingleView extends React.Component {
                 }, 400 );
             }
         });
-        */
+
     }
 
     // Render
@@ -213,7 +210,7 @@ class EventSingleView extends React.Component {
         return (
             <section className="container-section" id="event-single-view">
                 <Header in="#event-single-view" for=".scroll-container">
-                <ViewTopBar icon="#icon-star" viewBox="0 0 32 32" standard={ true } heart={ false } heartFunc={ this.heart.bind(this) } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
+                <ViewTopBar icon="#icon-star" viewBox="0 0 32 32" standard={ true } heart={ true } heartFunc={ this.heart.bind(this) } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
                 </Header>
                 <div className="scroll-container">
                     <div className="content">
