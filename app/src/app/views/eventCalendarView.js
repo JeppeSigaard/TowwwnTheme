@@ -131,7 +131,7 @@ class EventCalendarView extends React.Component {
             per_page : 24,
             page : 1,
             after : 'now',
-            cats : this.state.predictedCats,
+            cat : this.state.predictedCats,
         };
 
         this.loadEvents();
@@ -148,12 +148,10 @@ class EventCalendarView extends React.Component {
 
             if ( resp.length > 23 ) {
 
-                if (_( '#eventcv-load-more' )) _( '#eventcv-load-more' ).addClass('loading');
+               this.setState({allLoaded : false});
                 this.properties.page ++;
 
             } else {
-
-                if (_( '#eventcv-load-more' )) _( '#eventcv-load-more' ).removeClass('loading');
                 this.setState({allLoaded : true});
 
             } this.eventsLength = resp.length;
@@ -179,6 +177,15 @@ class EventCalendarView extends React.Component {
 
         Globals.hooks.add('onlogin', () => {
             Globals.user.predictBehaviour().then(( data ) => {
+
+                if ( data.length > 2 ) {
+                    data.sort(( a, b ) => {
+                        if ( a.output > b.output ) return -1;
+                        if ( a.output < b.output ) return 1;
+                        return 0;
+                    }); data = [ data[0], data[1], data[2] ];
+                }
+
                 let predictedCats = [];
                 for ( let iter = 0; iter < data.length; iter++ ) {
                      predictedCats.push(data[ iter ].id);
@@ -202,7 +209,7 @@ class EventCalendarView extends React.Component {
     render() {
 
         let loadMoreClass = 'eventcv-load-more';
-        if(this.state.allLoaded) loadMoreClass += ' loading';
+        if(!this.state.allLoaded) loadMoreClass += ' loading';
 
         return (
             <section className="container-section large-header" id="event-calendar-view">
