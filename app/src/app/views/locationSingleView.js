@@ -9,6 +9,7 @@ const React = require( 'react' ),
       SingleLocation = require( '../components/singleLocation.js' ),
       BannerCommercials = require( '../components/bannerCommercials.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
+      Header  = require( '../componentParts/sectionHeader.js' ),
       Loader = require( '../componentParts/loader.js' );
 
 class LocationSingleView extends React.Component{
@@ -216,8 +217,9 @@ class LocationSingleView extends React.Component{
     render() {
         return (
             <section className="container-section" id="location-single-view">
-                <ViewTopBar icon="#icon-location" viewBox="0 0 32 32" standard={ true } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } heart={ true } heartFunc={ this.heart.bind(this) } />
-
+                <Header for=".scroll-container" in="#location-single-view">
+                    <ViewTopBar icon="#icon-location" viewBox="0 0 32 32" standard={ true } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } heart={ true } heartFunc={ this.heart.bind(this) } />
+                </Header>
                 <div className="scroll-container">
                     <div className="content">
                         { this.props.elem != null &&

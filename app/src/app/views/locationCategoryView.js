@@ -6,6 +6,7 @@ const React = require( 'react' ),
       LocationCategory = require( '../components/locationCategory.js' ),
       SubCategories = require( '../components/subcategories.js' ),
       Loader = require( '../componentParts/loader.js' ),
+      Header  = require( '../componentParts/sectionHeader.js' ),
       Globals = require( '../globals.js' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
       _Array = require( '../../modules/libaries/underscore/underscore_array.js' );
@@ -146,7 +147,7 @@ class LocationCategoryView extends React.Component {
     render() {
         return (
             <section className="container-section" id="location-category-view">
-                    <header className="section-header">
+                    <Header in="#location-category-view" for=".scroll-container">
                         <div className="viewbar category-bar" onClick={ this.toggleSubCategories.bind(this) }>
                            <i className="viewbar-title-icon">
                                 <svg viewBox="0 0 32 32">
@@ -156,7 +157,7 @@ class LocationCategoryView extends React.Component {
                             Steder
                             <div className="sub-categories-title" ></div>
                         </div>
-                    </header>
+                    </Header>
                 <div className="scroll-container">
                     <div className="content">
                         <SubCategories subCategories={ this.props.allCategories } outerHeight={ this.state.subCatHeight } clickEvent={ this.handleCategoryClick } />

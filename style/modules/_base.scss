@@ -217,6 +217,17 @@ $horizontal-bezier-mobile: cubic-bezier(0, 0, 0, 1);
             bottom: 0;
             backface-visibility: hidden;
             transform: translateZ(0px);
+
+            &:after{
+                content: '';
+                position: absolute;
+                display: block;
+                width: 1px;
+                z-index: -1;
+                pointer-events: none;
+                top: 0;
+                bottom: -1px;
+            }
         }
 
         .scroll-container::-webkit-scrollbar {

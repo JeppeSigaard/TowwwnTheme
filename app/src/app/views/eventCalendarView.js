@@ -6,6 +6,7 @@ const React = require( 'react' ),
       Railbar = require( '../componentParts/railbar.js' ),
       EventFilterButton  = require( '../componentParts/eventFilterButton.js' ),
       Loader  = require( '../componentParts/loader.js' ),
+      Header  = require( '../componentParts/sectionHeader.js' ),
       Globals = require( '../globals.js' ),
       LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' );
@@ -30,6 +31,9 @@ class EventCalendarView extends React.Component {
 
     // In view
     isInView(element, preloadDistance) {
+
+        if(element == null) return;
+
         let elemTop = element.getBoundingClientRect().top,
             elemBottom = element.getBoundingClientRect().bottom,
             preload = ( preloadDistance != null ) ? preloadDistance : 0,
@@ -45,23 +49,6 @@ class EventCalendarView extends React.Component {
         if( this.isInView( loadEventsBtn, 100 ) && this.loadReturned ) {
            this.loadEvents();
         }
-
-       this.setHeader();
-    }
-
-    setHeader(){
-        let st = _('#event-calendar-view .scroll-container').get()[0].scrollTop;
-        if (this.scrollBuffer > 2 && st > this.lastScrollTop && st > _('#event-calendar-view .section-header .viewbar').height()) {
-            _('#event-calendar-view .section-header').addClass('collapse');
-            this.scrollBuffer = 0;
-        }
-        else if(this.scrollBuffer > 2){
-            _('#event-calendar-view .section-header').removeClass('collapse');
-            this.scrollBuffer = 0;
-        }
-        else{this.scrollBuffer ++;}
-
-        this.lastScrollTop = st;
     }
 
     // Set event layout
@@ -74,7 +61,6 @@ class EventCalendarView extends React.Component {
     }
 
     toggleFuture(){
-        this.setHeader();
         if( !this.loadReturned ) return;
         Globals.setMainState({'jsxEvents' : null});
         this.properties = {
@@ -86,7 +72,6 @@ class EventCalendarView extends React.Component {
     }
 
     togglePast(){
-        this.setHeader();
         if( !this.loadReturned ) return;
         Globals.setMainState({'jsxEvents' : null});
         this.properties = {
@@ -154,7 +139,7 @@ class EventCalendarView extends React.Component {
     render() {
         return (
             <section className="container-section large-header" id="event-calendar-view">
-                <header className="section-header">
+                <Header for=".scroll-container" in="#event-calendar-view">
                     <div className="viewbar" id="eventsbar">
                        <div id="eventslayoutbtns">
                             <a className="layoutbtn" href="#" onClick={ this.setEventLayout.bind(this) }>
@@ -181,7 +166,7 @@ class EventCalendarView extends React.Component {
                         <EventFilterButton onClick={this.toggleFuture.bind(this)} name="Kommende" active/>
                         <EventFilterButton onClick={this.togglePast.bind(this)} name="Tidligere"/>
                     </Railbar>
-                </header>
+                </Header>
                 <div className="scroll-container">
                     <div className="content">
 
