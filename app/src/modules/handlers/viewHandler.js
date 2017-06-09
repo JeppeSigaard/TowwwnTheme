@@ -262,7 +262,7 @@ class ViewHandler {
             _(activeView).addClass('active');
             Globals.setMainState({ currentMobileView : activeView });
 
-        }.bind(this), 10);
+        }.bind(this), 50);
     }
 
 } module.exports = ViewHandler;
