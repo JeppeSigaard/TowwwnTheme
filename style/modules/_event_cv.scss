@@ -7,15 +7,9 @@
 }
     
 #eventsbar{
-    pointer-events: all;
-    position: relative;
-    z-index: 100!important;
-    width: 100%;
-    height: $menu-bar-height;
+    padding-left: 0;
     background-color: darken($color-blue-2, 5%);
-    z-index: 10;
-    top: $header-bar-height;
-    border-bottom: 1px solid rgba(0,0,0,.3);
+
 
     #eventslayoutbtns{
         position: relative;

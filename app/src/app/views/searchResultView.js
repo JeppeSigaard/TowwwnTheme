@@ -4,6 +4,7 @@
 const React = require( 'react' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
       Globals = require( '../globals.js' ),
+      Header  = require( '../componentParts/sectionHeader.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
       Event = require( '../components/event.js' ),
       Location = require( '../components/location.js' ),
@@ -131,8 +132,9 @@ class SearchResultView extends React.Component {
     render() {
         return (
             <section className="container-section" id="search-results-view">
-                <ViewTopBar icon="#icon-search" viewBox="0 0 32 32" standard={ true } title={ this.props.keyword == null ? 'Søgeresultater' : 'Søgeresultater: ' + this.props.keyword } onClose={ this.onClose.bind(this) } closeviewstate={ this.state.closeviewstate } name={ 'search-results-view' } />
-
+                <Header in="#search-results-view" for=".scroll-container">
+                    <ViewTopBar icon="#icon-search" viewBox="0 0 32 32" standard={ true } title={ this.props.keyword == null ? 'Søgeresultater' : 'Søgeresultater: ' + this.props.keyword } onClose={ this.onClose.bind(this) } closeviewstate={ this.state.closeviewstate } name={ 'search-results-view' } />
+                </Header>
                 <div className="scroll-container" >
                     <div className="content">
 

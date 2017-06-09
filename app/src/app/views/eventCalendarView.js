@@ -6,6 +6,7 @@ const React = require( 'react' ),
       Railbar = require( '../componentParts/railbar.js' ),
       EventFilterButton  = require( '../componentParts/eventFilterButton.js' ),
       Loader  = require( '../componentParts/loader.js' ),
+      Header  = require( '../componentParts/sectionHeader.js' ),
       Globals = require( '../globals.js' ),
       LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' );
@@ -15,6 +16,8 @@ class EventCalendarView extends React.Component {
     // Ctor
     constructor() {
         super();
+        this.lastScrollTop = 0;
+        this.scrollBuffer = 0;
         this.state = { containerClasses : 'eventscontainer' };
         this.eventsLength = 0;
         this.allLoaded = false;
@@ -28,6 +31,9 @@ class EventCalendarView extends React.Component {
 
     // In view
     isInView(element, preloadDistance) {
+
+        if(element == null) return;
+
         let elemTop = element.getBoundingClientRect().top,
             elemBottom = element.getBoundingClientRect().bottom,
             preload = ( preloadDistance != null ) ? preloadDistance : 0,
@@ -109,6 +115,7 @@ class EventCalendarView extends React.Component {
             Globals.setMainState({'jsxEvents' : events});
 
             this.loadReturned = true;
+
         });
 
     }
@@ -131,36 +138,38 @@ class EventCalendarView extends React.Component {
     // Render
     render() {
         return (
-            <section className="container-section" id="event-calendar-view">
-               <div id="eventsbar">
-                   <div id="eventslayoutbtns">
-                        <a className="layoutbtn" href="#" onClick={ this.setEventLayout.bind(this) }>
-                            <svg viewBox="0 0 32 32" className="blocklayoutbtn">
-                                <use xlinkHref="#icon-block-layout"></use>
-                            </svg>
-                        </a>
-                        <a className="layoutbtn" href="#" onClick={ this.setEventLayout.bind(this) }>
-                            <svg viewBox="0 0 32 32" className="linelayoutbtn">
-                                <use xlinkHref="#icon-list-layout"></use>
-                            </svg>
-                        </a>
-                   </div>
-                   <div className="title">
-                       <i className="viewbar-title-icon">
-                            <svg viewBox="0 0 32 32">
-                                <use xlinkHref="#icon-star"></use>
-                            </svg>
-                       </i>
-                       Begivenheder
-                   </div>
-               </div>
+            <section className="container-section large-header" id="event-calendar-view">
+                <Header for=".scroll-container" in="#event-calendar-view">
+                    <div className="viewbar" id="eventsbar">
+                       <div id="eventslayoutbtns">
+                            <a className="layoutbtn" href="#" onClick={ this.setEventLayout.bind(this) }>
+                                <svg viewBox="0 0 32 32" className="blocklayoutbtn">
+                                    <use xlinkHref="#icon-block-layout"></use>
+                                </svg>
+                            </a>
+                            <a className="layoutbtn" href="#" onClick={ this.setEventLayout.bind(this) }>
+                                <svg viewBox="0 0 32 32" className="linelayoutbtn">
+                                    <use xlinkHref="#icon-list-layout"></use>
+                                </svg>
+                            </a>
+                       </div>
+                       <div className="title">
+                           <i className="viewbar-title-icon">
+                                <svg viewBox="0 0 32 32">
+                                    <use xlinkHref="#icon-star"></use>
+                                </svg>
+                           </i>
+                           Begivenheder
+                       </div>
+                    </div>
+                    <Railbar name="event-calendar-buttons" snap>
+                        <EventFilterButton onClick={this.toggleFuture.bind(this)} name="Kommende" active/>
+                        <EventFilterButton onClick={this.togglePast.bind(this)} name="Tidligere"/>
+                    </Railbar>
+                </Header>
                 <div className="scroll-container">
                     <div className="content">
-                        <Railbar name="event-calendar-buttons" snap>
-                            <EventFilterButton onClick={this.toggleFuture.bind(this)} name="Kommende" active/>
-                            <EventFilterButton onClick={this.togglePast.bind(this)} name="Tidligere"/>
-                            <EventFilterButton onClick={this.toggleHeart.bind(this)}icon="#icon-heart" viewBox="0 0 32 32" />
-                        </Railbar>
+
                         <div className={ this.state.containerClasses + '-outer' } >
                             <div className={ this.state.containerClasses }>
 
