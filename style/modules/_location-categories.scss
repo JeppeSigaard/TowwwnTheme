@@ -21,21 +21,7 @@
      height: auto;
 }
 
-.category-bar{
-    pointer-events: all;
-    position: relative;
-    z-index: 10;
-    width: 100%;
-    height: $menu-bar-height;
-    background-color: $color-blue-2;
-    line-height: $menu-bar-height;
-    font-size: 11px;
-    text-transform: uppercase;
-    padding-left: 20px;
-    color: white;
-    cursor: pointer;
-    top: $header-bar-height;
-    border-bottom: 1px solid #292929;
+.viewbar.category-bar{
 
     .sub-categories-title{
         position: absolute;

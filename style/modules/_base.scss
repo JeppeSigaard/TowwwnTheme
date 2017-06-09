@@ -198,6 +198,10 @@ $horizontal-bezier-mobile: cubic-bezier(0, 0, 0, 1);
             z-index: 2;
         }
 
+        &.large-header .scroll-container{
+          padding-top: $header-bar-height * 2 + $menu-bar-height;
+        }
+
 
         .scroll-container{
             pointer-events: all;
@@ -206,7 +210,7 @@ $horizontal-bezier-mobile: cubic-bezier(0, 0, 0, 1);
             overflow-x: hidden;
             height:100%;
             width: 100%;
-            padding-top: $menu-bar-height + $header-bar-height;
+            padding-top: $header-bar-height + $menu-bar-height;
             -webkit-overflow-scrolling: touch;
             position: absolute;
             z-index: 1;

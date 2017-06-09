@@ -15,6 +15,8 @@ class EventCalendarView extends React.Component {
     // Ctor
     constructor() {
         super();
+        this.lastScrollTop = 0;
+        this.scrollBuffer = 0;
         this.state = { containerClasses : 'eventscontainer' };
         this.eventsLength = 0;
         this.allLoaded = false;
@@ -43,6 +45,23 @@ class EventCalendarView extends React.Component {
         if( this.isInView( loadEventsBtn, 100 ) && this.loadReturned ) {
            this.loadEvents();
         }
+
+       this.setHeader();
+    }
+
+    setHeader(){
+        let st = _('#event-calendar-view .scroll-container').get()[0].scrollTop;
+        if (this.scrollBuffer > 2 && st > this.lastScrollTop && st > _('#event-calendar-view .section-header .viewbar').height()) {
+            _('#event-calendar-view .section-header').addClass('collapse');
+            this.scrollBuffer = 0;
+        }
+        else if(this.scrollBuffer > 2){
+            _('#event-calendar-view .section-header').removeClass('collapse');
+            this.scrollBuffer = 0;
+        }
+        else{this.scrollBuffer ++;}
+
+        this.lastScrollTop = st;
     }
 
     // Set event layout
@@ -55,6 +74,7 @@ class EventCalendarView extends React.Component {
     }
 
     toggleFuture(){
+        this.setHeader();
         if( !this.loadReturned ) return;
         Globals.setMainState({'jsxEvents' : null});
         this.properties = {
@@ -66,6 +86,7 @@ class EventCalendarView extends React.Component {
     }
 
     togglePast(){
+        this.setHeader();
         if( !this.loadReturned ) return;
         Globals.setMainState({'jsxEvents' : null});
         this.properties = {
@@ -109,6 +130,7 @@ class EventCalendarView extends React.Component {
             Globals.setMainState({'jsxEvents' : events});
 
             this.loadReturned = true;
+
         });
 
     }
@@ -131,36 +153,38 @@ class EventCalendarView extends React.Component {
     // Render
     render() {
         return (
-            <section className="container-section" id="event-calendar-view">
-               <div id="eventsbar">
-                   <div id="eventslayoutbtns">
-                        <a className="layoutbtn" href="#" onClick={ this.setEventLayout.bind(this) }>
-                            <svg viewBox="0 0 32 32" className="blocklayoutbtn">
-                                <use xlinkHref="#icon-block-layout"></use>
-                            </svg>
-                        </a>
-                        <a className="layoutbtn" href="#" onClick={ this.setEventLayout.bind(this) }>
-                            <svg viewBox="0 0 32 32" className="linelayoutbtn">
-                                <use xlinkHref="#icon-list-layout"></use>
-                            </svg>
-                        </a>
-                   </div>
-                   <div className="title">
-                       <i className="viewbar-title-icon">
-                            <svg viewBox="0 0 32 32">
-                                <use xlinkHref="#icon-star"></use>
-                            </svg>
-                       </i>
-                       Begivenheder
-                   </div>
-               </div>
+            <section className="container-section large-header" id="event-calendar-view">
+                <header className="section-header">
+                    <div className="viewbar" id="eventsbar">
+                       <div id="eventslayoutbtns">
+                            <a className="layoutbtn" href="#" onClick={ this.setEventLayout.bind(this) }>
+                                <svg viewBox="0 0 32 32" className="blocklayoutbtn">
+                                    <use xlinkHref="#icon-block-layout"></use>
+                                </svg>
+                            </a>
+                            <a className="layoutbtn" href="#" onClick={ this.setEventLayout.bind(this) }>
+                                <svg viewBox="0 0 32 32" className="linelayoutbtn">
+                                    <use xlinkHref="#icon-list-layout"></use>
+                                </svg>
+                            </a>
+                       </div>
+                       <div className="title">
+                           <i className="viewbar-title-icon">
+                                <svg viewBox="0 0 32 32">
+                                    <use xlinkHref="#icon-star"></use>
+                                </svg>
+                           </i>
+                           Begivenheder
+                       </div>
+                    </div>
+                    <Railbar name="event-calendar-buttons" snap>
+                        <EventFilterButton onClick={this.toggleFuture.bind(this)} name="Kommende" active/>
+                        <EventFilterButton onClick={this.togglePast.bind(this)} name="Tidligere"/>
+                    </Railbar>
+                </header>
                 <div className="scroll-container">
                     <div className="content">
-                        <Railbar name="event-calendar-buttons" snap>
-                            <EventFilterButton onClick={this.toggleFuture.bind(this)} name="Kommende" active/>
-                            <EventFilterButton onClick={this.togglePast.bind(this)} name="Tidligere"/>
-                            <EventFilterButton onClick={this.toggleHeart.bind(this)}icon="#icon-heart" viewBox="0 0 32 32" />
-                        </Railbar>
+
                         <div className={ this.state.containerClasses + '-outer' } >
                             <div className={ this.state.containerClasses }>
 

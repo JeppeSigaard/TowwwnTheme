@@ -102,6 +102,7 @@ class LocationListView extends React.Component {
         }
 
         if(nextProps.category != null && nextProps.category.category_parent != null){
+            _('#location-list-view').removeClass('large-header');
             let jsxCategoryList = [];
 
             const getID = (nextProps.category.category_parent == 0 ) ? nextProps.category.category_id : nextProps.category.category_parent;
@@ -112,6 +113,8 @@ class LocationListView extends React.Component {
                 Globals.categoryDataHandler.getCategory( getID ).then(( resp ) => {
 
                     if(resp.children.length == 0){this.setState({ 'jsxCategoryList' : null, 'jsxCategoryListHead' : getID, 'locationListHeading' : resp.category_name }); return;}
+
+                    _('#location-list-view').addClass('large-header');
 
                     jsxCategoryList.push(<Button
                         active={ resp.category_id == nextProps.category.category_id}
@@ -146,7 +149,9 @@ class LocationListView extends React.Component {
             }
         }
 
-        else this.setState({ 'jsxCategoryList' : null, 'jsxCategoryListHead' : null });
+        else {
+            this.setState({ 'jsxCategoryList' : null, 'jsxCategoryListHead' : null });
+        }
 
     }
 
@@ -154,6 +159,22 @@ class LocationListView extends React.Component {
     componentDidMount() {
         Globals.hooks.add('ls-hearted', this.moveHearted.bind(this));
         Globals.hooks.add('onlogin', this.updateJSXElemsOrder.bind(this));
+        _( '#location-list-view .scroll-container' ).on( 'scroll', this.onScroll.bind(this) );
+    }
+
+    onScroll(){
+        let st = _('#location-list-view .scroll-container').get()[0].scrollTop;
+        if (st !== 0 && (this.scrollBuffer > 10 && st > this.lastScrollTop && st > _('#location-list-view .section-header .viewbar').height())) {
+            _('#location-list-view .section-header').addClass('collapse');
+            this.scrollBuffer = 0;
+        }
+        else if(this.scrollBuffer > 10 || st == 0){
+            _('#location-list-view .section-header').removeClass('collapse');
+            this.scrollBuffer = 0;
+        }
+        else{this.scrollBuffer ++;}
+
+        this.lastScrollTop = st;
     }
 
     // Render
@@ -161,16 +182,17 @@ class LocationListView extends React.Component {
 
         return (
             <section className="container-section" id="location-list-view">
-               { this.props.category != null &&
-                    <ViewTopBar icon="#icon-location" viewBox="0 0 32 32" closeviewstate={ this.state.closeviewstate } title={ this.state.locationListHeading } darken={ true } standard={ true } name={ this.props.name } onClose={ this.onClose.bind(this) } />
-                }
-
-                <div className="scroll-container">
-                    <div className="content">
-                        { this.state.jsxCategoryList != null &&
+               <header className="section-header">
+                   { this.props.category != null &&
+                        <ViewTopBar icon="#icon-location" viewBox="0 0 32 32" closeviewstate={ this.state.closeviewstate } title={ this.state.locationListHeading } darken={ true } standard={ true } name={ this.props.name } onClose={ this.onClose.bind(this) } />
+                    }
+                     { this.state.jsxCategoryList != null &&
                         <Railbar name="sub-cat-bar" railIndex={this.state.catFilterIndex} snap>
                             {this.state.jsxCategoryList}
                         </Railbar> }
+               </header>
+                <div className="scroll-container">
+                    <div className="content">
                         { this.state.jsxLocations != null &&
                         <div className="location-list" >
                             { this.state.jsxLocations != null && this.state.jsxLocations }
