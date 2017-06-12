@@ -37,45 +37,19 @@ class User {
 
         // On load, get behaviour statistics from cookie
         window.onload = (() => {
-
-            // Uncomment this... i mean it.. Right now
-            let data = window._cookielib.read( 'data' );
-
-            if ( data != '' ) {
-                data = JSON.parse( data );
-                this.state.behaviourData = data.behaviourData;
-
-                if ( data.loggedIn ) {
-                    this.state.loggedIn = true;
-                    this.state.userFbid = data.userFbid;
-                    this.state.accessToken = data.accessToken;
-                    this.state.fbData = data.fbData;
-                    this.state.dbData = data.dbData;
-
-                    _('.login-btn').text( this.state.fbData.name.split(' ')[0] );
-                    this.loginToDB();
-                }
-            }
+            this.applyCookieData();
         });
 
         // On login
         this.hooks.add('onlogin', () => {
-            window._cookielib.set( 'data', JSON.stringify( this.state ), 30 );
-        });
-
-        // Init login
-        this.hooks.add('initlogin', () => {
-            window._cookielib.set( 'data', JSON.stringify( this.state ), 30 );
-        });
-
-        // On logout
-        this.hooks.add('onlogout', () => {
-            window._cookielib.set( 'data', JSON.stringify( this.state ), 30 );
+            this.saveDataInCookie( 30 );
         });
 
         // Before unload, uploads behaviour statistics
         window.onbeforeunload = (() => {
-            window._cookielib.set( 'data', JSON.stringify( this.state ), 30 );
+
+            this.saveDataInCookie( 30 );
+
             if ( this.state.loggedIn ) {
 
                 // Request Param
@@ -102,6 +76,46 @@ class User {
             }
         });
 
+    }
+
+    // Save Data in Cookie
+    saveDataInCookie( expireDays ) {
+
+        window._cookielib.set( 'loggedin', JSON.stringify( this.state.loggedIn ), expireDays );
+        window._cookielib.set( 'fbid', JSON.stringify( this.state.userFbid ), expireDays );
+        window._cookielib.set( 'fbData', JSON.stringify( this.state.fbData ), expireDays );
+        window._cookielib.set( 'dbData', JSON.stringify( this.state.dbData ), expireDays );
+
+        window._cookielib.set( 'accessToken', JSON.stringify( this.state.accessToken ), expireDays );
+        window._cookielib.set( 'behaviourStatistics', JSON.stringify( this.state.behaviourData ), expireDays );
+        window._cookielib.set( 'hearts', JSON.stringify( this.state.hearts ), expireDays );
+
+    }
+
+    // Apply cookie data
+    applyCookieData() {
+
+        let loggedIn = JSON.parse( window._cookielib.read( 'loggedin' ) ),
+            fbid = JSON.parse( window._cookielib.read( 'fbid' ) ),
+            fbData = JSON.parse( window._cookielib.read( 'fbData' ) ),
+            dbData = JSON.parse( window._cookielib.read( 'dbData' ) ),
+
+            accessToken = JSON.parse( window._cookielib.read('accessToken') ),
+            behaviourStatistics = JSON.parse( window._cookielib.read('behaviourStatistics') ),
+            hearts = JSON.parse( window._cookielib.read('hearts') );
+
+        if ( behaviourStatistics != null ) {
+            this.state.behaviourData = behaviourStatistics;
+        }
+
+        if ( loggedIn ) {
+            this.state.loggedIn = true;
+            this.state.userFbid = fbid;
+            this.state.accessToken = accessToken;
+            this.state.fbData = fbData;
+            this.state.dbData = dbData;
+            this.loginToDB();
+        }
     }
 
     // Log cat connections, for testing purposes
