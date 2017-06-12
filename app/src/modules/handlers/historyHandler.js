@@ -51,6 +51,8 @@ class historyHandler {
     // handles pop state
     pop( event ){
 
+        if(event.state == null) return;
+
         const eventName = (event.state.type == 'category') ? event.state.category_name + ' · Kategorier' : event.state.name;
 
         // To events

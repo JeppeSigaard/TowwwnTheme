@@ -106,13 +106,30 @@ class EventCalendarView extends React.Component {
             this.setState({allLoaded : false});
             Globals.setMainState({'jsxEvents' : null});
 
-            let events = [],
-                eventHearts = Globals.user.state.hearts.events;
+            let events = [];
+            if ( Globals.user.state.hearts !== null) {
+                const eventHearts = Globals.user.state.hearts.events;
 
-            for(let id in eventHearts){
-                if (eventHearts.hasOwnProperty(id) && eventHearts[id] !=null){
-                    events.push(id);
+                for(let id in eventHearts){
+                    if (eventHearts.hasOwnProperty(id) && eventHearts[id] !=null  && eventHearts[id] != false){
+                        events.push(id);
+                    }
                 }
+            }
+
+            if(events.length < 1){
+                let hearts_text = [];
+                hearts_text.push(
+                    <div key="intro-text-for-hearts" className="hearts-intro">
+                        <p>Her er plads til alle dine favorit-begivenheder. Giv et hjerte til en begivenhed, du gerne vil huske, og du kan finde den her.</p>
+                    </div>
+                );
+
+                Globals.setMainState({'jsxEvents' : hearts_text});
+                this.loadReturned = true;
+                this.setState({allLoaded : true});
+                return;
+
             }
 
             this.properties = {

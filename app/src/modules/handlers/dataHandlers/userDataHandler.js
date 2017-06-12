@@ -101,8 +101,10 @@ class User {
             dbData = JSON.parse( window._cookielib.read( 'dbData' ) ),
 
             accessToken = JSON.parse( window._cookielib.read('accessToken') ),
-            behaviourStatistics = JSON.parse( window._cookielib.read('behaviourStatistics') ),
-            hearts = JSON.parse( window._cookielib.read('hearts') );
+            behaviourStatistics = JSON.parse( window._cookielib.read('behaviourStatistics') );
+
+        const raw_hearts = window._cookielib.read('hearts');
+        let hearts = (raw_hearts != 'undefined') ? JSON.parse( raw_hearts ) : {events : null, locations : null};
 
         if ( behaviourStatistics != null ) {
             this.state.behaviourData = behaviourStatistics;

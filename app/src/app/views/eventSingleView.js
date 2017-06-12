@@ -172,6 +172,11 @@ class EventSingleView extends React.Component {
        } else {
             let heart = _('#event-single-view .heart');
             if ( heart.hasClass('anim') || heart.hasClass('animback') ) return;
+
+            if(Globals.user.state.hearts == null){
+                Globals.user.state.hearts = { events : [], locations : [] }
+            }
+
             if ( Globals.user.state.hearts.events[ this.props.event.id ] != true ) {
                 heart.addClass('anim');
                 Globals.user.state.hearts.events[ this.props.event.id ] = true;
