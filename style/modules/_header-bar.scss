@@ -51,7 +51,7 @@
             position: relative;
             flex-grow: 1;
             border-left: 1px solid #CCC;
-            width: $menu-bar-height;
+            width: $header-bar-height * 1.2;
             cursor: pointer;
             transition: 80ms cubic-bezier(.72, 0, .28, 1);
 

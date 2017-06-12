@@ -1,6 +1,8 @@
 #user-view{
     background-color: #292929;
 
+    a{color:inherit;}
+
     .content{
         position: absolute;
         top: 50%;
@@ -53,11 +55,12 @@
         border: 1px solid white;
         border-radius: 3px;
         cursor: pointer;
-        margin-bottom: 25px;
+
         transform: scale(1);
         transition: transform 120ms, background-color 120ms;
         transform-origin: center;
 
+        margin-bottom: 25px;
         @media(min-height:600px){margin-bottom: 40px;}
 
         &:hover{
@@ -80,6 +83,12 @@
 
     .loader{
         display: inline-block;
+        position: relative;
+        top: -10px;
+        left: 0;
+        transform: none;
+        margin-bottom: 25px;
+        @media(min-height:600px){margin-bottom: 40px;}
     }
 
     .loggedIn .notification{

@@ -8,6 +8,7 @@ const React = require( 'react' ),
       LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       SingleEvent = require( '../components/singleEvent.js' ),
       BannerCommercials = require( '../components/bannerCommercials.js' ),
+      Header  = require( '../componentParts/sectionHeader.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' );
 
 class EventSingleView extends React.Component {
@@ -81,6 +82,7 @@ class EventSingleView extends React.Component {
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
         if ( nextProps.event != this.lastElem ) {
+
             let heart = _('#event-single-view .heart');
 
             if ( Globals.user.state.hearts.events[ nextProps.event.id ] == true && !heart.hasClass('active') ) {
@@ -157,8 +159,8 @@ class EventSingleView extends React.Component {
             Globals.setMainState({ from: 'event-single-view' });
             Globals.lastViewState = [ Globals.viewHandler.focusedViews[0], Globals.viewHandler.focusedViews[1] ];
             Globals.viewHandler.changeViewFocus(
-                '#event-single-view',
                 '#user-view',
+                '#event-single-view',
                 false, true, false, true
             );
        } else {
@@ -188,6 +190,7 @@ class EventSingleView extends React.Component {
 
     // Component did mount
     componentDidMount() {
+
         Globals.user.hooks.add( 'onlogin', () => {
             if ( this.props.event != null && Globals.user.state.hearts.events[ this.props.event.id ] == true ) {
                 let heart = _('#event-single-view .heart');
@@ -198,6 +201,7 @@ class EventSingleView extends React.Component {
                 }, 400 );
             }
         });
+
     }
 
     // Render
@@ -205,8 +209,9 @@ class EventSingleView extends React.Component {
         let elem = this.props.event;
         return (
             <section className="container-section" id="event-single-view">
-                <ViewTopBar icon="#icon-star" viewBox="0 0 32 32" standard={ true } heart={ true } heartFunc={ this.heart.bind(this) } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
-
+                <Header in="#event-single-view" for=".scroll-container">
+                <ViewTopBar icon="#icon-star" viewBox="0 0 32 32" standard={ true } heart={ true } heartFunc={ this.heart.bind(this) } clickable={ false } title={ elem != null ? elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
+                </Header>
                 <div className="scroll-container">
                     <div className="content">
 

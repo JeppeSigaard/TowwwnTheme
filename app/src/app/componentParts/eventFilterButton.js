@@ -2,7 +2,7 @@
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
        _ = require( '../../modules/libaries/underscore/underscore_main.js' );
-class Loader extends React.Component {
+class EventFilterbutton extends React.Component {
 
     // Ctor
     constructor() {
@@ -10,29 +10,16 @@ class Loader extends React.Component {
     }
 
     handleClick( e ){
+
         if(Globals.navigationBlocker) return;
 
         // Set bookmark
         _('.event-filter-button').removeClass('bookmark-mode');
         e.target.classList.add('bookmark-mode');
 
-        // Set event globals from props
-        if(this.props.events != null){
-            Globals.setMainState({ 'currentEvents' : this.props.events });
+        if(typeof this.props.onClick == 'function'){
+            this.props.onClick();
         }
-
-        // Set event globals from state
-        else if(this.state.events != null){
-            Globals.setMainState({ 'currentEvents' : this.state.events });
-        }
-
-        // Set event globals from call
-        else{}
-
-    }
-
-    componentDidMount(){
-
     }
 
     // Render
@@ -52,4 +39,4 @@ class Loader extends React.Component {
             </div>
         );
     }
-} module.exports = Loader;
+} module.exports = EventFilterbutton;

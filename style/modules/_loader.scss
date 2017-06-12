@@ -4,17 +4,17 @@
     position: absolute;
     top: 50%; left: 50%;
     transform: translate( -50%, -50% );
-    width: calc(8px * 3 + 14px * 2);
+    width: calc(10px * 3 + 14px * 2);
     height: auto;
 
     .loader-line{
         position: absolute;
         top: 0;
         box-sizing: content-box;
-        width: 8px;
+        width: 10px;
         height: 32px;
         background-color: #ddd;
-        border: 1px solid #999;
+        //border: 1px solid #999;
     }
 
     .loader-line-1{
@@ -41,19 +41,19 @@
 
     @keyframes ll1{
         0% {
-            width: 8px;
+            width: 10px;
             height: 32px;
             background-color: #ddd;
             top: 0; left: 0;
         }
         10% {
-            width: 10px;
+            width: 12px;
             height: 42px;
             background-color: #9d9d9d;
             top: -5px; left: -1px;
         }
         80% {
-            width: 8px;
+            width: 10px;
             height: 32px;
             background-color: #ddd;
             top: 0; left: 0;
@@ -62,19 +62,19 @@
 
     @keyframes ll2{
         5% {
-            width: 8px;
+            width: 10px;
             height: 32px;
             background-color: #ddd;
             top: 0;
         }
         15% {
-            width: 10px;
+            width: 12px;
             height: 42px;
             background-color: #9d9d9d;
             top: -5px;
         }
         80% {
-            width: 8px;
+            width: 10px;
             height: 32px;
             background-color: #ddd;
             top: 0;
@@ -83,19 +83,19 @@
 
     @keyframes ll3{
         10% {
-            width: 8px;
+            width: 10px;
             height: 32px;
             background-color: #ddd;
             top: 0; right: 0;
         }
         20% {
-            width: 10px;
+            width: 12px;
             height: 42px;
             background-color: #9d9d9d;
             top: -5px; right: -1px;
         }
         80% {
-            width: 8px;
+            width: 10px;
             height: 32px;
             background-color: #ddd;
             top: 0; right: 0;

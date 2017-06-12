@@ -27,7 +27,6 @@ class ViewHandler {
     // Change view focus
     changeViewFocus( leftView, rightView, fromLeft, fromRight, notrans, ignoreAutoDirection, leftSize, rightSize ) {
         if ( _('body').hasClass('mobile') ) {
-
             this.changeMobileViewFocus( leftView, fromLeft, fromRight );
             return;
         }
@@ -263,7 +262,7 @@ class ViewHandler {
             _(activeView).addClass('active');
             Globals.setMainState({ currentMobileView : activeView });
 
-        }.bind(this), 10);
+        }.bind(this), 50);
     }
 
 } module.exports = ViewHandler;

@@ -69,6 +69,8 @@ class EventDataHandler{
                 // Opens new request
                 let request = new XMLHttpRequest();
                 request.addEventListener( 'load', ( data ) => {
+                    resolve ( JSON.parse(data.target.response) );
+                    /*
                     let json = JSON.parse( data.target.response ),
                         resp = json.sort(( a,b ) => {
                             if ( a.start_time < b.start_time ) return -1;
@@ -76,6 +78,7 @@ class EventDataHandler{
                             return 0;
                         });
                     resolve ( resp );
+                    */
                 });
 
                 // Sends request

@@ -23,7 +23,7 @@ class BehaviourDataHandler{
 
             catsRef[ data.category_id ]++;
 
-        } else if ( 'location' === type ) {
+        } else if ( 'location' === type && data.categories != null ) {
 
             for ( let iter = 0; iter < data.categories.length; iter++ ) {
                 if ( catsRef[ data.categories[ iter ].category_id ] == null )

@@ -122,20 +122,6 @@ class TowwwnApp extends React.Component {
 
         // Gets event data
         Globals.eventDataHandler = new EventDataHandler();
-        Globals.eventDataHandler.getFutureEvents( 24, true ).then((resp) => {
-
-            // Converts to jsx elements
-            let events = [];
-            resp.forEach(( item, index ) => {
-                events.push( <Event elem={ item } key={ 'event-' + item.fbid } setMainState={ this.parsedSetState.bind(this) } /> )
-            });
-
-            this.setState({
-                'eventsData' : resp,
-                'jsxEvents' : events,
-            });
-
-        });
 
         // Gets category data
         Globals.categoryDataHandler = new CategoryDataHandler();
@@ -261,13 +247,18 @@ class TowwwnApp extends React.Component {
                 Globals.setMainState( {'singleLocation' : singleLocation[0]});
                 Globals.history.replace(singleLocation[0]);
 
+                if(singleLocation[0].categories == null){
+                    Globals.viewHandler.changeViewFocus('#location-single-view', '#location-category-view');
+                }
+
+                else{
                 Globals.locationDataHandler.getCategorySpecificLocation( singleLocation[0].categories[0].category_id ).then(( resp ) => {
                     Globals.setMainState({
                         'currentLocationsCategory' : singleLocation[0].categories[0],
                         'currentLocations' : resp,
                     });
                 });
-
+                }
             });
 
             request.open( 'GET', app_data.rest_api + '/locations/' + app_data.id );
