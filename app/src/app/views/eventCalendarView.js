@@ -25,6 +25,10 @@ class EventCalendarView extends React.Component {
             page : 1,
             after : 'now',
         };
+
+        // Add user hook
+        if ( Globals.user != null && Globals.user.state.loggedIn ) this.userHook();
+        else if (Globals.user != null && Globals.hooks != null) Globals.hooks.add('onlogin', this.userHook.bind(this));
     }
 
     // In view
@@ -168,28 +172,28 @@ class EventCalendarView extends React.Component {
 
     }
 
+    userHook (){
+        Globals.user.predictBehaviour().then(( data ) => {
+
+            if ( data.length > 2 ) {
+                data.sort(( a, b ) => {
+                    if ( a.output > b.output ) return -1;
+                    if ( a.output < b.output ) return 1;
+                    return 0;
+                }); data = [ data[0], data[1], data[2] ];
+            }
+
+            let predictedCats = [];
+            for ( let iter = 0; iter < data.length; iter++ ) {
+                 predictedCats.push(data[ iter ].id);
+            }
+
+            if(predictedCats.length > 0) this.setState({showPredictedButton : true, predictedCats : predictedCats});
+        });
+    }
+
     // Component did mount
     componentDidMount() {
-
-        Globals.hooks.add('onlogin', () => {
-            Globals.user.predictBehaviour().then(( data ) => {
-
-                if ( data.length > 2 ) {
-                    data.sort(( a, b ) => {
-                        if ( a.output > b.output ) return -1;
-                        if ( a.output < b.output ) return 1;
-                        return 0;
-                    }); data = [ data[0], data[1], data[2] ];
-                }
-
-                let predictedCats = [];
-                for ( let iter = 0; iter < data.length; iter++ ) {
-                     predictedCats.push(data[ iter ].id);
-                }
-
-                if(predictedCats.length > 0) this.setState({showPredictedButton : true, predictedCats : predictedCats});
-            });
-        });
 
         this.loadEvents();
     }
