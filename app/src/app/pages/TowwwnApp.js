@@ -181,8 +181,7 @@ class TowwwnApp extends React.Component {
 
     // Component did mount
     componentDidMount() {
-        _('body').removeClass('loading');
-        _('body').addClass('loaded');
+
         this.viewSlider = new ViewSlider();
 
         Globals.viewHandler = null;
@@ -272,6 +271,9 @@ class TowwwnApp extends React.Component {
         // Handle anchor click
         _('a').off( 'click', this.handleAnchorClick );
         _('a').on( 'click', this.handleAnchorClick );
+
+        _('body').removeClass('loading');
+        _('body').addClass('loaded');
     }
 
     // Render
