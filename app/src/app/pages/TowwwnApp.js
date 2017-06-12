@@ -280,7 +280,6 @@ class TowwwnApp extends React.Component {
             <div>
                 <Header />
                 <div className="content-container" id="page-content">
-
                     <div className="content-container-inner">
                         <div id="general-overlay" ></div>
 

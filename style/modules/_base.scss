@@ -6,10 +6,9 @@
 
 html {overflow: -moz-scrollbars-none;}
 
-html, body{
+body{
     position: fixed;
-    height: 100%;
-    width:100%;
+    left: 0; top: 0; bottom: 0; right: 0;
     pointer-events: none;
     overflow: hidden;
 }
@@ -70,8 +69,7 @@ p a{
 .main-container{
     position: fixed;
     margin: 0;
-    width: 100%;
-    height: 100%;
+    left: 0; top: 0; bottom: 0; right: 0;
     overflow-x: hidden;
     overflow-y: auto;
     pointer-events: none;
@@ -86,8 +84,7 @@ $horizontal-bezier: cubic-bezier(.6, 0, .4, 1);
 $horizontal-bezier-mobile: cubic-bezier(0, 0, 0, 1);
 .content-container{
     position: fixed;
-    width: 100%;
-    height: 100%;
+    top: 0; bottom: 0; right: 0; left: 0;
     overflow-x: hidden;
     overflow-y: auto;
     pointer-events: none;
@@ -99,9 +96,8 @@ $horizontal-bezier-mobile: cubic-bezier(0, 0, 0, 1);
     .content-container-inner{
         position: fixed;
         width: 100%;
-        height: 100%;
         overflow: hidden;
-        top: 0; left: 0%;
+        top: 0; left: 0%; bottom: 0;
         font-size: 0;
         transition: 400ms, transform 180ms;
         transition-timing-function: $horizontal-bezier;
@@ -120,8 +116,7 @@ $horizontal-bezier-mobile: cubic-bezier(0, 0, 0, 1);
 
         #general-overlay{
             position: absolute;
-            left: 0; top: 0;
-            width: 100%; height: 100%;
+            left: 0; top: 0; bottom: 0; right: 0;
             background-color: rgba(0,0,0,.45);
             z-index: 99999;
             opacity: 0;
@@ -202,23 +197,23 @@ $horizontal-bezier-mobile: cubic-bezier(0, 0, 0, 1);
             z-index: 2;
         }
 
-        &.large-header .scroll-container{
-          padding-top: $header-bar-height * 2 + $menu-bar-height;
+        &.large-header .scroll-container .scroll-container-inner{
+          padding-top: $header-bar-height * 2;
         }
 
 
         .scroll-container{
             pointer-events: all;
-            //will-change: scroll-position;
+            will-change: transform;
             overflow: hidden;
             //overflow-x: hidden;
-            padding-top: $header-bar-height + $menu-bar-height;
+            //padding-top: $header-bar-height + $menu-bar-height;
             //-webkit-overflow-scrolling: touch;
             position: absolute;
             z-index: 1;
-            top: 0; bottom: 0; left: 0; right: 0;
-            //backface-visibility: hidden;
-            //transform: translateZ(0px);
+            top: $menu-bar-height; bottom: 0; left: 0; right: 0;
+            backface-visibility: hidden;
+            transform: translateZ(0px);
 
 
             &:after{
@@ -236,6 +231,7 @@ $horizontal-bezier-mobile: cubic-bezier(0, 0, 0, 1);
                 position: relative;
                 height: auto;
                 min-height: 100%;
+                padding-top: $header-bar-height;
             }
         }
 

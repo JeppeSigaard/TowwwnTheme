@@ -17,26 +17,9 @@ class LocationCategoryView extends React.Component {
     // Ctor
     constructor() {
         super();
-        this.state = { subCatHeight : '0px' };
+        this.state = { subCatHeight : '0px', scroller : 0 };
         this.scrollBuffer = 0;
         this.lastScrollTop = 0;
-    }
-
-
-
-    onScroll(){
-        let st = _('#location-category-view .scroll-container').get()[0].scrollTop;
-        if (st !== 0 && (this.scrollBuffer > 10 && st > this.lastScrollTop && st > _('#location-category-view .section-header .viewbar').height())) {
-            _('#location-category-view .section-header').addClass('collapse');
-            this.scrollBuffer = 0;
-        }
-        else if(this.scrollBuffer > 10 || st == 0){
-            _('#location-category-view .section-header').removeClass('collapse');
-            this.scrollBuffer = 0;
-        }
-        else{this.scrollBuffer ++;}
-
-        this.lastScrollTop = st;
     }
 
     // Handle category click
@@ -78,6 +61,10 @@ class LocationCategoryView extends React.Component {
         let inner = document.getElementsByClassName( 'sub-category-inner' )[0];
         if ( this.state.subCatHeight !== '0px' ) this.setState({ 'subCatHeight' : '0px' });
         else this.setState({ 'subCatHeight' : inner.clientHeight + 'px' });
+
+        setTimeout(function(){
+            this.setState({scroller : new Date().getTime()});
+        }.bind(this), 550);
     }
 
     // Will receive props
@@ -95,8 +82,6 @@ class LocationCategoryView extends React.Component {
     // Component did mount
     componentDidMount() {
         this.userHook.call(this);
-        //this.lazyLoad = new LazyLoadHandler( '#location-category-view .scroll-container' );
-        //_( '#location-category-view .scroll-container' ).on( 'scroll', this.onScroll.bind(this) );
     }
 
     // User Hook
@@ -148,18 +133,18 @@ class LocationCategoryView extends React.Component {
     render() {
         return (
             <section className="container-section" id="location-category-view">
-                    <Header in="#location-category-view" for=".scroll-container">
-                        <div className="viewbar category-bar" onClick={ this.toggleSubCategories.bind(this) }>
-                           <i className="viewbar-title-icon">
-                                <svg viewBox="0 0 32 32">
-                                    <use xlinkHref="#icon-location"></use>
-                                </svg>
-                           </i>
-                            Steder
-                            <div className="sub-categories-title" ></div>
-                        </div>
-                    </Header>
-                <ScrollContainer>
+                <Header in="#location-category-view" for=".scroll-container">
+                    <div className="viewbar category-bar" onClick={ this.toggleSubCategories.bind(this) }>
+                       <i className="viewbar-title-icon">
+                            <svg viewBox="0 0 32 32">
+                                <use xlinkHref="#icon-location"></use>
+                            </svg>
+                       </i>
+                        Steder
+                        <div className="sub-categories-title" ></div>
+                    </div>
+                </Header>
+                <ScrollContainer scroller={this.state.scroller}>
                     <div className="content">
                         <SubCategories subCategories={ this.props.allCategories } outerHeight={ this.state.subCatHeight } clickEvent={ this.handleCategoryClick } />
 

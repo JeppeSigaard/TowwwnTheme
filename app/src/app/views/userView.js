@@ -5,6 +5,7 @@
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
+      ScrollContainer  = require( '../componentParts/scrollContainer.js' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
       Loader = require( '../componentParts/loader.js' );
 
@@ -78,7 +79,7 @@ class UserView extends React.Component {
             <section className="container-section" id="user-view" >
                 {/*<ViewTopBar standard={ true } darken={ true } title={ ( Globals.user != null && Globals.user.state.loggedIn ) ? 'Bruger oplysninger:' : 'Log ind: ' } onClose={ this.onClose.bind(this) } closeviewstate={ this.closeviewstate != null && this.closeviewstate } name={ 'user-view' } />*/}
 
-                <div className="scroll-container">
+                <ScrollContainer>
                     <div className="content">
                         <svg className="heart-icon" viewBox="0 0 32 32">
                             <use xlinkHref="#icon-heart"></use>
@@ -108,7 +109,7 @@ class UserView extends React.Component {
                             </div>
                         }
                     </div>
-                </div>
+                </ScrollContainer>
             </section>
         );
     }

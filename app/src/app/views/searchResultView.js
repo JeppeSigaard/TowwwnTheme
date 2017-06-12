@@ -8,6 +8,7 @@ const React = require( 'react' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
       Event = require( '../components/event.js' ),
       Location = require( '../components/location.js' ),
+      ScrollContainer  = require( '../componentParts/scrollContainer.js' ),
       LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       Loader = require( '../componentParts/loader.js' );
 
@@ -135,7 +136,7 @@ class SearchResultView extends React.Component {
                 <Header in="#search-results-view" for=".scroll-container">
                     <ViewTopBar icon="#icon-search" viewBox="0 0 32 32" standard={ true } title={ this.props.keyword == null ? 'Søgeresultater' : 'Søgeresultater: ' + this.props.keyword } onClose={ this.onClose.bind(this) } closeviewstate={ this.state.closeviewstate } name={ 'search-results-view' } />
                 </Header>
-                <div className="scroll-container" >
+                <ScrollContainer>
                     <div className="content">
 
                         { this.state.jsxLoader != null &&
@@ -172,7 +173,7 @@ class SearchResultView extends React.Component {
                             </div>
                         }
                     </div>
-                </div>
+                </ScrollContainer>
             </section>
         );
      }

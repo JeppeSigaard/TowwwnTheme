@@ -77,12 +77,17 @@ class EventSingleView extends React.Component {
             },
 
             jsxEvent : null,
+            scrollTo : null,
         };
     }
 
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
+        if ( nextProps.event == this.lastElem ) {this.setState({scrollTo : null});}
+
         if ( nextProps.event != this.lastElem ) {
+
+            this.setState({scrollTo : 0});
 
             let heart = _('#event-single-view .heart');
 
@@ -211,9 +216,9 @@ class EventSingleView extends React.Component {
         return (
             <section className="container-section" id="event-single-view">
                 <Header in="#event-single-view" for=".scroll-container">
-                <ViewTopBar icon="#icon-star" viewBox="0 0 32 32" standard={ true } heart={ true } heartFunc={ this.heart.bind(this) } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
+                    <ViewTopBar icon="#icon-star" viewBox="0 0 32 32" standard={ true } heart={ true } heartFunc={ this.heart.bind(this) } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
                 </Header>
-                <ScrollContainer>
+                <ScrollContainer scrollTo={this.state.scrollTo}>
                     <div className="content">
 
                         { this.state.jsxEvent != null &&

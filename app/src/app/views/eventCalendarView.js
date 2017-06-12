@@ -16,8 +16,6 @@ class EventCalendarView extends React.Component {
     // Ctor
     constructor() {
         super();
-        this.lastScrollTop = 0;
-        this.scrollBuffer = 0;
         this.state = { containerClasses : 'eventscontainer', allLoaded : false, headerCollapsed : false };
         this.eventsLength = 0;
         this.allLoaded = false;
@@ -214,7 +212,7 @@ class EventCalendarView extends React.Component {
 
         return (
             <section className="container-section large-header" id="event-calendar-view">
-                <Header for=".scroll-container" in="#event-calendar-view" collapse={this.state.headerCollapsed}>
+                <Header for=".scroll-container" in="#event-calendar-view">
                     <div className="viewbar" id="eventsbar">
                         { this.props.layoutbtns != null &&
                             <div id="eventslayoutbtns">
