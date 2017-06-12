@@ -7,8 +7,8 @@ const React = require( 'react' ),
       EventFilterButton  = require( '../componentParts/eventFilterButton.js' ),
       Loader  = require( '../componentParts/loader.js' ),
       Header  = require( '../componentParts/sectionHeader.js' ),
+      ScrollContainer  = require( '../componentParts/scrollContainer.js' ),
       Globals = require( '../globals.js' ),
-      LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' );
 
 class EventCalendarView extends React.Component {
@@ -16,9 +16,7 @@ class EventCalendarView extends React.Component {
     // Ctor
     constructor() {
         super();
-        this.lastScrollTop = 0;
-        this.scrollBuffer = 0;
-        this.state = { containerClasses : 'eventscontainer', allLoaded : false };
+        this.state = { containerClasses : 'eventscontainer', allLoaded : false, headerCollapsed : false };
         this.eventsLength = 0;
         this.allLoaded = false;
         this.loadReturned = true;
@@ -172,8 +170,6 @@ class EventCalendarView extends React.Component {
 
     // Component did mount
     componentDidMount() {
-        this.lazyLoad = new LazyLoadHandler( '#event-calendar-view .scroll-container' );
-        _( '#event-calendar-view .scroll-container' ).on( 'scroll', this.onscroll.bind(this) );
 
         Globals.hooks.add('onlogin', () => {
             Globals.user.predictBehaviour().then(( data ) => {
@@ -201,9 +197,12 @@ class EventCalendarView extends React.Component {
     // Component did update
     componentDidUpdate() {
         if ( this.props.events != null ) {
-            this.lazyLoad.triggerload();
+            //this.lazyLoad.triggerload();
         }
     }
+
+    expandHeader(){this.setState({headerCollapsed: false})}
+    collapseHeader(){this.setState({headerCollapsed: true})}
 
     // Render
     render() {
@@ -244,9 +243,8 @@ class EventCalendarView extends React.Component {
                         <EventFilterButton onClick={this.toggleHeart.bind(this)} icon="#icon-heart" viewBox="0 0 32 32"/>
                     </Railbar>
                 </Header>
-                <div className="scroll-container">
+                <ScrollContainer onScroll={ this.onscroll.bind(this) } header="#event-calendar-view .section-header">
                     <div className="content">
-
                         <div className={ this.state.containerClasses + '-outer' } >
                             <div className={ this.state.containerClasses }>
 
@@ -261,7 +259,7 @@ class EventCalendarView extends React.Component {
                     { typeof this.props.events !== 'undefined' && this.props.events !== null && this.props.events.length !== 0 &&
                         <div id="eventcv-load-more" className={loadMoreClass}></div>
                     }
-                </div>
+                </ScrollContainer>
             </section>
         );
     }

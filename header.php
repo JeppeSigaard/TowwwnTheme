@@ -9,4 +9,4 @@
     </head>
     <body <?php body_class('loading') ?>>
         <?php get_template_part('svg'); ?>
-        <div class="main-container">
+        <div class="main-container" id="main-container">

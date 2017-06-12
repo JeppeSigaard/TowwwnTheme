@@ -45,8 +45,8 @@
     z-index: 10;
     cursor: pointer;
     fill: white;
-    background: rgba(black,.4);
-    opacity: 0;
+    background: #151515;
+    opacity: .7;
     transition: opacity 120ms;
 
     &:hover{

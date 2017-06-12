@@ -10,6 +10,7 @@ const React = require( 'react' ),
       BannerCommercials = require( '../components/bannerCommercials.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
       Header  = require( '../componentParts/sectionHeader.js' ),
+      ScrollContainer  = require( '../componentParts/scrollContainer.js' ),
       Loader = require( '../componentParts/loader.js' );
 
 class LocationSingleView extends React.Component{
@@ -76,6 +77,7 @@ class LocationSingleView extends React.Component{
         // State
         this.state = {
             closeviewstate: this.standardclose,
+            scroller : 0,
         };
 
     }
@@ -117,9 +119,21 @@ class LocationSingleView extends React.Component{
        }
     }
 
+    // when Single Location loads
+    onLoad(){
+        setTimeout(function(){
+            this.setState({scroller : new Date().getTime(), scrollTo : null});
+        }.bind(this), 150);
+    }
+
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
+
+        if ( nextProps.elem == this.lastElem ) {this.setState({scrollTo : null});}
         if ( nextProps.elem != this.lastElem ) {
+
+            this.setState({scrollTo : 0});
+
             let heart = _('#location-single-view .heart');
 
             if ( Globals.user.state.hearts.locations[ nextProps.elem.id ] == true && !heart.hasClass('active') ) {
@@ -220,14 +234,14 @@ class LocationSingleView extends React.Component{
                 <Header for=".scroll-container" in="#location-single-view">
                     <ViewTopBar icon="#icon-location" viewBox="0 0 32 32" standard={ true } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } heart={ true } heartFunc={ this.heart.bind(this) } />
                 </Header>
-                <div className="scroll-container">
+                <ScrollContainer scroller={this.state.scroller} scrollTo={this.state.scrollTo}>
                     <div className="content">
                         { this.props.elem != null &&
-                            <SingleLocation elem={ this.props.elem } name={ this.props.name } /> }
+                            <SingleLocation elem={ this.props.elem } name={ this.props.name } onLoad={this.onLoad.bind(this)}/> }
                         { this.props.elem == null &&
                             <Loader /> }
                     </div>
-                </div>
+                </ScrollContainer>
             </section>
         );
     }

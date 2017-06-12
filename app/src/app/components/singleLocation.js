@@ -77,6 +77,10 @@ class SingleLocation extends React.Component {
         // Sets state
         if ( jsxEvents <= 0 ) jsxEvents = null;
         this.setState({ 'jsxEvents' : jsxEvents });
+
+        if(this.props.onLoad){
+            this.props.onLoad();
+        }
     }
 
     // Component will receive props

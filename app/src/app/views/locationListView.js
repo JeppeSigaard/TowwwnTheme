@@ -11,6 +11,7 @@ const React = require( 'react' ),
       Button  = require( '../componentParts/categoryFilterButton.js' ),
       Railbar = require( '../componentParts/railbar.js' ),
       Header  = require( '../componentParts/sectionHeader.js' ),
+      ScrollContainer  = require( '../componentParts/scrollContainer.js' ),
       Location = require( '../components/location.js' ),
       Loader = require( '../componentParts/loader.js' );
 
@@ -195,7 +196,7 @@ class LocationListView extends React.Component {
                             {this.state.jsxCategoryList}
                         </Railbar> }
                </Header>
-                <div className="scroll-container">
+                <ScrollContainer header="#location-list-view .section-header">
                     <div className="content">
                         { this.state.jsxLocations != null &&
                         <div className="location-list" >
@@ -203,7 +204,7 @@ class LocationListView extends React.Component {
                         </div>}
                         { this.state.jsxLocations == null && <Loader /> }
                     </div>
-                </div>
+                </ScrollContainer>
             </section>
         );
     }

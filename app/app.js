@@ -9,5 +9,5 @@ let React = require( 'react' ),
 require( '../style/index.scss' );
 
 // Main Entry Point
-let root = document.getElementById( 'root' );
+let root = document.getElementById( 'main-container' );
 ReactDOM.render( <TowwwnApp />, root );
