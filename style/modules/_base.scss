@@ -209,17 +209,15 @@ $horizontal-bezier-mobile: cubic-bezier(0, 0, 0, 1);
 
         .scroll-container{
             pointer-events: all;
-            will-change: scroll-position;
-            overflow-y: scroll;
-            overflow-x: hidden;
-            height:100%;
-            width: 100%;
+            //will-change: scroll-position;
+            overflow: hidden;
+            //overflow-x: hidden;
             padding-top: $header-bar-height + $menu-bar-height;
-            -webkit-overflow-scrolling: touch;
+            //-webkit-overflow-scrolling: touch;
             position: absolute;
             z-index: 1;
-            bottom: 0;
-            backface-visibility: hidden;
+            top: 0; bottom: 0; left: 0; right: 0;
+            //backface-visibility: hidden;
             //transform: translateZ(0px);
 
 
@@ -232,6 +230,12 @@ $horizontal-bezier-mobile: cubic-bezier(0, 0, 0, 1);
                 pointer-events: none;
                 top: 0;
                 bottom: -1px;
+            }
+
+            .scroll-container-inner{
+                position: relative;
+                height: auto;
+                min-height: 100%;
             }
         }
 

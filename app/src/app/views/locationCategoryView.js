@@ -7,6 +7,7 @@ const React = require( 'react' ),
       SubCategories = require( '../components/subcategories.js' ),
       Loader = require( '../componentParts/loader.js' ),
       Header  = require( '../componentParts/sectionHeader.js' ),
+      ScrollContainer  = require( '../componentParts/scrollContainer.js' ),
       Globals = require( '../globals.js' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
       _Array = require( '../../modules/libaries/underscore/underscore_array.js' );
@@ -94,8 +95,8 @@ class LocationCategoryView extends React.Component {
     // Component did mount
     componentDidMount() {
         this.userHook.call(this);
-        this.lazyLoad = new LazyLoadHandler( '#location-category-view .scroll-container' );
-         _( '#location-category-view .scroll-container' ).on( 'scroll', this.onScroll.bind(this) );
+        //this.lazyLoad = new LazyLoadHandler( '#location-category-view .scroll-container' );
+        //_( '#location-category-view .scroll-container' ).on( 'scroll', this.onScroll.bind(this) );
     }
 
     // User Hook
@@ -158,7 +159,7 @@ class LocationCategoryView extends React.Component {
                             <div className="sub-categories-title" ></div>
                         </div>
                     </Header>
-                <div className="scroll-container">
+                <ScrollContainer>
                     <div className="content">
                         <SubCategories subCategories={ this.props.allCategories } outerHeight={ this.state.subCatHeight } clickEvent={ this.handleCategoryClick } />
 
@@ -168,7 +169,7 @@ class LocationCategoryView extends React.Component {
                             { this.state.suggestedCategories == null && this.state.jsxCategories == null && <Loader/> }
                         </div>
                     </div>
-                </div>
+                </ScrollContainer>
             </section>
         );
     }

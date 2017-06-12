@@ -23,7 +23,7 @@ class SectionHeader extends React.Component {
         this.setHeader();
     }
 
-    setHeader(){
+    setHeader(collapse){
 
         if (this.settingHeader) return;
         if (this.props.for == null) return;
@@ -33,6 +33,15 @@ class SectionHeader extends React.Component {
         this.settingHeader = true;
 
         let st = _(this.props.in + ' ' + this.props.for).get()[0].scrollTop;
+
+        // Manual collapse
+        if(collapse != null){
+            this.setState({collapse : collapse});
+            this.lastScrollTop = st;
+            this.scrollBuffer = 0;
+            this.settingHeader = false;
+            return;
+        }
 
         // Going down
         if (st > this.lastScrollTop) {
@@ -74,6 +83,12 @@ class SectionHeader extends React.Component {
         if (this.props.in == null) return;
         if (this.props.children == null) return;
         _(this.props.in +' '+ this.props.for).off('scroll', this.handleScroll);
+    }
+
+    componentWillReceiveProps(){
+        if(this.props.collapse != null){
+            this.setHeader(this.props.collapse);
+        }
     }
 
     // Render

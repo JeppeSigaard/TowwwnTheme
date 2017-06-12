@@ -9,6 +9,7 @@ const React = require( 'react' ),
       SingleEvent = require( '../components/singleEvent.js' ),
       BannerCommercials = require( '../components/bannerCommercials.js' ),
       Header  = require( '../componentParts/sectionHeader.js' ),
+      ScrollContainer  = require( '../componentParts/scrollContainer.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' );
 
 class EventSingleView extends React.Component {
@@ -212,13 +213,13 @@ class EventSingleView extends React.Component {
                 <Header in="#event-single-view" for=".scroll-container">
                 <ViewTopBar icon="#icon-star" viewBox="0 0 32 32" standard={ true } heart={ true } heartFunc={ this.heart.bind(this) } clickable={ true } title={ elem != null ? elem.parentname : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } vref={ this.state.vref } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
                 </Header>
-                <div className="scroll-container">
+                <ScrollContainer>
                     <div className="content">
 
                         { this.state.jsxEvent != null &&
                           this.state.jsxEvent }
                     </div>
-                </div>
+                </ScrollContainer>
             </section>
         );
     }
