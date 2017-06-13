@@ -38,7 +38,7 @@ class CategoryDataHandler {
     }
 
     // Get all categories
-    getAllCategories(include_empty, parent_only) {
+    getAllCategories(include_empty, parent_only, properties) {
         return new Promise(( resolve, reject ) => {
 
             // Opens new get request
@@ -57,18 +57,34 @@ class CategoryDataHandler {
                     }
                 }
 
+                if (properties != null || properties.orderby != null) resolve( json );
 
-                this.allCategories = json.sort((a, b) => {
-                    if ( a.location_count < b.location_count ) return 1;
-                    if ( a.location_count > b.location_count ) return -1;
-                    return 0;
-                }); resolve( this.allCategories );
+                else{
+                    this.allCategories = json.sort((a, b) => {
+                        if ( a.location_count < b.location_count ) return 1;
+                        if ( a.location_count > b.location_count ) return -1;
+                        return 0;
+                    });
+                    resolve( this.allCategories );
+                }
+
+
 
 
             }.bind(this);
 
+            // Set query string
+            let query = '';
+            if(properties != null && typeof properties === 'object'){
+                for(let k in properties){
+                    if(properties.hasOwnProperty(k)){
+                        query += '&' + encodeURIComponent(k) + '=' + encodeURIComponent(properties[k]);
+                    }
+                }
+            }
+
             // Sends request
-            request.open( 'GET', app_data.rest_api + '/categories?per_page=100' );
+            request.open( 'GET', app_data.rest_api + '/categories?per_page=100' + query );
             request.send();
 
         });

@@ -1,3 +1,17 @@
+@keyframes winkwink{
+    0%   {background: transparent; }
+
+    8%   {background: transparent; }
+    12%  {background: rgba(white,.1); }
+    16%  {background: transparent; }
+
+    20%  {background: transparent; }
+    24%  {background: rgba(white,.1); }
+    28%  {background: transparent}
+
+    100% {background: transparent; }
+}
+
 .locations-bar{
     position: absolute;
     pointer-events: all;
@@ -32,9 +46,11 @@
         border-left: 1px solid rgba(white,.5);
         background: transparent;
         transition: background 120ms;
+        animation: winkwink linear infinite 3s;
 
         &:hover{
             background: rgba(white,.1);
+            animation: none;
         }
 
         &:after{
@@ -64,15 +80,21 @@
         background-color: $color-grey-1;
 
         .sub-category{
+            background-color: $color-grey-1;
+            transition: background-color 120ms, color 120ms;
             position: relative;
             width: 100%; height: 50px;
-            color: white;
+            color: rgba(white,.95);
             font-size: 12px;
             line-height: 50px;
             padding-left: calc( 32px + 24px );
             text-transform: uppercase;
             border-bottom: 1px solid #eee;
             cursor: pointer;
+
+            &:nth-child(2n){ background-color: lighten( $color-grey-1, 3 ); }
+
+            &:hover{ background-color: lighten( $color-grey-1, 6 ); color: white;}
 
             .elem-counter{
                 position: absolute;
