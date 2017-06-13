@@ -90,7 +90,6 @@ class EventSingleView extends React.Component {
             this.setState({scrollTo : 0});
 
             let heart = _('#event-single-view .heart');
-
             if ( Globals.user.state.hearts.events[ nextProps.event.id ] == true && !heart.hasClass('active') ) {
                 heart.removeClass('animback');
                 heart.addClass('anim');
@@ -109,6 +108,7 @@ class EventSingleView extends React.Component {
                     heart.removeClass('active');
                 }, 400);
             }
+
 
             BehaviourDataHandler.parseData( 'event', nextProps.event );
             this.lastElem = nextProps.event;

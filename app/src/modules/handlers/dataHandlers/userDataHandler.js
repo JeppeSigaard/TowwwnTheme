@@ -47,35 +47,43 @@ class User {
 
         // Before unload, uploads behaviour statistics
         window.onbeforeunload = (() => {
-
-            this.saveDataInCookie( 30 );
-
-            if ( this.state.loggedIn ) {
-
-                // Request Param
-                let data = {
-                    id : this.state.dbData.id,
-                    token : this.state.accessToken.token,
-                    meta_data : {
-                        behaviour_statistics : this.state.behaviourData,
-                        hearts : this.state.hearts
-                    },
-                };
-
-                // Opens new request to sign on user
-                let request = new XMLHttpRequest();
-                request.onload = (( data ) => { });
-
-                // Opens request & sets headers
-                request.open( 'POST', app_data.rest_api+'/user/' + this.state.dbData.id, true );
-                request.setRequestHeader("Content-type", "application/json");
-
-                // Sends request
-                request.send( JSON.stringify( data ) );
-
-            }
+            this.handleUnload();
         });
 
+        // Save on a timer, for safari jerks
+        setInterval(() => {
+             this.handleUnload();
+        }, 30 * 1000);
+
+    }
+
+    handleUnload(){
+        this.saveDataInCookie( 30 );
+
+        if ( this.state.loggedIn ) {
+
+            // Request Param
+            let data = {
+                id : this.state.dbData.id,
+                token : this.state.accessToken.token,
+                meta_data : {
+                    behaviour_statistics : this.state.behaviourData,
+                    hearts : this.state.hearts
+                },
+            };
+
+            // Opens new request to sign on user
+            let request = new XMLHttpRequest();
+            request.onload = (( data ) => { });
+
+            // Opens request & sets headers
+            request.open( 'POST', app_data.rest_api+'/user/' + this.state.dbData.id, true );
+            request.setRequestHeader("Content-type", "application/json");
+
+            // Sends request
+            request.send( JSON.stringify( data ) );
+
+        }
     }
 
     // Save Data in Cookie

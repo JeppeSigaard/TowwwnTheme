@@ -63,12 +63,15 @@ class UserView extends React.Component {
         if ( Globals.user != null && !Globals.user.loggedIn ) {
             Globals.fb.login().then(() => {
                 setTimeout(() => {
+
+                    const leftView = ( Globals.lastViewState[0] != null) ?  Globals.lastViewState[0] : '#event-calendar-view',
+                          rightView = ( Globals.lastViewState[1] != null) ?  Globals.lastViewState[1] : '#location-category-view';
+
                     Globals.viewHandler.changeViewFocus(
-                        Globals.lastViewState[0],
-                        Globals.lastViewState[1],
+                        leftView, rightView,
                         true, false, false, false,
                     );
-                }, 3 * 1000);
+                }, 2.5 * 1000);
             });
         }
     }

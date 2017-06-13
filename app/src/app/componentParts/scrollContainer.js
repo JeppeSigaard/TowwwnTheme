@@ -91,7 +91,7 @@ class ScrollContainer extends React.Component {
     componentDidMount(){
         this.iscroll = new iscroll('#' + this.id,{
             mouseWheel: true,
-            preventDefaultException : { tagName: /^(A|INPUT|TEXTAREA|BUTTON|SELECT)$/ },
+            preventDefault : false,
             scrollbars: false,
             probeType: 2,
             bounce: false
