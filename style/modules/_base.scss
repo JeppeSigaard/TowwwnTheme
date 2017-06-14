@@ -8,7 +8,7 @@ html {overflow: -moz-scrollbars-none;}
 
 body{
     position: fixed;
-    left: 0; top: 0; bottom: 0; right: 0;
+    //left: 0; top: 0; bottom: 0; right: 0;
     pointer-events: none;
     overflow: hidden;
     margin: 0;
@@ -76,7 +76,6 @@ $horizontal-bezier-mobile: cubic-bezier(0, 0, 0, 1);
     pointer-events: none;
     background-color: white;
     z-index: 1;
-    min-height: 100vh;
     background-color: #fff;
 
     .content-container-inner{
