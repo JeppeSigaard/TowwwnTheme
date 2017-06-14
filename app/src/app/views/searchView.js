@@ -5,6 +5,9 @@
 const React = require( 'react' ),
       Globals = require( '../globals.js' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
+      Railbar = require( '../componentParts/railbar.js' ),
+      SearchBanner = require( '../componentParts/searchBanner.js' ),
+      LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
 
       // TMP
       SearchDataHandler = require( '../../modules/handlers/dataHandlers/searchDataHandler.js' );
@@ -14,11 +17,10 @@ class SearchView extends React.Component {
     // Ctor
     constructor() {
         super();
-        this.state = {
-            background : 'https://scontent-arn2-1.xx.fbcdn.net/v/t31.0-8/15235783_819639251509309_4689912872243390735_o.jpg?oh=b25910009f9397382b9f9e0891896f1d&oe=597D070E',
-        };
 
-        this.setCommercialImage();
+        this.state = {
+            jsxCommercials : null
+        };
     }
 
     // On key down
@@ -52,30 +54,40 @@ class SearchView extends React.Component {
         }
     }
 
+    setBanners(){
+        const commercialOptions = {
+            for : 'search',
+        };
 
-    setCommercialImage(){
+        Globals.CommercialDataHandler.getCommercials(commercialOptions).then((resp) =>{
+            if(resp.length < 1) return;
 
-        // Opens new request
-        let request = new XMLHttpRequest();
-        request.addEventListener( 'load', ( resp ) => {
-            let data = JSON.parse( resp.target.response );
-            for (var r in data){
-                if (data.hasOwnProperty(r) && data[r].commercial_tn_search != null){
-                    this.setState({background : data[r].commercial_tn_search });
-                    return;
+            let jsxCommercials = [];
+            for(let item in resp){
+                if(resp.hasOwnProperty(item)){
+                    jsxCommercials.push(<SearchBanner key={'search-banner-'+resp[item].id} item={resp[item]}></SearchBanner>);
                 }
             }
-        });
 
-        request.open( 'GET', app_data.rest_api + '/commercials?orderby=rand&fields=commercial_tn_search' );
-        request.send();
+            this.setState({ jsxCommercials: jsxCommercials});
+            this.lazyLoad.triggerload();
+        });
+    }
+
+    componentDidMount(){
+        this.lazyLoad = new LazyLoadHandler('#search-view');
+        this.setBanners();
     }
 
     // Render
     render() {
         return (
             <section className="container-section" id="search-view">
-                <div className="content" style={{ 'backgroundImage' : 'url(' + this.state.background }}>
+                <div className="content">
+                    {this.state.jsxCommercials !=null && this.state.jsxCommercials.length > 0 &&
+                    <Railbar name="search-banners" sizes={{0:1}} snap dots>
+                        {this.state.jsxCommercials}
+                    </Railbar>}
                     <form action="/" method="get" className="search-bar-container" onSubmit={ this.submitSearch.bind(this) }>
                         <input name="s" type="text" id="search-bar" onKeyDown={ this.onkeydown.bind(this) } placeholder="Søg"></input>
                         <input name="submit" type="submit" id="search-submit" value="søg"/>

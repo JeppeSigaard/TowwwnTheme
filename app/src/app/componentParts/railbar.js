@@ -12,6 +12,11 @@ class Railbar extends React.Component {
         // Add Event listeners
         this.mouseupfunct = this.handleMouseUp.bind(this);
         this.mousemovefunct = this.handleMouseMove.bind(this);
+
+
+        this.state = {
+            dots : null,
+        }
     }
 
     // Mouse Down event (mirror touch start)

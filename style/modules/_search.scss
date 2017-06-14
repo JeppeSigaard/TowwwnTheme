@@ -47,3 +47,92 @@
         }
     }
 }
+
+.rail-bar.search-banners{
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    height: auto!important;
+
+    .rail-bar-button-right,
+    .rail-bar-button-left{
+        display: none;
+        height: $header-bar-height;
+        top: auto;
+        bottom: 70px;
+        opacity: 1;
+        background: rgba(black,.5);
+        width: 50%;
+
+        svg{
+            transform: none;
+            height: $header-bar-height;
+            width: $header-bar-height * 1.1;
+            background: rgba(black,.4);
+            padding: 12px;
+            top: 0;
+        }
+
+        &.disabled{
+            opacity: 1;
+        }
+    }
+
+    .rail-bar-button-right svg{
+        left: auto;
+        right: 0px;
+    }
+
+    .rail-bar-button-left svg{
+        left: 0px;
+    }
+
+    .search-banner{
+        height: 100%;
+        position: relative;
+        background-size: cover;
+        background-position: center;
+        background-size: cover;
+
+        .search-banner-footer{
+            width: 100%;
+            position: absolute;
+            bottom: 20px;
+            background: rgba($color-blue-2,.9);
+            min-height: 50px;
+        }
+
+        .search-banner-icon{
+            display: inline-block;
+            vertical-align: top;
+            height: 38px;
+            width: 42px;
+            margin-top: 6px;
+            margin-left: 6px;
+            background-size: cover;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .search-banner-text{
+            display: inline-block;
+            vertical-align: top;
+            margin-top: 5px;
+            margin-left: 12px;
+            color:white;
+        }
+
+        .search-banner-title{
+            display: block;
+            font-family: 'Avenir';
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .search-banner-subtitle{
+            display: block;
+            font-family: 'Avenir';
+            font-size: 12px;
+            line-height: 1.5;
+        }
+    }
+}

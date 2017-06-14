@@ -9,6 +9,7 @@ const React = require( 'react' ),
     EventDataHandler = require( '../../modules/handlers/dataHandlers/eventDataHandler.js' ),
     CategoryDataHandler = require( '../../modules/handlers/dataHandlers/categoryDataHandler.js' ),
     LocationDataHandler = require( '../../modules/handlers/dataHandlers/locationDataHandler.js' ),
+    CommercialDataHandler = require( '../../modules/handlers/dataHandlers/commercialDataHandler.js' ),
 
     // API Handlers
     FBHandler = require( '../../modules/handlers/apihandlers/fbhandler.js' ),
@@ -73,6 +74,7 @@ class TowwwnApp extends React.Component {
         // Globals
         Globals.viewHandler = null;
         Globals.locationDataHandler = new LocationDataHandler();
+        Globals.CommercialDataHandler = new CommercialDataHandler();
         Globals.fb = new FBHandler();
         Globals.user = new User();
         Globals.history = new historyHandler();
