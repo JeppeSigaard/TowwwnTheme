@@ -71,7 +71,7 @@ class EventCalendarView extends React.Component {
             page : 1,
             after : 'now',
         };
-        this.loadEvents();
+        this.loadEvents('future');
     }
 
     togglePast(){
@@ -83,7 +83,7 @@ class EventCalendarView extends React.Component {
             page : 1,
             before : 'now',
         };
-        this.loadEvents();
+        this.loadEvents('past');
     }
 
     toggleHeart(){
@@ -118,18 +118,7 @@ class EventCalendarView extends React.Component {
             }
 
             if(events.length < 1){
-                let hearts_text = [];
-                hearts_text.push(
-                    <div key="intro-text-for-hearts" className="hearts-intro">
-                        <p>Her er plads til alle dine favorit-begivenheder. Giv et hjerte til en begivenhed, du gerne vil huske, og du kan finde den her.</p>
-                    </div>
-                );
-
-                Globals.setMainState({'jsxEvents' : hearts_text});
-                this.loadReturned = true;
-                this.setState({allLoaded : true});
-                return;
-
+                events.push(0);
             }
 
             this.properties = {
@@ -138,7 +127,7 @@ class EventCalendarView extends React.Component {
                 ids : events,
             };
 
-            this.loadEvents();
+            this.loadEvents('hearts');
         }
     }
 
@@ -153,17 +142,44 @@ class EventCalendarView extends React.Component {
             cat : this.state.predictedCats,
         };
 
-        this.loadEvents();
+        this.loadEvents('predicted');
     }
 
     // Load Events
-    loadEvents() {
+    loadEvents(type) {
 
         if ( this.allLoaded ) return;
         if( !this.loadReturned ) return;
         this.loadReturned = false;
 
         Globals.eventDataHandler.getEvents( this.properties ).then((resp) => {
+
+            if (resp.length < 1 && type != null){
+
+                const intro_text = {
+                    predicted : 'Her samler vi de begivenheder vi tror du vil sætte ekstra stor pris på at se.',
+                    hearts : 'Her er plads til alle dine favorit-begivenheder. Giv et hjerte til en begivenhed, du gerne vil huske, og du kan finde den her.',
+                    future : 'Der er ingen kommende begivenheder i vores kalender.',
+                    past : 'Der fandtes ingen afsluttede begivenheder i vores kalender',
+
+                };
+
+                let intro = [];
+                intro.push(
+                    <div key="intro-text-for-hearts" className="hearts-intro">
+                       {intro_text[type] != null &&
+                        <p>{intro_text[type]}</p>
+                       }
+                       {intro_text[type] == null &&
+                       <p>Ingen resultater fundet</p>}
+                    </div>
+                );
+
+                Globals.setMainState({'jsxEvents' : intro});
+                this.loadReturned = true;
+                this.setState({allLoaded : true});
+                return;
+            }
 
             if ( resp.length > 23 ) {
 
