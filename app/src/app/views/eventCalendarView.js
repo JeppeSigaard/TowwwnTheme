@@ -20,15 +20,12 @@ class EventCalendarView extends React.Component {
         this.eventsLength = 0;
         this.allLoaded = false;
         this.loadReturned = true;
+        this.userHooked = false;
         this.properties = {
             per_page : 24,
             page : 1,
             after : 'now',
         };
-
-        // Add user hook
-        if ( Globals.user != null && Globals.user.state.loggedIn ) this.userHook();
-        else if (Globals.user != null && Globals.hooks != null) Globals.hooks.add('onlogin', this.userHook.bind(this));
     }
 
     // In view
@@ -190,6 +187,7 @@ class EventCalendarView extends React.Component {
     }
 
     userHook (){
+
         Globals.user.predictBehaviour().then(( data ) => {
 
             if ( data.length > 2 ) {
@@ -211,12 +209,21 @@ class EventCalendarView extends React.Component {
 
     // Component did mount
     componentDidMount() {
+        if ( Globals.user != null && !this.userHooked) {
+            this.userHooked = true;
+            this.userHook();
+        }
 
         this.loadEvents();
     }
 
     // Component did update
     componentDidUpdate() {
+        if ( Globals.user != null && !this.userHooked ){
+            this.userHooked = true;
+            this.userHook();
+        }
+
         if ( this.props.events != null ) {
             //this.lazyLoad.triggerload();
         }
