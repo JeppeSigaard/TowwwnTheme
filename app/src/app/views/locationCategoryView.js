@@ -144,7 +144,7 @@ class LocationCategoryView extends React.Component {
                         <div className="sub-categories-title" ></div>
                     </div>
                 </Header>
-                <ScrollContainer scroller={this.state.scroller}>
+                <ScrollContainer scroller={this.state.scroller} name="location-category-scroll-content">
                     <div className="content">
                         <SubCategories subCategories={ this.props.allCategories } outerHeight={ this.state.subCatHeight } clickEvent={ this.handleCategoryClick } />
 

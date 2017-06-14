@@ -136,7 +136,7 @@ class SearchResultView extends React.Component {
                 <Header in="#search-results-view" for=".scroll-container">
                     <ViewTopBar icon="#icon-search" viewBox="0 0 32 32" standard={ true } title={ this.props.keyword == null ? 'Søgeresultater' : 'Søgeresultater: ' + this.props.keyword } onClose={ this.onClose.bind(this) } closeviewstate={ this.state.closeviewstate } name={ 'search-results-view' } />
                 </Header>
-                <ScrollContainer>
+                <ScrollContainer name="search-scroll-content">
                     <div className="content">
 
                         { this.state.jsxLoader != null &&

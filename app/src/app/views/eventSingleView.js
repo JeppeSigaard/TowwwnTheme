@@ -223,7 +223,7 @@ class EventSingleView extends React.Component {
                 <Header in="#event-single-view" for=".scroll-container">
                 <ViewTopBar icon="#icon-star" viewBox="0 0 32 32" standard={ true } heart={ true } heartFunc={ this.heart.bind(this) } clickable={ false } title={ elem != null ? elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } willChangeView={ this.willChangeView.bind(this) } name={ this.props.name } />
                 </Header>
-                <ScrollContainer scrollTo={this.state.scrollTo}>
+                <ScrollContainer name="event-single-scroll-content" scrollTo={this.state.scrollTo}>
                     <div className="content">
 
                         { this.state.jsxEvent != null &&

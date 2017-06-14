@@ -30,6 +30,7 @@ class ScrollContainer extends React.Component {
         if (this.refresh != null) clearTimeout(this.refresh);
         this.refresh = setTimeout(function(){
             if(this.iscroll != null) this.iscroll.refresh();
+            this.collapsed = false;
         }.bind(this), 100);
     }
 
@@ -107,6 +108,7 @@ class ScrollContainer extends React.Component {
     componentWillReceiveProps(props){
         if (props.scrollTo != null){
             this.iscroll.scrollTo(0,props.scrollTo);
+            this.collapsed = false;
         }
     }
 

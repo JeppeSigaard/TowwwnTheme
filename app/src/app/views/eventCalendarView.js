@@ -157,7 +157,7 @@ class EventCalendarView extends React.Component {
             if (resp.length < 1 && type != null){
 
                 const intro_text = {
-                    predicted : 'Her samler vi de begivenheder vi tror du vil sætte ekstra stor pris på at se.',
+                    predicted : 'Her samler vi de begivenheder vi tror du vil sætte ekstra stor pris på at se. Lige nu har vi ingen anbefalinger',
                     hearts : 'Her er plads til alle dine favorit-begivenheder. Giv et hjerte til en begivenhed, du gerne vil huske, og du kan finde den her.',
                     future : 'Der er ingen kommende begivenheder i vores kalender.',
                     past : 'Der fandtes ingen afsluttede begivenheder i vores kalender',
@@ -281,7 +281,7 @@ class EventCalendarView extends React.Component {
                         <EventFilterButton onClick={this.toggleHeart.bind(this)} icon="#icon-heart" viewBox="0 0 32 32"/>
                     </Railbar>
                 </Header>
-                <ScrollContainer onScroll={ this.onscroll.bind(this) } header="#event-calendar-view .section-header">
+                <ScrollContainer  name="event-calendar-scroll-content" onScroll={ this.onscroll.bind(this) } header="#event-calendar-view .section-header">
                     <div className="content">
                         <div className={ this.state.containerClasses + '-outer' } >
                             <div className={ this.state.containerClasses }>
