@@ -8,6 +8,7 @@ const React = require( 'react' ),
 
 class Hamburger extends React.Component {
 
+
     // Constructor
     constructor() {
         super();
@@ -96,6 +97,7 @@ class Hamburger extends React.Component {
         // UI Actions
         _('.nav-user').on('click', this.toggle.bind(this));
         _('#general-overlay').on('click', this.toggle.bind(this));
+        Globals.hooks.add('toggle-hamburger', this.toggle.bind(this));
 
     }
 

@@ -2,7 +2,6 @@
 
 // Location Category view
 const React = require( 'react' ),
-      LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       LocationCategory = require( '../components/locationCategory.js' ),
       SubCategories = require( '../components/subcategories.js' ),
       Loader = require( '../componentParts/loader.js' ),
@@ -18,8 +17,6 @@ class LocationCategoryView extends React.Component {
     constructor() {
         super();
         this.state = { subCatHeight : '0px', scroller : 0 };
-        this.scrollBuffer = 0;
-        this.lastScrollTop = 0;
     }
 
     // Handle category click
@@ -124,8 +121,7 @@ class LocationCategoryView extends React.Component {
     // Component did update
     componentDidUpdate() {
         if ( this.state.jsxCategories != null ) {
-            if ( this.lazyLoad == null ) this.lazyLoad = new LazyLoadHandler( '#location-category-view .scroll-container' );
-            this.lazyLoad.triggerload();
+
         }
     }
 

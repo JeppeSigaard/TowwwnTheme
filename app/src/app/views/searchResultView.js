@@ -9,7 +9,6 @@ const React = require( 'react' ),
       Event = require( '../components/event.js' ),
       Location = require( '../components/location.js' ),
       ScrollContainer  = require( '../componentParts/scrollContainer.js' ),
-      LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       Loader = require( '../componentParts/loader.js' );
 
 class SearchResultView extends React.Component {
@@ -126,7 +125,7 @@ class SearchResultView extends React.Component {
 
     // Component did mount
     componentDidMount() {
-        this.lazyLoadHandler = new LazyLoadHandler( '#search-results-view .scroll-container' );
+
     }
 
     // Render

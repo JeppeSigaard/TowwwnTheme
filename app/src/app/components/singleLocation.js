@@ -88,7 +88,6 @@ class SingleLocation extends React.Component {
 
         if( this.lastElem == null || nextProps.elem !== this.lastElem ){
             this.loadEvents( nextProps );
-            _('#location-single-view .scroll-container').get()[0].scrollTop = 0;
             this.lastElem = nextProps.elem;
         }
     }

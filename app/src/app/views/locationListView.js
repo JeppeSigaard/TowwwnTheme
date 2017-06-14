@@ -5,7 +5,6 @@ const React = require( 'react' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
       Globals = require( '../globals.js' ),
       BehaviourDataHandler = require( '../../modules/handlers/behaviourHandler/dataHandler.js' ),
-      CategoryDataHandler = require( '../../modules/handlers/dataHandlers/categoryDataHandler.js' ),
       LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
       Button  = require( '../componentParts/categoryFilterButton.js' ),
@@ -164,22 +163,6 @@ class LocationListView extends React.Component {
     componentDidMount() {
         Globals.hooks.add('ls-hearted', this.moveHearted.bind(this));
         Globals.hooks.add('onlogin', this.updateJSXElemsOrder.bind(this));
-        _( '#location-list-view .scroll-container' ).on( 'scroll', this.onScroll.bind(this) );
-    }
-
-    onScroll(){
-        let st = _('#location-list-view .scroll-container').get()[0].scrollTop;
-        if (st !== 0 && (this.scrollBuffer > 10 && st > this.lastScrollTop && st > _('#location-list-view .section-header .viewbar').height())) {
-            _('#location-list-view .section-header').addClass('collapse');
-            this.scrollBuffer = 0;
-        }
-        else if(this.scrollBuffer > 10 || st == 0){
-            _('#location-list-view .section-header').removeClass('collapse');
-            this.scrollBuffer = 0;
-        }
-        else{this.scrollBuffer ++;}
-
-        this.lastScrollTop = st;
     }
 
     // Render

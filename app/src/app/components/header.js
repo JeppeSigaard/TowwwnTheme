@@ -27,6 +27,7 @@ class Header extends React.Component {
         }
 
         Globals.history.push({'type' : 'home', 'name' : 'Søg · Towwwn'});
+
     }
 
     // On nav location click
@@ -41,6 +42,7 @@ class Header extends React.Component {
         Globals.viewHandler.changeViewFocus( '#location-category-view', Globals.viewHandler.focusedViews[0], false, true, false );
 
         Globals.history.push({'type' : 'home', 'name' : 'Steder · Towwwn'});
+
     }
 
     // On nav event click

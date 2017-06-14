@@ -235,7 +235,7 @@ class EventCalendarView extends React.Component {
     componentDidUpdate() {
 
         if ( this.props.events != null ) {
-            //this.lazyLoad.triggerload();
+
         }
     }
 

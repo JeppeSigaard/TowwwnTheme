@@ -5,7 +5,6 @@ const React = require( 'react' ),
       Globals = require( '../globals.js' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
       BehaviourDataHandler = require( '../../modules/handlers/behaviourHandler/dataHandler.js' ),
-      LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
       SingleLocation = require( '../components/singleLocation.js' ),
       BannerCommercials = require( '../components/bannerCommercials.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
@@ -206,7 +205,6 @@ class LocationSingleView extends React.Component{
 
     // Component did mount
     componentDidMount() {
-        this.lazyLoad = new LazyLoadHandler( '#location-single-view .scroll-container' );
 
         Globals.user.hooks.add( 'onlogin', () => {
             if ( this.props.elem != null && Globals.user.state.hearts.locations[ this.props.elem.id ] == true ) {
@@ -223,7 +221,7 @@ class LocationSingleView extends React.Component{
     // Component did update
     componentDidUpdate() {
         if ( this.props.elem != null ) {
-            this.lazyLoad.triggerload();
+
         }
     }
 

@@ -16,11 +16,14 @@ class ViewHandler {
         this.mobileFocusedView = initialMobileView;
 
         if(_('body').hasClass('mobile')){
-            this.changeMobileViewFocus( initialMobileView, true, true, true);
+            _(initialMobileView).css({left : 0});
+            this.changeMobileViewFocus( initialMobileView);
         }
 
         else{
-            this.changeViewFocus( initialLeftView, initialRightView, true, true, true, true);
+            _(initialLeftView).css({left : 0});
+            _(initialRightView).css({left : '50%'});
+            this.changeViewFocus( initialLeftView, initialRightView);
         }
     }
 
