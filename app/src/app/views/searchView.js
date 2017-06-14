@@ -6,7 +6,7 @@ const React = require( 'react' ),
       Globals = require( '../globals.js' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
       Railbar = require( '../componentParts/railbar.js' ),
-      SearchBanner = require( '../componentParts/searchBanner.js' ),
+      SponsorBanner = require( '../componentParts/SponsorBanner.js' ),
       LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
 
       // TMP
@@ -65,7 +65,7 @@ class SearchView extends React.Component {
             let jsxCommercials = [];
             for(let item in resp){
                 if(resp.hasOwnProperty(item)){
-                    jsxCommercials.push(<SearchBanner key={'search-banner-'+resp[item].id} item={resp[item]}></SearchBanner>);
+                    jsxCommercials.push(<SponsorBanner key={'search-banner-'+resp[item].id} item={resp[item]}></SponsorBanner>);
                 }
             }
 

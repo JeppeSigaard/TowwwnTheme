@@ -6,7 +6,6 @@ const React = require( 'react' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
       BehaviourDataHandler = require( '../../modules/handlers/behaviourHandler/dataHandler.js' ),
       SingleEvent = require( '../components/singleEvent.js' ),
-      BannerCommercials = require( '../components/bannerCommercials.js' ),
       Header  = require( '../componentParts/sectionHeader.js' ),
       ScrollContainer  = require( '../componentParts/scrollContainer.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' );
