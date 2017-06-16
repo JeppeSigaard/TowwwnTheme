@@ -249,6 +249,10 @@ class EventCalendarView extends React.Component {
                     this.loadReturned = true;
                 });
             }
+
+            else{
+                 this.loadReturned = true;
+            }
         });
     }
 
