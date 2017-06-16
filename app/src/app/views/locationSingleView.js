@@ -6,10 +6,11 @@ const React = require( 'react' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
       BehaviourDataHandler = require( '../../modules/handlers/behaviourHandler/dataHandler.js' ),
       SingleLocation = require( '../components/singleLocation.js' ),
-      BannerCommercials = require( '../components/bannerCommercials.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' ),
       Header  = require( '../componentParts/sectionHeader.js' ),
       ScrollContainer  = require( '../componentParts/scrollContainer.js' ),
+      Railbar  = require( '../componentParts/railbar.js' ),
+      SponsorBanner  = require( '../componentParts/sponsorBanner.js' ),
       Loader = require( '../componentParts/loader.js' );
 
 class LocationSingleView extends React.Component{
@@ -75,6 +76,7 @@ class LocationSingleView extends React.Component{
 
         // State
         this.state = {
+            SponsorBanners : null,
             closeviewstate: this.standardclose,
             scroller : 0,
         };
@@ -130,6 +132,8 @@ class LocationSingleView extends React.Component{
 
         if ( nextProps.elem == this.lastElem ) {this.setState({scrollTo : null});}
         if ( nextProps.elem != this.lastElem ) {
+
+            this.applySponsorBanner();
 
             this.setState({scrollTo : 0});
 
@@ -203,6 +207,29 @@ class LocationSingleView extends React.Component{
 
     }
 
+    applySponsorBanner(){
+
+        const commercialOptions = {
+            for : 'location_single',
+            per_page : 3,
+        };
+
+        Globals.CommercialDataHandler.getCommercials(commercialOptions).then((resp) =>{
+
+            if(resp.length < 1) return;
+            let sponsorBanners = [];
+            const time = new Date().getTime();
+
+            for(let item in resp){
+                if(resp.hasOwnProperty(item)){
+                    sponsorBanners.push(<SponsorBanner type="location_single" key={'single-banner-'+resp[item].id} item={resp[item]}></SponsorBanner>);
+                }
+            }
+
+            this.setState({sponsorBanners : sponsorBanners });
+        });
+    }
+
     // Component did mount
     componentDidMount() {
 
@@ -236,6 +263,10 @@ class LocationSingleView extends React.Component{
                     <div className="content">
                         { this.props.elem != null &&
                             <SingleLocation elem={ this.props.elem } name={ this.props.name } onLoad={this.onLoad.bind(this)}/> }
+
+                        { this.props.elem != null && this.state.sponsorBanners != null &&
+                        <Railbar name={'single-location-sponsor-banner'} sizes={{0:1}} children={this.state.sponsorBanners} snap />}
+
                         { this.props.elem == null &&
                             <Loader /> }
                     </div>

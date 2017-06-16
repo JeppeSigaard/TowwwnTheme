@@ -6,9 +6,11 @@ const React = require( 'react' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
       BehaviourDataHandler = require( '../../modules/handlers/behaviourHandler/dataHandler.js' ),
       SingleEvent = require( '../components/singleEvent.js' ),
-      BannerCommercials = require( '../components/bannerCommercials.js' ),
       Header  = require( '../componentParts/sectionHeader.js' ),
       ScrollContainer  = require( '../componentParts/scrollContainer.js' ),
+      Railbar  = require( '../componentParts/railbar.js' ),
+      SponsorBanner  = require( '../componentParts/sponsorBanner.js' ),
+      Loader = require( '../componentParts/loader.js' ),
       ViewTopBar = require( '../componentParts/viewtopbar.js' );
 
 class EventSingleView extends React.Component {
@@ -20,6 +22,7 @@ class EventSingleView extends React.Component {
         this.lastElem = null;
         this.startTime = null;
         this.state = {
+            sponsorBanners : null,
             'closeviewstate' : { },
 
             'standardclose' : {
@@ -134,7 +137,7 @@ class EventSingleView extends React.Component {
         if ( nextProps.event != null ) {
             this.setState({
                 'jsxEvent' : <SingleEvent elem={ nextProps.event } />,
-            });
+            }, this.applySponsorBanner.bind(this));
         }
     }
 
@@ -198,6 +201,29 @@ class EventSingleView extends React.Component {
        }
     }
 
+    applySponsorBanner(){
+
+        const commercialOptions = {
+            for : 'event_single',
+            per_page : 3,
+        };
+
+        Globals.CommercialDataHandler.getCommercials(commercialOptions).then((resp) =>{
+
+            if(resp.length < 1) return;
+            let sponsorBanners = [];
+            const time = new Date().getTime();
+
+            for(let item in resp){
+                if(resp.hasOwnProperty(item)){
+                    sponsorBanners.push(<SponsorBanner type="event_single" key={'single-banner-'+resp[item].id} item={resp[item]}></SponsorBanner>);
+                }
+            }
+
+            this.setState({sponsorBanners : sponsorBanners });
+        });
+    }
+
     // Component did mount
     componentDidMount() {
 
@@ -227,6 +253,13 @@ class EventSingleView extends React.Component {
 
                         { this.state.jsxEvent != null &&
                           this.state.jsxEvent }
+
+                        { this.state.jsxEvent != null && this.state.sponsorBanners != null &&
+                        <Railbar name={'single-event-sponsor-banner'} sizes={{0:1}} children={this.state.sponsorBanners} snap />}
+
+                        { this.state.jsxEvent == null &&
+                            <Loader /> }
+
                     </div>
                 </ScrollContainer>
             </section>

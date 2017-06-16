@@ -12,6 +12,11 @@ class Railbar extends React.Component {
         // Add Event listeners
         this.mouseupfunct = this.handleMouseUp.bind(this);
         this.mousemovefunct = this.handleMouseMove.bind(this);
+
+
+        this.state = {
+            dots : [],
+        }
     }
 
     // Mouse Down event (mirror touch start)
@@ -174,16 +179,45 @@ class Railbar extends React.Component {
             'transform': 'translateX('+deltaX+'px)'
         });
 
-        // enable or disable prev button?
-        if(deltaX >= 0 - this.state.marginLeft) _('#' + this.props.name + ' .rail-bar-button-left').addClass('disabled');
-        else _('#' + this.props.name + ' .rail-bar-button-left').removeClass('disabled');
+        setTimeout(function(){
+            // enable or disable prev button?
+            if(deltaX >= 0 - this.state.marginLeft) _('#' + this.props.name + ' .rail-bar-button-left').addClass('disabled');
+            else _('#' + this.props.name + ' .rail-bar-button-left').removeClass('disabled');
 
-        // enable or disable prev button?
-        if(deltaX <= this.state.maxDelta + 20) _('#' + this.props.name + ' .rail-bar-button-right').addClass('disabled');
-        else _('#' + this.props.name + ' .rail-bar-button-right').removeClass('disabled');
+            // enable or disable prev button?
+            if(deltaX <= this.state.maxDelta + 20) _('#' + this.props.name + ' .rail-bar-button-right').addClass('disabled');
+            else _('#' + this.props.name + ' .rail-bar-button-right').removeClass('disabled');
+
+            // Update dots
+            if(_('#' + this.props.name + ' .rail-bar-dots')){
+                let newPos = (arr.indexOf(closestRail) + 1);
+                if('next' === i){newPos = (nextRail != null) ? (arr.indexOf(nextRail) + 1) : (arr.indexOf(closestRail) + 1);}
+                if('prev' === i){newPos = (prevRail != null) ? (arr.indexOf(prevRail) + 1) : (arr.indexOf(closestRail) + 1);}
+
+                const newDot = _('#' + this.props.name + ' .rail-bar-dots .dot:nth-child('+newPos+')');
+                if(newDot){
+                    _('#' + this.props.name + ' .rail-bar-dots .dot').removeClass('active');
+                    newDot.addClass('active');
+                }
+            }
+        }.bind(this), 50);
 
         // Set Snap state
         this.setState({translateX : deltaX, maxDelta : _('#' + this.props.name + '-wrapper').width() - _('#' + this.props.name + '-inner').width()});
+    }
+
+    // Set dots
+    renderDots(){
+        let dots = [],
+            i = 0;
+        for (let child in this.props.children){
+            if (this.props.children.hasOwnProperty(child)){
+                dots.push(<li className="dot" key={this.props.name + '-dot-' + i} ></li>);
+                i++;
+            }
+        }
+
+        return dots;
     }
 
     // Set railbar height
@@ -213,7 +247,7 @@ class Railbar extends React.Component {
             styles = window.getComputedStyle(firstChild.get(0)),
             margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom']),
             marginLeft = parseFloat(styles['marginLeft']) + parseFloat(styles['borderLeft']),
-            height = Math.ceil(firstChild.height() + margin + 5);
+            height = Math.ceil(firstChild.height() + margin);
 
         for (let size in this.props.sizes){
             if(this.props.sizes.hasOwnProperty(size)){
@@ -283,6 +317,10 @@ class Railbar extends React.Component {
             if (this.props.railIndex != null) this.snapToIndex(this.props.railIndex);
             else this.snapToIndex(0);
         });
+
+        if(this.props.dots && this.props.children.length > 1){
+            this.setState({dots : this.renderDots()});
+        }
     }
 
     // Component will unmount
@@ -292,8 +330,12 @@ class Railbar extends React.Component {
 
     // Render
     render() {
+
+        let classn = 'rail-bar ' + this.props.name;
+        if(this.props.dots && this.props.children.length > 1) classn += ' has-dots';
+
         if(this.props.name != null){return (
-            <div className={'rail-bar ' + this.props.name} name={this.props.name} id={this.props.name} >
+            <div className={classn} name={this.props.name} id={this.props.name} >
                 <div className="rail-bar-wrapper" id={ this.props.name + '-wrapper' }>
                     <div className="rail-bar-inner" id={ this.props.name + '-inner' }
                         onMouseDown = { this.handleMouseDown.bind(this) }
@@ -303,6 +345,7 @@ class Railbar extends React.Component {
                         {this.props.children}
                     </div>
                 </div>
+                {this.state.dots != null && <ol className="rail-bar-dots">{this.state.dots}</ol>}
                 { this.props.buttons != false && <div className="rail-bar-button-left disabled" onClick={this.handleButtonPrevClick.bind(this)}><svg viewBox="0 0 20 20"><use xlinkHref="#chevron-left"></use></svg></div> }
                 { this.props.buttons != false && <div className="rail-bar-button-right disabled" onClick={this.handleButtonNextClick.bind(this)}><svg viewBox="0 0 20 20"><use xlinkHref="#chevron-right"></use></svg></div> }
             </div>
