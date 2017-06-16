@@ -8,16 +8,36 @@ const React = require( 'react' ),
 
 class Header extends React.Component {
 
+    constructor(){
+        super();
+
+        Globals.hooks.add( 'viewChanged', (data) => {
+            this.updateBookmark(data);
+        });
+
+    }
+
+    updateBookmark(views){
+
+        _('.nav-elem').removeClass('bookmark-mode');
+
+        if(views.indexOf('#search-view') != -1) _( '.nav-search' ).addClass('bookmark-mode');
+
+        else if( views.indexOf('#event-calendar-view') != -1 ||
+                 views.indexOf('#event-single-view') != -1
+               ) {_( '.nav-events' ).addClass('bookmark-mode'); }
+
+        else if( views.indexOf('#location-category-view') != -1 ||
+                 views.indexOf('#location-list-view') != -1 ||
+                 views.indexOf('#location-single-view') != -1
+               ) { _( '.nav-locations' ).addClass('bookmark-mode');}
+    }
+
     // On nav search click
     navSearchClick() {
         if ( _('.search-nav-container .bookmark-mode') !== false )
             _('.search-nav-container .bookmark-mode').removeClass('bookmark-mode');
-
-        _('.nav-elem').removeClass('bookmark-mode');
-        _( '.nav-search' ).addClass('bookmark-mode');
         if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
-
-
         Globals.viewHandler.changeViewFocus( '#search-view', Globals.viewHandler.focusedViews[0], true, false, false );
 
 
@@ -35,12 +55,9 @@ class Header extends React.Component {
         if ( _('.search-nav-container .bookmark-mode') !== false )
             _('.search-nav-container .bookmark-mode').removeClass('bookmark-mode');
 
-        _('.nav-elem').removeClass('bookmark-mode');
-        _( '.nav-locations' ).addClass('bookmark-mode');
         if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
 
         Globals.viewHandler.changeViewFocus( '#location-category-view', Globals.viewHandler.focusedViews[0], false, true, false );
-
         Globals.history.push({'type' : 'home', 'name' : 'Steder · Towwwn'});
 
     }
@@ -51,9 +68,6 @@ class Header extends React.Component {
 
         if ( _('.search-nav-container .bookmark-mode') !== false )
             _('.search-nav-container .bookmark-mode').removeClass('bookmark-mode');
-
-        _('.nav-elem').removeClass('bookmark-mode');
-        _( '.nav-events' ).addClass('bookmark-mode');
         if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
 
 
@@ -68,6 +82,9 @@ class Header extends React.Component {
 
     handleTouchEnd(){
         setTimeout(function(){Globals.navigationBlocker = false;},100);
+    }
+
+    componentDidMount(){
     }
 
     // Render

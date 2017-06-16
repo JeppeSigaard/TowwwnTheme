@@ -97,6 +97,8 @@ class ViewSlider {
     // Touch End
     onTouchEnd(e) {
 
+
+
         if(window.innerWidth > 768) return;
         if(Globals.navigationBlocker) return;
         if ( this.distance < 30 ) return;
@@ -114,6 +116,7 @@ class ViewSlider {
             Globals.viewHandler.mobileFocusedView = '#'+this.relations.right;
 
             Globals.setMainState({ currentMobileView : '#'+this.relations.right });
+            Globals.hooks.trigger( 'viewChanged', ['#'+this.relations.right, null]);
 
         } else if ( this.distance * this.cos >= _(window).width() / 3 * 1 && this.canLeft ) {
 
@@ -128,6 +131,7 @@ class ViewSlider {
             }, parseFloat( window.getComputedStyle( _('#'+this.currentView).get(0) ).transitionDuration ) * 1000);
 
             Globals.setMainState({ currentMobileView : '#'+this.relations.left });
+            Globals.hooks.trigger( 'viewChanged', ['#'+this.relations.left, null]);
 
         } else {
 
@@ -149,6 +153,7 @@ class ViewSlider {
                 }, parseFloat( window.getComputedStyle( _('#'+this.relations.right).get(0) ).transitionDuration ) * 1000);
             }
 
+            Globals.hooks.trigger( 'viewChanged', ['#'+this.currentView, null]);
         }
 
         // Resets fields

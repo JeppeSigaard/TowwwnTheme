@@ -29,10 +29,13 @@ class ViewHandler {
 
     // Change view focus
     changeViewFocus( leftView, rightView, fromLeft, fromRight, notrans, ignoreAutoDirection, leftSize, rightSize ) {
+
         if ( _('body').hasClass('mobile') ) {
             this.changeMobileViewFocus( leftView, fromLeft, fromRight );
             return;
         }
+
+        Globals.hooks.trigger( 'viewChanged', [leftView, rightView]);
 
         if ( this.focusedViews.includes( leftView ) &&
              this.focusedViews.includes( rightView ) ) return;
@@ -184,7 +187,6 @@ class ViewHandler {
                 _( this.focusedViews[1] ).removeClass('notrans');
             }
         } return;
-
     }
 
     // Manual change view focus
@@ -264,6 +266,8 @@ class ViewHandler {
              _('.container-section').removeClass('active');
             _(activeView).addClass('active');
             Globals.setMainState({ currentMobileView : activeView });
+
+            Globals.hooks.trigger( 'viewChanged', [activeView, null]);
 
         }.bind(this), 50);
     }
