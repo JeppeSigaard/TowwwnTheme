@@ -8,7 +8,7 @@ html {overflow: -moz-scrollbars-none;}
 
 body{
     position: fixed;
-    //left: 0; top: 0; bottom: 0; right: 0;
+    left: 0; top: 0; bottom: 0; right: 0;
     pointer-events: none;
     overflow: hidden;
     margin: 0;
@@ -34,6 +34,8 @@ body{
         }
     }
 }
+
+body.iphone .scroll-container-inner{padding-bottom: 36px;}
 
 p a{
     position: relative;
