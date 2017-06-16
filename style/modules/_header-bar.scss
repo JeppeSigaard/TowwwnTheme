@@ -50,13 +50,25 @@
         .nav-elem{
             position: relative;
             flex-grow: 1;
-            border-left: 1px solid #CCC;
+            border-left: 1px solid rgba(white,.4);
             width: $header-bar-height * 1.2;
             cursor: pointer;
             transition: 80ms cubic-bezier(.72, 0, .28, 1);
 
+            &:hover{
+                background-color: rgba($color-blue-2, .2);
+
+                svg{
+                   fill: #eee;
+                }
+            }
+
             &.bookmark-mode{
                 background-color: $color-blue-2;
+
+                svg{
+                   fill: #f9f9f9;
+                }
             }
 
             &.nav-user{
@@ -65,13 +77,22 @@
                         transform: translate(-50%,-50%) rotate(45deg);
                     }
                 }
+
+                &.bookmark-mode,
+                &.bookmark-mode:hover{
+
+                    svg{
+                        transform: translate(-50%,-50%) rotate(90deg);
+                    }
+
+                }
             }
 
             svg{
                 position: absolute;
                 top: 50%; left: 50%;
                 transform: translate( -50%, -50% );
-                fill: #EEE;
+                fill: #ccc;
                 width: 14px;
                 height: 14px;
                 transition: 120ms cubic-bezier(.72, 0, .28, 1);

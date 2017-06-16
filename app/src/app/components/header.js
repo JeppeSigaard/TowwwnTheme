@@ -42,7 +42,7 @@ class Header extends React.Component {
 
 
         // Focus search bar (if not mobile)
-        if(!_('body').hasClass('mobile')){
+        if(!_('body').hasClass('mobile') && !_('body').hasClass('ipad') ){
             document.getElementById('search-bar').focus();
         }
 
@@ -58,6 +58,7 @@ class Header extends React.Component {
         if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
 
         Globals.viewHandler.changeViewFocus( '#location-category-view', Globals.viewHandler.focusedViews[0], false, true, false );
+
         Globals.history.push({'type' : 'home', 'name' : 'Steder · Towwwn'});
 
     }
