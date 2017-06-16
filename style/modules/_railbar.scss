@@ -146,3 +146,28 @@ $rail-bar-svg-height: 12px;
         fill: white;
     }
 }
+
+.rail-bar-dots {
+    margin: 0;
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 0;
+    height: 7px;
+
+    .dot{
+        display: inline-block;
+        height: 7px;
+        width: 7px;
+        background: black;
+        opacity: .3;
+        border-radius: 100%;
+        margin: 0px 3px;
+
+        &.active{
+            opacity: .6;
+        }
+    }
+}

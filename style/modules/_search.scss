@@ -53,6 +53,18 @@
     top: 0; left: 0; right: 0; bottom: 0;
     height: auto!important;
 
+    .rail-bar-dots{
+        bottom: auto;
+        top: 36px;
+        height: 36px;
+        background: rgba($color-blue-1,.3);
+        line-height: 36px;
+
+        .dot{
+            background: white;
+        }
+    }
+
     .rail-bar-button-right,
     .rail-bar-button-left{
         display: none;

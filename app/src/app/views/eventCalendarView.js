@@ -5,6 +5,7 @@ const React = require( 'react' ),
       Event = require( '../components/event.js' ),
       Railbar = require( '../componentParts/railbar.js' ),
       EventFilterButton  = require( '../componentParts/eventFilterButton.js' ),
+      SponsorBanner  = require( '../componentParts/sponsorBanner.js' ),
       Loader  = require( '../componentParts/loader.js' ),
       Header  = require( '../componentParts/sectionHeader.js' ),
       ScrollContainer  = require( '../componentParts/scrollContainer.js' ),
@@ -64,26 +65,57 @@ class EventCalendarView extends React.Component {
 
     toggleFuture(){
         if( !this.loadReturned ) return;
-        this.setState({allLoaded : false});
+        this.allLoaded = false; this.setState({allLoaded : false});
         Globals.setMainState({'jsxEvents' : null});
         this.properties = {
             per_page : 24,
             page : 1,
-            after : 'now',
+            after : '-1 hour',
         };
         this.loadEvents('future');
     }
 
     togglePast(){
         if( !this.loadReturned ) return;
-        this.setState({allLoaded : false});
+        this.allLoaded = false; this.setState({allLoaded : false});
         Globals.setMainState({'jsxEvents' : null});
         this.properties = {
             per_page : 24,
             page : 1,
-            before : 'now',
+            before : '-1 hour',
         };
         this.loadEvents('past');
+    }
+
+    applySponsorBanner(){
+        return new Promise(( resolve, reject) => {
+            const commercialOptions = {
+                for : 'event_calendar',
+                per_page : 3,
+            };
+
+            Globals.CommercialDataHandler.getCommercials(commercialOptions).then((resp) =>{
+
+                if(resp.length < 1) resolve(null);
+
+                let events = this.props.events;
+                let jsxCommercials = [];
+                let sponsorbanners = [];
+                const time = new Date().getTime();
+
+
+                for(let item in resp){
+                    if(resp.hasOwnProperty(item)){
+                        sponsorbanners.push(<SponsorBanner type="event_calendar" key={'calendar-banner-'+resp[item].id} item={resp[item]}></SponsorBanner>);
+                    }
+                }
+
+                jsxCommercials.push(<Railbar className="calendar-banner-container" name={'sponsor-banner-' + time} key={'sponsor-banner-' + time} snap sizes={{0:1}} children={sponsorbanners} dots></Railbar>);
+
+                resolve(jsxCommercials);
+            });
+
+        });
     }
 
     toggleHeart(){
@@ -103,7 +135,7 @@ class EventCalendarView extends React.Component {
         else{
 
             if( !this.loadReturned ) return;
-            this.setState({allLoaded : false});
+            this.allLoaded = false; this.setState({allLoaded : false});
             Globals.setMainState({'jsxEvents' : null});
 
             let events = [];
@@ -122,17 +154,19 @@ class EventCalendarView extends React.Component {
             }
 
             this.properties = {
-                per_page : 24,
+                per_page : 9999,
                 page : 1,
                 ids : events,
+                after : '-1 hour',
             };
 
             this.loadEvents('hearts');
+            this.allLoaded = true; this.setState({allLoaded : true});
         }
     }
 
     togglePredicted(){
-        this.setState({allLoaded : false});
+        this.allLoaded = false; this.setState({allLoaded : false});
         Globals.setMainState({'jsxEvents' : null});
 
         this.properties = {
@@ -177,32 +211,45 @@ class EventCalendarView extends React.Component {
 
                 Globals.setMainState({'jsxEvents' : intro});
                 this.loadReturned = true;
-                this.setState({allLoaded : true});
+                this.allLoaded = true; this.setState({allLoaded : true});
                 return;
             }
 
+            this.eventsLength = resp.length;
+
             if ( resp.length > 23 ) {
-
-               this.setState({allLoaded : false});
+                this.allLoaded = false; this.setState({allLoaded : false});
                 this.properties.page ++;
+            }
 
-            } else {
-                this.setState({allLoaded : true});
+            else {
+                this.allLoaded = true; this.setState({allLoaded : true});
+            }
 
-            } this.eventsLength = resp.length;
+
 
             let events = this.props.events;
             if(null == events){events = [];}
 
+            const time = new Date().getTime();
             resp.forEach(( item, index ) => {
-                events.push( <Event from={ this.props.name } elem={ item } key={ 'event-' + item.fbid } setMainState={ this.props.setMainState } /> );
+                events.push( <Event from={ this.props.name } elem={ item } key={ 'event-' + time + item.id } setMainState={ this.props.setMainState } /> );
             });
 
             Globals.setMainState({'jsxEvents' : events});
-            this.loadReturned = true;
 
+            if(resp.length > 23){
+
+                this.applySponsorBanner().then((banner) => {
+                    if(null != banner){
+                        events.push(banner);
+                        Globals.setMainState({'jsxEvents' : events});
+                    }
+
+                    this.loadReturned = true;
+                });
+            }
         });
-
     }
 
     userHook (){
@@ -276,9 +323,9 @@ class EventCalendarView extends React.Component {
                     </div>
                     <Railbar name="event-calendar-buttons" snap>
                         <EventFilterButton onClick={this.toggleFuture.bind(this)} name="Kommende" active/>
-                        <EventFilterButton onClick={this.togglePast.bind(this)} name="Tidligere"/>
-                        { this.state.showPredictedButton !=null && <EventFilterButton onClick={this.togglePredicted.bind(this)} name="anbefalede"/>}
                         <EventFilterButton onClick={this.toggleHeart.bind(this)} icon="#icon-heart" viewBox="0 0 32 32"/>
+                        { this.state.showPredictedButton !=null && <EventFilterButton onClick={this.togglePredicted.bind(this)} name="anbefalede"/>}
+                        <EventFilterButton onClick={this.togglePast.bind(this)} name="Tidligere"/>
                     </Railbar>
                 </Header>
                 <ScrollContainer  name="event-calendar-scroll-content" onScroll={ this.onscroll.bind(this) } header="#event-calendar-view .section-header">

@@ -6,7 +6,7 @@ const React = require( 'react' ),
       Globals = require( '../globals.js' ),
       _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
       Railbar = require( '../componentParts/railbar.js' ),
-      SponsorBanner = require( '../componentParts/SponsorBanner.js' ),
+      SponsorBanner = require( '../componentParts/sponsorBanner.js' ),
       LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
 
       // TMP
@@ -57,6 +57,7 @@ class SearchView extends React.Component {
     setBanners(){
         const commercialOptions = {
             for : 'search',
+            per_page : 3,
         };
 
         Globals.CommercialDataHandler.getCommercials(commercialOptions).then((resp) =>{
@@ -65,7 +66,7 @@ class SearchView extends React.Component {
             let jsxCommercials = [];
             for(let item in resp){
                 if(resp.hasOwnProperty(item)){
-                    jsxCommercials.push(<SponsorBanner key={'search-banner-'+resp[item].id} item={resp[item]}></SponsorBanner>);
+                    jsxCommercials.push(<SponsorBanner type="search" key={'search-banner-'+resp[item].id} item={resp[item]}></SponsorBanner>);
                 }
             }
 
