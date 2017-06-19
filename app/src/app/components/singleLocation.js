@@ -101,6 +101,7 @@ class SingleLocation extends React.Component {
         let elem = this.props.elem,
             description = (elem.description != null && elem.description.length > 10) ? elem.description : elem.about,
             railSizes = {0 : 2, 640 : 3, 768 : 2, 1080 : 3, 1600 : 4};
+
         return (
             <div className="location-singleview-content" >
                 <div className="photo-container">
@@ -139,16 +140,27 @@ class SingleLocation extends React.Component {
                         </a>
                     }
                 </div>
+
                 <div className="breakline"></div>
-                {description != null && description.length > 50 && <div className="description-container">
+                 <div className="description-container">
                     <div className="description">
-                        <Linkify>
-                            { TextPreproccesors.nl2p( TextPreproccesors.ripRep( description ) ) }
-                        </Linkify>
+
+                       <div className="hearts">
+                            { elem.hearts != null ? elem.hearts : '0' }
+                            <svg viewBox="0 0 32 32">
+                                <use xlinkHref="#icon-heart"></use>
+                            </svg>
+                        </div>
+
+                        { description != null && description.length > 50 &&
+                            <Linkify>
+                                { TextPreproccesors.nl2p( TextPreproccesors.ripRep( description ) ) }
+                            </Linkify>
+                        }
+
                     </div>
                 </div>
-                }
-                {description != null && description.length > 50 && <div className="breakline"></div> }
+                <div className="breakline"></div>
                 { this.state.jsxEvents != null &&
                 <Railbar name="event-slider" sizes={railSizes} snap>
                     { this.state.jsxEvents }

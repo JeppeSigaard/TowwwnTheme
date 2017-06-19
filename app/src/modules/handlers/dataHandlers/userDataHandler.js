@@ -319,45 +319,49 @@ class User {
                     let json = JSON.parse( data.target.response ),
                         obj = json.behaviour_statistics;
 
-                    this.state.hearts = json.hearts;
+                    if ( json.hearts != null ) this.state.hearts = json.hearts;
 
                     // Converts arrays back into objects
-                    let timeData = obj.timeData,
-                        types = [ 'event', 'location', 'locationcategory' ];
+                    if ( obj != null ) {
 
-                    for ( let key of types ) {
-                        if ( timeData[ key ].constructor.name === 'Array' ) {
-                            var tmpObject = { };
-                            for (var iter = 0; iter < timeData[ key ].length; iter++ ) {
-                                if ( timeData[ key ][ iter ] != null ) tmpObject[ iter ]
-                                    = timeData[ key ][ iter ];
-                            } timeData[ key ] = tmpObject;
-                        }
-                    }
+                        let timeData = obj.timeData,
+                            types = [ 'event', 'location', 'locationcategory' ];
 
-                    // Adds new behaviour data from login, to old loaded from cookie
-                    let recursiveObjectAddition = (( newobj, oldobj ) => {
-                        let response = { };
-                        for ( let key of Object.keys( newobj ) ) {
-                            if ( newobj[ key ] == null ||
-                                oldobj == null ) continue;
-                            if ( typeof newobj[ key ] === 'object' &&
-                                 typeof oldobj[ key ] === 'object' ) {
-                                response[ key ] = recursiveObjectAddition( newobj[ key ], oldobj[ key ] );
-                            } else {
-                                if ( newobj[ key ] != null && oldobj[ key ] != null ) {
-                                    response[ key ] = newobj[ key ] + oldobj[ key ];
-                                } else if ( newobj[ key ] != null ) {
-                                    response[ key ] = newobj[ key ];
-                                } else if ( oldobj[ key ] != null ) {
-                                    response[ key ] = oldobj[ key ];
-                                }
+                        for ( let key of types ) {
+                            if ( timeData[ key ].constructor.name === 'Array' ) {
+                                var tmpObject = { };
+                                for (var iter = 0; iter < timeData[ key ].length; iter++ ) {
+                                    if ( timeData[ key ][ iter ] != null ) tmpObject[ iter ]
+                                        = timeData[ key ][ iter ];
+                                } timeData[ key ] = tmpObject;
                             }
-                        } return response;
-                    });
+                        }
 
-                    this.state.behaviourData = recursiveObjectAddition
+                        // Adds new behaviour data from login, to old loaded from cookie
+                        let recursiveObjectAddition = (( newobj, oldobj ) => {
+                            let response = { };
+                            for ( let key of Object.keys( newobj ) ) {
+                                if ( newobj[ key ] == null ||
+                                    oldobj == null ) continue;
+                                if ( typeof newobj[ key ] === 'object' &&
+                                     typeof oldobj[ key ] === 'object' ) {
+                                    response[ key ] = recursiveObjectAddition( newobj[ key ], oldobj[ key ] );
+                                } else {
+                                    if ( newobj[ key ] != null && oldobj[ key ] != null ) {
+                                        response[ key ] = newobj[ key ] + oldobj[ key ];
+                                    } else if ( newobj[ key ] != null ) {
+                                        response[ key ] = newobj[ key ];
+                                    } else if ( oldobj[ key ] != null ) {
+                                        response[ key ] = oldobj[ key ];
+                                    }
+                                }
+                            } return response;
+                        });
+
+                        this.state.behaviourData = recursiveObjectAddition
                             ( obj, this.state.behaviourData );
+
+                    }
 
                     this.state.loggedIn = true;
                     this.hooks.trigger( 'onlogin' );
@@ -414,6 +418,7 @@ class User {
             token : this.state.accessToken.token,
             meta_data : {
                 behaviour_statistics : { },
+                hearts: { events: [], locations: [] }
             },
         };
 

@@ -115,6 +115,25 @@
             font-size: 15px;
             max-width: 769px;
             word-wrap: break-word;
+
+            .hearts{
+                width: 100%;
+                text-align: center;
+                margin-top: 8px;
+                margin-bottom: 8px;
+                font-size: 14px;
+                font-family: 'Montserrat';
+                font-weight: 900;
+                line-height: 24px;
+                color: #292929;
+
+                svg{
+                    margin-left: 6px;
+                    width: 12px;
+                    height: auto;
+                    fill: #292929;
+                }
+            }
         }
     }
 
