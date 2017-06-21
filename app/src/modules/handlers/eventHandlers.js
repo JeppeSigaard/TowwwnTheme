@@ -14,8 +14,27 @@ class ExtraEventHandlers {
 
     // On resize
     onResize() {
-        if ( _(window).width() <= 769 ) _('body').addClass('mobile');
-        else _('body').removeClass('mobile');
+
+        if ( _(window).width() <= 769 && !_('body').hasClass('mobile') ){
+
+            // Mobile view
+            _('body').addClass('mobile');
+            _('.container-section').css({width : '100%'});
+            Globals.viewHandler.changeMobileViewFocus(Globals.viewHandler.focusedViews[0]);
+
+            console.log(Globals);
+        }
+
+        else if ( _(window).width() > 769 && _('body').hasClass('mobile') ){
+
+            // Desktop view
+            _('body').removeClass('mobile');
+            _('.container-section').css({width : '50%'});
+            const view0 = Globals.viewHandler.mobileFocusedView,
+                  view1 = (Globals.viewHandler.focusedViews[1] != null) ? Globals.viewHandler.focusedViews[1] : '#event-calendar-view';
+
+            Globals.viewHandler.changeViewFocus(view0, view1);
+        }
     }
 
     // On Scroll
