@@ -55,6 +55,11 @@
             cursor: pointer;
             transition: 80ms cubic-bezier(.72, 0, .28, 1);
 
+            &.nav-user.bookmark-mode{
+                cursor: pointer;
+                pointer-events: all;
+            }
+
             &:hover{
                 background-color: rgba($color-blue-2, .2);
 
@@ -65,6 +70,18 @@
 
             &.bookmark-mode{
                 background-color: $color-blue-2;
+                cursor: default;
+                pointer-events: none;
+
+                svg{
+                   fill: #f9f9f9;
+                }
+            }
+
+            &.semi-bookmark-mode{
+                background-color: darken($color-blue-2,15);
+                cursor: default;
+                pointer-events: none;
 
                 svg{
                    fill: #f9f9f9;

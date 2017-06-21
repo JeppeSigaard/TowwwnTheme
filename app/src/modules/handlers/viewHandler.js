@@ -35,8 +35,6 @@ class ViewHandler {
             return;
         }
 
-        Globals.hooks.trigger( 'viewChanged', [leftView, rightView]);
-
         if ( this.focusedViews.includes( leftView ) &&
              this.focusedViews.includes( rightView ) ) return;
 
@@ -186,7 +184,10 @@ class ViewHandler {
                 _( this.focusedViews[0] ).removeClass('notrans');
                 _( this.focusedViews[1] ).removeClass('notrans');
             }
-        } return;
+        }
+
+        Globals.hooks.trigger( 'viewChanged', [leftView, rightView]);
+        return;
     }
 
     // Manual change view focus

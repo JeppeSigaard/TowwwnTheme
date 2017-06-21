@@ -118,26 +118,27 @@ class EventSingleView extends React.Component {
             if ( this.props.event != null ) {
                 BehaviourDataHandler.parseTimeData( 'event', this.props.event.id, new Date().getTime()  -this.startTime, this.props.event.parentid );
             } this.startTime = new Date().getTime();
-        }
 
-        if ( nextProps.from === 'location-single-view' ) {
-            Globals.relations[ nextProps.name ].canleft = true;
-            Globals.relations[ nextProps.name ].canright = false;
-            this.setState({ closeviewstate : this.state.fromlocationclose });
-        } else if ( nextProps.from === 'search-results-view' ) {
-            Globals.relations[ nextProps.name ].canleft = true;
-            Globals.relations[ nextProps.name ].canright = false;
-            this.setState({ closeviewstate : this.state.fromsearchclose });
-        } else {
-            Globals.relations[ nextProps.name ].canleft = false;
-            Globals.relations[ nextProps.name ].canright = true;
-            this.setState({ closeviewstate : this.state.standardclose });
-        }
 
-        if ( nextProps.event != null ) {
-            this.setState({
-                'jsxEvent' : <SingleEvent elem={ nextProps.event } />,
-            }, this.applySponsorBanner.bind(this));
+            if ( nextProps.from === 'location-single-view' ) {
+                Globals.relations[ nextProps.name ].canleft = true;
+                Globals.relations[ nextProps.name ].canright = false;
+                this.setState({ closeviewstate : this.state.fromlocationclose });
+            } else if ( nextProps.from === 'search-results-view' ) {
+                Globals.relations[ nextProps.name ].canleft = true;
+                Globals.relations[ nextProps.name ].canright = false;
+                this.setState({ closeviewstate : this.state.fromsearchclose });
+            } else {
+                Globals.relations[ nextProps.name ].canleft = false;
+                Globals.relations[ nextProps.name ].canright = true;
+                this.setState({ closeviewstate : this.state.standardclose });
+            }
+
+            if ( nextProps.event != null ) {
+                this.setState({
+                    'jsxEvent' : <SingleEvent elem={ nextProps.event } />,
+                }, this.applySponsorBanner.bind(this));
+            }
         }
     }
 

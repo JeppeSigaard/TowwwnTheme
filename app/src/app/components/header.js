@@ -11,6 +11,10 @@ class Header extends React.Component {
     constructor(){
         super();
 
+        this.state = {
+            views : [null, null],
+        }
+
         Globals.hooks.add( 'viewChanged', (data) => {
             this.updateBookmark(data);
         });
@@ -18,34 +22,24 @@ class Header extends React.Component {
     }
 
     updateBookmark(views){
-
-        _('.nav-elem').removeClass('bookmark-mode');
-
-        if(views.indexOf('#search-view') != -1) _( '.nav-search' ).addClass('bookmark-mode');
-
-        else if( views.indexOf('#event-calendar-view') != -1 ||
-                 views.indexOf('#event-single-view') != -1
-               ) {_( '.nav-events' ).addClass('bookmark-mode'); }
-
-        else if( views.indexOf('#location-category-view') != -1 ||
-                 views.indexOf('#location-list-view') != -1 ||
-                 views.indexOf('#location-single-view') != -1
-               ) { _( '.nav-locations' ).addClass('bookmark-mode');}
+        if (views === this.state.views) this.setState( { views : [ views[1], views[0] ] } );
+        else this.setState({views : views});
     }
 
     // On nav search click
     navSearchClick() {
+
         if ( _('.search-nav-container .bookmark-mode') !== false )
             _('.search-nav-container .bookmark-mode').removeClass('bookmark-mode');
         if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
-        Globals.viewHandler.changeViewFocus( '#search-view', Globals.viewHandler.focusedViews[0], true, false, false );
-
 
         // Focus search bar (if not mobile)
         if(!_('body').hasClass('mobile') && !_('body').hasClass('ipad') ){
             document.getElementById('search-bar').focus();
         }
 
+        if(Globals.hamburger != null && Globals.hamburger) Globals.hooks.trigger('toggle-hamburger');
+        Globals.viewHandler.changeViewFocus( '#search-view', Globals.viewHandler.focusedViews[0], true, false, false );
         Globals.history.push({'type' : 'home', 'name' : 'Søg · Towwwn'});
 
     }
@@ -57,8 +51,8 @@ class Header extends React.Component {
 
         if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
 
+        if(Globals.hamburger != null && Globals.hamburger) Globals.hooks.trigger('toggle-hamburger');
         Globals.viewHandler.changeViewFocus( '#location-category-view', Globals.viewHandler.focusedViews[0], false, true, false );
-
         Globals.history.push({'type' : 'home', 'name' : 'Steder · Towwwn'});
 
     }
@@ -71,9 +65,8 @@ class Header extends React.Component {
             _('.search-nav-container .bookmark-mode').removeClass('bookmark-mode');
         if ( _('.search-inactive') !== false ) _('.search-inactive').removeClass('search-inactive');
 
-
+        if(Globals.hamburger != null && Globals.hamburger) Globals.hooks.trigger('toggle-hamburger');
         Globals.viewHandler.changeViewFocus( '#event-calendar-view', Globals.viewHandler.focusedViews[1], true, false, false );
-
         Globals.history.push({'type' : 'home', 'name' : 'Begivenheder · Towwwn'});
     }
 
@@ -90,6 +83,28 @@ class Header extends React.Component {
 
     // Render
     render() {
+
+
+        // Set bookmark mode and semi bookmark mode
+        const calendar_views = ['#event-single-view','#event-calendar-view'],
+              location_views = ['#location-category-view','#location-list-view','#location-single-view'],
+              search_views = ['#search-view'],
+              views = this.state.views;
+
+
+        let event_classes = 'nav-elem nav-events',
+            location_classes = 'nav-elem nav-locations',
+            search_classes = 'nav-elem nav-search';
+
+        if(views[0] != null && calendar_views.indexOf(views[0]) != -1) event_classes += ' bookmark-mode';
+        else if(views[1] != null && calendar_views.indexOf(views[1]) != -1) event_classes += ' semi-bookmark-mode';
+
+        if(views[0] != null && location_views.indexOf(views[0]) != -1) location_classes += ' bookmark-mode';
+        else if(views[1] != null && location_views.indexOf(views[1]) != -1) location_classes += ' semi-bookmark-mode';
+
+        if(views[0] != null && search_views.indexOf(views[0]) != -1) search_classes += ' bookmark-mode';
+        else if(views[1] != null && search_views.indexOf(views[1]) != -1) search_classes += ' semi-bookmark-mode';
+
         return (
             <header id="site-header" className="site-header" onTouchStart={this.handleTouchStart.bind(this)} onTouchEnd={this.handleTouchEnd.bind(this)}>
                 <div className="header-container">
@@ -105,19 +120,19 @@ class Header extends React.Component {
                         </a>
 
                         <div id="top-nav-icons" >
-                            <div className="nav-search nav-elem" onClick={ this.navSearchClick.bind(this) } >
+                            <div className={search_classes} onClick={ this.navSearchClick.bind(this) } >
                                 <svg viewBox="0 0 32 32">
                                     <use xlinkHref="#icon-search">
                                     </use>
                                 </svg>
                             </div>
-                            <div className="nav-events nav-elem bookmark-mode" onClick={ this.navEventClick.bind(this) } >
+                            <div className={event_classes} onClick={ this.navEventClick.bind(this) } >
                                 <svg viewBox="0 0 32 32">
                                     <use xlinkHref="#icon-event">
                                     </use>
                                 </svg>
                             </div>
-                            <div className="nav-locations nav-elem" onClick={ this.navLocationClick.bind(this) } >
+                            <div className={location_classes} onClick={ this.navLocationClick.bind(this) } >
                                 <svg viewBox="0 0 32 32">
                                     <use xlinkHref="#icon-location">
                                     </use>
