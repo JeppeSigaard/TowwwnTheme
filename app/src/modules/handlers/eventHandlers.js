@@ -22,7 +22,6 @@ class ExtraEventHandlers {
             _('.container-section').css({width : '100%'});
             Globals.viewHandler.changeMobileViewFocus(Globals.viewHandler.focusedViews[0]);
 
-            console.log(Globals);
         }
 
         else if ( _(window).width() > 769 && _('body').hasClass('mobile') ){
