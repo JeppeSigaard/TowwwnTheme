@@ -30,8 +30,13 @@ class ExtraEventHandlers {
             // Desktop view
             _('body').removeClass('mobile');
             _('.container-section').css({width : '50%'});
-            const view0 = Globals.viewHandler.mobileFocusedView,
-                  view1 = (Globals.viewHandler.focusedViews[1] != null) ? Globals.viewHandler.focusedViews[1] : '#event-calendar-view';
+            const view0 = Globals.viewHandler.mobileFocusedView;
+            let view1 = Globals.viewHandler.focusedViews[1];
+
+            if (view1 == null || view1 == view0 ) {
+                if (view0 !== '#event-calendar-view') view1 = '#event-calendar-view';
+                else view1 = '#location-category-view';
+            }
 
             Globals.viewHandler.changeViewFocus(view0, view1);
         }
