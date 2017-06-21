@@ -76,7 +76,7 @@
     right: 0;
 }
 
-$rail-bar-button-height: $menu-bar-height;
+$rail-bar-button-height: $header-bar-height; //$menu-bar-height;
 $rail-bar-svg-height: 12px;
 .rail-bar-menu-button{
     flex-grow: 0;

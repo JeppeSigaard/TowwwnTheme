@@ -9,6 +9,6 @@
     transition-timing-function: cubic-bezier(0, 0, 0, 1);
 
     &.collapse{
-        transform: translateY(-#{$menu-bar-height});
+        transform: translateY(-#{$header-bar-height});
     }
 }
