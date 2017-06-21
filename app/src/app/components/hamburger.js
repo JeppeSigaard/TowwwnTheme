@@ -122,6 +122,8 @@ class Hamburger extends React.Component {
             this.prevBookmark.addClass('bookmark-mode');
             _('.nav-user').removeClass('bookmark-mode');
 
+            Globals.hamburger = false;
+
         } else {
 
             _('.hamburger').addClass('active');
@@ -131,6 +133,7 @@ class Hamburger extends React.Component {
             this.prevBookmark = _('.nav-elem.bookmark-mode').removeClass('bookmark-mode');
             _('.nav-user').addClass('bookmark-mode');
 
+            Globals.hamburger = true;
         }
     }
 
