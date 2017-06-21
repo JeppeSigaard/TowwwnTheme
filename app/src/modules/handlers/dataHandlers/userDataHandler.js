@@ -58,8 +58,8 @@ class User {
     }
 
     handleUnload(){
-        this.saveDataInCookie( 30 );
 
+        this.saveDataInCookie( 30 );
         if ( this.state.loggedIn ) {
 
             // Request Param

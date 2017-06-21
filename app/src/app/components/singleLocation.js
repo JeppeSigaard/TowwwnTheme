@@ -141,26 +141,34 @@ class SingleLocation extends React.Component {
                     }
                 </div>
 
-                <div className="breakline"></div>
-                 <div className="description-container">
-                    <div className="description">
+                { ( parseInt( elem.hearts ) > 0 || description != null ) &&
+                    <div>
+                    <div className="breakline"></div>
+                     <div className="description-container">
 
-                       <div className="hearts">
-                            { elem.hearts != null ? elem.hearts : '0' }
-                            <svg viewBox="0 0 32 32">
-                                <use xlinkHref="#icon-heart"></use>
-                            </svg>
-                        </div>
+                          <div className="description">
 
-                        { description != null && description.length > 50 &&
-                            <Linkify>
-                                { TextPreproccesors.nl2p( TextPreproccesors.ripRep( description ) ) }
-                            </Linkify>
-                        }
+                               { parseInt( elem.hearts ) > 0 &&
+                                   <div className="hearts">
+                                        { elem.hearts != null ? elem.hearts : '0' }
+                                        <svg viewBox="0 0 32 32">
+                                            <use xlinkHref="#icon-heart"></use>
+                                        </svg>
+                                    </div>
+                                }
 
+                                { description != null && description.length > 50 &&
+                                    <Linkify>
+                                        { TextPreproccesors.nl2p( TextPreproccesors.ripRep( description ) ) }
+                                    </Linkify>
+                                }
+
+                            </div>
                     </div>
-                </div>
-                <div className="breakline"></div>
+                    <div className="breakline"></div>
+                    </div>
+                }
+
                 { this.state.jsxEvents != null &&
                 <Railbar name="event-slider" sizes={railSizes} snap>
                     { this.state.jsxEvents }
