@@ -95,10 +95,7 @@ class Hamburger extends React.Component {
         });
 
         // UI Actions
-        _('.nav-user').on('click', this.toggle.bind(this));
-        _('#general-overlay').on('click', this.toggle.bind(this));
         Globals.hooks.add('toggle-hamburger', this.toggle.bind(this));
-
     }
 
     // Remove nav elem
@@ -113,28 +110,8 @@ class Hamburger extends React.Component {
 
     // Toggle
     toggle() {
-        if ( _('.content-container-inner').hasClass('aside') ) {
-
-            _('.hamburger').removeClass('active');
-            _('.content-container-inner').removeClass('aside');
-            _('#general-overlay').removeClass('active');
-
-            this.prevBookmark.addClass('bookmark-mode');
-            _('.nav-user').removeClass('bookmark-mode');
-
-            Globals.hamburger = false;
-
-        } else {
-
-            _('.hamburger').addClass('active');
-            _('.content-container-inner').addClass('aside');
-            _('#general-overlay').addClass('active');
-
-            this.prevBookmark = _('.nav-elem.bookmark-mode').removeClass('bookmark-mode');
-            _('.nav-user').addClass('bookmark-mode');
-
-            Globals.hamburger = true;
-        }
+        if ( Globals.hamburger != null && Globals.hamburger ) Globals.hamburger = false;
+        else Globals.hamburger = true;
     }
 
     // Nav Click
@@ -213,8 +190,12 @@ class Hamburger extends React.Component {
 
     // Render
     render() {
+
+        let hamburger_class = 'hamburger';
+        if(Globals.hamburger != null && Globals.hamburger) hamburger_class += ' active';
+
         return (
-            <div className="hamburger">
+            <div className={hamburger_class}>
                 <div className="hamburger-inner">
                     { Globals.user.state.loggedIn &&
                         <div className="user-name">

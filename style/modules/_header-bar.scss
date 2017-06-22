@@ -1,3 +1,5 @@
+
+
 #headerbar{
     position: relative;
     width: 100%;
@@ -39,81 +41,94 @@
             text-transform: uppercase;
         }
     }
+}
 
-    #top-nav-icons{
-        display: flex;
-        position: absolute;
-        right: 0; top: 0;
-        width: auto; height: 100%;
-        flex-wrap: nowrap;
+
+.hamburger-active #top-nav-icons .nav-elem{
+    &.bookmark-mode,
+    &.semi-bookmark-mode{
+         background-color: transparent;
+         cursor: pointer;
+         pointer-events: all;
+    }
+
+    &.nav-user,
+    &.nav-user:hover{
+        background-color: $color-blue-2;
         
-        .nav-elem{
-            position: relative;
-            flex-grow: 1;
-            border-left: 1px solid rgba(white,.4);
-            width: $header-bar-height * 1.2;
+        svg{
+            transform: translate(-50%,-50%) rotate(90deg);
+            fill: #f9f9f9;
+        }
+
+    }
+}
+
+#top-nav-icons{
+    display: flex;
+    position: absolute;
+    right: 0; top: 0;
+    width: auto; height: 100%;
+    flex-wrap: nowrap;
+
+    .nav-elem{
+        position: relative;
+        flex-grow: 1;
+        border-left: 1px solid rgba(white,.4);
+        width: $header-bar-height * 1.2;
+        cursor: pointer;
+        transition: 80ms cubic-bezier(.72, 0, .28, 1);
+
+        &.nav-user.bookmark-mode{
             cursor: pointer;
-            transition: 80ms cubic-bezier(.72, 0, .28, 1);
+            pointer-events: all;
+        }
 
-            &.nav-user.bookmark-mode{
-                cursor: pointer;
-                pointer-events: all;
-            }
-
-            &:hover{
-                background-color: rgba($color-blue-2, .2);
-
-                svg{
-                   fill: #eee;
-                }
-            }
-
-            &.bookmark-mode{
-                background-color: $color-blue-2;
-                cursor: default;
-                pointer-events: none;
-
-                svg{
-                   fill: #f9f9f9;
-                }
-            }
-
-            &.semi-bookmark-mode{
-                background-color: darken($color-blue-2,15);
-                cursor: default;
-                pointer-events: none;
-
-                svg{
-                   fill: #f9f9f9;
-                }
-            }
-
-            &.nav-user{
-                &:hover{
-                    svg{
-                        transform: translate(-50%,-50%) rotate(45deg);
-                    }
-                }
-
-                &.bookmark-mode,
-                &.bookmark-mode:hover{
-
-                    svg{
-                        transform: translate(-50%,-50%) rotate(90deg);
-                    }
-
-                }
-            }
+        &:hover{
+            background-color: rgba($color-blue-2, .2);
 
             svg{
-                position: absolute;
-                top: 50%; left: 50%;
-                transform: translate( -50%, -50% );
-                fill: #ccc;
-                width: 14px;
-                height: 14px;
-                transition: 120ms cubic-bezier(.72, 0, .28, 1);
+               fill: #eee;
             }
+        }
+
+        &.nav-user:hover{
+            svg{
+                transform: translate(-50%,-50%) rotate(45deg);
+            }
+        }
+
+
+        &.bookmark-mode{
+            background-color: $color-blue-2;
+            cursor: default;
+            pointer-events: none;
+
+            svg{
+               fill: #f9f9f9;
+            }
+        }
+
+        &.semi-bookmark-mode{
+            background-color: darken($color-blue-2,15);
+            cursor: default;
+            pointer-events: none;
+
+            svg{
+               fill: #f9f9f9;
+            }
+        }
+
+
+
+        svg{
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate( -50%, -50% );
+            fill: #ccc;
+            width: 14px;
+            height: 14px;
+            transition: 120ms cubic-bezier(.72, 0, .28, 1);
         }
     }
 }

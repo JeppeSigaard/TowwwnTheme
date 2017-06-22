@@ -70,6 +70,10 @@ class Header extends React.Component {
         Globals.history.push({'type' : 'home', 'name' : 'Begivenheder · Towwwn'});
     }
 
+    userClick(){
+        Globals.hooks.trigger('toggle-hamburger');
+    }
+
     handleTouchStart(){
         Globals.navigationBlocker = true;
     }
@@ -138,7 +142,7 @@ class Header extends React.Component {
                                     </use>
                                 </svg>
                             </div>
-                            <div className="nav-user nav-elem">
+                            <div className="nav-user nav-elem" onClick={ this.userClick.bind(this) }>
                                 <svg viewBox="0 0 32 32">
                                     <use xlinkHref="#icon-user">
                                     </use>
