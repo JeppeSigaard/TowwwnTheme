@@ -18,7 +18,7 @@ class EventCalendarView extends React.Component {
     // Ctor
     constructor() {
         super();
-        this.state = { containerClasses : 'eventscontainer', allLoaded : false, headerCollapsed : false, view : 'grid' };
+        this.state = { containerClasses : 'eventscontainer', allLoaded : false, headerCollapsed : false, view : 'grid', toggled : 'future' };
         this.eventsLength = 0;
         this.allLoaded = false;
         this.loadReturned = true;
@@ -30,6 +30,10 @@ class EventCalendarView extends React.Component {
 
         Globals.user.hooks.add( 'onlogin', ( ) => {
             this.userHook();
+        });
+
+        Globals.user.hooks.add( 'eventHearts', ( ) => {
+            if(this.state.toggled === 'hearts') this.toggleHeart();
         });
     }
 
@@ -66,7 +70,7 @@ class EventCalendarView extends React.Component {
 
     toggleFuture(){
         if( !this.loadReturned ) return;
-        this.allLoaded = false; this.setState({allLoaded : false});
+        this.allLoaded = false; this.setState({allLoaded : false, toggled : 'future'});
         Globals.setMainState({'jsxEvents' : null});
         this.properties = {
             per_page : 24,
@@ -78,7 +82,7 @@ class EventCalendarView extends React.Component {
 
     togglePast(){
         if( !this.loadReturned ) return;
-        this.allLoaded = false; this.setState({allLoaded : false});
+        this.allLoaded = false; this.setState({allLoaded : false, toggled : 'past'});
         Globals.setMainState({'jsxEvents' : null});
         this.properties = {
             per_page : 24,
@@ -136,7 +140,7 @@ class EventCalendarView extends React.Component {
         else{
 
             if( !this.loadReturned ) return;
-            this.allLoaded = false; this.setState({allLoaded : false});
+            this.allLoaded = false; this.setState({allLoaded : false, toggled : 'hearts'});
             Globals.setMainState({'jsxEvents' : null});
 
             let events = [];
