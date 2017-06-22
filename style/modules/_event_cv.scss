@@ -53,6 +53,47 @@
     }
 }
 
+.line .eventscontainer .rail-bar.has-dots{
+    margin-bottom: 27px;
+}
+.line .event{
+    width: auto;
+    display: flex;
+    vertical-align: baseline;
+    height: 120px;
+    margin-bottom: 6px;
+    @media(min-width:480px){margin-bottom: 10px;}
+
+
+    .eventtext{
+        height: 120px;
+    }
+
+    .imgcontainer{
+        min-width: 120px;
+        max-width: 120px;
+        padding-bottom: 0;
+        height: 100%;
+        border-right: 1px solid $color-blue-1;
+
+        @media(min-width:480px){min-width: 160px; max-width: 160px;}
+        @media(min-width:640px){min-width: 200px; max-width: 200px;}
+        @media(min-width:769px){min-width: 120px; max-width: 120px;}
+        @media(min-width:1080px){min-width: 160px; max-width: 160px;}
+        @media(min-width:1280px){min-width: 200px; max-width: 200px;}
+    }
+    .eventlocation-container{
+        width: calc(100% - 140px);
+        @media(min-width:480px){width: calc(100% - 180px);}
+        @media(min-width:640px){width: calc(100% - 220px);}
+        @media(min-width:769px){width: calc(100% - 140px);}
+        @media(min-width:1080px){width: calc(100% - 180px);}
+        @media(min-width:1280px){width: calc(100% - 220px);}
+        right: 10px;
+        left: auto;
+    }
+}
+
 .event {
     vertical-align: top;
     color: inherit;

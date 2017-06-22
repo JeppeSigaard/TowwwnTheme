@@ -3,6 +3,7 @@
 // Location Category view
 const React = require( 'react' ),
       LocationCategory = require( '../components/locationCategory.js' ),
+      ViewTopBar = require( '../componentParts/viewtopbar.js' ),
       SubCategories = require( '../components/subcategories.js' ),
       Loader = require( '../componentParts/loader.js' ),
       Header  = require( '../componentParts/sectionHeader.js' ),
@@ -124,21 +125,14 @@ class LocationCategoryView extends React.Component {
 
         }
     }
-
     // Render
     render() {
         return (
             <section className="container-section" id="location-category-view">
                 <Header in="#location-category-view" for=".scroll-container">
-                    <div className="viewbar category-bar" onClick={ this.toggleSubCategories.bind(this) }>
-                       <i className="viewbar-title-icon">
-                            <svg viewBox="0 0 32 32">
-                                <use xlinkHref="#icon-location"></use>
-                            </svg>
-                       </i>
-                        Steder
-                        <div className="sub-categories-title" ></div>
-                    </div>
+                    <ViewTopBar title="Steder" icon="#icon-location" viewBox="0 0 32 32" classes="category-bar">
+                        <div className="viewbar-button sub-categories-title" onClick={ this.toggleSubCategories.bind(this) }></div>
+                    </ViewTopBar>
                 </Header>
                 <ScrollContainer scroller={this.state.scroller} name="location-category-scroll-content">
                     <div className="content">

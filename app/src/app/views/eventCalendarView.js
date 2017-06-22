@@ -6,6 +6,7 @@ const React = require( 'react' ),
       Railbar = require( '../componentParts/railbar.js' ),
       EventFilterButton  = require( '../componentParts/eventFilterButton.js' ),
       SponsorBanner  = require( '../componentParts/sponsorBanner.js' ),
+      ViewTopBar = require( '../componentParts/viewtopbar.js' ),
       Loader  = require( '../componentParts/loader.js' ),
       Header  = require( '../componentParts/sectionHeader.js' ),
       ScrollContainer  = require( '../componentParts/scrollContainer.js' ),
@@ -17,7 +18,7 @@ class EventCalendarView extends React.Component {
     // Ctor
     constructor() {
         super();
-        this.state = { containerClasses : 'eventscontainer', allLoaded : false, headerCollapsed : false };
+        this.state = { containerClasses : 'eventscontainer', allLoaded : false, headerCollapsed : false, view : 'grid' };
         this.eventsLength = 0;
         this.allLoaded = false;
         this.loadReturned = true;
@@ -179,6 +180,11 @@ class EventCalendarView extends React.Component {
         this.loadEvents('predicted');
     }
 
+    toggleView(){
+        if(this.state.view !== 'grid') this.setState({view : 'grid'});
+        else  this.setState({view : 'line'});
+    }
+
     // Load Events
     loadEvents(type) {
 
@@ -299,32 +305,25 @@ class EventCalendarView extends React.Component {
         let loadMoreClass = 'eventcv-load-more';
         if(!this.state.allLoaded) loadMoreClass += ' loading';
 
+        let section_class = 'container-section large-header';
+        if (this.state.view == 'line') section_class += ' line';
+
         return (
-            <section className="container-section large-header" id="event-calendar-view">
+            <section className={section_class} id="event-calendar-view">
                 <Header for=".scroll-container" in="#event-calendar-view">
-                    <div className="viewbar" id="eventsbar">
-                        { this.props.layoutbtns != null &&
-                            <div id="eventslayoutbtns">
-                            <a className="layoutbtn" href="#" onClick={ this.setEventLayout.bind(this) }>
-                                <svg viewBox="0 0 32 32" className="blocklayoutbtn">
-                                    <use xlinkHref="#icon-block-layout"></use>
-                                </svg>
-                            </a>
-                            <a className="layoutbtn" href="#" onClick={ this.setEventLayout.bind(this) }>
-                                <svg viewBox="0 0 32 32" className="linelayoutbtn">
-                                    <use xlinkHref="#icon-list-layout"></use>
-                                </svg>
-                            </a>
-                       </div>}
-                       <div className="title">
-                           <i className="viewbar-title-icon">
-                                <svg viewBox="0 0 32 32">
-                                    <use xlinkHref="#icon-star"></use>
-                                </svg>
-                           </i>
-                           Begivenheder
-                       </div>
-                    </div>
+                    <ViewTopBar icon="#icon-star" viewBox="0 0 32 32" title="Begivenheder">
+                        <div className="viewbar-button view-toggle" onClick={ this.toggleView.bind(this) } >
+                            {this.state.view === 'line' &&
+                            <svg viewBox="0 0 32 32">
+                                <use xlinkHref="#icon-block-layout" ></use>
+                            </svg>}
+
+                            {this.state.view !== 'line' &&
+                            <svg viewBox="0 0 32 32">
+                                <use xlinkHref="#icon-list-layout" ></use>
+                            </svg>}
+                        </div>
+                    </ViewTopBar>
                     <Railbar name="event-calendar-buttons" snap>
                         <EventFilterButton onClick={this.toggleFuture.bind(this)} name="Kommende" active/>
                         <EventFilterButton onClick={this.toggleHeart.bind(this)} icon="#icon-heart" viewBox="0 0 32 32"/>
