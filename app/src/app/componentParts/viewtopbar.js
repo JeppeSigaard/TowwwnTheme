@@ -70,6 +70,7 @@ class ViewTopBar extends React.Component {
         let classes = 'viewbar';
         if ( nextProps.darken ) classes += ' dark';
         if ( nextProps.clickable ) classes += ' clickable';
+        if( nextProps.classes ) classes += ' ' + nextProps.classes;
         this.setState({ classes : classes });
     }
 
@@ -77,8 +78,8 @@ class ViewTopBar extends React.Component {
     render() {
         return (
             <div className={ this.state.classes != null ? this.state.classes : "viewbar" }>
-                { this.props.standard &&
-                    <a onClick={ this.props.vref != null ? this.changeView.bind(this) : function() {} }>
+                { this.props.title != null &&
+                    <a className="viewbar-title" onClick={ this.props.vref != null ? this.changeView.bind(this) : function() {} }>
                     {this.props.icon !=null && this.props.viewBox != null &&
                         <i className="viewbar-title-icon">
                             <svg viewBox={this.props.viewBox}><use xlinkHref={this.props.icon}></use></svg>
@@ -90,8 +91,9 @@ class ViewTopBar extends React.Component {
                 }
 
                 { this.props.other }
+                { this.props.children }
                 { this.props.heart &&
-                    <div className="heart" onClick={ this.heart.bind(this) } >
+                    <div className="viewbar-button heart" onClick={ this.heart.bind(this) } >
                         <svg viewBox="0 0 32 32">
                             <use xlinkHref="#icon-heart" >
                             </use>
@@ -100,7 +102,7 @@ class ViewTopBar extends React.Component {
                 }
 
                 { this.props.standard &&
-                    <div className="close-button" onClick={ this.closeView.bind(this) } >&times;</div>
+                    <div className="viewbar-button close-button" onClick={ this.closeView.bind(this) } >&times;</div>
                 }
             </div>
         );
