@@ -112,6 +112,8 @@ class Hamburger extends React.Component {
     toggle() {
         if ( Globals.hamburger != null && Globals.hamburger ) Globals.hamburger = false;
         else Globals.hamburger = true;
+
+        this.setState({hamburger : Globals.hamburger});
     }
 
     // Nav Click
@@ -139,12 +141,14 @@ class Hamburger extends React.Component {
             }
 
             setTimeout(() => {
-                this.toggle();
+                console.log('toggle');
+                Globals.hooks.trigger('toggle-hamburger');
             }, parseFloat( _('.container-section').style()[0].transitionDuration ) * 1000);
 
         } else {
 
-            this.toggle();
+            console.log('toggle');
+            Globals.hooks.trigger('toggle-hamburger');
 
         } if ( cb != null ) cb();
     }
@@ -192,7 +196,7 @@ class Hamburger extends React.Component {
     render() {
 
         let hamburger_class = 'hamburger';
-        if(Globals.hamburger != null && Globals.hamburger) hamburger_class += ' active';
+        if(this.state.hamburger != null && this.state.hamburger) hamburger_class += ' active';
 
         return (
             <div className={hamburger_class}>
