@@ -57,7 +57,7 @@ class CategoryDataHandler {
                     }
                 }
 
-                if (properties != null || properties.orderby != null) resolve( json );
+                if (properties != null && properties.orderby != null) resolve( json );
 
                 else{
                     this.allCategories = json.sort((a, b) => {
