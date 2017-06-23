@@ -104,7 +104,8 @@
 }
 
 .category-container{
-    padding: 16px;
+    padding: 8px;
+    @media(min-width:640px){padding: 16px;}
     padding-bottom: 2px;
     width: 100%;
     height: auto;
@@ -156,7 +157,8 @@ a.category{
     background-position: center;
     background-size: cover;
     background-origin: content-box;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
+    @media(min-width:640px){margin-bottom: 16px;}
     cursor: pointer;
 
     &[data-image-src],
