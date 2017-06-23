@@ -125,13 +125,16 @@ class TowwwnApp extends React.Component {
         // Gets event data
         Globals.eventDataHandler = new EventDataHandler();
 
+
         // Gets category data
         Globals.categoryDataHandler = new CategoryDataHandler();
+        /*
         Globals.categoryDataHandler.getFeaturedCategories().then((resp) => {
             this.setState({
                 'featuredCategoriesData' : resp,
             });
         });
+        */
 
         Globals.categoryDataHandler.getAllCategories(false, true, {orderby : 'name', order : 'ASC'}).then(( resp ) => {
             let categoriesData = [];
@@ -142,7 +145,8 @@ class TowwwnApp extends React.Component {
             }
 
             this.setState({
-                'categoriesData' : categoriesData,
+                // 'categoriesData' : categoriesData,
+                'featuredCategoriesData' : resp,
             });
         });
 

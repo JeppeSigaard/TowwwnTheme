@@ -52,6 +52,7 @@ class LocationCategoryView extends React.Component {
 
     }
 
+    /*
     // Activate Sub Categories List
     toggleSubCategories() {
         let sc = _( '#location-category-view .scroll-container' );
@@ -64,6 +65,7 @@ class LocationCategoryView extends React.Component {
             this.setState({scroller : new Date().getTime()});
         }.bind(this), 550);
     }
+    */
 
     // Will receive props
     componentWillReceiveProps( nextProps ) {
@@ -131,13 +133,10 @@ class LocationCategoryView extends React.Component {
             <section className="container-section" id="location-category-view">
                 <Header in="#location-category-view" for=".scroll-container">
                     <ViewTopBar title="Steder" icon="#icon-location" viewBox="0 0 32 32" classes="category-bar">
-                        <div className="viewbar-button sub-categories-title" onClick={ this.toggleSubCategories.bind(this) }></div>
                     </ViewTopBar>
                 </Header>
                 <ScrollContainer scroller={this.state.scroller} name="location-category-scroll-content">
                     <div className="content">
-                        <SubCategories subCategories={ this.props.allCategories } outerHeight={ this.state.subCatHeight } clickEvent={ this.handleCategoryClick } />
-
                         <div className="category-container">
                             { this.state.suggestedCategories != null && this.state.suggestedCategories }
                             { this.state.jsxCategories != null && this.state.jsxCategories }

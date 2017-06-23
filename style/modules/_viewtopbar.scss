@@ -62,6 +62,8 @@
     background: darken($color-blue-2, 2);
     z-index: 100;
     border-bottom: 1px solid #292929;
+    border-right: 1px solid rgba(black,.03);
+
 
     &.clickable{
         a{ cursor: pointer; }
@@ -108,7 +110,7 @@
         background-color: lighten($color-blue-2, 2);
         transition: background-color 120ms;
         border-left: 1px solid rgba(white,.5);
-        border-right: 1px solid rgba(black,.05);
+
 
         &:hover{
             background-color: lighten($color-blue-2, 5);
