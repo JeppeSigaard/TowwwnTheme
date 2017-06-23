@@ -141,13 +141,10 @@ class Hamburger extends React.Component {
             }
 
             setTimeout(() => {
-                console.log('toggle');
                 Globals.hooks.trigger('toggle-hamburger');
             }, parseFloat( _('.container-section').style()[0].transitionDuration ) * 1000);
 
         } else {
-
-            console.log('toggle');
             Globals.hooks.trigger('toggle-hamburger');
 
         } if ( cb != null ) cb();
