@@ -47,6 +47,13 @@
     }
 }
 
+.section-header.collapse .viewbar-button {
+    border-left: none;
+    background: transparent;
+    color: transparent;
+    fill: transparent;
+}
+
 .viewbar{
     display: flex;
     pointer-events: all;
