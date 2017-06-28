@@ -65,7 +65,7 @@
 
         .event-sv-img{
             width: 100%;
-            padding-bottom: 56.25%;
+            padding-bottom: calc(45% + 25px);
             border: 1px solid $color-blue-1;
             margin-bottom: 16px;
             background-size: cover;
