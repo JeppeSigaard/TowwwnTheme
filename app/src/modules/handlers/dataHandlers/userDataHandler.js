@@ -186,8 +186,6 @@ class User {
                     this.state.fbData = {
                         name : resp.name,
                         mail : resp.email,
-                        birthday : resp.birthday,
-                        location : resp.location,
                     };
 
                     // Request Param
@@ -295,9 +293,8 @@ class User {
 
             // Request Param
             let data = {
-
-                name  : this.state.fbData.name,
-                email : this.state.fbData.mail,
+                name : (this.state.fbData != null) ? this.state.fbData.name : this.state.dbData.display_name,
+                email : (this.state.fbData != null) ? this.state.fbData.mail : this.state.dbData.email,
                 fbid  : this.state.userFbid,
                 token : this.state.accessToken.token,
 
@@ -437,9 +434,3 @@ class User {
 
 
 } module.exports = User;
-
-
-
-
-
-
