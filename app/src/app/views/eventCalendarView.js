@@ -18,7 +18,7 @@ class EventCalendarView extends React.Component {
     // Ctor
     constructor() {
         super();
-        this.state = { containerClasses : 'eventscontainer', allLoaded : false, headerCollapsed : false, view : 'grid', toggled : 'future' };
+        this.state = { containerClasses : 'eventscontainer', allLoaded : false, headerCollapsed : false, view : 'grid', toggled : 'future'};
         this.eventsLength = 0;
         this.allLoaded = false;
         this.loadReturned = true;
@@ -55,7 +55,7 @@ class EventCalendarView extends React.Component {
     onscroll(){
         let loadEventsBtn = document.getElementById('eventcv-load-more');
         if( this.isInView( loadEventsBtn, 100 ) && this.loadReturned ) {
-           this.loadEvents();
+           this.loadEvents(this.state.toggled);
         }
     }
 
@@ -219,9 +219,9 @@ class EventCalendarView extends React.Component {
                     </div>
                 );
 
-                Globals.setMainState({'jsxEvents' : intro});
                 this.loadReturned = true;
                 this.allLoaded = true; this.setState({allLoaded : true});
+                Globals.setMainState({'jsxEvents' : intro});
                 return;
             }
 
@@ -335,7 +335,7 @@ class EventCalendarView extends React.Component {
                         <EventFilterButton onClick={this.togglePast.bind(this)} name="Tidligere"/>
                     </Railbar>
                 </Header>
-                <ScrollContainer  name="event-calendar-scroll-content" onScroll={ this.onscroll.bind(this) } header="#event-calendar-view .section-header">
+                <ScrollContainer name="event-calendar-scroll-content" onScroll={ this.onscroll.bind(this) } in="#event-calendar-view">
                     <div className="content">
                         <div className={ this.state.containerClasses + '-outer' } >
                             <div className={ this.state.containerClasses }>

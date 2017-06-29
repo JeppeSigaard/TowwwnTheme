@@ -2,7 +2,8 @@
 const React = require( 'react' ),
       iscroll = require('../../modules/plugins/iscroll-probe.js'),
       LazyLoadHandler = require( '../../modules/handlers/lazyLoadHandler.js' ),
-      _ = require( '../../modules/libaries/underscore/underscore_main.js' );
+      _ = require( '../../modules/libaries/underscore/underscore_main.js' ),
+      Globals = require( '../globals.js' );
 
 class ScrollContainer extends React.Component {
 
@@ -41,6 +42,7 @@ class ScrollContainer extends React.Component {
 
     // Handle Scroll
     handleScroll(){
+
         // fire scroll event from props
         if(this.props.onScroll != null && typeof this.props.onScroll === 'function') this.props.onScroll();
 
@@ -49,7 +51,7 @@ class ScrollContainer extends React.Component {
 
         // Set header if in props
         if (this.settingHeader) return;
-        if (this.props.header == null) return;
+        if (this.props.header == null && this.props.in == null) return;
         this.settingHeader = true;
 
         const st = (this.iscroll != null ) ? 0 - this.iscroll.y : _('#' + this.id).get()[0].scrollTop;
@@ -58,7 +60,7 @@ class ScrollContainer extends React.Component {
         if (st > this.lastScrollTop) {
 
             if(this.scrollBuffer > this.collapse && st > 100){
-                _(this.props.header).addClass('collapse');
+                Globals.hooks.trigger('collapse-header', {header : this.props.in, collapse : true});
                 this.collapsed = true;
             }
 
@@ -70,7 +72,7 @@ class ScrollContainer extends React.Component {
         else if(st < this.lastScrollTop) {
 
             if(this.scrollBuffer > this.expand || st < 20){
-                _(this.props.header).removeClass('collapse');
+                Globals.hooks.trigger('collapse-header', {header : this.props.in, collapse : false});
                 this.collapsed = false;
             }
 
@@ -119,7 +121,6 @@ class ScrollContainer extends React.Component {
     // Component will receive props
     componentWillReceiveProps(props){
         if (props.scrollTo != null){
-
             if (this.iscroll != null) this.iscroll.scrollTo(0,props.scrollTo);
             else {  _('#' + this.id).get()[0].scrollTop = 0; }
             this.collapsed = false;
@@ -127,7 +128,7 @@ class ScrollContainer extends React.Component {
     }
 
     // Component did update
-    componentDidUpdate(){
+    componentDidUpdate(v){
         this.scrollRefresh();
         this.lazyLoad.triggerload();
     }

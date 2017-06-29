@@ -189,7 +189,7 @@ class LocationListView extends React.Component {
                             {this.state.jsxCategoryList}
                         </Railbar> }
                </Header>
-                <ScrollContainer name="location-list-scroll-content" header="#location-list-view .section-header">
+                <ScrollContainer name="location-list-scroll-content" in="#location-list-view">
                     <div className="content">
                         { this.state.jsxLocations != null &&
                         <div className="location-list" >

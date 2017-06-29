@@ -241,13 +241,15 @@ class Railbar extends React.Component {
         this.debounceSize = true;
 
         let num = null,
-            count = _('#' + this.props.name + '-inner >*').get().length,
+            elems = _('#' + this.props.name + '-inner >*'),
             outerWidth = _('#' + this.props.name + '-wrapper').width(),
             firstChild = _('#' + this.props.name + '-inner >*:first-child'),
             styles = window.getComputedStyle(firstChild.get(0)),
             margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom']),
             marginLeft = parseFloat(styles['marginLeft']) + parseFloat(styles['borderLeft']),
             height = Math.ceil(firstChild.height() + margin);
+
+        const count = (elems) ? _('#' + this.props.name + '-inner >*').get().length : 0 ;
 
         for (let size in this.props.sizes){
             if(this.props.sizes.hasOwnProperty(size)){
