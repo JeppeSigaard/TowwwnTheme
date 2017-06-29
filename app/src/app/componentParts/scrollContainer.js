@@ -52,7 +52,7 @@ class ScrollContainer extends React.Component {
         if (this.props.header == null) return;
         this.settingHeader = true;
 
-        const st = 0 - this.iscroll.y;
+        const st = (this.iscroll != null ) ? 0 - this.iscroll.y : _('#' + this.id).get()[0].scrollTop;
 
         // Going down
         if (st > this.lastScrollTop) {
@@ -90,16 +90,28 @@ class ScrollContainer extends React.Component {
 
     // Component Did Mount
     componentDidMount(){
-        this.iscroll = new iscroll('#' + this.id,{
-            mouseWheel: true,
-            preventDefault : false,
-            scrollbars: false,
-            probeType: 2,
-            bounce: false
-        });
+        if(_('body').hasClass('mobile')){
 
-        this.iscroll.on('scroll', this.handleScroll.bind(this));
-        this.iscroll.on('scrollEnd', this.handleScroll.bind(this));
+            this.iscroll = new iscroll('#' + this.id,{
+                mouseWheel: true,
+                preventDefault : false,
+                scrollbars: false,
+                probeType: 2,
+                bounce: false
+            });
+
+            this.iscroll.on('scroll', this.handleScroll.bind(this));
+            this.iscroll.on('scrollEnd', this.handleScroll.bind(this));
+
+        }
+
+        else{
+
+            _('#' + this.id).css({overflow: 'auto'});
+            _('#' + this.id).on('scroll',this.handleScroll.bind(this));
+        }
+
+
         this.lazyLoad = new LazyLoadHandler( '#' + this.id);
         _(window).on('resize', this.handleResize.bind(this));
     }
