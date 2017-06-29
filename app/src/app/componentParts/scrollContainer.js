@@ -119,7 +119,9 @@ class ScrollContainer extends React.Component {
     // Component will receive props
     componentWillReceiveProps(props){
         if (props.scrollTo != null){
-            this.iscroll.scrollTo(0,props.scrollTo);
+
+            if (this.iscroll != null) this.iscroll.scrollTo(0,props.scrollTo);
+            else {  _('#' + this.id).get()[0].scrollTop = 0; }
             this.collapsed = false;
         }
     }
