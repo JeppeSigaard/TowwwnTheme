@@ -54,10 +54,11 @@
     height: auto!important;
 
     .rail-bar-dots{
+        z-index: 2;
         bottom: auto;
-        top: 36px;
-        height: 36px;
-        background: rgba($color-blue-1,.3);
+        top: $header-bar-height;
+        height: $menu-bar-height;
+        background: rgba($color-blue-1,.5);
         line-height: 36px;
 
         .dot{
@@ -65,36 +66,19 @@
         }
     }
 
+    .rail-bar-button-right:hover{background: linear-gradient(270deg, rgba(0,0,0,0.2), transparent);}
+    .rail-bar-button-left:hover{background: linear-gradient(90deg, rgba(0,0,0,0.2), transparent);}
+
     .rail-bar-button-right,
     .rail-bar-button-left{
-        display: none;
-        height: $header-bar-height;
-        top: auto;
-        bottom: 70px;
-        opacity: 1;
-        background: rgba(black,.5);
-        width: 50%;
+        z-index: 1;
+        width: $menu-bar-height * 1.2;
+        background: transparent;
 
         svg{
-            transform: none;
-            height: $header-bar-height;
-            width: $header-bar-height * 1.1;
-            background: rgba(black,.4);
-            padding: 12px;
-            top: 0;
+            height: 48px;
+            transform: translate(-50%,-100%);
+            width: 20px;
         }
-
-        &.disabled{
-            opacity: 1;
-        }
-    }
-
-    .rail-bar-button-right svg{
-        left: auto;
-        right: 0px;
-    }
-
-    .rail-bar-button-left svg{
-        left: 0px;
     }
 }
