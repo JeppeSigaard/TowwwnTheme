@@ -104,9 +104,8 @@
 }
 
 .category-container{
-    padding: 8px;
-    @media(min-width:640px){padding: 16px;}
-    padding-bottom: 2px;
+    padding: 8px 8px 0px;
+    @media(min-width:640px){padding: 16px 16px 0px;}
     width: 100%;
     height: auto;
     box-sizing: border-box;
