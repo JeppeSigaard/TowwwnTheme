@@ -9,9 +9,34 @@ class Loader extends React.Component {
         super();
     }
 
+    setMainState(){
+        setTimeout(function(){
+
+            // Set category globals from props
+            if(this.props.locations != null){
+                Globals.setMainState({ 'currentLocations' : this.props.locations });
+            }
+
+            // Set category globals from state
+            else if(this.state.locations != null){
+                Globals.setMainState({ 'currentLocations' : this.state.locations });
+            }
+
+            // Set category globals from call
+            else if(this.props.elem != null){
+                Globals.setMainState({ 'currentLocations' : null, });
+                Globals.locationDataHandler.getCategorySpecificLocation( this.props.elem.category_id ).then(( resp ) => {
+                    Globals.setMainState({ 'currentLocations' : resp, });
+                    this.setState({locations : resp});
+                });
+            }
+
+
+        }.bind(this), 50);
+    }
+
     handleClick( e ){
         if(Globals.navigationBlocker) return;
-        Globals.setMainState({ 'currentLocations' : null });
 
         // Set bookmark
         _('.category-filter-button').removeClass('bookmark-mode');
@@ -24,26 +49,10 @@ class Loader extends React.Component {
             this.props.elem.type != null
           ) Globals.history.push(this.props.elem);
 
-        // Set category globals from props
-        if(this.props.locations != null){
-            Globals.setMainState({ 'currentLocations' : this.props.locations });
-        }
 
-        // Set category globals from state
-        else if(this.state.locations != null){
-            Globals.setMainState({ 'currentLocations' : this.state.locations });
-        }
-
-        // Set category globals from call
-        else if(this.props.elem != null){
-            Globals.setMainState({ 'currentLocations' : null, });
-            Globals.locationDataHandler.getCategorySpecificLocation( this.props.elem.category_id ).then(( resp ) => {
-                Globals.setMainState({ 'currentLocations' : resp, });
-                this.setState({locations : resp});
-            });
-        }
-
-
+        Globals.setMainState('currentLocations', null, function(){
+            this.setMainState();
+        }.bind(this));
     }
 
     componentDidMount(){

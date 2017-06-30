@@ -166,13 +166,15 @@ class TowwwnApp extends React.Component {
     }
 
     // ParsedSetState
-    parsedSetState( key, value ) {
+    parsedSetState( key, value, cb ) {
         if ( typeof key !== 'object' ) {
             this.state[ key ] = value;
             this.forceUpdate();
         } else {
             this.setState(key);
         }
+
+        if(typeof cb === 'function') cb();
     }
 
     toggleHamburger(){

@@ -44,7 +44,7 @@ class ScrollContainer extends React.Component {
 
         // Fire at 20 fps
         if(this.scrollTimer) return; this.scrollTimer = true;
-        setTimeout(function(){ this.scrollTimer = false; }.bind(this), 1000 / 20);
+        setTimeout(function(){ this.scrollTimer = false; }.bind(this), 1000 / 60);
 
         // fire scroll event from props
         if(this.props.onScroll != null && typeof this.props.onScroll === 'function') this.props.onScroll();
