@@ -11,6 +11,7 @@ class Loader extends React.Component {
 
     handleClick( e ){
         if(Globals.navigationBlocker) return;
+        Globals.setMainState({ 'currentLocations' : null });
 
         // Set bookmark
         _('.category-filter-button').removeClass('bookmark-mode');

@@ -96,7 +96,13 @@ class LocationListView extends React.Component {
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
 
+        if(nextProps.elems == null){
+            this.setState({jsxLocations : null});
+        }
+
         if ( nextProps.category != this.lastElem ) {
+            this.setState({jsxLocations : null});
+
             BehaviourDataHandler.parseData( 'location-category', nextProps.category );
             this.lastElem = nextProps.category;
             Globals.hooks.trigger('category-change');
