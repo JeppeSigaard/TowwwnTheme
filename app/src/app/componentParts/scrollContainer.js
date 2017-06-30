@@ -31,7 +31,6 @@ class ScrollContainer extends React.Component {
         if (this.refresh != null) clearTimeout(this.refresh);
         this.refresh = setTimeout(function(){
             if(this.iscroll != null) this.iscroll.refresh();
-            this.collapsed = false;
         }.bind(this), 100);
     }
 
@@ -42,6 +41,10 @@ class ScrollContainer extends React.Component {
 
     // Handle Scroll
     handleScroll(){
+
+        // Fire at 20 fps
+        if(this.scrollTimer) return; this.scrollTimer = true;
+        setTimeout(function(){ this.scrollTimer = false; }.bind(this), 1000 / 20);
 
         // fire scroll event from props
         if(this.props.onScroll != null && typeof this.props.onScroll === 'function') this.props.onScroll();
@@ -123,7 +126,6 @@ class ScrollContainer extends React.Component {
         if (props.scrollTo != null){
             if (this.iscroll != null) this.iscroll.scrollTo(0,props.scrollTo);
             else {  _('#' + this.id).get()[0].scrollTop = 0; }
-            this.collapsed = false;
         }
     }
 
