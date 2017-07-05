@@ -62,7 +62,7 @@
         .coverphoto{
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%;
+            padding-bottom: calc(45% + 25px);
             background-size: cover;
             background-position: 20% center;
             border: 1px solid $color-blue-2;
@@ -142,6 +142,15 @@
         margin-top: 32px;
         margin-left: -10px;
         margin-right: -10px;
+
+        .event{
+            height: 230px;
+
+            .imgcontainer{
+                height: 90px;
+                padding-bottom: 0px;
+            }
+        }
 
         .rail-bar-wrapper{
             background: inherit;

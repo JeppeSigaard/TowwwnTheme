@@ -2,11 +2,39 @@
 
 
 // Single View Footer
-const React = require( 'react' );
+const React = require( 'react' ),
+      Globals = require( '../globals.js' );
 class SingleViewFooter extends React.Component {
 
     // Ctor
     constructor() { super(); }
+
+    locationNav(e){
+        e.preventDefault();
+        Globals.setMainState( {'singleLocation' : null});
+        Globals.viewHandler.changeViewFocus('#location-single-view', '#event-single-view');
+
+        let request = new XMLHttpRequest();
+        request.addEventListener( 'load', ( data ) => {
+            let singleLocation = JSON.parse( data.target.response );
+            Globals.setMainState( {'singleLocation' : singleLocation[0]});
+            Globals.history.push(singleLocation[0]);
+
+            if ( singleLocation[0].categories == null ) return;
+
+            Globals.locationDataHandler.getCategorySpecificLocation( singleLocation[0].categories[0].category_id ).then(( resp ) => {
+                Globals.setMainState({
+                    'currentLocationsCategory' : singleLocation[0].categories[0],
+                    'currentLocations' : resp,
+                });
+            });
+
+        });
+
+        request.open( 'GET', app_data.rest_api + '/locations/' + this.props.elem.parentid);
+        request.send();
+
+    }
 
     // Render
     render() {
@@ -78,10 +106,18 @@ class SingleViewFooter extends React.Component {
                 <footer className="sv-footer" >
 
                     {/* Title */}
+
+                    {type === 'event' &&
+                    <a onClick={this.locationNav.bind(this)} href={app_data.main_path + '/location/' + elem.parentid } className="sv-footer-block title clickable">
+                        <div className="icon" style={ picture != null ? { 'backgroundImage' : 'url('+ picture +')' } : {} } ></div>
+                        <div className="value" >{ name }</div>
+                    </a>}
+
+                    {type === 'location' &&
                     <div className="sv-footer-block title">
                         <div className="icon" style={ picture != null ? { 'backgroundImage' : 'url('+ picture +')' } : {} } ></div>
                         <div className="value" >{ name }</div>
-                    </div>
+                    </div>}
 
                     {/* Facebook */}
                     <a className="sv-footer-block clickable" target="_blank" href={ 'http://fb.com/' + id + '?ref="towwwn"'} >

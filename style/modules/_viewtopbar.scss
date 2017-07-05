@@ -1,4 +1,61 @@
+@keyframes anim{
+    0% {
+        width: 20px;
+        height: 20px;
+        fill: transparent;
+    }
+
+    40% {
+        width: 24px;
+        height: 24px;
+        // fill: lighten( red, 25% );
+    }
+
+    60% {
+        width: 24px;
+        height: 24px;
+    }
+
+    100% {
+        width: 20px;
+        height: 20px;
+        fill: #fff;
+    }
+}
+@keyframes animBack{
+    0% {
+        width: 20px;
+        height: 20px;
+        fill: #fff;
+    }
+
+    40% {
+        width: 24px;
+        height: 24px;
+    }
+
+    60% {
+        width: 24px;
+        height: 24px;
+        // fill: lighten( red, 25% );
+    }
+
+    100% {
+        width: 20px;
+        height: 20px;
+        fill: transparent;
+    }
+}
+
+.section-header.collapse .viewbar-button {
+    border-left: none;
+    background: transparent;
+    color: transparent;
+    fill: transparent;
+}
+
 .viewbar{
+    display: flex;
     pointer-events: all;
     position: relative;
     z-index: 2;
@@ -9,18 +66,74 @@
     color: white;
     text-transform: uppercase;
     font-size: 11px;
-    background-color: $color-blue-2;
+    background: darken($color-blue-2, 2);
     z-index: 100;
     border-bottom: 1px solid #292929;
+    border-right: 1px solid rgba(black,.03);
+
+
+    &.clickable{
+        a{ cursor: pointer; }
+    }
+
+    a{
+        border-right:5px solid darken($color-blue-2, 2);
+        flex-grow: 1;
+        color: white;
+        text-decoration: none;
+        line-height: inherit;
+        overflow: hidden;
+        white-space: nowrap;
+
+        .viewbar-title-icon {
+            display: inline-block;
+            float: left;
+            position: relative;
+            width: 16px;
+            height: $menu-bar-height;
+            margin-right: 6px;
+
+            svg{
+                position: absolute;
+                top: 50%;
+                LEFT: 50%;
+                height: 16px;
+                width: 16px;
+                transform: translate(-50%,-50%);
+                fill: rgba(white,.8);
+                stroke: darken($color-blue-2, 5);
+            }
+        }
+    }
+
+    .viewbar-button{
+        flex-grow: 0;
+        min-width: $menu-bar-height * 1.2;
+        text-align: center;
+        position: relative;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        background-color: lighten($color-blue-2, 2);
+        transition: background-color 120ms;
+        border-left: 1px solid rgba(white,.5);
+
+
+        &:hover{
+            background-color: lighten($color-blue-2, 5);
+        }
+    }
+
+    .view-toggle svg{
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate( -50%, -50% );
+        fill: white;
+        width: 18px;
+        height: 18px;
+    }
 
     .heart{
-        position: absolute;
-        right: $menu-bar-height * 1.2;
-        top: 0;
-        width: $menu-bar-height * 1.2;
-        height: $menu-bar-height;
-        border-left: 1px solid rgba(white,.6);
-        cursor: pointer;
         animation-duration: 400ms;
 
         &.active{
@@ -41,56 +154,6 @@
             }
         }
 
-        @keyframes anim{
-            0% {
-                width: 20px;
-                height: 20px;
-                fill: transparent;
-            }
-
-            40% {
-                width: 24px;
-                height: 24px;
-                // fill: lighten( red, 25% );
-            }
-
-            60% {
-                width: 24px;
-                height: 24px;
-            }
-
-            100% {
-                width: 20px;
-                height: 20px;
-                fill: #fff;
-            }
-        }
-
-        @keyframes animBack{
-            0% {
-                width: 20px;
-                height: 20px;
-                fill: #fff;
-            }
-
-            40% {
-                width: 24px;
-                height: 24px;
-            }
-
-            60% {
-                width: 24px;
-                height: 24px;
-                // fill: lighten( red, 25% );
-            }
-
-            100% {
-                width: 20px;
-                height: 20px;
-                fill: transparent;
-            }
-        }
-
         svg{
             position: absolute;
             top: 50%; left: 50%;
@@ -104,63 +167,4 @@
         }
     }
 
-    &.dark{
-        background-color: darken( $color-blue-2, 5% );
-    }
-
-    &.clickable{
-        a{ cursor: pointer; }
-    }
-
-    @media(min-width:769px){padding-left:20px;}
-
-    a{
-       color: white;
-        text-decoration: none;
-        height: inherit;
-        line-height: inherit;
-        display: inline-block;
-        width: calc(100% - #{$menu-bar-height});
-        overflow: hidden;
-    }
-
-    .close-button{
-        position: absolute;
-        top: 50%;
-        right: 0px;
-        height: 100%;
-        width: $menu-bar-height * 1.2;
-        text-align: center;
-        transform: translate(0,-50%);
-        color: white;
-        font-size: 24px;
-        cursor: pointer;
-        background-color: transparent;
-        transition: background-color 120ms;
-        border-left: 1px solid rgba(white,.6);
-
-        &:hover{
-            background-color: lighten($color-blue-2,2%);
-        }
-    }
-}
-
-.viewbar-title-icon {
-    display: inline-block;
-    float: left;
-    position: relative;
-    width: 16px;
-    height: $menu-bar-height;
-    margin-right: 6px;
-
-    svg{
-        position: absolute;
-        top: 50%;
-        LEFT: 50%;
-        height: 16px;
-        width: 16px;
-        transform: translate(-50%,-50%);
-        fill: rgba(white,.8);
-        stroke: darken($color-blue-2, 5);
-    }
 }

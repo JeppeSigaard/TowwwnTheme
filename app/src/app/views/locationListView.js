@@ -99,7 +99,13 @@ class LocationListView extends React.Component {
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
 
+        if(nextProps.elems == null){
+            this.setState({jsxLocations : null});
+        }
+
         if ( nextProps.category != this.lastElem ) {
+            this.setState({jsxLocations : null});
+
             BehaviourDataHandler.parseData( 'location-category', nextProps.category );
             this.lastElem = nextProps.category;
             Globals.hooks.trigger('category-change');
@@ -192,7 +198,7 @@ class LocationListView extends React.Component {
                             {this.state.jsxCategoryList}
                         </Railbar> }
                </Header>
-                <ScrollContainer name="location-list-scroll-content" header="#location-list-view .section-header">
+                <ScrollContainer name="location-list-scroll-content" in="#location-list-view">
                     <div className="content">
                         { this.state.jsxLocations != null &&
                         <div className="location-list" >

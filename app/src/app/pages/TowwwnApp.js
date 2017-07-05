@@ -79,7 +79,7 @@ class TowwwnApp extends React.Component {
         Globals.user = new User();
         Globals.history = new historyHandler();
 
-        this.state = { from: null, currentView: null, navelems: [] };
+        this.state = { from: null, currentView: null, navelems: [], hamburger : null };
         this.hasMounted = false;
 
         // Relations
@@ -125,13 +125,16 @@ class TowwwnApp extends React.Component {
         // Gets event data
         Globals.eventDataHandler = new EventDataHandler();
 
+
         // Gets category data
         Globals.categoryDataHandler = new CategoryDataHandler();
+        /*
         Globals.categoryDataHandler.getFeaturedCategories().then((resp) => {
             this.setState({
                 'featuredCategoriesData' : resp,
             });
         });
+        */
 
         Globals.categoryDataHandler.getAllCategories(false, true, {orderby : 'name', order : 'ASC'}).then(( resp ) => {
             let categoriesData = [];
@@ -142,12 +145,17 @@ class TowwwnApp extends React.Component {
             }
 
             this.setState({
-                'categoriesData' : categoriesData,
+                // 'categoriesData' : categoriesData,
+                'featuredCategoriesData' : resp,
             });
         });
 
         // Set main state
         Globals.setMainState = this.parsedSetState.bind(this);
+
+        Globals.hooks.add('toggle-hamburger', () => {
+            this.setState({hamburger : (this.state.hamburger === true) ? false : true});
+        });
     }
 
     // Handle anchor click
@@ -158,13 +166,19 @@ class TowwwnApp extends React.Component {
     }
 
     // ParsedSetState
-    parsedSetState( key, value ) {
+    parsedSetState( key, value, cb ) {
         if ( typeof key !== 'object' ) {
             this.state[ key ] = value;
             this.forceUpdate();
         } else {
             this.setState(key);
         }
+
+        if(typeof cb === 'function') cb();
+    }
+
+    toggleHamburger(){
+        Globals.hooks.trigger('toggle-hamburger');
     }
 
     // After render
@@ -279,12 +293,23 @@ class TowwwnApp extends React.Component {
 
     // Render
     render() {
+
+        let container_inner_class = 'content-container-inner',
+            overlay_class = 'general-overlay',
+            towwwn_class = 'towwwn-app';
+
+        if(this.state.hamburger != null && this.state.hamburger){
+            container_inner_class += ' aside';
+            overlay_class += ' active';
+            towwwn_class += ' hamburger-active';
+        }
+
         return (
-            <div>
+            <div className={towwwn_class}>
                 <Header />
                 <div className="content-container" id="page-content">
-                    <div className="content-container-inner">
-                        <div id="general-overlay" ></div>
+                    <div className={container_inner_class}>
+                        <div id='general-overlay' className={overlay_class} onClick={this.toggleHamburger.bind(this)}></div>
 
                         <SearchView />
                         <SearchResultView result={ this.state.searchResult } />

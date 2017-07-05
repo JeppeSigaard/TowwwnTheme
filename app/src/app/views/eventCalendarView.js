@@ -6,6 +6,7 @@ const React = require( 'react' ),
       Railbar = require( '../componentParts/railbar.js' ),
       EventFilterButton  = require( '../componentParts/eventFilterButton.js' ),
       SponsorBanner  = require( '../componentParts/sponsorBanner.js' ),
+      ViewTopBar = require( '../componentParts/viewtopbar.js' ),
       Loader  = require( '../componentParts/loader.js' ),
       Header  = require( '../componentParts/sectionHeader.js' ),
       ScrollContainer  = require( '../componentParts/scrollContainer.js' ),
@@ -17,7 +18,7 @@ class EventCalendarView extends React.Component {
     // Ctor
     constructor() {
         super();
-        this.state = { containerClasses : 'eventscontainer', allLoaded : false, headerCollapsed : false };
+        this.state = { containerClasses : 'eventscontainer', allLoaded : false, headerCollapsed : false, view : 'grid', toggled : 'future'};
         this.eventsLength = 0;
         this.allLoaded = false;
         this.loadReturned = true;
@@ -29,6 +30,10 @@ class EventCalendarView extends React.Component {
 
         Globals.user.hooks.add( 'onlogin', ( ) => {
             this.userHook();
+        });
+
+        Globals.user.hooks.add( 'eventHearts', ( ) => {
+            if(this.state.toggled === 'hearts') this.toggleHeart();
         });
     }
 
@@ -50,7 +55,7 @@ class EventCalendarView extends React.Component {
     onscroll(){
         let loadEventsBtn = document.getElementById('eventcv-load-more');
         if( this.isInView( loadEventsBtn, 100 ) && this.loadReturned ) {
-           this.loadEvents();
+           this.loadEvents(this.state.toggled);
         }
     }
 
@@ -65,7 +70,7 @@ class EventCalendarView extends React.Component {
 
     toggleFuture(){
         if( !this.loadReturned ) return;
-        this.allLoaded = false; this.setState({allLoaded : false});
+        this.allLoaded = false; this.setState({allLoaded : false, toggled : 'future'});
         Globals.setMainState({'jsxEvents' : null});
         this.properties = {
             per_page : 24,
@@ -77,7 +82,7 @@ class EventCalendarView extends React.Component {
 
     togglePast(){
         if( !this.loadReturned ) return;
-        this.allLoaded = false; this.setState({allLoaded : false});
+        this.allLoaded = false; this.setState({allLoaded : false, toggled : 'past'});
         Globals.setMainState({'jsxEvents' : null});
         this.properties = {
             per_page : 24,
@@ -135,7 +140,7 @@ class EventCalendarView extends React.Component {
         else{
 
             if( !this.loadReturned ) return;
-            this.allLoaded = false; this.setState({allLoaded : false});
+            this.allLoaded = false; this.setState({allLoaded : false, toggled : 'hearts'});
             Globals.setMainState({'jsxEvents' : null});
 
             let events = [];
@@ -179,6 +184,11 @@ class EventCalendarView extends React.Component {
         this.loadEvents('predicted');
     }
 
+    toggleView(){
+        if(this.state.view !== 'grid') this.setState({view : 'grid'});
+        else  this.setState({view : 'line'});
+    }
+
     // Load Events
     loadEvents(type) {
 
@@ -209,9 +219,9 @@ class EventCalendarView extends React.Component {
                     </div>
                 );
 
-                Globals.setMainState({'jsxEvents' : intro});
                 this.loadReturned = true;
                 this.allLoaded = true; this.setState({allLoaded : true});
+                Globals.setMainState({'jsxEvents' : intro});
                 return;
             }
 
@@ -299,32 +309,25 @@ class EventCalendarView extends React.Component {
         let loadMoreClass = 'eventcv-load-more';
         if(!this.state.allLoaded) loadMoreClass += ' loading';
 
+        let section_class = 'container-section large-header';
+        if (this.state.view == 'line') section_class += ' line';
+
         return (
-            <section className="container-section large-header" id="event-calendar-view">
+            <section className={section_class} id="event-calendar-view">
                 <Header for=".scroll-container" in="#event-calendar-view">
-                    <div className="viewbar" id="eventsbar">
-                        { this.props.layoutbtns != null &&
-                            <div id="eventslayoutbtns">
-                            <a className="layoutbtn" href="#" onClick={ this.setEventLayout.bind(this) }>
-                                <svg viewBox="0 0 32 32" className="blocklayoutbtn">
-                                    <use xlinkHref="#icon-block-layout"></use>
-                                </svg>
-                            </a>
-                            <a className="layoutbtn" href="#" onClick={ this.setEventLayout.bind(this) }>
-                                <svg viewBox="0 0 32 32" className="linelayoutbtn">
-                                    <use xlinkHref="#icon-list-layout"></use>
-                                </svg>
-                            </a>
-                       </div>}
-                       <div className="title">
-                           <i className="viewbar-title-icon">
-                                <svg viewBox="0 0 32 32">
-                                    <use xlinkHref="#icon-star"></use>
-                                </svg>
-                           </i>
-                           Begivenheder
-                       </div>
-                    </div>
+                    <ViewTopBar icon="#icon-star" viewBox="0 0 32 32" title="Begivenheder">
+                        <div className="viewbar-button view-toggle" onClick={ this.toggleView.bind(this) } >
+                            {this.state.view === 'line' &&
+                            <svg viewBox="0 0 32 32">
+                                <use xlinkHref="#icon-block-layout" ></use>
+                            </svg>}
+
+                            {this.state.view !== 'line' &&
+                            <svg viewBox="0 0 32 32">
+                                <use xlinkHref="#icon-list-layout" ></use>
+                            </svg>}
+                        </div>
+                    </ViewTopBar>
                     <Railbar name="event-calendar-buttons" snap>
                         <EventFilterButton onClick={this.toggleFuture.bind(this)} name="Kommende" active/>
                         <EventFilterButton onClick={this.toggleHeart.bind(this)} icon="#icon-heart" viewBox="0 0 32 32"/>
@@ -332,7 +335,7 @@ class EventCalendarView extends React.Component {
                         <EventFilterButton onClick={this.togglePast.bind(this)} name="Tidligere"/>
                     </Railbar>
                 </Header>
-                <ScrollContainer  name="event-calendar-scroll-content" onScroll={ this.onscroll.bind(this) } header="#event-calendar-view .section-header">
+                <ScrollContainer name="event-calendar-scroll-content" onScroll={ this.onscroll.bind(this) } in="#event-calendar-view">
                     <div className="content">
                         <div className={ this.state.containerClasses + '-outer' } >
                             <div className={ this.state.containerClasses }>

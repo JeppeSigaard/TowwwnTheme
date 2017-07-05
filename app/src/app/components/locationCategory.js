@@ -23,8 +23,12 @@ class LocationCategory extends React.Component {
     // Render
     render() {
         const elem = this.props.elem;
+
+        let img = elem.category_imgurl;
+        if('' === img) img = elem.location_img;
+
         return(
-            <a href={ app_data.main_path + '/category/' + elem.slug } className="category" data-image-src={ (elem.category_imgurl != null) ? elem.category_imgurl : elem.location_img } data-type="category" data-id={ elem.category_id }
+            <a href={ app_data.main_path + '/category/' + elem.slug } className="category" data-image-src={img} data-type="category" data-id={ elem.category_id }
                    onClick={ this.props.clickEvent.bind(this) } >
                 <div className="category-content-container" >
                     <div className="category-title" >{ elem.category_name }</div>

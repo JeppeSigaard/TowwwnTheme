@@ -81,18 +81,20 @@
 	h14c0.553,0,1-0.448,1-1V14C24,13.448,23.553,13,23,13z"/>
     </g>
     <g id="icon-list-layout">
-        <rect y="2.473" width="0.83" height="27.055"/>
-        <rect x="8.092" y="3.302" width="23.908" height="6.09"/>
-        <rect x="8.092" y="11.949" width="23.908" height="6.089"/>
-        <rect x="8.092" y="20.595" width="23.908" height="6.09"/>
+        <rect x="0" y="4" width="6" height="6"/>
+        <rect x="0" y="14" width="6" height="6"/>
+        <rect x="0" y="24" width="6" height="6"/>
+
+        <rect x="8" y="4" width="24" height="6"/>
+        <rect x="8" y="14" width="24" height="6"/>
+        <rect x="8" y="24" width="24" height="6"/>
     </g>
     <g id="icon-block-layout">
-        <rect y="2.461" width="0.831" height="27.078"/>
-        <rect x="8.103" y="3.292" width="6.589" height="10.803"/>
-        <rect x="16.757" y="3.292" width="6.589" height="10.803"/>
-        <rect x="8.103" y="16.206" width="6.589" height="10.804"/>
-        <rect x="16.757" y="16.206" width="6.589" height="10.804"/>
-        <rect x="25.411" y="3.292" width="6.589" height="10.803"/>
+        <rect x="4.051" y="4.141" width="6.589" height="10.803"/>
+        <rect x="12.705" y="4.141" width="6.589" height="10.803"/>
+        <rect x="4.051" y="17.055" width="6.589" height="10.805"/>
+        <rect x="12.705" y="17.055" width="6.589" height="10.805"/>
+        <rect x="21.359" y="4.141" width="6.589" height="10.803"/>
     </g>
     <g id="chevron-left" viewBox="0 0 20 20">
         <path d="M13.891 17.418c0.268 0.272 0.268 0.709 0 0.979s-0.701 0.271-0.969 0l-7.83-7.908c-0.268-0.27-0.268-0.707 0-0.979l7.83-7.908c0.268-0.27 0.701-0.27 0.969 0s0.268 0.709 0 0.979l-7.141 7.419 7.141 7.418z"></path>

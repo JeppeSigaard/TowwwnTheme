@@ -1,81 +1,3 @@
-@media screen and (max-width: $bp-m) {
-    #eventsbar{
-        .monthSelector{
-            right: 20px!important;
-        }
-    }
-}
-    
-#eventsbar{
-    padding-left: 0;
-    background-color: darken($color-blue-2, 5%);
-
-
-    #eventslayoutbtns{
-        position: relative;
-        font-size: 0;
-        height: 100%;
-        vertical-align: top;
-        border-right: 1px solid rgba(white,.5);
-        transition: 300ms;
-        padding: 0px 15px;
-        display: inline-block;
-
-        &:hover {
-            background-color: darken($color-blue-2, 2%);
-        }
-
-        .layoutbtn{
-            position: relative;
-            vertical-align: top;
-            display: inline-block;
-            height:$menu-bar-height;
-            width: $menu-bar-height * .7 ;
-            fill: rgba(white,.9);
-            transition: fill 120ms;
-            cursor: pointer;
-
-            &:hover {
-               fill: white;
-            }
-        }
-
-        svg{
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            height: 14px;
-            width: 14px;
-        }
-    }
-    
-    .title{
-        position: absolute;
-//        top: 50%;
-        right: 20px;
-//        line-height: $menu-bar-height;
-//        transform: translate(0,-50%);
-//        color: white;
-//        text-transform: uppercase;
-//        font-size: 11px;
-    }
-
-    .monthSelector{
-        position: absolute;
-        display: inline-block;
-        top: 50%;
-        right: 32px;
-        transform: translate(0, -50%);
-        color: white;
-        cursor: pointer;
-        padding-right: 22px;
-        text-transform: uppercase;
-        transition: 120ms;
-        font-size: 12px;
-    }
-}
-
 .events-sync-container{
     position: absolute;
     width: 100%;
@@ -129,85 +51,46 @@
         width: 100%;
         text-align: center;
     }
+}
 
-    &.lineLayout{
-        padding-top: 12px;
-
-        .event{
-            width: 100%;
-            min-height: 110px;
-            height: auto;
-            margin: 6px 15px;
-
-            .imgcontainer{
-                float: left;
-                width: 110px;
-                height: 100%;
-                border-bottom: none;
-                border-right: 1px solid rgba($color-blue-1, .6);
-                padding-bottom: 0;
-            }
-
-            .eventtext{
-                width: auto;
-                height: auto;
-                padding: 8px;
-                margin-bottom: 36px;
-
-                .title{
-                    width: auto;
-                    font-size: 10px;
-                    margin-left: 0px!important;
-                }
-
-                .start_time{
-                    margin-top: 0px;
-                    margin-left: 0px!important;
-                }
-            }
+.line .eventscontainer .rail-bar.has-dots{
+    margin-bottom: 27px;
+}
+.line .event{
+    width: auto;
+    display: flex;
+    vertical-align: baseline;
+    height: 120px;
+    margin-bottom: 6px;
+    @media(min-width:480px){margin-bottom: 10px;}
 
 
-            .eventlocation-container {
-                width: calc(100% - 130px);
-                position: absolute;
-                bottom: 10px;
-                left: 120px;
-                height: 2em;
-                text-transform: uppercase;
+    .eventtext{
+        height: 120px;
+    }
 
-                .eventblackbar{
-                    height: 2px;
-                }
-            }
+    .imgcontainer{
+        min-width: 120px;
+        max-width: 120px;
+        padding-bottom: 0;
+        height: 100%;
+        border-right: 1px solid $color-blue-1;
 
-            @media(min-width:769px){
-                min-height: 110px;
-
-                .imgcontainer{
-                    width: 160px;
-                    border-right: 1px solid $color-blue-1;
-                }
-
-                .eventtext{
-                    padding: 16px;
-                    margin-bottom: 36px;
-
-                    .title{
-                        font-size: 14px;
-                    }
-                }
-
-                .eventlocation-container {
-                    width: calc(100% - 190px);
-                    bottom: 5px;
-                    left: 175px;
-
-                    .eventblackbar{
-                        height: 2px;
-                    }
-                }
-            }
-        }
+        @media(min-width:480px){min-width: 160px; max-width: 160px;}
+        @media(min-width:640px){min-width: 200px; max-width: 200px;}
+        @media(min-width:769px){min-width: 120px; max-width: 120px;}
+        @media(min-width:1080px){min-width: 160px; max-width: 160px;}
+        @media(min-width:1280px){min-width: 200px; max-width: 200px;}
+    }
+    .eventlocation-container{
+        width: calc(100% - 140px);
+        @media(min-width:480px){width: calc(100% - 180px);}
+        @media(min-width:640px){width: calc(100% - 220px);}
+        @media(min-width:769px){width: calc(100% - 140px);}
+        @media(min-width:1080px){width: calc(100% - 180px);}
+        @media(min-width:1280px){width: calc(100% - 220px);}
+        right: 10px;
+        left: auto;
     }
 }
 
@@ -420,7 +303,7 @@
         position: absolute;
         bottom: 45px;
         left: 10px;
-        height: 2em;
+        height: 0px;
         text-transform: uppercase;
 
         .eventblackbar{

@@ -95,10 +95,7 @@ class Hamburger extends React.Component {
         });
 
         // UI Actions
-        _('.nav-user').on('click', this.toggle.bind(this));
-        _('#general-overlay').on('click', this.toggle.bind(this));
         Globals.hooks.add('toggle-hamburger', this.toggle.bind(this));
-
     }
 
     // Remove nav elem
@@ -113,28 +110,10 @@ class Hamburger extends React.Component {
 
     // Toggle
     toggle() {
-        if ( _('.content-container-inner').hasClass('aside') ) {
+        if ( Globals.hamburger != null && Globals.hamburger ) Globals.hamburger = false;
+        else Globals.hamburger = true;
 
-            _('.hamburger').removeClass('active');
-            _('.content-container-inner').removeClass('aside');
-            _('#general-overlay').removeClass('active');
-
-            this.prevBookmark.addClass('bookmark-mode');
-            _('.nav-user').removeClass('bookmark-mode');
-
-            Globals.hamburger = false;
-
-        } else {
-
-            _('.hamburger').addClass('active');
-            _('.content-container-inner').addClass('aside');
-            _('#general-overlay').addClass('active');
-
-            this.prevBookmark = _('.nav-elem.bookmark-mode').removeClass('bookmark-mode');
-            _('.nav-user').addClass('bookmark-mode');
-
-            Globals.hamburger = true;
-        }
+        this.setState({hamburger : Globals.hamburger});
     }
 
     // Nav Click
@@ -162,12 +141,11 @@ class Hamburger extends React.Component {
             }
 
             setTimeout(() => {
-                this.toggle();
+                Globals.hooks.trigger('toggle-hamburger');
             }, parseFloat( _('.container-section').style()[0].transitionDuration ) * 1000);
 
         } else {
-
-            this.toggle();
+            Globals.hooks.trigger('toggle-hamburger');
 
         } if ( cb != null ) cb();
     }
@@ -213,8 +191,12 @@ class Hamburger extends React.Component {
 
     // Render
     render() {
+
+        let hamburger_class = 'hamburger';
+        if(this.state.hamburger != null && this.state.hamburger) hamburger_class += ' active';
+
         return (
-            <div className="hamburger">
+            <div className={hamburger_class}>
                 <div className="hamburger-inner">
                     { Globals.user.state.loggedIn &&
                         <div className="user-name">

@@ -199,6 +199,8 @@ class EventSingleView extends React.Component {
                 }, 400);
 
             }
+
+           Globals.user.hooks.trigger('eventHearts');
        }
     }
 

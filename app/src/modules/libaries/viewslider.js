@@ -82,10 +82,10 @@ class ViewSlider {
                 bright = this.canRight ? -sw : 0;
             if ( this.distance * this.cos <= bleft &&
                  this.distance * this.cos >= bright ) {
-                let ntrans = ( ( this.distance * this.cos ) / sw ) * 100;
+                let ntrans = Math.floor( ( ( this.distance * this.cos ) / sw ) * 1000 ) / 10 ;
                 _('#'+this.currentView).addClass('scroll-lock').css({ left : ntrans+'%' });
-                if ( this.canLeft ) _('#'+this.relations.left).css({ left : ( -100 + ntrans )+'%' });
-                if ( this.canRight ) _('#'+this.relations.right).css({ left : ( 100 + ntrans )+'%' });
+                if ( this.canLeft && null != this.relations.left ) _('#'+this.relations.left).css({ left : ( -100 + ntrans )+'%' });
+                if ( this.canRight && null != this.relations.right ) _('#'+this.relations.right).css({ left : ( 100 + ntrans )+'%' });
             }
 
         } else if ( Math.abs( this.distance ) >= 30 ) {
