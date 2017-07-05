@@ -131,39 +131,39 @@ class User {
     // Log cat connections, for testing purposes
     predictBehaviour( ) {
 
-//        return new Promise(( resolve, reject ) => {
-//
-//            // Start new request
-//            let request = new XMLHttpRequest();
-//            request.onload = (( resp ) => {
-//                let json = JSON.parse( resp.target.response );
-//                resolve( json );
-//            });
-//
-//            // Generates arrays used for behaviour prediction
-//            let arr1 = [], clicks = this.state.behaviourData.catRelatedClicks;
-//            for ( let key of Object.keys( clicks ) ) {
-//                arr1[ parseInt( key ) ] = clicks[ key ]; }
-//
-//            let arr2 = [], timeData = this.state.behaviourData.timeData.locationcategory;
-//            for ( let key of Object.keys( timeData ) ) {
-//                arr2[ parseInt( key ) ] = timeData[ key ]; }
-//
-//            // Fills out 'holes'
-//            for ( let iter1 = 0; iter1 < arr1.length; iter1++ ) {
-//                if ( arr1[ iter1 ] == null ) arr1[ iter1 ] = 0; }
-//
-//            for ( let iter2 = 0; iter2 < arr2.length; iter2++ ) {
-//                if ( arr2[ iter2 ] == null ) arr2[ iter2 ] = 0; }
-//
-//            // Sends request
-//            request.open( 'POST', app_data.ajax_url );
-//            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-//            request.send( 'action=towwwn_ub_predict'
-//                         +'&catRelatedClicks='+arr1
-//                         +'&catRelatedTimes='+arr2);
-//
-//        });
+        return new Promise(( resolve, reject ) => {
+
+            // Start new request
+            let request = new XMLHttpRequest();
+            request.onload = (( resp ) => {
+                let json = JSON.parse( resp.target.response );
+                resolve( json );
+            });
+
+            // Generates arrays used for behaviour prediction
+            let arr1 = [], clicks = this.state.behaviourData.catRelatedClicks;
+            for ( let key of Object.keys( clicks ) ) {
+                arr1[ parseInt( key ) ] = clicks[ key ]; }
+
+            let arr2 = [], timeData = this.state.behaviourData.timeData.locationcategory;
+            for ( let key of Object.keys( timeData ) ) {
+                arr2[ parseInt( key ) ] = timeData[ key ]; }
+
+            // Fills out 'holes'
+            for ( let iter1 = 0; iter1 < arr1.length; iter1++ ) {
+                if ( arr1[ iter1 ] == null ) arr1[ iter1 ] = 0; }
+
+            for ( let iter2 = 0; iter2 < arr2.length; iter2++ ) {
+                if ( arr2[ iter2 ] == null ) arr2[ iter2 ] = 0; }
+
+            // Sends request
+            request.open( 'POST', app_data.ajax_url );
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            request.send( 'action=towwwn_ub_predict'
+                         +'&catRelatedClicks='+arr1
+                         +'&catRelatedTimes='+arr2);
+
+        });
 
     }
 
