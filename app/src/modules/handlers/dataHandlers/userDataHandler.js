@@ -4,7 +4,8 @@
 // User data handler
 const Globals = require( '../../../app/globals.js' ),
       _ = require( '../../libaries/underscore/underscore_main.js' ),
-      HookHandler = require( '../../libaries/underscore/underscore_hookhandler.js' );
+      HookHandler = require( '../../libaries/underscore/underscore_hookhandler.js' ),
+      TextClassifier;
 
 class User {
 
@@ -34,6 +35,10 @@ class User {
                 locations: []
             }
         };
+
+        // Text classifiers
+        this.eventclassifier = new TextClassifier();
+        this.locationsclassfier = new TextClassifier();
 
         // On load, get behaviour statistics from cookie
         window.onload = (() => {
@@ -114,6 +119,32 @@ class User {
         const raw_hearts = window._cookielib.read('hearts');
         let hearts = (raw_hearts != 'undefined') ? JSON.parse( raw_hearts ) : { events : null, locations : null };
 
+        // Converts from old heart data format to the new one
+        let convert = (( arr ) => {
+            if ( arr == null ) return [];
+
+            // Checks if should convert array
+            let shouldConvert = false;
+            for ( let n = 0; n < arr.length; n ++ ) {
+                if ( typeof arr[n] !== 'number' ) {
+                    shouldConvert = true; break; }
+            } if ( !shouldConvert ) return arr;
+
+            // Converts array
+            let response = [];
+            for ( let n = 0; n < arr.length; n ++ ) {
+                if ( arr[ n ] == true ) response.push( n );
+            } return response;
+
+        });
+
+        // Sets hearts
+        this.state.hearts.events = convert( hearts.events );
+        this.state.hearts.locations = convert( hearts.locations );
+        if ( this.state.hearts.events == null ) this.state.hearts.events = [];
+        if ( this.state.hearts.locations == null ) this.state.hearts.locations = [];
+
+        // Sets behaviourStatistics
         if ( behaviourStatistics != null ) {
             this.state.behaviourData = behaviourStatistics;
         }
@@ -131,39 +162,41 @@ class User {
     // Log cat connections, for testing purposes
     predictBehaviour( ) {
 
-//        return new Promise(( resolve, reject ) => {
-//
-//            // Start new request
-//            let request = new XMLHttpRequest();
-//            request.onload = (( resp ) => {
-//                let json = JSON.parse( resp.target.response );
-//                resolve( json );
-//            });
-//
-//            // Generates arrays used for behaviour prediction
-//            let arr1 = [], clicks = this.state.behaviourData.catRelatedClicks;
-//            for ( let key of Object.keys( clicks ) ) {
-//                arr1[ parseInt( key ) ] = clicks[ key ]; }
-//
-//            let arr2 = [], timeData = this.state.behaviourData.timeData.locationcategory;
-//            for ( let key of Object.keys( timeData ) ) {
-//                arr2[ parseInt( key ) ] = timeData[ key ]; }
-//
-//            // Fills out 'holes'
-//            for ( let iter1 = 0; iter1 < arr1.length; iter1++ ) {
-//                if ( arr1[ iter1 ] == null ) arr1[ iter1 ] = 0; }
-//
-//            for ( let iter2 = 0; iter2 < arr2.length; iter2++ ) {
-//                if ( arr2[ iter2 ] == null ) arr2[ iter2 ] = 0; }
-//
-//            // Sends request
-//            request.open( 'POST', app_data.ajax_url );
-//            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-//            request.send( 'action=towwwn_ub_predict'
-//                         +'&catRelatedClicks='+arr1
-//                         +'&catRelatedTimes='+arr2);
-//
-//        });
+//        USE THE TEXT CLASSIFIER!
+
+        return new Promise(( resolve, reject ) => {
+
+            // Start new request
+            let request = new XMLHttpRequest();
+            request.onload = (( resp ) => {
+                let json = JSON.parse( resp.target.response );
+                resolve( json );
+            });
+
+            // Generates arrays used for behaviour prediction
+            let arr1 = [], clicks = this.state.behaviourData.catRelatedClicks;
+            for ( let key of Object.keys( clicks ) ) {
+                arr1[ parseInt( key ) ] = clicks[ key ]; }
+
+            let arr2 = [], timeData = this.state.behaviourData.timeData.locationcategory;
+            for ( let key of Object.keys( timeData ) ) {
+                arr2[ parseInt( key ) ] = timeData[ key ]; }
+
+            // Fills out 'holes'
+            for ( let iter1 = 0; iter1 < arr1.length; iter1++ ) {
+                if ( arr1[ iter1 ] == null ) arr1[ iter1 ] = 0; }
+
+            for ( let iter2 = 0; iter2 < arr2.length; iter2++ ) {
+                if ( arr2[ iter2 ] == null ) arr2[ iter2 ] = 0; }
+
+            // Sends request
+            request.open( 'POST', app_data.ajax_url );
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            request.send( 'action=towwwn_ub_predict'
+                         +'&catRelatedClicks='+arr1
+                         +'&catRelatedTimes='+arr2);
+
+        });
 
     }
 
@@ -318,7 +351,34 @@ class User {
                     let json = JSON.parse( data.target.response ),
                         obj = json.behaviour_statistics;
 
-                    if ( json.hearts != null ) this.state.hearts = json.hearts;
+                    if ( json.hearts != null ) {
+
+                        // Converts from old heart data format to the new one
+                        let convert = (( arr ) => {
+                            if ( arr == null ) return [];
+
+                            // Checks if should convert array
+                            let shouldConvert = false;
+                            for ( let n = 0; n < arr.length; n ++ ) {
+                                if ( typeof arr[n] !== 'number' ) {
+                                    shouldConvert = true; break; }
+                            } if ( !shouldConvert ) return arr;
+
+                            // Converts array
+                            let response = [];
+                            for ( let n = 0; n < arr.length; n ++ ) {
+                                if ( arr[ n ] == true ) response.push( n );
+                            } return response;
+
+                        });
+
+                        // Sets hearts
+                        this.state.hearts.events = convert( json.hearts.events );
+                        this.state.hearts.locations = convert( json.hearts.locations );
+                        if ( this.state.hearts.events == null ) this.state.hearts.events = [];
+                        if ( this.state.hearts.locations == null ) this.state.hearts.locations = [];
+
+                    }
 
                     // Converts arrays back into objects
                     if ( obj != null ) {

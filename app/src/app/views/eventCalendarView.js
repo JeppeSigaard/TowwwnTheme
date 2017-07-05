@@ -145,13 +145,7 @@ class EventCalendarView extends React.Component {
 
             let events = [];
             if ( Globals.user.state.hearts != null) {
-                const eventHearts = Globals.user.state.hearts.events;
-
-                for(let id in eventHearts){
-                    if (eventHearts.hasOwnProperty(id) && eventHearts[id] !=null  && eventHearts[id] != false){
-                        events.push(id);
-                    }
-                }
+                events = Globals.user.state.hearts.events;
             }
 
             if(events.length < 1){
