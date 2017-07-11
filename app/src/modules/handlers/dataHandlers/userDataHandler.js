@@ -13,12 +13,14 @@ class User {
 
         this.hooks = new HookHandler();
         this.state = {
+
             loggedIn: false,
             userFbid: null,
             accessToken: {
                 token: null,
                 expires: null,
             },
+
             fbData: { },
             dbData: { },
             behaviourData: {
@@ -29,11 +31,15 @@ class User {
                     locationcategory: { },
                 }
             },
+
             hearts: {
                 events: [],
                 locations: []
             }
+
         };
+
+        this.resetBehaviourStatistics();
 
         // On load, get behaviour statistics from cookie
         window.onload = (() => {
@@ -114,6 +120,32 @@ class User {
         const raw_hearts = window._cookielib.read('hearts');
         let hearts = (raw_hearts != 'undefined') ? JSON.parse( raw_hearts ) : { events : null, locations : null };
 
+        // Converts from old heart data format to the new one
+        let convert = (( arr ) => {
+            if ( arr == null ) return [];
+
+            // Checks if should convert array
+            let shouldConvert = false;
+            for ( let n = 0; n < arr.length; n ++ ) {
+                if ( typeof arr[n] !== 'number' ) {
+                    shouldConvert = true; break; }
+            } if ( !shouldConvert ) return arr;
+
+            // Converts array
+            let response = [];
+            for ( let n = 0; n < arr.length; n ++ ) {
+                if ( arr[ n ] == true ) response.push( n );
+            } return response;
+
+        });
+
+        // Sets hearts
+        this.state.hearts.events = convert( hearts.events );
+        this.state.hearts.locations = convert( hearts.locations );
+        if ( this.state.hearts.events == null ) this.state.hearts.events = [];
+        if ( this.state.hearts.locations == null ) this.state.hearts.locations = [];
+
+        // Sets behaviourStatistics
         if ( behaviourStatistics != null ) {
             this.state.behaviourData = behaviourStatistics;
         }
@@ -128,40 +160,55 @@ class User {
         }
     }
 
-    // Log cat connections, for testing purposes
+    // Predictions :O
     predictBehaviour( ) {
 
         return new Promise(( resolve, reject ) => {
 
+            // Calculates 15 most liked
+            let response = [  ],
+                timeDataa = this.state.behaviourData.timeData;
+
+            for ( let key of Object.keys( timeDataa.event ) ) { // event
+                if ( timeDataa.event.hasOwnProperty( key ) ) {
+
+                    let tmpresp = timeDataa.event[key] / 10000;
+                    if ( !this.state.hearts.events.includes( key ) ) {
+                        tmpresp * 0.8;
+                    }
+
+                    response.push({
+                        id : key,
+                        score : Math.floor( tmpresp )
+                    })
+
+                }
+            }
+
+            response.sort(( a, b ) => {
+                if ( a.score > b.score ) return -1;
+                if ( a.score < b.score ) return 1;
+                return 0;
+            }); response = response.slice(0,4);
+
+            let finalresponse = [ ];
+            for ( let n = 0; n < response.length; n ++ ) {
+                finalresponse.push( response[n].id );
+            }
+
             // Start new request
             let request = new XMLHttpRequest();
             request.onload = (( resp ) => {
+
                 let json = JSON.parse( resp.target.response );
                 resolve( json );
+
             });
 
-            // Generates arrays used for behaviour prediction
-            let arr1 = [], clicks = this.state.behaviourData.catRelatedClicks;
-            for ( let key of Object.keys( clicks ) ) {
-                arr1[ parseInt( key ) ] = clicks[ key ]; }
-
-            let arr2 = [], timeData = this.state.behaviourData.timeData.locationcategory;
-            for ( let key of Object.keys( timeData ) ) {
-                arr2[ parseInt( key ) ] = timeData[ key ]; }
-
-            // Fills out 'holes'
-            for ( let iter1 = 0; iter1 < arr1.length; iter1++ ) {
-                if ( arr1[ iter1 ] == null ) arr1[ iter1 ] = 0; }
-
-            for ( let iter2 = 0; iter2 < arr2.length; iter2++ ) {
-                if ( arr2[ iter2 ] == null ) arr2[ iter2 ] = 0; }
-
             // Sends request
-            request.open( 'POST', app_data.ajax_url );
-            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            request.send( 'action=towwwn_ub_predict'
-                         +'&catRelatedClicks='+arr1
-                         +'&catRelatedTimes='+arr2);
+            request.open( 'GET', app_data.tools_api+'/predict?type=event&predictdata='+JSON.stringify( finalresponse ) );
+            request.setRequestHeader(  'Content-type', 'application/x-www-form-urlencoded' );
+            request.send( );
 
         });
 
@@ -198,8 +245,8 @@ class User {
                         fbid  : this.state.userFbid,
                         token : this.state.accessToken.token,
 
-                        client_id     : 'O8hovMTxdFK4ZehKnWuMExBH',
-                        client_secret : 'Shbq4TrZFwQ6BlWWyq5PsHinr6hdcDssCMym0GffQlkfphgj',
+                        client_id     : '4YVFKa6tYT6FmKhTNonasDX9',
+                        client_secret : 'IIjxvk8Hbu9kX6010BzLEigekRmRcIICl6ojokt4IsBjvw8E',
 
                     };
 
@@ -300,8 +347,8 @@ class User {
                 fbid  : this.state.userFbid,
                 token : this.state.accessToken.token,
 
-                client_id     : 'O8hovMTxdFK4ZehKnWuMExBH',
-                client_secret : 'Shbq4TrZFwQ6BlWWyq5PsHinr6hdcDssCMym0GffQlkfphgj',
+                client_id     : '4YVFKa6tYT6FmKhTNonasDX9',
+                client_secret : 'IIjxvk8Hbu9kX6010BzLEigekRmRcIICl6ojokt4IsBjvw8E',
 
             };
 
@@ -318,7 +365,34 @@ class User {
                     let json = JSON.parse( data.target.response ),
                         obj = json.behaviour_statistics;
 
-                    if ( json.hearts != null ) this.state.hearts = json.hearts;
+                    if ( json.hearts != null ) {
+
+                        // Converts from old heart data format to the new one
+                        let convert = (( arr ) => {
+                            if ( arr == null ) return [];
+
+                            // Checks if should convert array
+                            let shouldConvert = false;
+                            for ( let n = 0; n < arr.length; n ++ ) {
+                                if ( typeof arr[n] !== 'number' ) {
+                                    shouldConvert = true; break; }
+                            } if ( !shouldConvert ) return arr;
+
+                            // Converts array
+                            let response = [];
+                            for ( let n = 0; n < arr.length; n ++ ) {
+                                if ( arr[ n ] == true ) response.push( n );
+                            } return response;
+
+                        });
+
+                        // Sets hearts
+                        this.state.hearts.events = convert( json.hearts.events );
+                        this.state.hearts.locations = convert( json.hearts.locations );
+                        if ( this.state.hearts.events == null ) this.state.hearts.events = [];
+                        if ( this.state.hearts.locations == null ) this.state.hearts.locations = [];
+
+                    }
 
                     // Converts arrays back into objects
                     if ( obj != null ) {
@@ -417,7 +491,7 @@ class User {
             token : this.state.accessToken.token,
             meta_data : {
                 behaviour_statistics : { },
-                hearts: { events: [], locations: [] }
+                hearts: { events: [ ], locations: [ ] }
             },
         };
 

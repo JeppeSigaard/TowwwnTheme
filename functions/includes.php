@@ -21,6 +21,7 @@ add_action('wp_head',function(){
         wp_enqueue_script('main-script');
         wp_localize_script( 'main-script', 'app_data', array(
             'ajax_url' => admin_url( 'admin-ajax.php' ),
+            'tools_api' => get_theme_mod('tools_api_url'),
             'rest_api' => get_theme_mod('rest_api_url'),
             'main_path' => site_url(),
             'city' => get_theme_mod('city'),

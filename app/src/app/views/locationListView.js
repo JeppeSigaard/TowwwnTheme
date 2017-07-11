@@ -41,18 +41,8 @@ class LocationListView extends React.Component {
 
         this.lastElems.sort(( a, b ) => {
 
-            /*
-            if ( Globals.user.state.hearts.locations[ a.id ] == true &&
-                Globals.user.state.hearts.locations[ b.id ] != true ) return -1;
-
-            if ( Globals.user.state.hearts.locations[ b.id ] == true &&
-                Globals.user.state.hearts.locations[ a.id ] != true ) return 1;
-            */
-
-            console.log( a );
             if ( parseInt( a.hearts ) > parseInt( b.hearts ) ) return 1;
             if ( parseInt( a.hearts ) < parseInt( b.hearts ) ) return -1;
-
             return 0;
 
         });

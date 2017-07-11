@@ -2,7 +2,7 @@
 
 // Classifier
 const pA = 3, sS = .34; // max pro. advantage & shortness sensitivity
-class AllyClassifier {
+class TextClassifier {
 
     // Constructor
     constructor() {
@@ -14,7 +14,7 @@ class AllyClassifier {
     }
 
     // Fit
-    fit ( data ) {
+    fit ( data ) { // data format : [ { id, text }, { id, text }  ]
 
         for ( let iter = 0; iter < data.length; iter++ ) {
             if ( data[iter].id == null || data[iter].text == null ) continue;
@@ -130,4 +130,4 @@ class AllyClassifier {
 
     }
 
-} module.exports = AllyClassifier;
+} module.exports = TextClassifier;

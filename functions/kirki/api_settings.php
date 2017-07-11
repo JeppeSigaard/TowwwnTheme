@@ -20,3 +20,13 @@ Kirki::add_field( 'smamo_kirki_config', array(
 	'default'     => '',
 	'priority'    => 10,
 ));
+
+// Adds logo field
+Kirki::add_field( 'smamo_kirki_config', array(
+	'type'        => 'text',
+	'settings'    => 'tools_api_url',
+	'label'       => __( 'Tools API URL' ),
+	'section'     => 'api_settings',
+	'default'     => '',
+	'priority'    => 10,
+));
