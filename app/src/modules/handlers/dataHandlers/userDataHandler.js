@@ -11,6 +11,12 @@ class User {
     // Constructor
     constructor() {
 
+        // Temp. client id var... Should be removed.
+        this.client_id = '4YVFKa6tYT6FmKhTNonasDX9';
+
+        // Temp. client secret var... Should be removed.
+        this.client_secret = 'IIjxvk8Hbu9kX6010BzLEigekRmRcIICl6ojokt4IsBjvw8E';
+
         this.hooks = new HookHandler();
         this.state = {
 
@@ -23,14 +29,7 @@ class User {
 
             fbData: { },
             dbData: { },
-            behaviourData: {
-                catRelatedClicks: { },
-                timeData: {
-                    event: { },
-                    location: { },
-                    locationcategory: { },
-                }
-            },
+            eventClicks: { },
 
             hearts: {
                 events: [],
@@ -38,8 +37,6 @@ class User {
             }
 
         };
-
-        this.resetBehaviourStatistics();
 
         // On load, get behaviour statistics from cookie
         window.onload = (() => {
@@ -63,6 +60,13 @@ class User {
 
     }
 
+    // Apply event click
+    applyEventClick( id ) {
+        if ( !this.state.eventClicks.hasOwnProperty( '#'+id ) ) {
+            this.state.eventClicks[ '#'+id ] = { id : id, clicks : 1 };
+        } else { this.state.eventClicks['#'+id].clicks ++; }
+    }
+
     handleUnload(){
 
         this.saveDataInCookie( 30 );
@@ -73,7 +77,6 @@ class User {
                 id : this.state.dbData.id,
                 token : this.state.accessToken.token,
                 meta_data : {
-                    behaviour_statistics : this.state.behaviourData,
                     hearts : this.state.hearts
                 },
             };
@@ -101,8 +104,8 @@ class User {
         window._cookielib.set( 'dbData', JSON.stringify( this.state.dbData ), expireDays );
 
         window._cookielib.set( 'accessToken', JSON.stringify( this.state.accessToken ), expireDays );
-        window._cookielib.set( 'behaviourStatistics', JSON.stringify( this.state.behaviourData ), expireDays );
         window._cookielib.set( 'hearts', JSON.stringify( this.state.hearts ), expireDays );
+        window._cookielib.set( 'eventclicks', JSON.stringify(( this.state.eventClicks == null ? {} : this.state.eventClicks )), expireDays );
 
     }
 
@@ -115,7 +118,7 @@ class User {
             dbData = JSON.parse( window._cookielib.read( 'dbData' ) ),
 
             accessToken = JSON.parse( window._cookielib.read('accessToken') ),
-            behaviourStatistics = JSON.parse( window._cookielib.read('behaviourStatistics') );
+            eventClicks = JSON.parse( window._cookielib.read('eventclicks') );
 
         const raw_hearts = window._cookielib.read('hearts');
         let hearts = (raw_hearts != 'undefined') ? JSON.parse( raw_hearts ) : { events : null, locations : null };
@@ -145,10 +148,7 @@ class User {
         if ( this.state.hearts.events == null ) this.state.hearts.events = [];
         if ( this.state.hearts.locations == null ) this.state.hearts.locations = [];
 
-        // Sets behaviourStatistics
-        if ( behaviourStatistics != null ) {
-            this.state.behaviourData = behaviourStatistics;
-        }
+        this.state.eventClicks = eventClicks;
 
         if ( loggedIn ) {
             this.state.loggedIn = true;
@@ -164,32 +164,31 @@ class User {
     predictBehaviour( ) {
 
         return new Promise(( resolve, reject ) => {
+            if ( this.state.eventClicks == null ) reject();
 
-            // Calculates 15 most liked
-            let response = [  ],
-                timeDataa = this.state.behaviourData.timeData;
-
-            for ( let key of Object.keys( timeDataa.event ) ) { // event
-                if ( timeDataa.event.hasOwnProperty( key ) ) {
-
-                    let tmpresp = timeDataa.event[key] / 10000;
-                    if ( !this.state.hearts.events.includes( key ) ) {
-                        tmpresp * 0.8;
-                    }
-
-                    response.push({
-                        id : key,
-                        score : Math.floor( tmpresp )
-                    })
-
+            // Converts to arrau
+            let arr = [ ];
+            for ( let key in Object.keys( this.state.eventClicks ) ) {
+                if ( this.state.eventClicks.hasOwnProperty( key ) ) {
+                    arr.push( this.state.eventClicks[key] );
                 }
             }
 
-            response.sort(( a, b ) => {
-                if ( a.score > b.score ) return -1;
-                if ( a.score < b.score ) return 1;
+            // Calculates 15 most liked
+            arr.sort((a,b) => {
+                if ( a.clicks > b.clicks ) return 1;
+                if ( a.clicks < b.clicks ) return -1;
                 return 0;
-            }); response = response.slice(0,4);
+            });
+
+            let tmp = arr.slice(0,4);
+            let response = [];
+
+            for ( let key in Object.keys( tmp ) ) {
+                if ( tmp.hasOwnProperty( key ) ) {
+                    response.push( tmp[key].clicks );
+                }
+            }
 
             let finalresponse = [ ];
             for ( let n = 0; n < response.length; n ++ ) {
@@ -245,8 +244,8 @@ class User {
                         fbid  : this.state.userFbid,
                         token : this.state.accessToken.token,
 
-                        client_id     : '4YVFKa6tYT6FmKhTNonasDX9',
-                        client_secret : 'IIjxvk8Hbu9kX6010BzLEigekRmRcIICl6ojokt4IsBjvw8E',
+                        client_id     : this.client_id,
+                        client_secret : this.client_secret,
 
                     };
 
@@ -264,44 +263,6 @@ class User {
                                 obj = json.behaviour_statistics;
 
                             this.state.hearts = json.hearts;
-
-                            // Converts arrays back into objects
-                            let timeData = obj.timeData,
-                                types = [ 'event', 'location', 'locationcategory' ];
-
-                            for ( let key of types ) {
-                                if ( timeData[ key ].constructor.name === 'Array' ) {
-                                    var tmpObject = { };
-                                    for (var iter = 0; iter < timeData[ key ].length; iter++ ) {
-                                        if ( timeData[ key ][ iter ] != null ) tmpObject[ iter ]
-                                            = timeData[ key ][ iter ];
-                                    } timeData[ key ] = tmpObject;
-                                }
-                            }
-
-                            // Adds new behaviour data from login, to old loaded from cookie
-                            let recursiveObjectAddition = (( newobj, oldobj ) => {
-                                let response = { };
-                                for ( let key of Object.keys( newobj ) ) {
-                                    if ( newobj[ key ] == null ||
-                                        oldobj == null ) continue;
-                                    if ( typeof newobj[ key ] === 'object' &&
-                                         typeof oldobj[ key ] === 'object' ) {
-                                        response[ key ] = recursiveObjectAddition( newobj[ key ], oldobj[ key ] );
-                                    } else {
-                                        if ( newobj[ key ] != null && oldobj[ key ] != null ) {
-                                            response[ key ] = newobj[ key ] + oldobj[ key ];
-                                        } else if ( newobj[ key ] != null ) {
-                                            response[ key ] = newobj[ key ];
-                                        } else if ( oldobj[ key ] != null ) {
-                                            response[ key ] = oldobj[ key ];
-                                        }
-                                    }
-                                } return response;
-                            });
-
-                            this.state.behaviourData = recursiveObjectAddition
-                                    ( obj, this.state.behaviourData );
 
                             this.state.loggedIn = true;
                             this.hooks.trigger( 'onlogin' );
@@ -347,8 +308,8 @@ class User {
                 fbid  : this.state.userFbid,
                 token : this.state.accessToken.token,
 
-                client_id     : '4YVFKa6tYT6FmKhTNonasDX9',
-                client_secret : 'IIjxvk8Hbu9kX6010BzLEigekRmRcIICl6ojokt4IsBjvw8E',
+                client_id     : this.client_id,
+                client_secret : this.client_secret,
 
             };
 
@@ -362,8 +323,7 @@ class User {
                 let request = new XMLHttpRequest();
                 request.onload = (( data ) => {
 
-                    let json = JSON.parse( data.target.response ),
-                        obj = json.behaviour_statistics;
+                    let json = JSON.parse( data.target.response );
 
                     if ( json.hearts != null ) {
 
@@ -393,49 +353,6 @@ class User {
                         if ( this.state.hearts.locations == null ) this.state.hearts.locations = [];
 
                     }
-
-                    // Converts arrays back into objects
-                    if ( obj != null ) {
-
-                        let timeData = obj.timeData,
-                            types = [ 'event', 'location', 'locationcategory' ];
-
-                        for ( let key of types ) {
-                            if ( timeData[ key ].constructor.name === 'Array' ) {
-                                var tmpObject = { };
-                                for (var iter = 0; iter < timeData[ key ].length; iter++ ) {
-                                    if ( timeData[ key ][ iter ] != null ) tmpObject[ iter ]
-                                        = timeData[ key ][ iter ];
-                                } timeData[ key ] = tmpObject;
-                            }
-                        }
-
-                        // Adds new behaviour data from login, to old loaded from cookie
-                        let recursiveObjectAddition = (( newobj, oldobj ) => {
-                            let response = { };
-                            for ( let key of Object.keys( newobj ) ) {
-                                if ( newobj[ key ] == null ||
-                                    oldobj == null ) continue;
-                                if ( typeof newobj[ key ] === 'object' &&
-                                     typeof oldobj[ key ] === 'object' ) {
-                                    response[ key ] = recursiveObjectAddition( newobj[ key ], oldobj[ key ] );
-                                } else {
-                                    if ( newobj[ key ] != null && oldobj[ key ] != null ) {
-                                        response[ key ] = newobj[ key ] + oldobj[ key ];
-                                    } else if ( newobj[ key ] != null ) {
-                                        response[ key ] = newobj[ key ];
-                                    } else if ( oldobj[ key ] != null ) {
-                                        response[ key ] = oldobj[ key ];
-                                    }
-                                }
-                            } return response;
-                        });
-
-                        this.state.behaviourData = recursiveObjectAddition
-                            ( obj, this.state.behaviourData );
-
-                    }
-
                     this.state.loggedIn = true;
                     this.hooks.trigger( 'onlogin' );
 
@@ -467,16 +384,7 @@ class User {
     logOut() {
 
         this.state.loggedIn = false;
-        this.state.behaviourData = {
-            catRelatedClicks: { },
-            timeData: {
-                event: { },
-                location: { },
-                locationcategory: { },
-            }
-        };
-
-        window._cookielib.set( 'data', JSON.stringify( this.state ), 30 );
+        window._cookielib.set( 'loggedin', JSON.stringify( false ), 30 );
         this.hooks.trigger( 'onlogout' );
         Globals.hooks.trigger( 'onlogout' );
 
@@ -490,7 +398,6 @@ class User {
             id : this.state.dbData.id,
             token : this.state.accessToken.token,
             meta_data : {
-                behaviour_statistics : { },
                 hearts: { events: [ ], locations: [ ] }
             },
         };

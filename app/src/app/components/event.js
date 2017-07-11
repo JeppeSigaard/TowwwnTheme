@@ -17,6 +17,9 @@ class Event extends React.Component {
             this.props.elem
         );
 
+        // Adds event click to user stuff
+        Globals.user.applyEventClick( this.props.elem.id );
+
         // Push to browser history
         Globals.history.push(this.props.elem);
 

@@ -16,7 +16,7 @@ class Location extends React.Component {
     // Check if hearted
     checkIfHearted() {
         if ( this.props.elem == null || this.unmounted ) return;
-        if ( Globals.user.state.hearts.locations.contains( this.props.elem.id ) ) {
+        if ( Globals.user.state.hearts.locations.includes( this.props.elem.id ) ) {
             this.setState({ hearted : true });
         } else { this.setState({ hearted : false }); }
     }
