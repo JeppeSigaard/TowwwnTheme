@@ -12,10 +12,10 @@ class User {
     constructor() {
 
         // Temp. client id var... Should be removed.
-        this.client_id = 'O8hovMTxdFK4ZehKnWuMExBH';
+        this.client_id = '4YVFKa6tYT6FmKhTNonasDX9'; //O8hovMTxdFK4ZehKnWuMExBH
 
         // Temp. client secret var... Should be removed.
-        this.client_secret = 'Shbq4TrZFwQ6BlWWyq5PsHinr6hdcDssCMym0GffQlkfphgj';
+        this.client_secret = 'IIjxvk8Hbu9kX6010BzLEigekRmRcIICl6ojokt4IsBjvw8E'; // Shbq4TrZFwQ6BlWWyq5PsHinr6hdcDssCMym0GffQlkfphgj
 
         this.hooks = new HookHandler();
         this.state = {
@@ -164,11 +164,10 @@ class User {
     predictBehaviour( ) {
 
         return new Promise(( resolve, reject ) => {
-            if ( this.state.eventClicks == null ) reject();
 
             // Converts to arrau
             let arr = [ ];
-            for ( let key in Object.keys( this.state.eventClicks ) ) {
+            for ( let key of Object.keys( this.state.eventClicks ) ) {
                 if ( this.state.eventClicks.hasOwnProperty( key ) ) {
                     arr.push( this.state.eventClicks[key] );
                 }
@@ -176,24 +175,19 @@ class User {
 
             // Calculates 15 most liked
             arr.sort((a,b) => {
-                if ( a.clicks > b.clicks ) return 1;
-                if ( a.clicks < b.clicks ) return -1;
+                if ( a.clicks > b.clicks ) return -1;
+                if ( a.clicks < b.clicks ) return 1;
                 return 0;
             });
 
             let tmp = arr.slice(0,4);
             let response = [];
 
-            for ( let key in Object.keys( tmp ) ) {
-                if ( tmp.hasOwnProperty( key ) ) {
-                    response.push( tmp[key].clicks );
-                }
+            for ( let n = 0; n < tmp.length; n++ ) {
+                response.push( tmp[n].id );
             }
 
-            let finalresponse = [ ];
-            for ( let n = 0; n < response.length; n ++ ) {
-                finalresponse.push( response[n].id );
-            }
+            console.log( response );
 
             // Start new request
             let request = new XMLHttpRequest();
@@ -205,7 +199,7 @@ class User {
             });
 
             // Sends request
-            request.open( 'GET', app_data.tools_api+'/predict?type=event&predictdata='+JSON.stringify( finalresponse ) );
+            request.open( 'GET', app_data.tools_api+'/predict?type=event&predictdata='+JSON.stringify( response ) );
             request.setRequestHeader(  'Content-type', 'application/x-www-form-urlencoded' );
             request.send( );
 
