@@ -12,10 +12,10 @@ class User {
     constructor() {
 
         // Temp. client id var... Should be removed.
-        this.client_id = '4YVFKa6tYT6FmKhTNonasDX9';
+        this.client_id = 'O8hovMTxdFK4ZehKnWuMExBH';
 
         // Temp. client secret var... Should be removed.
-        this.client_secret = 'IIjxvk8Hbu9kX6010BzLEigekRmRcIICl6ojokt4IsBjvw8E';
+        this.client_secret = 'Shbq4TrZFwQ6BlWWyq5PsHinr6hdcDssCMym0GffQlkfphgj';
 
         this.hooks = new HookHandler();
         this.state = {
