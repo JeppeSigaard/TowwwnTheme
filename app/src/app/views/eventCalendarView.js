@@ -18,7 +18,11 @@ class EventCalendarView extends React.Component {
     // Ctor
     constructor() {
         super();
-        this.state = { containerClasses : 'eventscontainer', allLoaded : false, headerCollapsed : false, view : 'grid', toggled : 'future'};
+        this.state = {
+            containerClasses : 'eventscontainer', allLoaded : false,
+          headerCollapsed : false, view : 'grid', toggled : 'future'
+        };
+
         this.eventsLength = 0;
         this.allLoaded = false;
         this.loadReturned = true;
@@ -66,6 +70,7 @@ class EventCalendarView extends React.Component {
             this.setState({ containerClasses : 'eventscontainer' });
         else if ( !this.state.containerClasses.includes('lineLayout') )
             this.setState({ containerClasses : 'eventscontainer lineLayout' });
+
     }
 
     toggleFuture(){
@@ -165,17 +170,29 @@ class EventCalendarView extends React.Component {
     }
 
     togglePredicted(){
+
         this.allLoaded = false; this.setState({allLoaded : false});
         Globals.setMainState({'jsxEvents' : null});
 
-        this.properties = {
-            per_page : 24,
-            page : 1,
-            after : 'now',
-            cat : this.state.predictedCats,
-        };
+        Globals.user.predictBehaviour().then(( response ) => {
 
-        this.loadEvents('predicted');
+            let data = JSON.parse( response ).slice(0,12),
+                ids = [];
+
+            for ( let n = 0; n < data.length; n++ ) {
+                ids.push( data[n].id ); }
+
+            this.properties = {
+                per_page : 24,
+                ids : ids,
+                page : 1,
+                after : 'now',
+            };
+
+            this.loadEvents('predicted');
+
+        });
+
     }
 
     toggleView(){
@@ -264,20 +281,9 @@ class EventCalendarView extends React.Component {
 
         Globals.user.predictBehaviour().then(( data ) => {
 
-            if ( data.length > 2 ) {
-                data.sort(( a, b ) => {
-                    if ( a.output > b.output ) return -1;
-                    if ( a.output < b.output ) return 1;
-                    return 0;
-                }); data = [ data[0], data[1], data[2] ];
-            }
+            data = JSON.parse( data );
+            if( data.length > 0 ) this.setState({showPredictedButton : true});
 
-            let predictedCats = [];
-            for ( let iter = 0; iter < data.length; iter++ ) {
-                 predictedCats.push(data[ iter ].id);
-            }
-
-            if(predictedCats.length > 0) this.setState({showPredictedButton : true, predictedCats : predictedCats});
         });
     }
 
