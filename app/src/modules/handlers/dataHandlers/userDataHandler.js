@@ -12,10 +12,10 @@ class User {
     constructor() {
 
         // Temp. client id var... Should be removed.
-        this.client_id = 'O8hovMTxdFK4ZehKnWuMExBH'; //4YVFKa6tYT6FmKhTNonasDX9
+        this.client_id = '4YVFKa6tYT6FmKhTNonasDX9'; //O8hovMTxdFK4ZehKnWuMExBH
 
         // Temp. client secret var... Should be removed.
-        this.client_secret = 'Shbq4TrZFwQ6BlWWyq5PsHinr6hdcDssCMym0GffQlkfphgj'; // IIjxvk8Hbu9kX6010BzLEigekRmRcIICl6ojokt4IsBjvw8E
+        this.client_secret = 'IIjxvk8Hbu9kX6010BzLEigekRmRcIICl6ojokt4IsBjvw8E'; // Shbq4TrZFwQ6BlWWyq5PsHinr6hdcDssCMym0GffQlkfphgj
 
         this.hooks = new HookHandler();
         this.state = {
@@ -70,7 +70,7 @@ class User {
     handleUnload(){
 
         this.saveDataInCookie( 30 );
-        if ( this.state.loggedIn ) {
+        if ( this.state.loggedIn && this.state.dbData.id != null ) {
 
             // Request Param
             let data = {
@@ -104,7 +104,6 @@ class User {
         window._cookielib.set( 'dbData', JSON.stringify( this.state.dbData ), expireDays );
 
         window._cookielib.set( 'accessToken', JSON.stringify( this.state.accessToken ), expireDays );
-        window._cookielib.set( 'hearts', JSON.stringify( this.state.hearts ), expireDays );
         window._cookielib.set( 'eventclicks', JSON.stringify(( this.state.eventClicks == null ? {} : this.state.eventClicks )), expireDays );
 
     }
@@ -119,9 +118,6 @@ class User {
 
             accessToken = JSON.parse( window._cookielib.read('accessToken') ),
             eventClicks = JSON.parse( window._cookielib.read('eventclicks') );
-
-        const raw_hearts = window._cookielib.read('hearts');
-        let hearts = (raw_hearts != 'undefined') ? JSON.parse( raw_hearts ) : { events : null, locations : null };
 
         // Converts from old heart data format to the new one
         let convert = (( arr ) => {
@@ -141,12 +137,6 @@ class User {
             } return response;
 
         });
-
-        // Sets hearts
-        this.state.hearts.events = convert( hearts.events );
-        this.state.hearts.locations = convert( hearts.locations );
-        if ( this.state.hearts.events == null ) this.state.hearts.events = [];
-        if ( this.state.hearts.locations == null ) this.state.hearts.locations = [];
 
         this.state.eventClicks = eventClicks;
 
@@ -186,8 +176,6 @@ class User {
             for ( let n = 0; n < tmp.length; n++ ) {
                 response.push( tmp[n].id );
             }
-
-            console.log( response );
 
             // Start new request
             let request = new XMLHttpRequest();
@@ -253,9 +241,7 @@ class User {
                         let request = new XMLHttpRequest();
                         request.onload = (( data ) => {
 
-                            let json = JSON.parse( data.target.response ),
-                                obj = json.behaviour_statistics;
-
+                            let json = JSON.parse( data.target.response );
                             this.state.hearts = json.hearts;
 
                             this.state.loggedIn = true;
@@ -268,7 +254,7 @@ class User {
                         request.open( 'GET', app_data.rest_api+'/user/'+this.state.dbData.id+
                                       '?user='+ this.state.dbData.id +
                                       '&token='+ this.state.accessToken.token +
-                                      '&fields=hearts,behaviour_statistics' );
+                                      '&fields=hearts' );
 
                         request.send();
                         resolve( data );
@@ -318,7 +304,6 @@ class User {
                 request.onload = (( data ) => {
 
                     let json = JSON.parse( data.target.response );
-
                     if ( json.hearts != null ) {
 
                         // Converts from old heart data format to the new one
@@ -347,8 +332,12 @@ class User {
                         if ( this.state.hearts.locations == null ) this.state.hearts.locations = [];
 
                     }
+
                     this.state.loggedIn = true;
                     this.hooks.trigger( 'onlogin' );
+                    if ( json.hearts.locations != null ) {
+                        this.hooks.trigger( 'ls-hearted', json.hearts.locations );
+                    }
 
                 });
 
@@ -356,7 +345,7 @@ class User {
                 request.open( 'GET', app_data.rest_api+'/user/'+this.state.dbData.id+
                              '?user='+ this.state.dbData.id +
                              '&token='+ this.state.accessToken.token +
-                             '&fields=behaviour_statistics,hearts' );
+                             '&fields=hearts' );
 
                 request.send();
                 resolve( data );

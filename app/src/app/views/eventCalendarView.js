@@ -184,9 +184,9 @@ class EventCalendarView extends React.Component {
 
             this.properties = {
                 per_page : 24,
-                ids : ids,
+                ids : ids.join(','),
                 page : 1,
-                after : 'now',
+                after : 'now'
             };
 
             this.loadEvents('predicted');
