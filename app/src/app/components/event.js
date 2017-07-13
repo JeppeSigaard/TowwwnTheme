@@ -59,6 +59,8 @@ class Event extends React.Component {
     locationRefClick( e ) {
         e.preventDefault();
 
+        return;
+
         Globals.setMainState({
             singleLocation : null
         });
