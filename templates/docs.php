@@ -30,7 +30,20 @@
             <main>
                 <div class="inner">
                     <article>
-                        <header class="article-header"><h1><?php the_title(); ?></h1></header>
+                        <?php
+                        $patch_version_name = '';
+                        if ('patch' === get_post_type(get_the_ID())){
+                            $patch_version = get_post_meta($id,'patch_version', true);
+
+                            $major = (isset($patch_version['major'])) ? $patch_version['major'] : '0';
+                            $minor = (isset($patch_version['minor'])) ? $patch_version['minor'] : '0';
+                            $patch = (isset($patch_version['patch'])) ? $patch_version['patch'] : '0';
+
+                            $patch_version_name = $major.'.'.$minor.'.'.$patch. ' : ';
+
+                        }
+                        ?>
+                        <header class="article-header"><h1><?php echo $patch_version_name; the_title(); ?></h1></header>
                         <div class="article-content"><?php the_content(); ?></div>
                         <footer class="article-footer"></footer>
                     </article>
