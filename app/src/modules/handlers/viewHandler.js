@@ -252,30 +252,26 @@ class ViewHandler {
         if ( fromRight ) _(activeView).css({ left : '100%' });
 
         _(activeView).get(0).offsetHeight;
+        _(activeView).removeClass('notrans');
+        _(activeView).get(0).offsetHeight;
 
-        setTimeout(function(){
+        // Translates view in
+        if ( fromLeft && null != this.mobileFocusedView  ) _(this.mobileFocusedView).css({ left : '100%' });
+        if ( fromRight && null != this.mobileFocusedView  ) _(this.mobileFocusedView).css({ left : '-100%' });
+        _(activeView).css({ left : '0' });
 
-            _(activeView).removeClass('notrans');
+        // Forces queues to run
+        _(activeView).get(0).offsetHeight;
+        _(this.mobileFocusedView).get(0).offsetHeight;
 
-            // Translates view in
-            if ( fromLeft && null != this.mobileFocusedView  ) _(this.mobileFocusedView).css({ left : '100%' });
-            if ( fromRight && null != this.mobileFocusedView  ) _(this.mobileFocusedView).css({ left : '-100%' });
-            _(activeView).get(0).offsetHeight;
-            _(activeView).css({ left : '0' });
+        // Sets new focused view
+        this.mobileFocusedView = activeView;
+         _('.container-section').removeClass('active');
+        _(activeView).addClass('active');
+        Globals.setMainState({ currentMobileView : activeView });
 
-            // Forces queues to run
-            _(activeView).get(0).offsetHeight;
-            _(this.mobileFocusedView).get(0).offsetHeight;
+        Globals.hooks.trigger( 'viewChanged', [activeView, null]);
 
-            // Sets new focused view
-            this.mobileFocusedView = activeView;
-             _('.container-section').removeClass('active');
-            _(activeView).addClass('active');
-            Globals.setMainState({ currentMobileView : activeView });
-
-            Globals.hooks.trigger( 'viewChanged', [activeView, null]);
-
-        }.bind(this), 50);
     }
 
 } module.exports = ViewHandler;
