@@ -86,39 +86,39 @@ class LocationCategoryView extends React.Component {
 
     // User Hook
     userHook() {
-        if ( this.hookedIntoUser == null && Globals.user != null ) {
-            this.hookedIntoUser = true;
-
-            Globals.user.hooks.add( 'onlogin', ( ) => {
-                Globals.user.predictBehaviour().then(( data ) => {
-                    let jsxCats = new _Array([ ]);
-                    jsxCats.hooks.add( 'onpush', () => {
-                        if ( jsxCats.data.length >= data.length )
-                            this.setState({ suggestedCategories : jsxCats.data });
-                    });
-
-                    if ( data.length > 2 ) {
-                        data.sort(( a, b ) => {
-                            if ( a.output > b.output ) return -1;
-                            if ( a.output < b.output ) return 1;
-                            return 0;
-                        }); data = [ data[0], data[1], data[2] ];
-                    }
-
-                    for ( let iter = 0; iter < data.length; iter++ ) {
-                        Globals.categoryDataHandler.getCategory( data[ iter ].id ).then(( resp ) => {
-                            jsxCats.push( <LocationCategory key={ 'predicted-category-'+data[ iter ].id } elem={ resp } name={ this.props.name } clickEvent={ this.handleCategoryClick } /> );
-
-                            // Remove from jsxCategories if exists already
-                            if(_('[data-id="'+data[ iter ].id+'"]')){
-                                const elem = _('[data-id="'+data[ iter ].id+'"]').get()[0];
-                                elem.parentNode.removeChild(elem);
-                            }
-                        });
-                    }
-                });
-            });
-        }
+//        if ( this.hookedIntoUser == null && Globals.user != null ) {
+//            this.hookedIntoUser = true;
+//
+//            Globals.user.hooks.add( 'onlogin', ( ) => {
+//                Globals.user.predictBehaviour().then(( data ) => {
+//                    let jsxCats = new _Array([ ]);
+//                    jsxCats.hooks.add( 'onpush', () => {
+//                        if ( jsxCats.data.length >= data.length )
+//                            this.setState({ suggestedCategories : jsxCats.data });
+//                    });
+//
+//                    if ( data.length > 2 ) {
+//                        data.sort(( a, b ) => {
+//                            if ( a.output > b.output ) return -1;
+//                            if ( a.output < b.output ) return 1;
+//                            return 0;
+//                        }); data = [ data[0], data[1], data[2] ];
+//                    }
+//
+//                    for ( let iter = 0; iter < data.length; iter++ ) {
+//                        Globals.categoryDataHandler.getCategory( data[ iter ].id ).then(( resp ) => {
+//                            jsxCats.push( <LocationCategory key={ 'predicted-category-'+data[ iter ].id } elem={ resp } name={ this.props.name } clickEvent={ this.handleCategoryClick } /> );
+//
+//                            // Remove from jsxCategories if exists already
+//                            if(_('[data-id="'+data[ iter ].id+'"]')){
+//                                const elem = _('[data-id="'+data[ iter ].id+'"]').get()[0];
+//                                elem.parentNode.removeChild(elem);
+//                            }
+//                        });
+//                    }
+//                });
+//            });
+//        }
     }
 
     // Component did update

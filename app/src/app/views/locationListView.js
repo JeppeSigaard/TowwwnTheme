@@ -39,25 +39,25 @@ class LocationListView extends React.Component {
     // Update jsx elems
     updateJSXElemsOrder() {
 
-        this.lastElems.sort(( a, b ) => {
+        this.lastElems.sort((a,b) => {
 
-            /*
-            if ( Globals.user.state.hearts.locations[ a.id ] == true &&
-                Globals.user.state.hearts.locations[ b.id ] != true ) return -1;
+            if ( Globals.user.state.hearts.locations.includes(a.id) &&
+                 !Globals.user.state.hearts.locations.includes(b.id) ) {
 
-            if ( Globals.user.state.hearts.locations[ b.id ] == true &&
-                Globals.user.state.hearts.locations[ a.id ] != true ) return 1;
-            */
+                return -1;
 
-            console.log( a );
-            if ( parseInt( a.hearts ) > parseInt( b.hearts ) ) return 1;
-            if ( parseInt( a.hearts ) < parseInt( b.hearts ) ) return -1;
+            } else if ( !Globals.user.state.hearts.locations.includes(a.id) &&
+                        Globals.user.state.hearts.locations.includes(b.id) ) {
 
-            return 0;
+                return 1;
+
+            } else return 0;
 
         });
 
         this.setState({ shouldSort: false });
+        this.updateJSXElems();
+
     }
 
     // Move hearetd
@@ -180,8 +180,11 @@ class LocationListView extends React.Component {
 
     // Component did mount
     componentDidMount() {
-        Globals.hooks.add('ls-hearted', this.moveHearted.bind(this));
+        Globals.hooks.add('ls-hearted', this.updateJSXElemsOrder.bind(this));
+        Globals.user.hooks.add('ls-hearted', this.updateJSXElemsOrder.bind(this));
+
         Globals.hooks.add('onlogin', this.updateJSXElemsOrder.bind(this));
+        Globals.user.hooks.add('onlogin', this.updateJSXElemsOrder.bind(this));
     }
 
     // Render

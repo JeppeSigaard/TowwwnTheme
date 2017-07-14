@@ -86,13 +86,12 @@ class EventSingleView extends React.Component {
     // Component will receive props
     componentWillReceiveProps( nextProps ) {
         if ( nextProps.event == this.lastElem ) {this.setState({scrollTo : null});}
-
         if ( nextProps.event != this.lastElem ) {
 
             this.setState({scrollTo : 0});
 
             let heart = _('#event-single-view .heart');
-            if ( Globals.user.state.hearts.events[ nextProps.event.id ] == true && !heart.hasClass('active') ) {
+            if ( Globals.user.state.hearts.events.includes( nextProps.event.id ) && !heart.hasClass('active') ) {
                 heart.removeClass('animback');
                 heart.addClass('anim');
 
@@ -101,7 +100,7 @@ class EventSingleView extends React.Component {
                     heart.addClass('active');
                 }, 400);
 
-            } else if ( Globals.user.state.hearts.events[ nextProps.event.id ] != true && heart.hasClass( 'active' ) ) {
+            } else if ( Globals.user.state.hearts.events.includes( nextProps.event.id ) && heart.hasClass( 'active' ) ) {
                 heart.removeClass('anim');
                 heart.addClass('animback');
 
@@ -180,9 +179,10 @@ class EventSingleView extends React.Component {
                 Globals.user.state.hearts = { events : [], locations : [] }
             }
 
-            if ( Globals.user.state.hearts.events[ this.props.event.id ] != true ) {
+            if ( !Globals.user.state.hearts.events.includes( this.props.event.id ) ) {
+
                 heart.addClass('anim');
-                Globals.user.state.hearts.events[ this.props.event.id ] = true;
+                Globals.user.state.hearts.events.push( this.props.event.id );
 
                 setTimeout(() => {
                     heart.removeClass('anim');
@@ -191,7 +191,7 @@ class EventSingleView extends React.Component {
 
             } else {
                 heart.addClass('animback');
-                Globals.user.state.hearts.events[ this.props.event.id ] = false;
+                Globals.user.state.hearts.events.splice( Globals.user.state.hearts.events.indexOf(this.props.event.id), 1 );
 
                 setTimeout(() => {
                     heart.removeClass('animback');
@@ -201,7 +201,9 @@ class EventSingleView extends React.Component {
             }
 
            Globals.user.hooks.trigger('eventHearts');
-       }
+        }
+
+        console.log( Globals.user.state.hearts );
     }
 
     applySponsorBanner(){
@@ -231,7 +233,7 @@ class EventSingleView extends React.Component {
     componentDidMount() {
 
         Globals.user.hooks.add( 'onlogin', () => {
-            if ( this.props.event != null && Globals.user.state.hearts.events[ this.props.event.id ] == true ) {
+            if ( this.props.event != null && Globals.user.state.hearts.events.includes( this.props.event.id ) ) {
                 let heart = _('#event-single-view .heart');
                 heart.addClass('anim');
                 setTimeout(() => {

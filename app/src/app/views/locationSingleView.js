@@ -96,9 +96,10 @@ class LocationSingleView extends React.Component{
        } else {
             let heart = _('#location-single-view .heart');
             if ( heart.hasClass('anim') || heart.hasClass('animback') ) return;
-            if ( Globals.user.state.hearts.locations[ this.props.elem.id ] != true ) {
+            if ( !Globals.user.state.hearts.locations.includes( this.props.elem.id ) ) {
+
                 heart.addClass('anim');
-                Globals.user.state.hearts.locations[ this.props.elem.id ] = true;
+                Globals.user.state.hearts.locations.push( this.props.elem.id );
 
                 setTimeout(() => {
                     heart.removeClass('anim');
@@ -107,7 +108,7 @@ class LocationSingleView extends React.Component{
 
             } else {
                 heart.addClass('animback');
-                Globals.user.state.hearts.locations[ this.props.elem.id ] = false;
+                Globals.user.state.hearts.locations.splice( Globals.user.state.hearts.locations.indexOf( this.props.elem.id ), 1 );
 
                 setTimeout(() => {
                     heart.removeClass('animback');
@@ -139,7 +140,7 @@ class LocationSingleView extends React.Component{
 
             let heart = _('#location-single-view .heart');
 
-            if ( Globals.user.state.hearts.locations[ nextProps.elem.id ] == true && !heart.hasClass('active') ) {
+            if ( Globals.user.state.hearts.locations.includes( nextProps.elem.id ) && !heart.hasClass('active') ) {
                 heart.removeClass('animback');
                 heart.addClass('anim');
 
@@ -148,7 +149,7 @@ class LocationSingleView extends React.Component{
                     heart.addClass('active');
                 }, 400);
 
-            } else if ( Globals.user.state.hearts.locations[ nextProps.elem.id ] != true && heart.hasClass( 'active' ) ) {
+            } else if ( !Globals.user.state.hearts.locations.includes( nextProps.elem.id ) && heart.hasClass( 'active' ) ) {
                 heart.removeClass('anim');
                 heart.addClass('animback');
 
@@ -234,7 +235,7 @@ class LocationSingleView extends React.Component{
     componentDidMount() {
 
         Globals.user.hooks.add( 'onlogin', () => {
-            if ( this.props.elem != null && Globals.user.state.hearts.locations[ this.props.elem.id ] == true ) {
+            if ( this.props.elem != null && Globals.user.state.hearts.locations.includes( this.props.elem.id ) ) {
                 let heart = _('#location-single-view .heart');
                 heart.addClass('anim');
                 setTimeout(() => {
@@ -243,13 +244,6 @@ class LocationSingleView extends React.Component{
                 }, 400 );
             }
         });
-    }
-
-    // Component did update
-    componentDidUpdate() {
-        if ( this.props.elem != null ) {
-
-        }
     }
 
     // Render
