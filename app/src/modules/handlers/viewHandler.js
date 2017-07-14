@@ -30,21 +30,20 @@ class ViewHandler {
     // Change view focus
     changeViewFocus( leftView, rightView, fromLeft, fromRight, notrans, ignoreAutoDirection, leftSize, rightSize ) {
 
+        // Uses change mobile view focus, if screen is less than x pixels
         if ( _('body').hasClass('mobile') ) {
             this.changeMobileViewFocus( leftView, fromLeft, fromRight );
             return;
         }
 
+        // If both views, already is in view.. Don't do anything:))
         if ( this.focusedViews.includes( leftView ) &&
              this.focusedViews.includes( rightView ) ) return;
 
+        // Uses manual change view focus if ignore auto direction is true
         if ( ignoreAutoDirection ) { this.manualChangeViewFocus( leftView, rightView ); return; }
 
-        _('.container-section').css({ 'width' : '50%' });
-
-        if ( leftSize == null ) leftSize = 50;
-        if ( rightSize == null ) rightSize = 50;
-
+        // Adds notrans classes
         if ( notrans ) {
             _( leftView ).addClass('notrans').get(0).offsetHeight;
             _( rightView ).addClass('notrans').get(0).offsetHeight;
@@ -55,9 +54,7 @@ class ViewHandler {
             }
         }
 
-        _( leftView ).css({ 'width' : leftSize+'%' });
-        _( rightView ).css({ 'width' : rightSize+'%' });
-
+        // Checks if the any of views already is in focus
         let leftFocused = false, rightFocused = false;
         if ( this.focusedViews.length > 1 ) {
 
@@ -123,11 +120,13 @@ class ViewHandler {
             window.cs = window.getComputedStyle( _( this.focusedViews[1] ).get(0) );
         }
 
+        // Adds notrans classes
         if ( !notrans ) {
             _( leftView ).addClass('notrans');
             _( rightView ).addClass('notrans');
         }
 
+        // Pre positions views
         if ( fromLeft ) {
             if ( !rightFocused ) {
                 _( leftView ).css({ 'left' : '-100%' })
@@ -138,6 +137,7 @@ class ViewHandler {
             }
         }
 
+        // Pre positions views
         if ( fromRight ) {
             if ( !leftFocused ) {
                 _( leftView ).css({ 'left' : '100%' });
@@ -157,22 +157,21 @@ class ViewHandler {
             _( this.focusedViews[1] ).get(0).offsetHeight;
         }
 
+        // If not notrans remove the classes
         if ( !notrans ) {
             _( leftView ).removeClass('notrans');
             _( rightView ).removeClass('notrans');
         }
 
+        // Positions new views
         _( leftView ).css({ 'left': '0' });
-        _( rightView ).css({ 'left': leftSize+'%' });
+        _( rightView ).css({ 'left': '50%' });
 
+        // Forces browser to run css queue
         _( leftView ).get(0).offsetHeight;
         _( rightView ).get(0).offsetHeight;
-//
-//        if ( _( leftView ) !== _( '#search-view' ) && _( rightView ) !== _( '#search-view' ) ) {
-//            if ( _( this.focusedViews[1] ) === _( '#search-view' ) ) _( '#search-view' ).css({ left: '50%' });
-//            else _( '#search-view' ).css({ left: '0' });
-//        }
 
+        // Sets focused views
         this.focusedViews[0] = leftView;
         this.focusedViews[1] = rightView;
 
@@ -252,6 +251,8 @@ class ViewHandler {
         if ( fromLeft ) _(activeView).css({ left : '-100%' });
         if ( fromRight ) _(activeView).css({ left : '100%' });
 
+        _(activeView).get(0).offsetHeight;
+
         setTimeout(function(){
 
             _(activeView).removeClass('notrans');
@@ -261,6 +262,10 @@ class ViewHandler {
             if ( fromRight && null != this.mobileFocusedView  ) _(this.mobileFocusedView).css({ left : '-100%' });
             _(activeView).get(0).offsetHeight;
             _(activeView).css({ left : '0' });
+
+            // Forces queues to run
+            _(activeView).get(0).offsetHeight;
+            _(this.mobileFocusedView).get(0).offsetHeight;
 
             // Sets new focused view
             this.mobileFocusedView = activeView;
