@@ -1,7 +1,10 @@
 <?php
 
 add_action('wp_head',function(){
-    $template = (is_page() && !is_front_page()) ? 'page' : 'app';
+
+    $template = 'app';
+    if (is_singular('patch') || is_page()){$template = 'page';}
+
 
     if('app' === $template){
 

@@ -235,3 +235,23 @@ article, aside .inner {
     color: inherit;
     text-decoration: none;
     position: relative; }
+
+.patch-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #68a297; }
+  .patch-list .patch-item {
+    padding-left: 20px;
+    position: relative; }
+    .patch-list .patch-item:before {
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0; }
+  .patch-list.type-add .patch-item:before {
+    content: '+'; }
+  .patch-list.type-change .patch-item:before {
+    content: '*'; }
+  .patch-list.type-remove .patch-item:before {
+    content: '-'; }
