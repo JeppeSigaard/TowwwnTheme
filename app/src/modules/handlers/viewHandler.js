@@ -246,12 +246,11 @@ class ViewHandler {
         // Adds needed classes
         if (null != this.mobileFocusedView ) _(this.mobileFocusedView).removeClass('notrans');
         _(activeView).addClass('notrans');
+        _(activeView).get(0).offsetHeight;
 
         // Sets starting position for new view
         if ( fromLeft ) _(activeView).css({ left : '-100%' });
         if ( fromRight ) _(activeView).css({ left : '100%' });
-
-        _(activeView).get(0).offsetHeight;
         _(activeView).removeClass('notrans');
         _(activeView).get(0).offsetHeight;
 

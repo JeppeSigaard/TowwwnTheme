@@ -9,16 +9,18 @@
     height: 100vh;
     overflow: hidden;
     background-color: #292929;
-    transition: 180ms $horizontal-bezier;
+    transition: 180ms $horizontal-bezier!important;
 
     .hamburger-inner{
         position: absolute;
-        top: $menu-bar-height; left: 0;
+        top: $header-bar-height;
+        left: 0;
         width: 100%;
         height: auto;
         overflow-x: hidden;
-        overflow-y: scroll;
+        overflow-y: auto;
         padding-top: 20px;
+        max-height: calc( 100vh - #{$header-bar-height} );
 
         .user-name{
             line-height: 1.3;
@@ -72,7 +74,11 @@
         }
     }
 
-    &.active{
-        transform: translateX(0);
-    }
+//    &.active{
+//        transform: translateX(0);
+//
+//        & ~ .content-container .content-container-inner{
+//            transform: translateX( -$sidebar-width );
+//        }
+//    }
 }
