@@ -89,27 +89,20 @@ $horizontal-bezier-mobile: cubic-bezier(0, 0, 0, 1);
         position: fixed;
         width: 100%;
         overflow: hidden;
-        top: 0; left: 0%; bottom: 0;
+        top: 0; left: 0; bottom: 0;
         font-size: 0;
-        transition: 400ms, transform 180ms;
-        transition-timing-function: $horizontal-bezier!important;
+        transition: 180ms $horizontal-bezier;
 
         &.aside{
-            transition: 180ms $horizontal-bezier!important;
             transform: translateX( -$sidebar-width );
 
             & ~ .hamburger{
-                transition: 180ms $horizontal-bezier!important;
                 transform: translateX(0);
             }
         }
 
         &.notrans{
-            transition: 0ms, transform 180ms;
-        }
-
-        &.transition{
-            transition: 250ms, left 180ms, transform 180ms;
+            transition: 0!important;
         }
 
         #general-overlay{
