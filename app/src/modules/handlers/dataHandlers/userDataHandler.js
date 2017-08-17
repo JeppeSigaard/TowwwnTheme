@@ -64,6 +64,9 @@ class User {
 
     // Apply event click
     applyEventClick( id ) {
+        
+        if (id == null) return;
+        
         if ( !this.state.eventClicks.hasOwnProperty( '#'+id ) ) {
             this.state.eventClicks[ '#'+id ] = { id : id, clicks : 1 };
         } else { this.state.eventClicks['#'+id].clicks ++; }
