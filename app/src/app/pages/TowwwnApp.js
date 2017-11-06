@@ -198,7 +198,6 @@ class TowwwnApp extends React.Component {
     componentDidMount() {
 
         this.viewSlider = new ViewSlider();
-
         Globals.viewHandler = null;
 
         // Render 404
