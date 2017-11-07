@@ -32,13 +32,13 @@ class EventCalendarView extends React.Component {
             after : 'now',
         };
 
-        Globals.user.hooks.add( 'onlogin', ( ) => {
-            this.userHook();
-        });
-
-        Globals.user.hooks.add( 'eventHearts', ( ) => {
-            if(this.state.toggled === 'hearts') this.toggleHeart();
-        });
+        // Globals.user.hooks.add( 'onlogin', ( ) => {
+        //     this.userHook();
+        // });
+        //
+        // Globals.user.hooks.add( 'eventHearts', ( ) => {
+        //     if(this.state.toggled === 'hearts') this.toggleHeart();
+        // });
     }
 
     // In view
@@ -130,68 +130,69 @@ class EventCalendarView extends React.Component {
 
     toggleHeart(){
 
-        if ( Globals.user != null && !Globals.user.state.loggedIn ) {
-            Globals.setMainState({ from: 'event-calendar-view' });
-            Globals.lastViewState = [ Globals.viewHandler.focusedViews[0], Globals.viewHandler.focusedViews[1] ];
-            Globals.viewHandler.changeViewFocus(
-                '#user-view',
-                '#event-calendar-view',
-                false, true, false, true
-            );
+        // if ( Globals.user != null && !Globals.user.state.loggedIn ) {
+        //     Globals.setMainState({ from: 'event-calendar-view' });
+        //     Globals.lastViewState = [ Globals.viewHandler.focusedViews[0], Globals.viewHandler.focusedViews[1] ];
+        //     Globals.viewHandler.changeViewFocus(
+        //         '#user-view',
+        //         '#event-calendar-view',
+        //         false, true, false, true
+        //     );
+        //
+        //     Globals.hooks.add('onlogin', this.toggleHeart.bind(this));
+        // }
+        //
+        // else{
+        //
+        //     if( !this.loadReturned ) return;
+        //     this.allLoaded = false; this.setState({allLoaded : false, toggled : 'hearts'});
+        //     Globals.setMainState({'jsxEvents' : null});
+        //
+        //     let events = [];
+        //     if ( Globals.user.state.hearts != null) {
+        //         events = Globals.user.state.hearts.events;
+        //     }
+        //
+        //     if(events.length < 1){
+        //         events.push(0);
+        //     }
+        //
+        //     this.properties = {
+        //         per_page : 9999,
+        //         page : 1,
+        //         ids : events,
+        //         after : '-1 hour',
+        //     };
+        //
+        //     this.loadEvents('hearts');
+        //     this.allLoaded = true; this.setState({allLoaded : true});
+        // }
 
-            Globals.hooks.add('onlogin', this.toggleHeart.bind(this));
-        }
-
-        else{
-
-            if( !this.loadReturned ) return;
-            this.allLoaded = false; this.setState({allLoaded : false, toggled : 'hearts'});
-            Globals.setMainState({'jsxEvents' : null});
-
-            let events = [];
-            if ( Globals.user.state.hearts != null) {
-                events = Globals.user.state.hearts.events;
-            }
-
-            if(events.length < 1){
-                events.push(0);
-            }
-
-            this.properties = {
-                per_page : 9999,
-                page : 1,
-                ids : events,
-                after : '-1 hour',
-            };
-
-            this.loadEvents('hearts');
-            this.allLoaded = true; this.setState({allLoaded : true});
-        }
     }
 
     togglePredicted(){
 
-        this.allLoaded = false; this.setState({allLoaded : false});
-        Globals.setMainState({'jsxEvents' : null});
-
-        Globals.user.predictBehaviour().then(( response ) => {
-
-            let data = JSON.parse( response ).slice(0,12),
-                ids = [];
-
-            for ( let n = 0; n < data.length; n++ ) {
-                ids.push( data[n].id ); }
-
-            this.properties = {
-                per_page : 24,
-                ids : ids.join(','),
-                page : 1,
-                after : 'now'
-            };
-
-            this.loadEvents('predicted');
-
-        });
+        // this.allLoaded = false; this.setState({allLoaded : false});
+        // Globals.setMainState({'jsxEvents' : null});
+        //
+        // Globals.user.predictBehaviour().then(( response ) => {
+        //
+        //     let data = JSON.parse( response ).slice(0,12),
+        //         ids = [];
+        //
+        //     for ( let n = 0; n < data.length; n++ ) {
+        //         ids.push( data[n].id ); }
+        //
+        //     this.properties = {
+        //         per_page : 24,
+        //         ids : ids.join(','),
+        //         page : 1,
+        //         after : 'now'
+        //     };
+        //
+        //     this.loadEvents('predicted');
+        //
+        // });
 
     }
 
@@ -212,8 +213,8 @@ class EventCalendarView extends React.Component {
             if (resp.length < 1 && type != null){
 
                 const intro_text = {
-                    predicted : 'Her samler vi de begivenheder vi tror du vil sætte ekstra stor pris på at se. Lige nu har vi ingen anbefalinger',
-                    hearts : 'Her er plads til alle dine favorit-begivenheder. Giv et hjerte til en begivenhed, du gerne vil huske, og du kan finde den her.',
+                    // predicted : 'Her samler vi de begivenheder vi tror du vil sætte ekstra stor pris på at se. Lige nu har vi ingen anbefalinger',
+                    // hearts : 'Her er plads til alle dine favorit-begivenheder. Giv et hjerte til en begivenhed, du gerne vil huske, og du kan finde den her.',
                     future : 'Der er ingen kommende begivenheder i vores kalender.',
                     past : 'Der fandtes ingen afsluttede begivenheder i vores kalender',
 
@@ -330,8 +331,8 @@ class EventCalendarView extends React.Component {
                     </ViewTopBar>
                     <Railbar name="event-calendar-buttons" snap>
                         <EventFilterButton onClick={this.toggleFuture.bind(this)} name="Kommende" active/>
-                        <EventFilterButton onClick={this.toggleHeart.bind(this)} icon="#icon-heart" viewBox="0 0 32 32"/>
-                        { this.state.showPredictedButton !=null && <EventFilterButton onClick={this.togglePredicted.bind(this)} name="anbefalede"/>}
+                        {/*<EventFilterButton onClick={this.toggleHeart.bind(this)} icon="#icon-heart" viewBox="0 0 32 32"/>
+                        { this.state.showPredictedButton !=null && <EventFilterButton onClick={this.togglePredicted.bind(this)} name="anbefalede"/>}*/}
                         <EventFilterButton onClick={this.togglePast.bind(this)} name="Tidligere"/>
                     </Railbar>
                 </Header>

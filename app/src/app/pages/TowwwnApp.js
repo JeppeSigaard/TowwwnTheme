@@ -201,7 +201,7 @@ class TowwwnApp extends React.Component {
         Globals.viewHandler = null;
 
         // Render 404
-        if ( app_data.type == '404' || app_data.id == null){
+        if ( app_data.type == '404' || app_data.id == null) {
             Globals.viewHandler = new ViewHandler('#event-calendar-view', '#location-category-view', '#event-calendar-view');
         }
 

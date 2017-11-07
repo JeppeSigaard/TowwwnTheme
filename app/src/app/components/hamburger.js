@@ -17,22 +17,22 @@ class Hamburger extends React.Component {
         this.state = {
             navelems: [
 
-                { // Log in
-                    title: 'Log ind',
-                    order: 0,
-                    id: 'login',
-                    vref: {
-                        leftview: '#user-view',
-                        fromLeft: true,
-                        fromRight: false,
-                        ignoreAutoDirection: true,
-                        mobile: {
-                            view: '#user-view',
-                            fromLeft : true,
-                            fromRight : false
-                        }
-                    },
-                },
+                // { // Log in
+                //     title: 'Log ind',
+                //     order: 0,
+                //     id: 'login',
+                //     vref: {
+                //         leftview: '#user-view',
+                //         fromLeft: true,
+                //         fromRight: false,
+                //         ignoreAutoDirection: true,
+                //         mobile: {
+                //             view: '#user-view',
+                //             fromLeft : true,
+                //             fromRight : false
+                //         }
+                //     },
+                // },
 
                 { // Info
                     title: 'Information',
@@ -63,36 +63,36 @@ class Hamburger extends React.Component {
     bindActions() {
 
         // On login
-        Globals.user.hooks.add( 'onlogin', () => {
-            this.removeNavElem( 'login' );
-            this.state.navelems.push({
-                title: 'Log ud',
-                order: 9999,
-                id: 'logout',
-                cb: (() => { Globals.user.logOut(); })
-            }); this.updateJsxElems( false );
-        });
-
-        // On login click
-        Globals.user.hooks.add( 'initlogin', () => {
-            this.setOutOfService( 'login' );
-        });
-
-        // On logout
-        Globals.user.hooks.add( 'onlogout', () => {
-            this.removeNavElem( 'logout' );
-            this.state.navelems.push({
-                title: 'Log ind',
-                order: 0,
-                id: 'login',
-                vref: {
-                    leftview: '#user-view',
-                    fromLeft: true,
-                    fromRight: false,
-                    ignoreAutoDirection: true
-                },
-            }); this.updateJsxElems( false );
-        });
+        // Globals.user.hooks.add( 'onlogin', () => {
+        //     this.removeNavElem( 'login' );
+        //     this.state.navelems.push({
+        //         title: 'Log ud',
+        //         order: 9999,
+        //         id: 'logout',
+        //         cb: (() => { Globals.user.logOut(); })
+        //     }); this.updateJsxElems( false );
+        // });
+        //
+        // // On login click
+        // Globals.user.hooks.add( 'initlogin', () => {
+        //     this.setOutOfService( 'login' );
+        // });
+        //
+        // // On logout
+        // Globals.user.hooks.add( 'onlogout', () => {
+        //     this.removeNavElem( 'logout' );
+        //     this.state.navelems.push({
+        //         title: 'Log ind',
+        //         order: 0,
+        //         id: 'login',
+        //         vref: {
+        //             leftview: '#user-view',
+        //             fromLeft: true,
+        //             fromRight: false,
+        //             ignoreAutoDirection: true
+        //         },
+        //     }); this.updateJsxElems( false );
+        // });
 
         // UI Actions
         Globals.hooks.add('toggle-hamburger', this.toggle.bind(this));
