@@ -90,32 +90,32 @@ class EventSingleView extends React.Component {
 
             this.setState({scrollTo : 0});
 
-            let heart = _('#event-single-view .heart');
-            if ( Globals.user.state.hearts.events.includes( nextProps.event.id ) && !heart.hasClass('active') ) {
-                heart.removeClass('animback');
-                heart.addClass('anim');
+            // let heart = _('#event-single-view .heart');
+            // if ( Globals.user.state.hearts.events.includes( nextProps.event.id ) && !heart.hasClass('active') ) {
+            //     heart.removeClass('animback');
+            //     heart.addClass('anim');
+            //
+            //     setTimeout(() => {
+            //         heart.removeClass('anim');
+            //         heart.addClass('active');
+            //     }, 400);
+            //
+            // } else if ( Globals.user.state.hearts.events.includes( nextProps.event.id ) && heart.hasClass( 'active' ) ) {
+            //     heart.removeClass('anim');
+            //     heart.addClass('animback');
+            //
+            //     setTimeout(() => {
+            //         heart.removeClass('animback');
+            //         heart.removeClass('active');
+            //     }, 400);
+            // }
 
-                setTimeout(() => {
-                    heart.removeClass('anim');
-                    heart.addClass('active');
-                }, 400);
 
-            } else if ( Globals.user.state.hearts.events.includes( nextProps.event.id ) && heart.hasClass( 'active' ) ) {
-                heart.removeClass('anim');
-                heart.addClass('animback');
-
-                setTimeout(() => {
-                    heart.removeClass('animback');
-                    heart.removeClass('active');
-                }, 400);
-            }
-
-
-            BehaviourDataHandler.parseData( 'event', nextProps.event );
+            // BehaviourDataHandler.parseData( 'event', nextProps.event );
             this.lastElem = nextProps.event;
 
             if ( this.props.event != null ) {
-                BehaviourDataHandler.parseTimeData( 'event', this.props.event.id, new Date().getTime()  -this.startTime, this.props.event.parentid );
+                // BehaviourDataHandler.parseTimeData( 'event', this.props.event.id, new Date().getTime()  -this.startTime, this.props.event.parentid );
             } this.startTime = new Date().getTime();
 
 
@@ -163,47 +163,47 @@ class EventSingleView extends React.Component {
 
     // heart
     heart() {
-       if ( Globals.user != null && !Globals.user.state.loggedIn ) {
-            Globals.setMainState({ from: 'event-single-view' });
-            Globals.lastViewState = [ Globals.viewHandler.focusedViews[0], Globals.viewHandler.focusedViews[1] ];
-            Globals.viewHandler.changeViewFocus(
-                '#user-view',
-                '#event-single-view',
-                false, true, false, true
-            );
-       } else {
-            let heart = _('#event-single-view .heart');
-            if ( heart.hasClass('anim') || heart.hasClass('animback') ) return;
-
-            if(Globals.user.state.hearts == null){
-                Globals.user.state.hearts = { events : [], locations : [] }
-            }
-
-            if ( !Globals.user.state.hearts.events.includes( this.props.event.id ) ) {
-
-                heart.addClass('anim');
-                Globals.user.state.hearts.events.push( this.props.event.id );
-
-                setTimeout(() => {
-                    heart.removeClass('anim');
-                    heart.addClass('active');
-                }, 400 );
-
-            } else {
-                heart.addClass('animback');
-                Globals.user.state.hearts.events.splice( Globals.user.state.hearts.events.indexOf(this.props.event.id), 1 );
-
-                setTimeout(() => {
-                    heart.removeClass('animback');
-                    heart.removeClass('active');
-                }, 400);
-
-            }
-
-           Globals.user.hooks.trigger('eventHearts');
-        }
-
-        console.log( Globals.user.state.hearts );
+    //    if ( Globals.user != null && !Globals.user.state.loggedIn ) {
+    //         Globals.setMainState({ from: 'event-single-view' });
+    //         Globals.lastViewState = [ Globals.viewHandler.focusedViews[0], Globals.viewHandler.focusedViews[1] ];
+    //         Globals.viewHandler.changeViewFocus(
+    //             '#user-view',
+    //             '#event-single-view',
+    //             false, true, false, true
+    //         );
+    //    } else {
+    //         let heart = _('#event-single-view .heart');
+    //         if ( heart.hasClass('anim') || heart.hasClass('animback') ) return;
+    //
+    //         if(Globals.user.state.hearts == null){
+    //             Globals.user.state.hearts = { events : [], locations : [] }
+    //         }
+    //
+    //         if ( !Globals.user.state.hearts.events.includes( this.props.event.id ) ) {
+    //
+    //             heart.addClass('anim');
+    //             Globals.user.state.hearts.events.push( this.props.event.id );
+    //
+    //             setTimeout(() => {
+    //                 heart.removeClass('anim');
+    //                 heart.addClass('active');
+    //             }, 400 );
+    //
+    //         } else {
+    //             heart.addClass('animback');
+    //             Globals.user.state.hearts.events.splice( Globals.user.state.hearts.events.indexOf(this.props.event.id), 1 );
+    //
+    //             setTimeout(() => {
+    //                 heart.removeClass('animback');
+    //                 heart.removeClass('active');
+    //             }, 400);
+    //
+    //         }
+    //
+    //        Globals.user.hooks.trigger('eventHearts');
+    //     }
+    //
+    //     console.log( Globals.user.state.hearts );
     }
 
     applySponsorBanner(){
@@ -229,21 +229,22 @@ class EventSingleView extends React.Component {
         });
     }
 
-    // Component did mount
-    componentDidMount() {
-
-        Globals.user.hooks.add( 'onlogin', () => {
-            if ( this.props.event != null && Globals.user.state.hearts.events.includes( this.props.event.id ) ) {
-                let heart = _('#event-single-view .heart');
-                heart.addClass('anim');
-                setTimeout(() => {
-                    heart.removeClass('anim');
-                    heart.addClass('active');
-                }, 400 );
-            }
-        });
-
-    }
+    //
+    // // Component did mount
+    // componentDidMount() {
+    //
+    //     Globals.user.hooks.add( 'onlogin', () => {
+    //         if ( this.props.event != null && Globals.user.state.hearts.events.includes( this.props.event.id ) ) {
+    //             let heart = _('#event-single-view .heart');
+    //             heart.addClass('anim');
+    //             setTimeout(() => {
+    //                 heart.removeClass('anim');
+    //                 heart.addClass('active');
+    //             }, 400 );
+    //         }
+    //     });
+    //
+    // }
 
     // Render
     render() {

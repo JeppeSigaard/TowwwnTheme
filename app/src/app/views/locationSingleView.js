@@ -85,40 +85,40 @@ class LocationSingleView extends React.Component{
 
     // Heart
     heart() {
-       if ( Globals.user != null && !Globals.user.state.loggedIn ) {
-            Globals.setMainState({ from: 'location-single-view' });
-            Globals.lastViewState = [ Globals.viewHandler.focusedViews[0], Globals.viewHandler.focusedViews[1] ];
-            Globals.viewHandler.changeViewFocus(
-                '#user-view',
-                '#location-single-view',
-                false, true, false, true
-            );
-       } else {
-            let heart = _('#location-single-view .heart');
-            if ( heart.hasClass('anim') || heart.hasClass('animback') ) return;
-            if ( !Globals.user.state.hearts.locations.includes( this.props.elem.id ) ) {
-
-                heart.addClass('anim');
-                Globals.user.state.hearts.locations.push( this.props.elem.id );
-
-                setTimeout(() => {
-                    heart.removeClass('anim');
-                    heart.addClass('active');
-                }, 400 );
-
-            } else {
-                heart.addClass('animback');
-                Globals.user.state.hearts.locations.splice( Globals.user.state.hearts.locations.indexOf( this.props.elem.id ), 1 );
-
-                setTimeout(() => {
-                    heart.removeClass('animback');
-                    heart.removeClass('active');
-                }, 400);
-
-            }
-
-            Globals.hooks.trigger( 'ls-hearted', this.props.elem );
-       }
+      //  if ( Globals.user != null && !Globals.user.state.loggedIn ) {
+      //       Globals.setMainState({ from: 'location-single-view' });
+      //       Globals.lastViewState = [ Globals.viewHandler.focusedViews[0], Globals.viewHandler.focusedViews[1] ];
+      //       Globals.viewHandler.changeViewFocus(
+      //           '#user-view',
+      //           '#location-single-view',
+      //           false, true, false, true
+      //       );
+      //  } else {
+      //       let heart = _('#location-single-view .heart');
+      //       if ( heart.hasClass('anim') || heart.hasClass('animback') ) return;
+      //       if ( !Globals.user.state.hearts.locations.includes( this.props.elem.id ) ) {
+       //
+      //           heart.addClass('anim');
+      //           Globals.user.state.hearts.locations.push( this.props.elem.id );
+       //
+      //           setTimeout(() => {
+      //               heart.removeClass('anim');
+      //               heart.addClass('active');
+      //           }, 400 );
+       //
+      //       } else {
+      //           heart.addClass('animback');
+      //           Globals.user.state.hearts.locations.splice( Globals.user.state.hearts.locations.indexOf( this.props.elem.id ), 1 );
+       //
+      //           setTimeout(() => {
+      //               heart.removeClass('animback');
+      //               heart.removeClass('active');
+      //           }, 400);
+       //
+      //       }
+       //
+      //       Globals.hooks.trigger( 'ls-hearted', this.props.elem );
+      //  }
     }
 
     // when Single Location loads
@@ -138,32 +138,32 @@ class LocationSingleView extends React.Component{
 
             this.setState({scrollTo : 0});
 
-            let heart = _('#location-single-view .heart');
+            // let heart = _('#location-single-view .heart');
 
-            if ( Globals.user.state.hearts.locations.includes( nextProps.elem.id ) && !heart.hasClass('active') ) {
-                heart.removeClass('animback');
-                heart.addClass('anim');
-
-                setTimeout(() => {
-                    heart.removeClass('anim');
-                    heart.addClass('active');
-                }, 400);
-
-            } else if ( !Globals.user.state.hearts.locations.includes( nextProps.elem.id ) && heart.hasClass( 'active' ) ) {
-                heart.removeClass('anim');
-                heart.addClass('animback');
-
-                setTimeout(() => {
-                    heart.removeClass('animback');
-                    heart.removeClass('active');
-                }, 400);
-            }
-
-            BehaviourDataHandler.parseData( 'location', nextProps.elem );
+            // if ( Globals.user.state.hearts.locations.includes( nextProps.elem.id ) && !heart.hasClass('active') ) {
+            //     heart.removeClass('animback');
+            //     heart.addClass('anim');
+            //
+            //     setTimeout(() => {
+            //         heart.removeClass('anim');
+            //         heart.addClass('active');
+            //     }, 400);
+            //
+            // } else if ( !Globals.user.state.hearts.locations.includes( nextProps.elem.id ) && heart.hasClass( 'active' ) ) {
+            //     heart.removeClass('anim');
+            //     heart.addClass('animback');
+            //
+            //     setTimeout(() => {
+            //         heart.removeClass('animback');
+            //         heart.removeClass('active');
+            //     }, 400);
+            // }
+            //
+            // BehaviourDataHandler.parseData( 'location', nextProps.elem );
             this.lastElem = nextProps.elem;
 
             if ( this.props.elem != null ) {
-                BehaviourDataHandler.parseTimeData( 'location', this.props.elem.id, new Date().getTime() - this.startTime );
+                // BehaviourDataHandler.parseTimeData( 'location', this.props.elem.id, new Date().getTime() - this.startTime );
             } this.startTime = new Date().getTime();
         }
 
@@ -234,16 +234,16 @@ class LocationSingleView extends React.Component{
     // Component did mount
     componentDidMount() {
 
-        Globals.user.hooks.add( 'onlogin', () => {
-            if ( this.props.elem != null && Globals.user.state.hearts.locations.includes( this.props.elem.id ) ) {
-                let heart = _('#location-single-view .heart');
-                heart.addClass('anim');
-                setTimeout(() => {
-                    heart.removeClass('anim');
-                    heart.addClass('active');
-                }, 400 );
-            }
-        });
+        // Globals.user.hooks.add( 'onlogin', () => {
+        //     if ( this.props.elem != null && Globals.user.state.hearts.locations.includes( this.props.elem.id ) ) {
+        //         let heart = _('#location-single-view .heart');
+        //         heart.addClass('anim');
+        //         setTimeout(() => {
+        //             heart.removeClass('anim');
+        //             heart.addClass('active');
+        //         }, 400 );
+        //     }
+        // });
     }
 
     // Render

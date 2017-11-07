@@ -141,20 +141,20 @@ class SingleLocation extends React.Component {
                     }
                 </div>
 
-                { ( parseInt( elem.hearts ) > 0 || description != null ) &&
+                { ( description != null ) &&
                     <div>
                     <div className="breakline"></div>
                      <div className="description-container">
 
                           <div className="description">
 
-                               { parseInt( elem.hearts ) > 0 &&
+                               { /*parseInt( elem.hearts ) > 0 &&
                                    <div className="hearts">
                                         { elem.hearts != null ? elem.hearts : '0' }
                                         <svg viewBox="0 0 32 32">
                                             <use xlinkHref="#icon-heart"></use>
                                         </svg>
-                                    </div>
+                                    </div>*/
                                 }
 
                                 { description != null && description.length > 50 &&

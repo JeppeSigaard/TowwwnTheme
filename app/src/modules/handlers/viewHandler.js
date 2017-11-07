@@ -12,8 +12,6 @@ class ViewHandler {
               initialRightView = ( right != null ) ? right : '#location-category-view',
               initialMobileView = (mobile != null ) ? mobile : '#event-calendar-view';
 
-        console.log( initialLeftView, initialRightView );
-
         this.focusedViews = [];
         this.mobileFocusedView = initialMobileView;
 
