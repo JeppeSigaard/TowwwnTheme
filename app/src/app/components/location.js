@@ -94,10 +94,10 @@ class Location extends React.Component {
                     <span className="location-picture" style={{ 'backgroundImage' : 'url(' + elem.picture + ')' }} ></span>
                     <span className="location-description">
                         <h2 className="location-title">
-                            { this.state.hearted &&
+                            { /*this.state.hearted &&
                                 <svg className="heart anim" viewBox="0 0 32 32">
                                     <use xlinkHref="#icon-heart"></use>
-                                </svg>
+                                </svg>*/
                             } { elem.name }
                         </h2>
                         <p className="location-about">{ elem.about }</p>
