@@ -251,12 +251,16 @@ class LocationSingleView extends React.Component{
         return (
             <section className="container-section" id="location-single-view">
                 <Header for=".scroll-container" in="#location-single-view">
+<<<<<<< HEAD
 
                     <ViewTopBar icon="#icon-location" viewBox="0 0 32 32" standard={ true }
                       title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' }
                       closeviewstate={ this.state.closeviewstate } name={ this.props.name }
                       heart={ false } />
 
+=======
+                    <ViewTopBar icon="#icon-location" viewBox="0 0 32 32" standard={ true } title={ this.props.elem != null ? this.props.elem.name : 'Indlæser..' } closeviewstate={ this.state.closeviewstate } name={ this.props.name } heart={ false } />
+>>>>>>> 3a51ea467c549adde9cbc11d6ddcd4ef5f04ef41
                 </Header>
                 <ScrollContainer name="location-single-scroll-content" scroller={this.state.scroller} scrollTo={this.state.scrollTo}>
                     <div className="content">
