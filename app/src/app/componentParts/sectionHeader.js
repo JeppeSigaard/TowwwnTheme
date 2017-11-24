@@ -20,7 +20,7 @@ class SectionHeader extends React.Component {
     // Component Will Mount
     componentWillMount(){
         this.id = (this.props.name != null) ? this.props.name : 'sh-' + new Date().getTime();
-        Globals.hooks.add('collapse-header', this.collapse.bind(this));
+        // Globals.hooks.add('collapse-header', this.collapse.bind(this));
     }
 
     // Render
