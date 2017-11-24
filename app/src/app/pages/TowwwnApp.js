@@ -310,9 +310,9 @@ class TowwwnApp extends React.Component {
                     <div className={container_inner_class}>
                         <div id='general-overlay' className={overlay_class} onClick={this.toggleHamburger.bind(this)}></div>
 
-                        <SearchView />
+                        {/*<SearchView />
                         <SearchResultView result={ this.state.searchResult } />
-                        <UserView from={ this.state.from } />
+                        <UserView from={ this.state.from } />*/}
 
                         <EventSingleView name="event-single-view" from={ this.state.from } event={ this.state.singleevent } setMainState={ this.parsedSetState.bind(this) } />
                         <EventCalendarView name="event-calendar-view" from={ this.state.from } events={ this.state.jsxEvents } setMainState={ this.parsedSetState.bind(this) } />

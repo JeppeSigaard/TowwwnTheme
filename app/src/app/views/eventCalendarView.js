@@ -295,14 +295,10 @@ class EventCalendarView extends React.Component {
 
     // Component did update
     componentDidUpdate() {
-
-        if ( this.props.events != null ) {
-
-        }
     }
 
-    expandHeader(){this.setState({headerCollapsed: false})}
-    collapseHeader(){this.setState({headerCollapsed: true})}
+    // expandHeader(){this.setState({headerCollapsed: false})}
+    // collapseHeader(){this.setState({headerCollapsed: true})}
 
     // Render
     render() {
@@ -310,7 +306,7 @@ class EventCalendarView extends React.Component {
         let loadMoreClass = 'eventcv-load-more';
         if(!this.state.allLoaded) loadMoreClass += ' loading';
 
-        let section_class = 'container-section large-header';
+        let section_class = 'container-section';
         if (this.state.view == 'line') section_class += ' line';
 
         return (
@@ -329,12 +325,12 @@ class EventCalendarView extends React.Component {
                             </svg>}
                         </div>
                     </ViewTopBar>
-                    <Railbar name="event-calendar-buttons" snap>
+                    {/*<Railbar name="event-calendar-buttons" snap>
                         <EventFilterButton onClick={this.toggleFuture.bind(this)} name="Kommende" active/>
                         {/*<EventFilterButton onClick={this.toggleHeart.bind(this)} icon="#icon-heart" viewBox="0 0 32 32"/>
-                        { this.state.showPredictedButton !=null && <EventFilterButton onClick={this.togglePredicted.bind(this)} name="anbefalede"/>}*/}
+                        { this.state.showPredictedButton !=null && <EventFilterButton onClick={this.togglePredicted.bind(this)} name="anbefalede"/>}*//*}
                         <EventFilterButton onClick={this.togglePast.bind(this)} name="Tidligere"/>
-                    </Railbar>
+                    </Railbar>*/}
                 </Header>
                 <ScrollContainer name="event-calendar-scroll-content" onScroll={ this.onscroll.bind(this) } in="#event-calendar-view">
                     <div className="content">

@@ -124,12 +124,12 @@ class Header extends React.Component {
                         </a>
 
                         <div id="top-nav-icons" >
-                            <div className={search_classes} onClick={ this.navSearchClick.bind(this) } >
+                            {/*<div className={search_classes} onClick={ this.navSearchClick.bind(this) } >
                                 <svg viewBox="0 0 32 32">
                                     <use xlinkHref="#icon-search">
                                     </use>
                                 </svg>
-                            </div>
+                            </div>*/}
                             <div className={event_classes} onClick={ this.navEventClick.bind(this) } >
                                 <svg viewBox="0 0 32 32">
                                     <use xlinkHref="#icon-event">
