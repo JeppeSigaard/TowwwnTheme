@@ -19,15 +19,15 @@ class Location extends React.Component {
         if ( this.props.elem == null || this.unmounted ) return;
         if ( data == null || data.length <= 0 || data.constructor.name != 'Array' ) {
 
-            if ( Globals.user.state.hearts.locations.includes( this.props.elem.id ) ) {
-                this.setState({ hearted : true });
-            } else { this.setState({ hearted : false }); }
+            // if ( Globals.user.state.hearts.locations.includes( this.props.elem.id ) ) {
+            //     this.setState({ hearted : true });
+            // } else { this.setState({ hearted : false }); }
 
         } else {
 
-            if ( data.includes( this.props.elem.id ) ) {
-                this.setState({ hearted : true })
-            } else { this.setState({ hearted : false }); }
+            // if ( data.includes( this.props.elem.id ) ) {
+            //     this.setState({ hearted : true })
+            // } else { this.setState({ hearted : false }); }
 
         }
 
@@ -70,7 +70,7 @@ class Location extends React.Component {
     componentDidMount() {
         this.unmounted = false;
         this.checkIfHearted();
-        Globals.user.hooks.add('ls-hearted', this.checkIfHearted.bind(this));
+        //Globals.user.hooks.add('ls-hearted', this.checkIfHearted.bind(this));
         Globals.hooks.add('ls-hearted', this.checkIfHearted.bind(this));
         Globals.hooks.add('onlogin', this.checkIfHearted.bind(this));
         Globals.hooks.add('category-change', this.checkIfHearted.bind(this));
@@ -79,7 +79,7 @@ class Location extends React.Component {
     // Component will unmount
     componentWillUnmount() {
         this.unmounted = true;
-        Globals.user.hooks.remove('ls-hearted', this.checkIfHearted.bind(this));
+        //lobals.user.hooks.remove('ls-hearted', this.checkIfHearted.bind(this));
         Globals.hooks.remove('ls-hearted', this.checkIfHearted.bind(this));
         Globals.hooks.remove('onlogin', this.checkIfHearted.bind(this));
         Globals.hooks.remove('category-change', this.checkIfHearted.bind(this));

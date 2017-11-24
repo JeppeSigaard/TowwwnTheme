@@ -76,7 +76,7 @@ class TowwwnApp extends React.Component {
         Globals.locationDataHandler = new LocationDataHandler();
         Globals.CommercialDataHandler = new CommercialDataHandler();
         Globals.fb = new FBHandler();
-        Globals.user = new User();
+        //Globals.user = new User();
         Globals.history = new historyHandler();
 
         this.state = { from: null, currentView: null, navelems: [], hamburger : null };
@@ -277,10 +277,6 @@ class TowwwnApp extends React.Component {
             request.open( 'GET', app_data.rest_api + '/locations/' + app_data.id );
             request.send();
         }
-
-        // yups
-        _( '.nav-search' ).on( 'click', () => {
-        });
 
         // Handle anchor click
         _('a').off( 'click', this.handleAnchorClick );

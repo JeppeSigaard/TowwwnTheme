@@ -198,11 +198,11 @@ class Hamburger extends React.Component {
         return (
             <div className={hamburger_class}>
                 <div className="hamburger-inner">
-                    { Globals.user.state.loggedIn &&
+                    {/*Globals.user.state.loggedIn &&
                         <div className="user-name">
                             { Globals.user.state.fbData.name }
                         </div>
-                    }
+                    */}
 
                     { this.state.jsxElems != null && this.state.jsxElems }
                 </div>

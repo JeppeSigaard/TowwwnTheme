@@ -31,16 +31,16 @@ class FBHandler {
     // Login
     login( scope ) {
 
-        Globals.user.hooks.trigger( 'initlogin' );
+        // Globals.user.hooks.trigger( 'initlogin' );
         scope = scope == null ? 'email' :
             ( typeof scope === 'object' ? scope.join(',') : scope );
 
         return new Promise(( resolve, reject ) => {
             FB.login( response => {
                 if ( response.status === 'connected' ) {
-                    Globals.user.parseFbLoginData( response ).then(() => {
-                        resolve( response );
-                    });
+                    // Globals.user.parseFbLoginData( response ).then(() => {
+                    //     resolve( response );
+                    // });
                 } else reject( response );
             }, { scope: scope });
         });

@@ -280,12 +280,12 @@ class EventCalendarView extends React.Component {
 
     userHook (){
 
-        Globals.user.predictBehaviour().then(( data ) => {
-
-            data = JSON.parse( data );
-            if( data.length > 0 ) this.setState({showPredictedButton : true});
-
-        });
+        // Globals.user.predictBehaviour().then(( data ) => {
+        //
+        //     data = JSON.parse( data );
+        //     if( data.length > 0 ) this.setState({showPredictedButton : true});
+        //
+        // });
     }
 
     // Component did mount
