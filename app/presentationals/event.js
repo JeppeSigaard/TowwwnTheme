@@ -14,14 +14,14 @@ class Event extends React.Component {
         {/* Head */}
         <header className="event-head">
           <div className="event-image"
-            style={{ 'backgroundImage' : 'url('+'x'+')' }} >
+            style={{ 'backgroundImage' : 'url('+''+')' }} >
           </div>
         </header>
 
         {/* Body */}
         <div className="event-body">
           <div className="title">
-            { this.props.title != null && this.props.title }
+            { this.props.element['title'] != null && this.props.element['title'] }
           </div>
         </div>
 
