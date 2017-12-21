@@ -23,19 +23,31 @@ add_action('wp_head',function(){
             $app_type = 'category';
         }
 
+        // Localized data
         wp_enqueue_script('main-script');
         wp_localize_script( 'main-script', 'app_data', array(
+
+            'logo' => get_theme_mod('logo'),
+            'coverimage' => get_theme_mod('cover-image'),
+            'desc' => get_theme_mod('description'),
+
+            'fbid' => get_theme_mod('facebook_id'),
+
             'ajax_url' => admin_url( 'admin-ajax.php' ),
             'tools_api' => get_theme_mod('tools_api_url'),
             'rest_api' => get_theme_mod('rest_api_url'),
             'main_path' => site_url(),
             'city' => get_theme_mod('city'),
             'template_uri' => get_template_directory_uri(),
+
             'commercial_image_url' => get_theme_mod('commercial'),
             'commercial_link' => get_theme_mod('commercial_link'),
+
             'type' => $app_type,
             'id' => $app_id,
-            'app_name' => (isset($wp_query->query['category'])) ? $wp_query->query['category'] : 'no',
+            'app_name' => (isset($wp_query->query['category'])) ?
+              $wp_query->query['category'] : 'no',
+
         ));
     }
     else{
@@ -59,9 +71,9 @@ add_action( 'wp_enqueue_scripts', function() {
     wp_register_script( 'main-script', get_template_directory_uri() . '/app/bundle.js', array(), null, true );
 
     // Styles
-   // wp_enqueue_style( 'swiper-style', 'https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.1/css/swiper.min.css' );
-    wp_enqueue_style( 'montserrat', 'https://fonts.googleapis.com/css?family=Montserrat' );
-    wp_enqueue_style( 'lato', 'https://fonts.googleapis.com/css?family=Lato' );
+    // wp_enqueue_style( 'swiper-style', 'https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.1/css/swiper.min.css' );
+    // wp_enqueue_style( 'montserrat', 'https://fonts.googleapis.com/css?family=Montserrat' );
+    wp_enqueue_style( 'lato', 'https://fonts.googleapis.com/css?family=Lato:300,400,700' );
     wp_register_style( 'page-style', get_template_directory_uri() . '/docs/assets/style/main.css' );
     // wp_enqueue_style( 'flickityStyle', 'https://unpkg.com/flickity@2/dist/flickity.min.css' );
     // wp_enqueue_style( 'mainStyle', get_template_directory_uri() . '/style/index.css');

@@ -1,17 +1,19 @@
 
 
 // Imports
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
 // Reducers
-import events from './reducers/events.js';
-import categories from './reducers/categories.js';
-import places from './reducers/places.js';
+import ui from './reducers/ui.js';
+import defaultdata from './reducers/data/defaultdata.js';
+import events from './reducers/data/events.js';
+import categories from './reducers/data/categories.js';
+import places from './reducers/data/places.js';
 
 // Creates root reducer
 const rootReducer = combineReducers({
-  events, categories, places
+  ui, defaultdata, events, categories, places
 });
 
 // Compose enhancer & middleware... Used to activate redux dev tools

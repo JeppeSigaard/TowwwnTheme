@@ -23,6 +23,16 @@ Kirki::add_field( 'smamo_kirki_config', array(
 // FB
 Kirki::add_field( 'smamo_kirki_config', array(
 	'type'        => 'text',
+	'settings'    => 'facebook_id',
+	'label'       => __( 'Facebook ID' ),
+	'section'     => 'socialmedia',
+	'default'     => '',
+	'priority'    => 10,
+));
+
+// FB
+Kirki::add_field( 'smamo_kirki_config', array(
+	'type'        => 'text',
 	'settings'    => 'facebook_app_id',
 	'label'       => __( 'Facebook App ID' ),
 	'section'     => 'socialmedia',

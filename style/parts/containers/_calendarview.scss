@@ -1,0 +1,47 @@
+
+
+// Calendar
+.event-calendar{
+
+  position: relative;
+  width: 100%; height: auto;
+  min-height: calc( 100vh - #{$view-head-height} * 2 );
+
+  display: flex;
+  flex-wrap: wrap;
+
+  padding: 4px;
+
+  // No more events
+  .all-fetched{
+
+    position: relative;
+    width: 100%;
+    min-height: 140px;
+
+    .all-fetched-inner{
+
+      position: absolute;
+      top: 55%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 48px; height: 6px;
+
+      background-color: rgba($accent-color, .7);
+
+      &:before{
+
+        content: '';
+        position: absolute;
+        bottom: 6px; left: 50%;
+        transform: translateX(-50%);
+        width: 6px; height: 16px;
+
+        background-color: rgba($accent-color, .7);
+
+      }
+
+    }
+
+  }
+
+}

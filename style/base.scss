@@ -1,0 +1,39 @@
+
+
+// Global variables
+$primary-color: #fff;
+$secondary-color: #333333;
+$accent-color: #699;
+
+$fontstack: 'Lato', sans-serif;
+
+// Normalization
+body{
+
+  position: absolute;
+  width: 100vw; height: 100vh;
+  overflow: hidden;
+
+  font-family: $fontstack;
+  font-weight: 400;
+  color: $secondary-color;
+
+  margin: 0;
+
+  *{ box-sizing: border-box; }
+
+}
+
+
+// Normalization
+::-webkit-scrollbar {
+    display: none;
+}
+
+// Imports
+@import './parts/view';
+@import './parts/containers/welcomeview';
+@import './parts/containers/calendarview';
+@import './parts/containers/eventview';
+@import './parts/presentationals/loader';
+@import './parts/presentationals/event';
