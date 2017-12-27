@@ -97,35 +97,35 @@ class EventCalendarView extends React.Component {
         this.loadEvents('past');
     }
 
-    applySponsorBanner(){
-        return new Promise(( resolve, reject) => {
-            const commercialOptions = {
-                for : 'event_calendar',
-                per_page : 3,
-            };
-
-            Globals.CommercialDataHandler.getCommercials(commercialOptions).then((resp) =>{
-
-                if(resp.length < 1) resolve(null);
-
-                let events = this.props.events;
-                let jsxCommercials = [];
-                let sponsorbanners = [];
-                const time = new Date().getTime();
-
-
-                for(let item in resp){
-                    if(resp.hasOwnProperty(item)){
-                        sponsorbanners.push(<SponsorBanner type="event_calendar" key={'calendar-banner-'+resp[item].id} item={resp[item]}></SponsorBanner>);
-                    }
-                }
-
-                jsxCommercials.push(<Railbar className="calendar-banner-container" name={'sponsor-banner-' + time} key={'sponsor-banner-' + time} snap sizes={{0:1}} children={sponsorbanners} dots></Railbar>);
-
-                resolve(jsxCommercials);
-            });
-
-        });
+    applySponsorBanner(){ return new Promise(( resolve, reject ) => { resolve(<div className="e" key={'sb-'+(new Date().getTime())}></div>); });
+        // return new Promise(( resolve, reject) => {
+        //     const commercialOptions = {
+        //         for : 'event_calendar',
+        //         per_page : 3,
+        //     };
+        //
+        //     Globals.CommercialDataHandler.getCommercials(commercialOptions).then((resp) =>{
+        //
+        //         if(resp.length < 1) resolve(null);
+        //
+        //         let events = this.props.events;
+        //         let jsxCommercials = [];
+        //         let sponsorbanners = [];
+        //         const time = new Date().getTime();
+        //
+        //
+        //         for(let item in resp){
+        //             if(resp.hasOwnProperty(item)){
+        //                 sponsorbanners.push(<SponsorBanner type="event_calendar" key={'calendar-banner-'+resp[item].id} item={resp[item]}></SponsorBanner>);
+        //             }
+        //         }
+        //
+        //         jsxCommercials.push(<Railbar className="calendar-banner-container" name={'sponsor-banner-' + time} key={'sponsor-banner-' + time} snap sizes={{0:1}} children={sponsorbanners} dots></Railbar>);
+        //
+        //         resolve(jsxCommercials);
+        //     });
+        //
+        // });
     }
 
     toggleHeart(){
