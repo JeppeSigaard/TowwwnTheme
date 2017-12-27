@@ -13,7 +13,7 @@ $event-footer-height: 50px;
   max-width: 360px;
   height: $event-height;
 
-  background-color: darken($primary-color,1%);
+  background-color: darken($primary-color,0%);
   transition: 100ms ease-out;
 
   box-shadow: 0px 0px 3px rgba(0,0,0,.06);
@@ -22,12 +22,12 @@ $event-footer-height: 50px;
   cursor: pointer;
 
   font-size: 0;
-  margin: 4px;
+  margin: 6px;
 
   // Bookmark mode
   &.bookmark-mode{
-    background-color: $primary-color;
-    box-shadow: 0px 0px 6px rgba(0,0,0,.2);
+    background-color: lighten($accent-color, 40%);
+    box-shadow: 0px 0px 0px rgba(0,0,0,0);
   }
 
   // Hover

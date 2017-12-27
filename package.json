@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/JeppeSigaard/TowwwnTheme#readme",
   "devDependencies": {
+    "autoprefixer": "^7.2.3",
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.1",
     "babel-polyfill": "^6.23.0",
@@ -30,6 +31,7 @@
     "css-loader": "^0.26.4",
     "file-loader": "^0.10.1",
     "node-sass": "^4.5.0",
+    "postcss-loader": "^2.0.9",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-linkify": "^0.2.0",
@@ -39,6 +41,7 @@
     "sass-loader": "^6.0.3",
     "sticky-position": "^1.0.1",
     "style-loader": "^0.13.2",
+    "sugarss": "^1.0.1",
     "url-loader": "^0.5.8",
     "webpack": "^2.2.1"
   },

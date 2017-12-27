@@ -2,10 +2,10 @@
 
 // UI Actions
 // Set view focus
-const setViewFocus = (( leftview, rightview, transition ) => {
+const setViewFocus = (( leftview, rightview, mview, transition ) => {
   return {
     type : "CHANGE_VIEW_FOCUS",
-    payload : { leftview, rightview, transition }
+    payload : { leftview, rightview, mview, transition }
   };
 });
 
@@ -29,5 +29,13 @@ const setShownSingleEvent = (( id ) => {
 
 });
 
+// Set mobile
+const setMobileMode = ((mobile) => {
+  return {
+    type : "SET_MOBILE_MODE",
+    payload : { mobile }
+  };
+});
+
 // Exports
-export { setViewFocus, setShownSingleEvent };
+export { setViewFocus, setShownSingleEvent, setMobileMode };

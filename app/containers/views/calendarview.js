@@ -5,7 +5,7 @@ import React from 'react';
 import View from '../../hoc/view.js';
 
 // Components
-import Loader from '../../presentationals/loader.js';
+import Loader from '../../presentationals/parts/loader.js';
 import Event from '../parts/event.js';
 
 // Actions
@@ -36,7 +36,7 @@ class CalendarView extends View {
 
         {/* Events */}
         { this.state.ids.length>0 &&
-          (this.preprocess.call(this, this.state.ids))
+          (this.preprocess(this.state.ids))
           .map( this.renderElement.bind(this) ) }
 
         {/* Load more */}
@@ -90,13 +90,17 @@ class CalendarView extends View {
 
       // Filters away old events
       let resp = ids.filter(( val ) => { val = String(val);
+
         if ( events[val].end_time!=null ) {
-          return (new Date(events[val].end_time)).getTime()
-            > (new Date()).getTime();
-        } else {
-          return (new Date(events[val].start_time)).getTime()
-            > (new Date()).getTime();
+          return ((new Date(events[val].end_time)).getTime()
+            > (new Date()).getTime());
+        } else if ( events[val].start_time!=null ) {
+          return ((new Date(events[val].start_time)).getTime()
+            > (new Date()).getTime());
         }
+
+        return false;
+
       });
 
       // Sorts event based on time
@@ -128,6 +132,9 @@ class CalendarView extends View {
 
   // On Store Change
   onStoreChange() {
+
+    if ( this.ran > 20 ) { return; }
+    this.ran = this.ran == null ? 0 : this.ran+1;
 
     // State
     let state = this.props.store.getState();

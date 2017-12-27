@@ -27,10 +27,25 @@ const EventsReducer = (( state=initState, action ) => {
       // Error handling
       if ( action.payload.elements == null ||
            action.payload.elements.length <= 0 ) { return state; }
+
       // Formats data
       let formatteddata = { };
       for ( let n = 0; n < action.payload.elements.length; n++ ) {
+
         formatteddata[action.payload.elements[n].id] = action.payload.elements[n];
+        let elem = formatteddata[action.payload.elements[n].id];
+
+        // Removes not functional part of time strings,
+        // for start time
+        if ( elem.start_time != null ) {
+          elem.start_time = elem.start_time.slice(0,19);
+        }
+
+        // and for end time
+        if ( elem.end_time != null ) {
+          elem.end_time = elem.end_time.slice(0,19);
+        }
+
       }
 
       // Combines the formatted data with previous state

@@ -69,7 +69,7 @@ class Event extends React.Component {
 
       // Sets view focus
       this.props.store.dispatch(setViewFocus(
-        'calendar-view', 'event-view', true));
+        'calendar-view', 'event-view', 'event-view', true));
 
     }
 
@@ -77,6 +77,7 @@ class Event extends React.Component {
 
   // Extract data
   extractData( props ) {
+    if ( props == null ) { props = this.props; }
 
     // Optimization:
     // Gets smallest image above 200px width
@@ -131,21 +132,23 @@ class Event extends React.Component {
       // Checks
       if ( shown_event == String(this.props.element['id'])
         && ( views[0] === 'event-view' || views[1] === 'event-view' )) {
-
         return true;
-
       } else {
-
         return false;
-
       }
 
-    }
+    } else { return false; }
   }
 
   // Life cycle events
   componentWillReceiveProps(nextProps) { this.extractData(nextProps); }
-  componentWillMount() { this.extractData(this.props); }
+  componentWillMount() {
+    this.extractData(this.props);
+
+    if ( this.props.store != null ) {
+      this.props.store.subscribe(this.extractData.bind(this, this.props));
+    }
+  }
 
 }
 

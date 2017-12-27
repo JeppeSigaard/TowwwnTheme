@@ -1,5 +1,8 @@
 
 
+// Imports
+import { setMobileMode } from '../actions/ui.js';
+
 // View Handler
 class ViewHandler {
 
@@ -9,14 +12,60 @@ class ViewHandler {
     // Error handling
     if (store==null) {return false;}
 
-    // Runs init positioning & subscribes to store
-    this.updateViewPositioning(store, false);
-    store.subscribe((e) => { this.updateViewPositioning(store); });
+    // Runs init positioning
+    if ( window.innerWidth > 640 ) { this.updateViewPositioningLargeScreen(store); }
+    else { this.updateViewPositioningSmallScreen(store); }
+
+    // Store subscription
+    store.subscribe((e) => { this.processStoreChange(store); });
+
+    // Resize event
+    window.addEventListener('resize',this.onResize.bind(this, store));
+    this.onResize( store );
 
   }
 
-  // Update view positioning
-  updateViewPositioning( store ) {
+  // On resize
+  onResize( store ) {
+    if ( window.innerWidth >= 640 &&
+      store.getState().ui.mobile ) {
+
+      // Not mobile.. Any more
+      store.dispatch(setMobileMode(false));
+
+    } else if ( window.innerWidth < 640 &&
+      !store.getState().ui.mobile ) {
+
+      // Mobile now!
+      store.dispatch(setMobileMode(true));
+
+    }
+  }
+
+  // Process store change
+  processStoreChange( store ) {
+
+    if ( store.getState().ui != null && store.getState().ui.mobile ) { // Mobile
+      this.updateViewPositioningSmallScreen(store);
+    } else { // !Mobile
+      this.updateViewPositioningLargeScreen(store);
+    }
+
+  }
+
+  // Update view positioning small screen
+  updateViewPositioningSmallScreen( store ) {
+
+    // Extracts data
+    // let state = store.getState(),
+    //   transition = state.ui.viewrelated.transition,
+    //   mview_id  = state.ui.viewrelated.mview,
+    //   x_mview_id  = state.ui.viewrelated.x_mview;
+
+  }
+
+  // Update view positioning large screen
+  updateViewPositioningLargeScreen( store ) {
 
     // Extracts data
     let state = store.getState(),

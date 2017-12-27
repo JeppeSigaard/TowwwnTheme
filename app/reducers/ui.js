@@ -6,11 +6,14 @@ const initState = {
   viewrelated : {
     x_leftview : null,
     x_rightview : null,
+    x_mview : null,
     leftview : 'welcome-view',
     rightview : 'calendar-view',
+    mview : 'calendar-view',
     transition : false,
   },
 
+  mobile : false,
   shown_single_event : null,
 
 };
@@ -23,15 +26,19 @@ const UIReducer = (( state=initState, action ) => {
     case "CHANGE_VIEW_FOCUS" : {
 
       // Error handling
-      if ( action.payload.leftview == null || action.payload.rightview == null )
+      if ( action.payload.leftview == null ||
+           action.payload.rightview == null ||
+           action.payload.mview == null )
         { return state; }
 
       // Composes new state
       let viewrelated = Object.assign({}, state.viewrelated, {
         x_leftview  : state.viewrelated.leftview,
         x_rightview : state.viewrelated.rightview,
+        x_mview : state.viewrelated.mview,
         leftview  : action.payload.leftview,
         rightview : action.payload.rightview,
+        mview : action.payload.mview,
         transition : action.payload.transition,
       });
 
@@ -50,6 +57,20 @@ const UIReducer = (( state=initState, action ) => {
       // Return state
       return Object.assign({}, state, {
         shown_single_event : action.payload.id
+      });
+
+    }
+
+    /* ---- Set mobile mode ---- */
+    case "SET_MOBILE_MODE" : {
+
+      // Error handling
+      if (action.payload.mobile==null)
+        {return state;}
+
+      // Returns
+      return Object.assign({}, state, {
+        mobile : action.payload.mobile,
       });
 
     }

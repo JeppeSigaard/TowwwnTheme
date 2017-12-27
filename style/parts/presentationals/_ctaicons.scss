@@ -1,0 +1,69 @@
+
+
+// Cta icons
+.cta-icons{
+
+  display: flex;
+
+  .cta-icon{
+
+    display: block;
+    flex: 1;
+    position: relative;
+
+    &:hover{
+      .cta-icon-inner{
+        max-width: 90px!important;
+        left: 50%;
+
+        .text{
+          width: auto;
+          opacity: 1;
+        }
+      }
+    }
+
+    .cta-icon-inner{
+
+      position: absolute;
+      top: 52%; left: 55%;
+      transform: translate(-50%,-50%);
+      max-width: 18px; height: 18px;
+      width: auto;
+      transition: 200ms ease-out;
+
+      *{ vertical-align: top;}
+
+      svg{
+
+        position: absolute;
+        top: 0px; left: 0px;
+
+        width: 16px;
+        fill: $primary-color;
+
+      }
+
+      .text{
+
+        position: relative;
+        width: calc(100% - 17px); height: 17px;
+        overflow: hidden;
+
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 12px;
+        color: $primary-color;
+        line-height: 18px;
+        opacity: 0;
+
+        transition: 200ms ease-out;
+        margin-left: 24px;
+
+      }
+
+    }
+
+  }
+
+}

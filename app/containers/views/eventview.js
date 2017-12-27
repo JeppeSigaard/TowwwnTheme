@@ -6,11 +6,10 @@ import React from 'react';
 // Components
 import View from '../../hoc/view.js';
 import Event from '../parts/event.js';
+import CTAIcons from '../../presentationals/parts/ctaicons.js';
 
-// Actions
+// Actions & tools
 import { getSinglePlace } from '../../actions/api/places.js';
-
-// Tools
 import { formatDate, nl2p } from '../../tools/formatters.js';
 
 
@@ -26,11 +25,13 @@ class EventView extends View {
       imgUrl : null,
       hours : null,
 
+      ctaelems : [ ],
+
       id : 'event-view',
       title : 'Begivenhed',
       icon : '#icon-event',
       viewBox : '0 0 32 32',
-      closeProps : ['welcome-view','calendar-view',true],
+      closeProps : ['welcome-view','calendar-view','calendar-view',true],
 
     };
   }
@@ -45,44 +46,7 @@ class EventView extends View {
           <div className="single-event-image"
             style={{ backgroundImage : 'url('+this.state.imgUrl+')' }}>
 
-            <div className="cta-icons">
-
-              {/* Fb link */}
-              <a className="cta-icon facebook"
-                href={'http://fb.com/'+this.state.event['fbid']}
-                target="_blank">
-
-                <svg viewBox="0 0 32 32">
-                  <use xlinkHref="#icon-facebook"></use>
-                </svg>
-
-              </a>
-
-              {/* Share link */}
-              <a className="cta-icon share"
-                href={'http://fb.com/'+this.state.event['fbid']}
-                onClick={this.share.bind(this)}>
-
-                <svg viewBox="0 0 32 32">
-                  <use xlinkHref="#icon-share"></use>
-                </svg>
-
-              </a>
-
-              {/* Ticket Link */}
-              { this.state.event['ticket_uri'] != null &&
-                <a className="cta-icon ticket"
-                  href={this.state.event['ticket_uri']}
-                  target="_blank" >
-
-                  <svg viewBox="0 0 32 32">
-                    <use xlinkHref="#icon-ticket"></use>
-                  </svg>
-
-                </a>
-              }
-
-            </div>
+            <CTAIcons elements={this.state.ctaelems} />
 
           </div>
 
@@ -202,22 +166,8 @@ class EventView extends View {
     );
   }
 
-  // Share
-  share(e) {
-
-    // Prevents redirect
-    e.preventDefault();
-
-    // Share dialog
-    FB.ui({
-      method: 'share',
-      href: 'fb.com/'+this.state.event['fbid'],
-    }, ((response) => {}));
-
-  }
-
   // Render siblings
-  renderSiblings(id) {
+  renderSiblings( id ) {
 
     // Gets element & checks if it exists
     let element = this.props.store.getState().events.elements[id];
@@ -255,6 +205,65 @@ class EventView extends View {
       </div>
     );
 
+  }
+
+  // Share
+  share(e) {
+
+    // Prevents redirect
+    e.preventDefault();
+
+    // Share dialog
+    FB.ui({
+      method: 'share',
+      href: 'fb.com/'+this.state.event['fbid'],
+    }, ((response) => {}));
+
+  }
+
+  // Update call to action elements
+  updateCallToActionElements( props ) {
+    if ( this.state.event != null ) {
+
+      // Creates response field
+      let ctaelems = [ ];
+
+      // Facebook sjiz
+      if ( this.state.event['fbid'] != null ) {
+
+        // Facebook link
+        ctaelems.push({
+          href : 'http://fb.com/'+this.state.event['fbid'],
+          viewBox : '0 0 32 32',
+          xlinkHref : '#icon-facebook',
+          text : 'facebook',
+        });
+
+        // Facebook share
+        ctaelems.push({
+          href : 'http://fb.com/'+this.state.event['fbid'],
+          onClick : this.share.bind(this),
+          viewBox : '0 0 32 32',
+          xlinkHref : '#icon-share',
+          text : 'del nu',
+        });
+
+      }
+
+      // Ticket link
+      if ( this.state.event['ticket_uri'] != null ) {
+        ctaelems.push({
+          href : this.state.event['ticket_uri'],
+          viewBox : '0 0 32 32',
+          xlinkHref : '#icon-ticket',
+          text : 'billet'
+        });
+      }
+
+      // Sets state
+      this.setState({ ctaelems });
+
+    }
   }
 
   // On store change
@@ -302,6 +311,11 @@ class EventView extends View {
       this.setState({
         event, imgUrl, hours,
         title : event['title']
+      }, () => {
+
+        // Updates call to action elements
+        this.updateCallToActionElements();
+
       });
 
     }

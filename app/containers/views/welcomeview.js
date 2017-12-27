@@ -3,6 +3,9 @@
 // Imports
 import React from 'react';
 import View from '../../hoc/view.js';
+import Advertisement from '../../presentationals/advertisement.js';
+
+// Tools
 import { nl2p } from '../../tools/formatters.js';
 
 // Welcome View component
@@ -66,6 +69,17 @@ class WelcomeView extends View {
         <div className="startoff">
           Start med at vælge en begivenhed til højre
         </div>
+
+        {/* Commercials */}
+        { false && this.props.store != null &&
+          <div className="commercials">
+
+            { this.props.store.getState()
+              .commercials.elements.map(( val ) => {
+                return <Advertisement element={val} />; })}
+
+          </div>
+        }
 
       </div>
     );

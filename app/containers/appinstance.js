@@ -11,6 +11,7 @@ import EventView from './views/eventview.js';
 
 // Actions
 import { getDefaultData } from '../actions/api/defaultdata.js';
+import { getAdvertisements } from '../actions/api/advertisements.js';
 
 // Styling
 import Styling from '../../style/base.scss';
@@ -34,10 +35,21 @@ class AppInstance extends React.Component {
   // Fetch default data
   fetchDefaultData( props ) {
 
-    // Dispatches an action that fetches default data
-    if ( props.store != null &&
-         !props.store.getState().defaultdata.fetched )
-         { props.store.dispatch(getDefaultData()); }
+    // Dispatches an action that fetches default data and
+    // an action that fetches all commercials.
+    if ( props.store != null ) {
+
+      // Fetches default data
+      if ( !props.store.getState().defaultdata.fetched ) {
+        props.store.dispatch(getDefaultData());
+      }
+
+      // Fetches commercials
+      if ( true ) {
+        props.store.dispatch(getAdvertisements());
+      }
+
+    }
 
   }
 
