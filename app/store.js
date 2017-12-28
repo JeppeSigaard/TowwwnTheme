@@ -7,13 +7,17 @@ import thunk from 'redux-thunk';
 // Reducers
 import ui from './reducers/ui.js';
 import defaultdata from './reducers/data/defaultdata.js';
+
 import events from './reducers/data/events.js';
 import categories from './reducers/data/categories.js';
 import places from './reducers/data/places.js';
+import advertisements from './reducers/data/advertisements.js';
 
 // Creates root reducer
 const rootReducer = combineReducers({
-  ui, defaultdata, events, categories, places
+  ui, defaultdata,
+  events, categories, places,
+  advertisements
 });
 
 // Compose enhancer & middleware... Used to activate redux dev tools

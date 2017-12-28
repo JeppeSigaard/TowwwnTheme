@@ -16,28 +16,6 @@
     background-size: cover;
     background-position: center;
 
-    .cta-icons{
-
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 100%; height: 48px;
-
-      background-color: rgba($accent-color, .9);
-      display: flex;
-
-      .cta-icon{
-
-        border-left: 1px solid rgba($primary-color, .9);
-        cursor: pointer;
-
-        .cta-icon-inner.facebook{
-          border: none;
-        }
-
-      }
-
-    }
-
   }
 
   // Top

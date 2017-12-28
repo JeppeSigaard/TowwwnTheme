@@ -80,36 +80,32 @@ $view-trans: cubic-bezier(.6,0,.4,1);
         position: absolute;
         top: 0; right: 0;
 
-        width: 56px;
+        width: 60px;
         height: $view-head-height;
-
-        transition: 120ms ease-in;
-        border-left: 1px solid rgba($primary-color, .5);
         margin: 0;
 
         cursor: pointer;
         z-index: 10;
 
-        &:before{
+        // filter: drop-shadow(0px 2px 1px rgba(0,0,0,.3));
+        transition: 70ms ease-in;
 
-          content: '\00d7';
+        svg{
 
           position: absolute;
-          top: 50%; left: 46%;
+          top: 50%; left: 50%;
           transform: translate(-50%,-50%);
+          transition: 70ms ease-in;
 
-          transition: 120ms ease-in;
-          color: rgba($primary-color, .5);
-          font-weight: 300;
-          font-size: 18px;
+          width: 18px;
+          fill: darken($primary-color, 6%);
+          margin: 0;
 
         }
 
         &:hover{
-
-          border-left: 1px solid rgba($primary-color, .75);
-          &:before{ color: rgba($primary-color, .75); }
-
+          filter: drop-shadow(0px 0px 1px black);
+          svg{ fill: $primary-color; top: 51%; }
         }
 
       }

@@ -26,9 +26,11 @@ class CTAIcons extends React.Component {
 
     // Returns
     return (
-      <a className="cta-icon" target="_blank" key={val['text']+'#'+val['href']}
+      <a className={"cta-icon "+(val['className'] != null ? val['className'] : '')}
+        key={val['text']+'#'+val['href']}
         href={ val['href'] != null ? val['href'] : '#' }
-        onClick={ val['onClick'] != null ? val['onClick'] : noop } >
+        onClick={ val['onClick'] != null ? val['onClick'] : noop }
+        target="_blank" >
 
         <div className="cta-icon-inner">
           <svg viewBox={ val['viewBox'] != null ? val['viewBox'] : '0 0 32 32' }>

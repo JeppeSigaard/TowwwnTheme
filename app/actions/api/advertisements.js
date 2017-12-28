@@ -9,7 +9,13 @@ const getAdvertisements = (( ) => (( dispatch ) => {
   // Creates new request
   let request = new XMLHttpRequest();
   request.onload = (( response ) => {
-    console.log( JSON.parse( response.target.response ) );
+
+    // Dispatches fetched action
+    dispatch({
+      type : "COMMERCIALS_FETCHED",
+      payload : { elements : JSON.parse( response.target.response ) }
+    });
+
   });
 
   // Opens and sends request

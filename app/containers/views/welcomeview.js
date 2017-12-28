@@ -15,10 +15,14 @@ class WelcomeView extends View {
   constructor( props ) {
     super(props);
     this.state = {
+
+      ads : null,
+
       id : 'welcome-view',
       title : 'Velkommen til Towwwn',
       icon : '#towwwn-logo-17',
       viewBox : '0 0 32 32'
+
     };
   }
 
@@ -71,18 +75,49 @@ class WelcomeView extends View {
         </div>
 
         {/* Commercials */}
-        { false && this.props.store != null &&
-          <div className="commercials">
+        { this.state.ads != null &&
+          <div className="advertisements">
 
-            { this.props.store.getState()
-              .commercials.elements.map(( val ) => {
-                return <Advertisement element={val} />; })}
+            { this.state.ads.map(( val ) => {
+                return <Advertisement
+                  key={ 'ad#'+val['id'] }
+                  element={val} />; })}
 
           </div>
         }
 
       </div>
     );
+  }
+
+  // On store change
+  onStoreChange() {
+
+    // Creates new state field &
+    // extracts data
+    let newState = { },
+      storeState = this.props.store.getState();
+
+    // Sets new state ads
+    if ( storeState.advertisements.elements != null ) {
+      newState['ads'] = storeState.advertisements.elements; }
+
+    // Sets state
+    this.setState(newState);
+
+  }
+
+  // Component will mount
+  componentWillMount() {
+
+    // Subscribes to store
+    if ( this.props.store != null ) {
+
+      this.props.store.subscribe
+        (this.onStoreChange.bind(this));
+
+    }
+
   }
 
 }

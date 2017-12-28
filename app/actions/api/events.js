@@ -1,5 +1,8 @@
 
 
+// Current future page, per 24.
+let curPage = 1;
+
 // Events API action creators
 const getFutureEvents = (( amount, page ) => (( dispatch ) => {
 
@@ -8,7 +11,7 @@ const getFutureEvents = (( amount, page ) => (( dispatch ) => {
 
   // Extracts data
   amount = (amount == null) ? 24 : amount;
-  page   = (page   == null) ? 1  : page;
+  page   = (page   == null) ? curPage : page;
 
   // Creates a new request
   let request = new XMLHttpRequest();
@@ -16,6 +19,9 @@ const getFutureEvents = (( amount, page ) => (( dispatch ) => {
 
     // Elements
     let elements = JSON.parse( response.target.response );
+
+    // Updates page counter
+    if(elements!=null){curPage++;}
 
     // Events fetched action dispatch
     dispatch({ type : 'EVENTS_FETCHED', payload : {

@@ -7,6 +7,7 @@ import View from '../../hoc/view.js';
 // Components
 import Loader from '../../presentationals/parts/loader.js';
 import Event from '../parts/event.js';
+import Advertisement from '../../presentationals/advertisement.js';
 
 // Actions
 import { getFutureEvents } from '../../actions/api/events.js';
@@ -62,25 +63,52 @@ class CalendarView extends View {
   }
 
   // Render Element
-  renderElement( id ) {
+  renderElement( val ) {
 
-    // Extracts data
-    let event = this.props.store.getState().events.elements[String( id )];
-    if ( event == null ) { return (<div>An error occured</div>); }
+    // Event section
+    if ( 'object' !== typeof val ) {
 
-    // Returns jsx
-    return (
-      <Event element={event}
-        store={this.props.store}
-        key={ 'calendar-event#'+id }
-      />
-    );
+      // Extracts data
+      let event = this.props.store.getState().events.elements[String( val )];
+      if ( event == null ) { return (<div>An error occured</div>); }
+
+      // Returns jsx event
+      return (
+        <Event element={event}
+          store={this.props.store}
+          key={ 'calendar-event#'+val }
+        />
+      );
+
+    // Advertisement section
+    } else if ( 'ad' === val.type ) {
+
+      if ( this.props.store.getState().advertisements.elements != null ) {
+
+        // Gets an advertisement
+        let ad = this.props.store.getState().advertisements.elements[0];
+        if ( ad == null ) { return (<div>An error occured</div>) }
+
+        // Returns jsx ad
+        return (
+          <Advertisement
+            element={ ad }
+            key={ 'ad#'+val.id }
+            inline={ true } />
+        );
+
+      }
+
+    }
 
   }
 
   // Preprocess: Sorts & filters events.
   // Important: This needs to be a pure function, and use immutable data
   preprocess( ids ) {
+
+    // Remove advertisements
+    this.removeAdvertisements(ids);
 
     // Is the store defined?
     if ( this.props.store != null ) {
@@ -110,6 +138,9 @@ class CalendarView extends View {
         return 0;
       });
 
+      // Insert advertisements
+      this.insertAdvertisements(resp);
+
       // Returns response
       return resp;
 
@@ -118,6 +149,21 @@ class CalendarView extends View {
     // Default response
     return ids;
 
+  }
+
+  // Insert advertisements
+  insertAdvertisements( arr ) {
+    let len = arr.length;
+    for ( let n = 0; n < len; n += 25 ) {
+      arr.splice( n+24, 0, { type: 'ad', id: n } );
+    }
+  }
+
+  // Remove advertisements
+  removeAdvertisements( arr ) {
+    arr.filter(( val ) => {
+      return val !== 'ad';
+    });
   }
 
   // Init load
@@ -132,9 +178,6 @@ class CalendarView extends View {
 
   // On Store Change
   onStoreChange() {
-
-    if ( this.ran > 20 ) { return; }
-    this.ran = this.ran == null ? 0 : this.ran+1;
 
     // State
     let state = this.props.store.getState();
@@ -175,11 +218,7 @@ class CalendarView extends View {
 
       // Checks if load more is needed (24 future events)
       if (fromBottom<=600) {
-
-        // Gets more events
-        this.props.store.dispatch(getFutureEvents( 24,
-          Math.floor(this.props.store.getState().events.future_count/24)+1 ));
-
+        this.props.store.dispatch(getFutureEvents( 24 ));
       }
 
     }

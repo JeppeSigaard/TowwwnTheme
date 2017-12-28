@@ -234,6 +234,7 @@ class EventView extends View {
         // Facebook link
         ctaelems.push({
           href : 'http://fb.com/'+this.state.event['fbid'],
+          className : 'fb',
           viewBox : '0 0 32 32',
           xlinkHref : '#icon-facebook',
           text : 'facebook',

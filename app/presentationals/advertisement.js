@@ -11,60 +11,78 @@ class Advertisement extends React.Component {
   constructor() {
     super();
     this.state = {
-      ctaelems : [
-
-      ],
+      ctaelems : [],
     };
   }
 
   // Render
   render() {
-    return (
-      <a className="commercial" target="_blank"
-        href={ this.props.element.link }
-        style={{ backgroundImage : 'url('+this.props.element.img+')' }}>
+    return this.props.element != null ? (
+
+      <div className={"advertisement "+(this.props.inline?'inline':'')}
+        style={{ backgroundImage : 'url('+this.props.element.img+')' }}
+        target="_blank" >
 
         {/* Cta Icons */}
         <CTAIcons elements={this.state.ctaelems} />
 
-      </a>
+      </div>
+
+    ) : (
+
+      <div className={"advertisement "+(this.props.inline?'inline':'')}>
+      </div>
+
     );
   }
 
   // Update state
   updateState( props ) {
 
+      // Error handling
+      if(props==null||props.element==null){return;}
+
       // Creates response field
       let ctaelems = [ ];
 
       // Sets facebook link
-      if ( props.element.fburl != null ) {
+      if ( props.element.fburl != null &&
+        props.element.fburl !== '' ) {
+
         ctaelems.push({
           href : props.element.fburl,
+          className : 'fb',
           viewBox : '0 0 32 32',
           xlinkHref : '#icon-facebook',
           text : 'facebook'
         });
+
       }
 
       // Sets instagram link
-      if ( props.element.insta != null ) {
+      if ( props.element.insta != null &&
+        props.element.insta !== '' ) {
+
         ctaelems.push({
           href : props.element.insta,
           viewBox : '0 0 20 20',
-          xlinkHref : '#icon-insta',
+          xlinkHref : '#icon-instagram',
           text : 'instagram',
         });
+
       }
 
       // Sets website link
-      if ( props.element.link != null ) {
+      if ( props.element.link != null &&
+        props.element.link !== '' ) {
+
         ctaelems.push({
           href : this.props.element.link,
           viewBox : '0 0 32 32',
           xlinkHref : '#icon-web',
           text : 'website',
         });
+
       }
 
       // Sets state

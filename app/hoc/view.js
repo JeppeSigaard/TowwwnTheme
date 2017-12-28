@@ -41,6 +41,12 @@ class View extends React.Component {
               { this.state.closeProps != null &&
                 <div className="close"
                   onClick={ this.processClose.bind(this) } >
+
+                  <svg viewBox="0 0 20 20">
+                    <use xlinkHref="#icon-close">
+                    </use>
+                  </svg>
+
                 </div>
               }
 
