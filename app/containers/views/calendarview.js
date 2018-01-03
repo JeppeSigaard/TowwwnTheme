@@ -21,6 +21,7 @@ class CalendarView extends View {
     this.state = {
 
       ids : [ ],
+      adOffset : Math.floor(Math.random() * 99),
 
       id : 'calendar-view',
       title : 'Begivenheder',
@@ -33,7 +34,7 @@ class CalendarView extends View {
   // Render
   render() {
     return this.generateRender(
-      <div className="event-calendar">
+        <div className="event-calendar" key={ 'event-calendar' } >
 
         {/* Events */}
         { this.state.ids.length>0 &&
@@ -85,9 +86,14 @@ class CalendarView extends View {
 
       if ( this.props.store.getState().advertisements.elements != null ) {
 
+        // Gets id, using the random offset to ensure that all ads
+        // gets their place in the spotlight.
+        let id = (val.id + this.state.adOffset) % this.props.store.getState()
+          .advertisements.elements.length;
+
         // Gets an advertisement
-        let ad = this.props.store.getState().advertisements.elements[0];
-        if ( ad == null ) { return (<div>An error occured</div>) }
+        let ad = this.props.store.getState().advertisements.elements[id];
+        if ( ad == null || val.id == null ) { return (<div>An error occured</div>) }
 
         // Returns jsx ad
         return (
@@ -155,7 +161,9 @@ class CalendarView extends View {
   insertAdvertisements( arr ) {
     let len = arr.length;
     for ( let n = 0; n < len; n += 25 ) {
-      arr.splice( n+24, 0, { type: 'ad', id: n } );
+      if ( n+24 <= arr.length ) {
+        arr.splice( n+24, 0, { type: 'ad', id: Math.floor(n / 24) } );
+      }
     }
   }
 

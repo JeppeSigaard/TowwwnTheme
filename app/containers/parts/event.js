@@ -69,7 +69,7 @@ class Event extends React.Component {
 
       // Sets view focus
       this.props.store.dispatch(setViewFocus(
-        'calendar-view', 'event-view', 'event-view', true));
+        'calendar-view', 'event-view', 'event-view', 'right', true));
 
     }
 

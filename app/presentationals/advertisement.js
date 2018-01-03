@@ -23,6 +23,13 @@ class Advertisement extends React.Component {
         style={{ backgroundImage : 'url('+this.props.element.img+')' }}
         target="_blank" >
 
+        {/* Title */}
+        { this.props.element.title != null &&
+          <div className="title">
+            { this.props.element.title }
+          </div>
+        }
+
         {/* Cta Icons */}
         <CTAIcons elements={this.state.ctaelems} />
 

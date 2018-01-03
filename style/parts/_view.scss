@@ -84,28 +84,29 @@ $view-trans: cubic-bezier(.6,0,.4,1);
         height: $view-head-height;
         margin: 0;
 
+        border-left: 1px solid darken( $primary-color, 20% );
+        color: darken( $primary-color, 20% );
+
         cursor: pointer;
         z-index: 10;
 
-        // filter: drop-shadow(0px 2px 1px rgba(0,0,0,.3));
-        transition: 70ms ease-in;
+        &:before{
 
-        svg{
-
+          content: '\00d7';
           position: absolute;
-          top: 50%; left: 50%;
+          top: 50%; left: 45%;
           transform: translate(-50%,-50%);
-          transition: 70ms ease-in;
 
-          width: 18px;
-          fill: darken($primary-color, 6%);
-          margin: 0;
+          font-size: 18px;
+          font-weight: 300;
 
         }
 
         &:hover{
-          filter: drop-shadow(0px 0px 1px black);
-          svg{ fill: $primary-color; top: 51%; }
+
+          border-color: $primary-color;
+          color: $primary-color;
+
         }
 
       }
@@ -124,21 +125,32 @@ $view-trans: cubic-bezier(.6,0,.4,1);
 
   // Left view class
   &.leftview{
-
     background-color: darken($primary-color, 3%);
 
     .view-head{
       background-color: darken($secondary-color, 3%);
     }
-
   }
 
+  // Right view class
   &.rightview{
-
     background-color: darken($primary-color, 6%);
 
     .view-head{
       background-color: darken($secondary-color, 6%);
+    }
+  }
+
+  // Mobile
+  @media screen and ( max-width: $mobile-width ) {
+
+    width: 100vw; left: -100%;
+    background-color: darken($primary-color, 6%);
+
+    .view-head{
+
+      background-color: darken($secondary-color, 6%);
+
     }
 
   }

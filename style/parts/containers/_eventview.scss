@@ -16,6 +16,11 @@
     background-size: cover;
     background-position: center;
 
+    // Mobile
+    @media screen and ( max-width: $mobile-width ) {
+      height: calc( 100vw / 16 * 9 );
+    }
+
   }
 
   // Top
@@ -141,6 +146,8 @@
 
         height: auto;
         padding: 16px 96px;
+
+        .icon{ top: 32px; }
 
         .text{
 

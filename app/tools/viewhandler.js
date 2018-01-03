@@ -23,18 +23,21 @@ class ViewHandler {
     window.addEventListener('resize',this.onResize.bind(this, store));
     this.onResize( store );
 
+    // Creates copy of viewrelated state
+    this.l_viewrelated = store.getState().ui.viewrelated;
+
   }
 
   // On resize
   onResize( store ) {
-    if ( window.innerWidth >= 640 &&
-      store.getState().ui.mobile ) {
+    if ( window.innerWidth >= 770 &&
+      store.getState().ui.viewrelated.mobile ) {
 
       // Not mobile.. Any more
       store.dispatch(setMobileMode(false));
 
-    } else if ( window.innerWidth < 640 &&
-      !store.getState().ui.mobile ) {
+    } else if ( window.innerWidth < 770 &&
+      !store.getState().ui.viewrelated.mobile ) {
 
       // Mobile now!
       store.dispatch(setMobileMode(true));
@@ -45,11 +48,24 @@ class ViewHandler {
   // Process store change
   processStoreChange( store ) {
 
-    if ( store.getState().ui != null && store.getState().ui.mobile ) { // Mobile
-      this.updateViewPositioningSmallScreen(store);
-    } else { // !Mobile
-      this.updateViewPositioningLargeScreen(store);
+    // if last view related is not equal to current
+    if ( this.l_viewrelated != store.getState().ui.viewrelated ) {
+
+      if ( store.getState().ui != null && store.getState().ui.viewrelated.mobile ) {
+
+        // Mobile
+        this.updateViewPositioningSmallScreen(store);
+
+      } else {
+
+        // !Mobile
+        this.updateViewPositioningLargeScreen(store);
+
+      }
     }
+
+    // Changes last viewrelated
+    this.l_viewrelated = store.getState().ui.viewrelated;
 
   }
 
@@ -57,10 +73,41 @@ class ViewHandler {
   updateViewPositioningSmallScreen( store ) {
 
     // Extracts data
-    // let state = store.getState(),
-    //   transition = state.ui.viewrelated.transition,
-    //   mview_id  = state.ui.viewrelated.mview,
-    //   x_mview_id  = state.ui.viewrelated.x_mview;
+    let state = store.getState(),
+      transition = state.ui.viewrelated.transition,
+      mview_id  = state.ui.viewrelated.mview,
+      x_mview_id  = state.ui.viewrelated.x_mview,
+      from = state.ui.viewrelated.from;
+
+    // Mobile last
+    if ( this.l_viewrelated != null && !this.l_viewrelated.mobile ) {
+      transition = false; }
+
+    // Get elements
+    let mview = document.getElementById( mview_id ),
+      x_mview = document.getElementById( x_mview_id );
+
+    // Sets views (plural)
+    let views = [mview];
+    if ( x_mview != null ) { views.push( x_mview ); }
+
+    // Pre positions view
+    this.prePositionSmallScreen( mview, x_mview, from );
+
+    // Add trans classes
+    if ( transition ) { this.addTransClass(views); }
+    if ( !transition ) { this.rmTransClass(views); }
+
+    // Positions views
+    mview['style'].left = '0%';
+
+    if ( x_mview != null ) {
+      if ( 'left' === from ) { x_mview['style'].left = '100%'; }
+      if ( 'right' === from ) { x_mview['style'].left = '-100%'; }
+    }
+
+    // Forces css queue to execute
+    this.forceQueueExecution(views)
 
   }
 
@@ -75,11 +122,15 @@ class ViewHandler {
       x_leftview_id  = state.ui.viewrelated.x_leftview,
       x_rightview_id = state.ui.viewrelated.x_rightview;
 
+    // Mobile last
+    if ( this.l_viewrelated != null && this.l_viewrelated.mobile ) {
+      transition = false; }
+
     // Check
     if ( this.lastViews != null &&
       this.lastViews[0] === leftview_id &&
       this.lastViews[1] === rightview_id ) {
-     return false;
+     transition = false;
     }
 
     // Last views
@@ -166,6 +217,28 @@ class ViewHandler {
     // Right view equals old left
     if ( rightview === x_leftview ) {
       leftview['style'].left = "-50%"; }
+
+    // Force queue execution
+    this.forceQueueExecution(views);
+
+  }
+
+  // Pre position small screen
+  prePositionSmallScreen( mview, x_mview, from ) {
+
+    // Views (plural)
+    let views = [ mview ];
+    if ( x_mview != null ) { views.push( x_mview ); }
+
+    // Removes transition class
+    // And forces css queue to execute
+    this.rmTransClass(views);
+    this.forceQueueExecution(views);
+
+    // Pre positioning
+    if ( x_mview != null ) { x_mview['style'].left = "0%"; }
+    if ( 'left' === from ) { mview['style'].left = "-100%"; }
+    if ( 'right' === from ) { mview['style'].left = "100%"; }
 
     // Force queue execution
     this.forceQueueExecution(views);

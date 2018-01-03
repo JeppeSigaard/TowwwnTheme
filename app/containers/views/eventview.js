@@ -31,7 +31,7 @@ class EventView extends View {
       title : 'Begivenhed',
       icon : '#icon-event',
       viewBox : '0 0 32 32',
-      closeProps : ['welcome-view','calendar-view','calendar-view',true],
+      closeProps : ['welcome-view','calendar-view','calendar-view', 'left', true],
 
     };
   }

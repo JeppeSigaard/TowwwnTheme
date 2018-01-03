@@ -19,7 +19,7 @@ class View extends React.Component {
     // Render
     generateRender(children) {
       return (
-        <div className="view" id={this.state.id}
+        <div className={"view"} id={this.state.id}
           onScroll={ this.processScroll.bind(this) } >
 
           <div className="view-inner">
@@ -39,14 +39,7 @@ class View extends React.Component {
               </div>
 
               { this.state.closeProps != null &&
-                <div className="close"
-                  onClick={ this.processClose.bind(this) } >
-
-                  <svg viewBox="0 0 20 20">
-                    <use xlinkHref="#icon-close">
-                    </use>
-                  </svg>
-
+                <div className="close" onClick={ this.processClose.bind(this) } >
                 </div>
               }
 
