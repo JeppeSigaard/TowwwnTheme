@@ -1,0 +1,215 @@
+
+
+// Local fields
+$sidebar-town-height: 48px;
+$sidebar-trans: cubic-bezier(.6,0,.4,1);
+
+// Side bar
+.sidebar{
+
+  position: absolute;
+  top: 0; left: 0;
+
+  width: $sidebar-width;
+  height: 100vh;
+
+  background-color: darken($accent-color, 6%);
+  overflow: hidden;
+
+  cursor: pointer;
+  z-index: 99;
+
+  transition: width 180ms $sidebar-trans;
+
+  *{
+    transition: 180ms $sidebar-trans,
+      top 0ms ease-out,
+      height 0ms ease-out,
+      background-color 0ms ease-out;
+  }
+
+  .town{
+
+    position: relative;
+    width: 100%; height: $sidebar-town-height;
+    background-color: darken($secondary-color, 0%);
+
+    .icon{
+
+      position: absolute;
+      top: 50%; left: 24px;
+      transform: translate(-50%,-50%);
+
+      width: 16px;
+      svg{ fill: $primary-color; }
+
+    }
+
+    .text{
+
+      position: absolute;
+      top: 46%; left: 40px;
+      transform: translateY(-50%);
+
+      opacity: 0;
+
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      line-height: $sidebar-town-height;
+
+      color: darken( $primary-color, 10% );
+
+    }
+
+  }
+
+  section{
+
+    position: absolute;
+    left: 0;
+
+    width: 100%;
+    height: calc( ( 100vh - #{$sidebar-town-height} ) / 2 );
+
+    .icon{
+
+      position: absolute;
+      top: 54%; left: 50%;
+      transform: translate(-50%,-50%);
+
+      width: 16px;
+      svg{ fill: $primary-color; }
+
+    }
+
+    .text{
+
+      position: absolute;
+      top: 50%; left: 64px;
+      transform: translateY(-50%);
+
+      opacity: 0;
+
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+
+      color: $primary-color;
+
+      .subtext{
+
+        position: absolute;
+        bottom: -18px; left: 50%;
+        transform: translateX(-50%);
+
+        width: 200px;
+
+        text-align: center;
+        font-size: 14px;
+        font-weight: 300;
+        text-transform: uppercase;
+
+        color: darken( $primary-color, 10% );
+
+      }
+
+    }
+
+    &:after{
+
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+
+      background-color: rgba($primary-color, .04);
+      transition: 80ms;
+      opacity: 0;
+
+    }
+
+    &:hover{
+      &:after{
+
+        opacity: 1;
+
+      }
+    }
+
+  }
+
+  section.places {
+    top: calc( ( 100vh - #{$sidebar-town-height} ) /
+      2 + #{$sidebar-town-height} );
+  }
+
+  section:not(.active){
+    background-color: rgba($secondary-color, .3);
+  }
+
+  // Open state
+  // Mobile
+  @media screen and ( max-width: $mobile-width ) {
+    &.forceopen {
+
+        width: 100vw;
+
+        section .icon{
+
+          left: 24%;
+          width: 36px;
+
+        }
+
+        section .text{
+
+          left: 43%;
+          opacity: 1;
+          font-size: 64px;
+
+        }
+
+        .town .text{
+
+          opacity: 1;
+          left: 48px;
+
+        }
+
+    }
+  }
+
+  // !Mobile
+  @media screen and ( min-width: $mobile-width ) {
+    &:hover {
+
+      width: calc( 50vw + #{$sidebar-town-height} / 2 );
+
+      section .icon{
+
+        left: 28%;
+        width: 36px;
+
+      }
+
+      section .text{
+
+        left: 45%;
+        opacity: 1;
+        font-size: 64px;
+
+      }
+
+      .town .text{
+
+        opacity: 1;
+        left: 48px;
+
+      }
+
+    }
+  }
+
+}

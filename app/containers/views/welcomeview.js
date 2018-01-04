@@ -74,7 +74,7 @@ class WelcomeView extends View {
           Start med at vælge en begivenhed til højre
         </div>
 
-        {/* Commercials */}
+        {/* Advertisements */}
         { this.state.ads != null &&
           <div className="advertisements">
 

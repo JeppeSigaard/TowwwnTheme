@@ -7,7 +7,7 @@ const getCategories = (( amount, orderby, order ) => (( dispatch ) => {
   dispatch({ type : "CATEGORIES_FETCHING" });
 
   // Extracts data
-  amount  = ( amount == null  ) ? 1000   : amount;
+  amount  = ( amount == null  ) ? 9999   : amount;
   orderby = ( orderby == null ) ? 'name' : orderby;
   order   = ( order == null   ) ? 'ASC'  : order;
 

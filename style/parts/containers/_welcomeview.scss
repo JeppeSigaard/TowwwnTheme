@@ -19,7 +19,7 @@
     .coverimage{
 
       position: relative;
-      width: 100%; height: calc( 50vw / 16 * 9 );
+      width: 100%; height: calc( (50vw - #{$view-head-height}) / 16 * 9 );
 
       background-size: 101%;
       background-position: center;

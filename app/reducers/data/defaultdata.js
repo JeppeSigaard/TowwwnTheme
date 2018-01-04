@@ -4,7 +4,7 @@
 const initState = {
   fetching : false,
   fetched : false,
-  data : {},
+  data : { },
 };
 
 // Reducer

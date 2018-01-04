@@ -4,10 +4,16 @@
 import React from 'react';
 import ViewHandler from '../tools/viewhandler.js';
 
+import SideBar from './parts/sidebar.js';
+
 // Views
 import WelcomeView from './views/welcomeview.js';
+
 import CalendarView from './views/calendarview.js';
 import EventView from './views/eventview.js';
+
+import CategoryView from './views/categoryview.js';
+import PlaceListView from './views/placelistview.js';
 
 // Actions
 import { getDefaultData } from '../actions/api/defaultdata.js';
@@ -23,10 +29,21 @@ class AppInstance extends React.Component {
   render() {
     return (
       <div className="app">
+        <SideBar store={ this.props.store } />
+
         <div className="app-inner">
+
+          {/* Welcome view */}
           <WelcomeView store={ this.props.store } />
+
+          {/* Event related */}
           <CalendarView store={ this.props.store } />
           <EventView store={ this.props.store } />
+
+          {/* Place related */}
+          <CategoryView store={ this.props.store } />
+          <PlaceListView store={ this.props.store } />
+
         </div>
       </div>
     );

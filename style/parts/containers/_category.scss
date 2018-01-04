@@ -1,0 +1,73 @@
+
+
+// Fields
+$category-height: 48px;
+
+// Category
+.category{
+
+  position: relative;
+  width: auto; height: $category-height;
+  margin: 12px;
+
+  background-color: $primary-color;
+  color: $secondary-color;
+  box-shadow: 0px 2px 1px rgba(0,0,0,.02);
+  transition: 80ms ease-out;
+
+  font-size: 11px;
+  font-weight: 300;
+
+  cursor: pointer;
+
+  // Bookmark mode
+  &.bookmark-mode{
+    background-color: lighten($accent-color, 40%);
+    box-shadow: 0px 0px 0px rgba(0,0,0,0);
+  }
+
+  // Hover
+  &:hover:not(.bookmark-mode){
+    box-shadow: 0px 1px 3px rgba(0,0,0,.09);
+  }
+
+  .category-place-count{
+
+    position: absolute;
+    top: 50%; left: 16px;
+    transform: translateY(-50%);
+
+    width: 28px; height: 28px;
+    background-color: $secondary-color;
+    box-shadow: 0px 0px 3px rgba(0,0,0,.06);
+
+    line-height: 28px;
+    text-align: center;
+
+    color: $primary-color;
+
+  }
+
+  .category-title{
+
+    position: absolute;
+    top: 50%; left: 60px;
+    transform: translateY(-50%);
+    text-transform: uppercase;
+
+  }
+
+  .category-subs{
+
+    position: absolute;
+    top: 50%; right: 16px;
+    transform: translateY(-50%);
+
+    color: darken($secondary-color, 10%);
+    text-transform: uppercase;
+    font-style: italic;
+    font-size: 10px;
+
+  }
+
+}

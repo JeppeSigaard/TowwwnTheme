@@ -24,10 +24,10 @@ class Advertisement extends React.Component {
         target="_blank" >
 
         {/* Title */}
-        { this.props.element.title != null &&
+        { /*this.props.element.title != null &&
           <div className="title">
             { this.props.element.title }
-          </div>
+          </div>*/
         }
 
         {/* Cta Icons */}
@@ -98,7 +98,7 @@ class Advertisement extends React.Component {
   }
 
   // Component will mount
-  componentWillMount(props) { this.updateState( props ); }
+  componentDidMount(props) { this.updateState( props ); }
   componentWillReceiveProps(props) { this.updateState( props ); }
 
 }

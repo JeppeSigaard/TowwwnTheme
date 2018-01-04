@@ -28,8 +28,23 @@ const CategoriesReducer = (( state=initState, action ) => {
       // Formats data
       let formatteddata = { };
       for ( let n = 0; n < action.payload.elements.length; n++ ) {
-        formatteddata[action.payload.elements[n].category_id] =
-          action.payload.elements[n];
+        let elem = action.payload.elements[n];
+
+        // Gets sub category count data
+        let subcat_counter = 0;
+        for ( let i = 0; i < action.payload.elements.length; i++ ) {
+          let sub_elem = action.payload.elements[i];
+          if ( elem.category_id === sub_elem.category_parent ) {
+            subcat_counter ++;
+          }
+        }
+        
+        // Inserts sub category count data
+        action.payload.elements[n].subcategory_count = subcat_counter;
+
+        // Sets formatted data
+        formatteddata[action.payload.elements[n].category_id] = elem;
+
       }
 
       // Combines the formatted data with previous state

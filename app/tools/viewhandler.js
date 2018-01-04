@@ -79,9 +79,19 @@ class ViewHandler {
       x_mview_id  = state.ui.viewrelated.x_mview,
       from = state.ui.viewrelated.from;
 
-    // Mobile last
+    // Not mobile last
     if ( this.l_viewrelated != null && !this.l_viewrelated.mobile ) {
-      transition = false; }
+
+      // Sets transition to false
+      transition = false;
+
+      // Gets all views and positions them
+      let views = document.getElementsByClassName('view');
+      for ( let n = 0; n < views.length; n++ ) {
+        views[n].style.left = "-100%";
+      }
+
+    }
 
     // Get elements
     let mview = document.getElementById( mview_id ),
@@ -99,14 +109,16 @@ class ViewHandler {
     if ( !transition ) { this.rmTransClass(views); }
 
     // Positions views
-    mview['style'].left = '0%';
-
     if ( x_mview != null ) {
       if ( 'left' === from ) { x_mview['style'].left = '100%'; }
       if ( 'right' === from ) { x_mview['style'].left = '-100%'; }
     }
 
+    mview['style'].left = '0%';
+
     // Forces css queue to execute
+    this.removePositioningClasses();
+    mview.classList.add('leftview');
     this.forceQueueExecution(views)
 
   }
@@ -124,7 +136,18 @@ class ViewHandler {
 
     // Mobile last
     if ( this.l_viewrelated != null && this.l_viewrelated.mobile ) {
-      transition = false; }
+
+      // Sets transition
+      transition = false;
+
+      // Gets all views and positions them
+      let views = document.getElementsByClassName('view');
+      for ( let n = 0; n < views.length; n++ ) {
+        views[n].style.left = "-50%";
+      }
+
+    }
+
 
     // Check
     if ( this.lastViews != null &&
@@ -156,13 +179,42 @@ class ViewHandler {
 
     }
 
+    // If transition is false?, do this:
+    if ( !transition ) {
+
+      // Removes transition classes,
+      // removes positioning classes and
+      // forces css queue execution
+      this.rmTransClass(views);
+      this.removePositioningClasses();
+      this.forceQueueExecution(views);
+
+      // Positions old views
+      if ( x_leftview != null ) {
+        x_leftview['style'].left = "-50%";
+      }
+
+      if ( x_rightview != null ) {
+        x_rightview['style'].left = "-50%";
+      }
+
+      // Positions new views
+      leftview['style'].left = "0%";
+      rightview['style'].left = "50%";
+
+      // Adds view position classes and returns
+      leftview.classList.add('leftview');
+      rightview.classList.add('rightview');
+      return;
+
+    }
+
     // Preposition & removes positioning classes
     this.prePosition(...views);
     this.removePositioningClasses();
 
     // Adds | removes transition classes
-    if ( transition )  { this.addTransClass(views); }
-    if ( !transition ) { this.rmTransClass(views); }
+    this.addTransClass(views);
 
     // Initial
     if ( x_leftview_id == null || x_rightview_id == null ) {

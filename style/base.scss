@@ -8,6 +8,7 @@ $accent-color: #699;
 $fontstack: 'Lato', sans-serif;
 
 $mobile-width: 770px;
+$sidebar-width: 48px;
 
 // Normalization
 body{
@@ -26,6 +27,23 @@ body{
 
 }
 
+// App
+.app{
+
+  width: 100vw;
+  height: 100vh;
+  padding-left: $sidebar-width;
+
+}
+
+.app-inner{
+
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+}
 
 // Normalization
 ::-webkit-scrollbar {
@@ -35,11 +53,13 @@ body{
 // Imports
 @import './parts/view';
 
+@import './parts/containers/sidebar';
 @import './parts/containers/welcomeview';
 @import './parts/containers/calendarview';
 @import './parts/containers/eventview';
+@import './parts/containers/event';
+@import './parts/containers/category';
 
 @import './parts/presentationals/loader';
-@import './parts/presentationals/event';
 @import './parts/presentationals/advertisement';
 @import './parts/presentationals/ctaicons';

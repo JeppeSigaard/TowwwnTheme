@@ -30,6 +30,27 @@ const setShownSingleEvent = (( id ) => {
 
 });
 
+// Set shown category
+const setShownCategory = (( id ) => {
+
+  // Error handling
+  if ( typeof Number(id) !== 'number' ) {
+    id = String(id['category_id']);
+
+    if ( id == null ) {
+      throw "SET_SHOWN_SINGLE_EVENT: Id not found.";
+      return;
+    }
+  }
+
+  // Returns
+  return {
+    type : "SET_SHOWN_CATEGORY",
+    payload : { id }
+  };
+
+});
+
 // Set mobile
 const setMobileMode = ((mobile) => {
   return {
@@ -39,4 +60,4 @@ const setMobileMode = ((mobile) => {
 });
 
 // Exports
-export { setViewFocus, setShownSingleEvent, setMobileMode };
+export { setViewFocus, setShownSingleEvent, setShownCategory, setMobileMode };
