@@ -7,7 +7,7 @@ const getPlaces = (( amount, cat, page ) => (( dispatch ) => {
   dispatch({ type : "PLACES_FETCHING" });
 
   // Extracts data
-  amount = amount == null ? 100000 : amount;
+  amount = amount == null ? 999999 : amount;
   cat = cat == null ? '' : '&cat='+cat;
   page = page == null ? 1 : page;
 
@@ -19,6 +19,9 @@ const getPlaces = (( amount, cat, page ) => (( dispatch ) => {
     dispatch({ type : "PLACES_FETCHED", payload: {
       elements : JSON.parse( response.target.response )
     }});
+
+    // Returns promise.resolve
+    return Promise.resolve();
 
   });
 

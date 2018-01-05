@@ -2,7 +2,11 @@
 
 // Imports
 import React from 'react';
+
+// Actions
 import { setShownCategory, setViewFocus } from '../../actions/ui.js';
+import { getPlaces } from '../../actions/api/places.js';
+
 
 // Category component
 class Category extends React.Component {
@@ -46,6 +50,10 @@ class Category extends React.Component {
   // On click
   onClick() {
     if ( this.props.store != null ) {
+
+      // Gets places from category
+      this.props.store.dispatch(getPlaces(
+        null,this.props.element['category_id']));
 
       // Sets shown category
       this.props.store.dispatch(setShownCategory(

@@ -47,7 +47,7 @@ class Event extends React.Component {
 
         {/* Footer */}
         <footer className="event-footer">
-          <div className="place">
+          <div className="event-place">
             { this.props.element['parentname'] != null &&
               this.props.element['parentname'] }
           </div>

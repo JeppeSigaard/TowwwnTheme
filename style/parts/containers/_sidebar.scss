@@ -140,7 +140,7 @@ $sidebar-trans: cubic-bezier(.6,0,.4,1);
 
   }
 
-  section.places {
+  section.sidebar-places {
     top: calc( ( 100vh - #{$sidebar-town-height} ) /
       2 + #{$sidebar-town-height} );
   }
@@ -159,15 +159,15 @@ $sidebar-trans: cubic-bezier(.6,0,.4,1);
         section .icon{
 
           left: 24%;
-          width: 36px;
+          width: 48px;
 
         }
 
         section .text{
 
-          left: 43%;
+          left: 44%;
           opacity: 1;
-          font-size: 64px;
+          font-size: 48px;
 
         }
 

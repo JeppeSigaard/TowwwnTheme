@@ -267,6 +267,19 @@ class EventView extends View {
     }
   }
 
+  // Reset scroll
+  resetScroll( withTrans ) {
+
+    // Gets view, its transition time and scroll down.
+    let view  = document.getElementById(this.state.id);
+    let trans = parseFloat(window.getComputedStyle(view).transitionDuration) * 1000;
+    setTimeout(() => { view.scrollTo( 0, 0 ); }, withTrans?trans:0 );
+
+  }
+
+  // On close
+  onClose() { this.resetScroll(true); }
+
   // On store change
   onStoreChange() {
 
@@ -278,6 +291,7 @@ class EventView extends View {
 
       // Gets event
       let event = state.events.elements[String(state.ui.shown_single_event)];
+      if ( event !== this.state.event ) { this.resetScroll(false); }
 
       // Gets smallest event image above 400px
       let imgUrl = event.images[(Object.keys(event.images).filter(( size ) => {

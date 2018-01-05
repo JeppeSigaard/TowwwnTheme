@@ -14,6 +14,7 @@ import EventView from './views/eventview.js';
 
 import CategoryView from './views/categoryview.js';
 import PlaceListView from './views/placelistview.js';
+import SinglePlaceView from './views/singleplaceview.js';
 
 // Actions
 import { getDefaultData } from '../actions/api/defaultdata.js';
@@ -43,6 +44,7 @@ class AppInstance extends React.Component {
           {/* Place related */}
           <CategoryView store={ this.props.store } />
           <PlaceListView store={ this.props.store } />
+          <SinglePlaceView store={ this.props.store } />
 
         </div>
       </div>

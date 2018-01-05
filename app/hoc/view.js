@@ -91,6 +91,10 @@ class View extends React.Component {
       if ( this.state.closeProps != null &&
            this.props.store != null ) {
 
+        // Call child close function
+        if ( this.onClose != null ) {
+          this.onClose(); }
+
         // Dispatches view change action
         this.props.store.dispatch(setViewFocus
           (...this.state.closeProps));

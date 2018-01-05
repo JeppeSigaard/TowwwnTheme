@@ -4,11 +4,15 @@
 import React from 'react';
 import View from '../../hoc/view.js';
 
+import Place from '../parts/place.js';
+import Loader from '../../presentationals/parts/loader.js';
+
 // Place list view
 class PlaceListView extends View {
 
   // Constructor
   constructor(props) {
+
     super(props);
     this.state = {
 
@@ -23,15 +27,80 @@ class PlaceListView extends View {
       ],
 
     };
+
   }
 
   // Render
   render() {
     return this.generateRender(
-      <div className="places" key={ 'places' } >
-        Hello World!
+      <div className="place-list" key={ 'places' } >
+
+        { this.state.ids != null && this.state.ids.length>0 &&
+          this.state.ids.map(this.renderElement.bind(this))
+        }
+
+        {(this.state.ids == null || this.state.ids.length<1) &&
+          <Loader />
+        }
+
       </div>
     );
+  }
+
+  // Render element
+  renderElement( val ) {
+    if ( this.props.store != null ) {
+
+      // Extracts data
+      let state = this.props.store.getState();
+      let place = state.places.elements[String(val)];
+
+      // Returns
+      return <Place element={place} key={'place#'+place.id} />;
+
+    }
+  }
+
+  // On store change
+  onStoreChange() {
+
+    // Extracts data
+    let state = this.props.store.getState();
+    let shown_cat = state.ui.shown_category;
+    let response = { };
+
+    // Generates response
+    response['ids'] = Object.keys(state.places.elements).filter(( val ) => {
+
+      // Checks if place has category, returns.
+      let cats = state.places.elements[val].categories;
+      if ( cats == null ) { return false; }
+
+      for ( let n = 0; n < cats.length; n++ ) {
+        if ( String(cats[n]['category_id']) == String(shown_cat) ) {
+          return true;
+        }
+      }
+
+      // If not, return false.
+      return false;
+
+    });
+
+    // Category name found, view title set.
+    let cat = state.categories.elements[shown_cat];
+    if ( cat != null ) { response['title'] = cat.category_name; }
+
+    // Sets state
+    this.setState(response);
+
+  }
+
+  // Component did mount
+  componentDidMount() {
+    if ( this.props.store != null ) {
+      this.props.store.subscribe(this.onStoreChange.bind(this));
+    }
   }
 
 }

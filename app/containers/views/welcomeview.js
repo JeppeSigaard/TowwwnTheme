@@ -71,7 +71,7 @@ class WelcomeView extends View {
 
         {/* Start off */}
         <div className="startoff">
-          Start med at vælge en begivenhed til højre
+          Start med at vælge enten begivenheder<br/>eller steder i menuen til venstre.
         </div>
 
         {/* Advertisements */}

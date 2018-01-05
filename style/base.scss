@@ -14,7 +14,7 @@ $sidebar-width: 48px;
 body{
 
   position: absolute;
-  width: 100vw; height: 100vh;
+  width: calc(100vw - 1px); height: 100vh;
   overflow: hidden;
 
   font-family: $fontstack;
@@ -57,8 +57,11 @@ body{
 @import './parts/containers/welcomeview';
 @import './parts/containers/calendarview';
 @import './parts/containers/eventview';
-@import './parts/containers/event';
-@import './parts/containers/category';
+@import './parts/containers/placelistview';
+
+@import './parts/containers/parts/event';
+@import './parts/containers/parts/category';
+@import './parts/containers/parts/place';
 
 @import './parts/presentationals/loader';
 @import './parts/presentationals/advertisement';

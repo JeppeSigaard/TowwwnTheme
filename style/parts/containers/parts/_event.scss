@@ -5,6 +5,10 @@ $event-height: 256px;
 $event-head-height: 96px;
 $event-footer-height: 50px;
 
+$event-mobile-height: 200px;
+$event-mobile-head-height: 72px;
+$event-mobile-footer-height: 50px;
+
 // Event
 .event{
 
@@ -97,6 +101,38 @@ $event-footer-height: 50px;
     font-size: 10px;
     text-transform: uppercase;
     font-weight: 500;
+
+  }
+
+  // Mobile
+  @media screen and ( max-width: $mobile-width ) {
+
+    min-width: 150px;
+    max-width: 335px;
+    height: $event-mobile-height;
+
+    .event-head{
+      height: $event-mobile-head-height;
+    }
+
+    .event-body{
+      font-size: 11px;
+
+      height: calc( #{$event-mobile-height} -
+        #{$event-mobile-head-height} -
+        #{$event-mobile-footer-height} );
+
+      .time{
+        font-size: 9px;
+      }
+    }
+
+    .event-footer{
+
+      font-size: 9px;
+      height: $event-mobile-footer-height;
+
+    }
 
   }
 

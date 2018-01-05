@@ -47,7 +47,7 @@ class SideBar extends React.Component {
         </header>
 
         {/* Events */}
-        <section className={"events "+(this.state.active_type==='events'?'active':'')}
+        <section className={"sidebar-events "+(this.state.active_type==='events'?'active':'')}
           onClick={ this.onClick.bind(this, 'events') } >
 
           <div className="icon">
@@ -68,7 +68,7 @@ class SideBar extends React.Component {
         </section>
 
         {/* Places */}
-        <section className={"places "+(this.state.active_type==='places'?'active':'')}
+        <section className={"sidebar-places "+(this.state.active_type==='places'?'active':'')}
           onClick={ this.onClick.bind(this, 'places') } >
 
           <div className="icon">

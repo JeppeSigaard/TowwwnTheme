@@ -1,0 +1,107 @@
+
+
+// Local fields
+$place-height: 96px;
+
+// Place
+.place{
+
+  position: relative;
+  width: 100%; height: $place-height;
+  cursor: pointer;
+
+  &:nth-child(2n+0) {
+    background-color: rgba($secondary-color, .05);
+
+    &:hover{
+      background-color: rgba($secondary-color, .03);
+    }
+  }
+
+  &:nth-child(2n+1) {
+    background-color: rgba($secondary-color, .10);
+
+    &:hover{
+      background-color: rgba($secondary-color, .08);
+    }
+  }
+
+  .place-icon{
+
+    position: absolute;
+    top: 50%; left: 16px;
+    transform: translateY(-50%);
+
+    width: 64px; height: 64px;
+    box-shadow: 0px 0px 3px rgba(0,0,0,.06);
+
+    background-size: cover;
+    background-position: center;
+
+
+  }
+
+  .place-leftsided-text{
+
+    position: absolute;
+    top: 50%; left: 96px;
+    transform: translateY(-50%);
+
+    width: auto; height: 64px;
+    font-size: 11px;
+    font-weight: 300;
+    text-transform: uppercase;
+    line-height: 1.5;
+
+    .title{
+
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 4px;
+      padding-right: 16px;
+
+    }
+
+  }
+
+  .small-cta-icons{
+
+    position: absolute;
+    bottom: 16px; right: 16px;
+    //transform: translateY(-50%);
+
+    display: flex;
+    flex-wrap: nowrap;
+
+    @media screen and ( max-width: $mobile-width ) {
+      display: none;
+    }
+
+    .small-cta-icon{
+
+      width: 12px;
+      height: 14px;
+      flex: 1;
+
+      margin-left: 8px;
+
+      svg{
+
+        fill: lighten( $secondary-color, 20% );
+
+      }
+
+    }
+
+  }
+
+}
+
+
+
+
+
+
+
+
+*{}
