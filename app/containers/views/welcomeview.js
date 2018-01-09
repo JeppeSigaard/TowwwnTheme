@@ -3,7 +3,7 @@
 // Imports
 import React from 'react';
 import View from '../../hoc/view.js';
-import Advertisement from '../../presentationals/advertisement.js';
+import Advertisements from '../parts/advertisements.js';
 
 // Tools
 import { nl2p } from '../../tools/formatters.js';
@@ -75,16 +75,7 @@ class WelcomeView extends View {
         </div>
 
         {/* Advertisements */}
-        { this.state.ads != null &&
-          <div className="advertisements">
-
-            { this.state.ads.map(( val ) => {
-                return <Advertisement
-                  key={ 'ad#'+val['id'] }
-                  element={val} />; })}
-
-          </div>
-        }
+        <Advertisements store={this.props.store} />
 
       </div>
     );

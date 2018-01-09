@@ -36,10 +36,12 @@ class PlaceListView extends View {
       <div className="place-list" key={ 'places' } >
 
         { this.state.ids != null && this.state.ids.length>0 &&
+          !this.props.store.getState().places.fetching &&
           this.state.ids.map(this.renderElement.bind(this))
         }
 
-        {(this.state.ids == null || this.state.ids.length<1) &&
+        { ( this.state.ids == null || this.state.ids.length<1 ||
+            this.props.store.getState().places.fetching ) &&
           <Loader />
         }
 
@@ -56,7 +58,10 @@ class PlaceListView extends View {
       let place = state.places.elements[String(val)];
 
       // Returns
-      return <Place element={place} key={'place#'+place.id} />;
+      return <Place
+        element={place}
+        store={this.props.store}
+        key={'place#'+place.id} />;
 
     }
   }

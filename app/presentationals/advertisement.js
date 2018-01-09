@@ -11,7 +11,7 @@ class Advertisement extends React.Component {
   constructor() {
     super();
     this.state = {
-      ctaelems : [],
+      ctaelems : [ ],
     };
   }
 
@@ -22,13 +22,6 @@ class Advertisement extends React.Component {
       <div className={"advertisement "+(this.props.inline?'inline':'')}
         style={{ backgroundImage : 'url('+this.props.element.img+')' }}
         target="_blank" >
-
-        {/* Title */}
-        { /*this.props.element.title != null &&
-          <div className="title">
-            { this.props.element.title }
-          </div>*/
-        }
 
         {/* Cta Icons */}
         <CTAIcons elements={this.state.ctaelems} />
@@ -98,7 +91,7 @@ class Advertisement extends React.Component {
   }
 
   // Component will mount
-  componentDidMount(props) { this.updateState( props ); }
+  componentDidMount() { this.updateState( this.props ); }
   componentWillReceiveProps(props) { this.updateState( props ); }
 
 }

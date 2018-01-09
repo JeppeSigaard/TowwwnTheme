@@ -21,6 +21,7 @@ const initState = {
 
   shown_single_event : null,
   shown_category : null,
+  shown_single_place : null,
 
 };
 
@@ -82,6 +83,20 @@ const UIReducer = (( state=initState, action ) => {
       // Return state
       return Object.assign({}, state, {
         shown_category : action.payload.id
+      });
+
+    }
+
+    /* ---- Set shown single place ---- */
+    case "SET_SHOWN_SINGLE_PLACE" : {
+
+      // Error handling
+      if ( action.payload.id == null )
+        { return state; }
+
+      // Return state
+      return Object.assign({}, state, {
+        shown_single_place : action.payload.id
       });
 
     }

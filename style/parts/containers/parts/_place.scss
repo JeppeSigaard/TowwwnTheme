@@ -13,7 +13,7 @@ $place-height: 96px;
   &:nth-child(2n+0) {
     background-color: rgba($secondary-color, .05);
 
-    &:hover{
+    &:hover:not(.bookmark-mode){
       background-color: rgba($secondary-color, .03);
     }
   }
@@ -21,8 +21,16 @@ $place-height: 96px;
   &:nth-child(2n+1) {
     background-color: rgba($secondary-color, .10);
 
-    &:hover{
+    &:hover:not(.bookmark-mode){
       background-color: rgba($secondary-color, .08);
+    }
+  }
+
+  &.bookmark-mode{
+    background-color: lighten($accent-color, 38%);
+
+    &:nth-child(2n+1) {
+      background-color: lighten($accent-color, 32%);
     }
   }
 

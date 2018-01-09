@@ -58,10 +58,12 @@ body{
 @import './parts/containers/calendarview';
 @import './parts/containers/eventview';
 @import './parts/containers/placelistview';
+@import './parts/containers/singleplaceview';
 
 @import './parts/containers/parts/event';
 @import './parts/containers/parts/category';
 @import './parts/containers/parts/place';
+@import './parts/containers/parts/singlefooter';
 
 @import './parts/presentationals/loader';
 @import './parts/presentationals/advertisement';

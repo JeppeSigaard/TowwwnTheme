@@ -145,7 +145,7 @@ class CalendarView extends View {
       });
 
       // Insert advertisements
-      this.insertAdvertisements(resp);
+      // this.insertAdvertisements(resp); <- TMP: Commented
 
       // Returns response
       return resp;

@@ -6,6 +6,7 @@ import React from 'react';
 // Components
 import View from '../../hoc/view.js';
 import Event from '../parts/event.js';
+import SingleFooter from '../parts/singlefooter.js';
 import CTAIcons from '../../presentationals/parts/ctaicons.js';
 
 // Actions & tools
@@ -67,99 +68,8 @@ class EventView extends View {
           }
 
           {/* Footer */}
-          <footer className="single-event-footer">
-
-            {/* Parent */}
-            <div className="parent row">
-              <div className="image" style={{ backgroundImage :
-                'url('+this.state.event['parentpicture']+')' }}>
-              </div>
-
-              <div className="text">
-                { this.state.event['parentname'] }
-              </div>
-            </div>
-
-            {/* Hours */}
-            { this.state.hours != null &&
-              <a className="hours row">
-                <div className="icon">
-                  <svg viewBox="0 0 32 34">
-                    <use xlinkHref="#icon-watch"></use>
-                  </svg>
-                </div>
-
-                <div className="text">
-
-                  { Object.keys(this.state.hours)
-                    .map(this.renderHours.bind(this)) }
-
-                </div>
-              </a>
-            }
-
-            {/* Phone */}
-            { this.state.event['phone'] != null &&
-              <a className="phone row" href={'tel://'+this.state.event['phone']}>
-                <div className="icon">
-                  <svg viewBox="0 0 32 32">
-                    <use xlinkHref="#icon-phone"></use>
-                  </svg>
-                </div>
-
-                <div className="text">
-                  { this.state.event['phone'] }
-                </div>
-              </a>
-            }
-
-            {/* Facebook */}
-            { this.state.event['fbid'] != null &&
-              <a className="facebook row" target="_blank"
-                href={'http://fb.com/'+this.state.event['fbid']}>
-                <div className="icon">
-                  <svg viewBox="0 0 32 32">
-                    <use xlinkHref="#icon-facebook"></use>
-                  </svg>
-                </div>
-
-                <div className="text">Facebook</div>
-              </a>
-            }
-
-            {/* Website */}
-            { this.state.event['website'] != null &&
-              <a className="web row" target="_blank"
-                href={this.state.event['website']}>
-                <div className="icon">
-                  <svg viewBox="0 0 32 32">
-                    <use xlinkHref="#icon-web"></use>
-                  </svg>
-                </div>
-
-                <div className="text">
-                  { this.state.event['website'] }
-                </div>
-              </a>
-            }
-
-            {/* Adress */}
-            { this.state.event['adress'] != null &&
-              <a className="adress row" target="_blank"
-                href={'https://www.google.dk/maps/place/'+this.state.event['adress']}>
-                <div className="icon">
-                  <svg viewBox="0 0 32 32" >
-                    <use xlinkHref="#icon-location"></use>
-                  </svg>
-                </div>
-
-                <div className="text">
-                  { this.state.event['adress'] }
-                </div>
-              </a>
-            }
-
-          </footer>
+          <SingleFooter element={ this.state.event } elementType="event"
+            store={this.props.store} />
 
         </div> }
       </div>
@@ -291,7 +201,7 @@ class EventView extends View {
 
       // Gets event
       let event = state.events.elements[String(state.ui.shown_single_event)];
-      if ( event !== this.state.event ) { this.resetScroll(false); }
+      if ( event !== this.state.event ) { this.resetScroll }
 
       // Gets smallest event image above 400px
       let imgUrl = event.images[(Object.keys(event.images).filter(( size ) => {

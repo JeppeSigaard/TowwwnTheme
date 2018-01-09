@@ -132,7 +132,8 @@ class ViewHandler {
       leftview_id  = state.ui.viewrelated.leftview,
       rightview_id = state.ui.viewrelated.rightview,
       x_leftview_id  = state.ui.viewrelated.x_leftview,
-      x_rightview_id = state.ui.viewrelated.x_rightview;
+      x_rightview_id = state.ui.viewrelated.x_rightview,
+      from = state.ui.viewrelated.from;
 
     // Mobile last
     if ( this.l_viewrelated != null && this.l_viewrelated.mobile ) {
@@ -210,7 +211,7 @@ class ViewHandler {
     }
 
     // Preposition & removes positioning classes
-    this.prePosition(...views);
+    this.prePosition(...views, from);
     this.removePositioningClasses();
 
     // Adds | removes transition classes
@@ -222,8 +223,8 @@ class ViewHandler {
       rightview['style'].left = "50%";
     }
 
-    // From left
-    if ( rightview_id === x_leftview_id ) {
+    // From left when some in view
+    if ( rightview_id === x_leftview_id  ) {
       leftview['style'].left  = "0%";
       rightview['style'].left = "50%";
 
@@ -232,7 +233,7 @@ class ViewHandler {
       }
     }
 
-    // From right
+    // From right when some in view
     if ( leftview_id === x_rightview_id ) {
       leftview['style'].left  = "0%";
       rightview['style'].left = "50%";
@@ -240,6 +241,42 @@ class ViewHandler {
       if ( x_leftview != null ) {
         x_leftview['style'].left = "-50%";
       }
+    }
+
+    // From left when none is in view
+    if ( 'left' === from &&
+        ( rightview_id !== x_leftview_id ) &&
+        ( leftview_id !== x_rightview_id ) ) {
+
+      if ( x_leftview != null ) {
+        x_leftview['style'].left = "100%";
+      }
+
+      if ( x_rightview != null ) {
+        x_rightview['style'].left = "150%";
+      }
+
+      leftview['style'].left  = "0%";
+      rightview['style'].left = "50%";
+
+    }
+
+    // From right when none is in view
+    if ( 'right' === from &&
+        ( rightview_id !== x_leftview_id ) &&
+        ( leftview_id !== x_rightview_id ) ) {
+
+      if ( x_leftview != null ) {
+        x_leftview['style'].left = "-50%";
+      }
+
+      if ( x_rightview != null ) {
+        x_rightview['style'].left = "-100%";
+      }
+
+      leftview['style'].left  = "0%";
+      rightview['style'].left = "50%";
+
     }
 
     // Add positioning classes
@@ -252,7 +289,7 @@ class ViewHandler {
   }
 
   // Pre position (All args are the ids)
-  prePosition( leftview, rightview, x_leftview, x_rightview ) {
+  prePosition( leftview, rightview, x_leftview, x_rightview, from ) {
 
     // Views (plural)
     let views = [leftview, rightview];
@@ -264,11 +301,25 @@ class ViewHandler {
 
     // Left view equals old right
     if ( leftview === x_rightview ) {
-      rightview['style'].left = "100%"; }
+      rightview['style'].left = "100%";
+    }
 
     // Right view equals old left
-    if ( rightview === x_leftview ) {
-      leftview['style'].left = "-50%"; }
+    else if ( rightview === x_leftview ) {
+      leftview['style'].left = "-50%";
+    }
+
+    // Else if direction equals left
+    else if ( 'left' === from ) {
+      leftview['style'].left = "-100%";
+      rightview['style'].left = "-50%";
+    }
+
+    // Else if direction equals right
+    else if ( 'right' === from ) {
+      leftview['style'].left = "100%";
+      rightview['style'].left = "150%";
+    }
 
     // Force queue execution
     this.forceQueueExecution(views);
