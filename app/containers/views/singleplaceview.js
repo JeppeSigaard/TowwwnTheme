@@ -125,12 +125,14 @@ class SinglePlaceView extends View {
 
             {/* Body */}
             { this.state.element['description'] != null &&
+              this.state.element['description'] !== '' &&
               <div className="singleplace-body">
                 { nl2p(this.state.element['description']) }
               </div>
             }
 
-            { this.state.element['description'] == null &&
+            { this.state.element['description'] == null ||
+              this.state.element['description'] === '' &&
               <div className="singleplace-body">
                 <p>Dette sted har ingen beskrivelse.</p>
               </div>

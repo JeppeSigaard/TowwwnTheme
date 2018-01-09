@@ -1,15 +1,19 @@
 
 
+// Imports
+import { store } from '../../store.js';
+
 // Current future page, per 24.
-let curPage = 1;
+let curPage = 0;
 
 // Events API action creators
-const getFutureEvents = (( amount, page ) => (( dispatch ) => {
+const getFutureEvents = (( amount, page, city ) => (( dispatch ) => {
 
   // Events fetching action dispatch
   dispatch({ type : 'EVENTS_FETCHING' });
 
   // Extracts data
+  let city = store.getState().config.city;
   amount = (amount == null) ? 24 : amount;
   page   = (page   == null) ? curPage : page;
 
@@ -34,7 +38,7 @@ const getFutureEvents = (( amount, page ) => (( dispatch ) => {
 
   // Opens and sends the request
   request.open( 'GET', app_data.rest_api+'/events?per_page='+
-    amount+'&page='+page+'&after=now' );
+    amount+'&page='+page+'&after=now&city='+city );
 
   request.send();
 

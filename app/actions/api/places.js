@@ -1,5 +1,8 @@
 
 
+// Imports
+import { store } from '../../store.js';
+
 // Places API actions
 const getPlaces = (( amount, cat, page ) => (( dispatch ) => {
 
@@ -7,8 +10,9 @@ const getPlaces = (( amount, cat, page ) => (( dispatch ) => {
   dispatch({ type : "PLACES_FETCHING" });
 
   // Extracts data
+  let city = store.getState().config.city;
   amount = amount == null ? 999999 : amount;
-  cat = cat == null ? '' : '&cat='+cat;
+  cat = cat == null ? '' : cat;
   page = page == null ? 1 : page;
 
   // Creates new request
@@ -26,8 +30,8 @@ const getPlaces = (( amount, cat, page ) => (( dispatch ) => {
   });
 
   // Opens and sends the request
-  request.open( 'GET', app_data.rest_api+'/locations?per_page='+
-    amount+'&page='+page+cat );
+  request.open( 'GET', app_data.rest_api+'/places?per_page='+
+    amount+'&page='+page+'&cat='+cat+'&city='+city );
 
   request.send();
 
@@ -54,7 +58,7 @@ const getSinglePlace = (( id ) => ( dispatch ) => {
   });
 
   // Opens and sends the request
-  request.open( 'GET', app_data.rest_api+'/locations/'+String(id) );
+  request.open( 'GET', app_data.rest_api+'/places/'+String(id) );
   request.send();
 
 });
