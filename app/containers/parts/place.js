@@ -33,12 +33,14 @@ class Place extends React.Component {
         {/* Left sided text */}
         <div className="place-leftsided-text">
           <div className="title">{ this.props.element.name }</div>
-          <div className="adress">{ this.props.element.adress }</div>
 
           { this.props.element.hours != null &&
-            renderDynamicOpenTimes(this.props.element.hours)
+            <div className="open-hours">
+              { renderDynamicOpenTimes(this.props.element.hours) }
+            </div>
           }
 
+          <div className="adress">{ this.props.element.adress }</div>
         </div>
 
         {/* Call to action icons */}

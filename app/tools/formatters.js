@@ -44,7 +44,7 @@ const renderDynamicOpenTimes = (( val ) => {
 
   // No hours found at all, they're closed.
   if ( json.constructor.name === 'Array' &&
-       json.length == 0 ) { return 'Ingen Åbningstider'; }
+       json.length == 0 ) { return 'Ingen åbningstider fundet'; }
 
   // Gets todays data
   let todaysdata = json[days[date.getDay()]];

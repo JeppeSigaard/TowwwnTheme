@@ -16,6 +16,7 @@ class SingleFooter extends React.Component {
     super();
     this.state = {
       element : null,
+      hours : null,
     };
   }
 
@@ -153,26 +154,43 @@ class SingleFooter extends React.Component {
   }
 
   // On store change
-  updateHours() {
+  updateHours( props ) {
 
-    // Extracts data
-    let state = this.props.store.getState();
-
-    // If parent not loaded,
-    // well, fetch it!:))
-    let parent = state.places.elements[this.props.element['parentid']];
-    if ( parent == null && !state.places.fetching ) {
-      this.props.store.dispatch(getSinglePlace(this.props.element['parentid']));
-    }
-
-    // Else? set hours.
+    // Extracts data and creates response field
+    let element = props.element;
+    let elementType = props.elementType;
     let hours = null;
-    if ( parent != null ) {
-      let tmphours = JSON.parse( parent['hours'] );
-      if ( tmphours != null && Object.keys(tmphours).length>=1 ) {
-        hours = tmphours;
+
+    // Event
+    if ( 'event' === elementType ) {
+
+      // Extracts data
+      let state = this.props.store.getState();
+
+      // If parent not loaded,
+      // well, fetch it!:))
+      let parent = state.places.elements[this.props.element['parentid']];
+      if ( parent == null && !state.places.fetching ) {
+        this.props.store.dispatch(getSinglePlace(this.props.element['parentid']));
       }
+
+      // Else? set hours.
+      if ( parent != null ) {
+        let tmphours = JSON.parse( parent['hours'] );
+        if ( tmphours != null && Object.keys(tmphours).length>=1 ) {
+          hours = tmphours;
+        }
+      }
+
     }
+
+    // Place
+    else if ( 'place' === elementType && JSON.parse(element['hours']).length!==0 ) {
+      hours = JSON.parse( element['hours'] );
+    }
+
+    console.log( hours );
+
     // Sets state
     this.setState({ hours });
 
@@ -208,12 +226,11 @@ class SingleFooter extends React.Component {
       // Sets picture n' name
       new_element['picture'] = element['picture'];
       new_element['name'] = element['name'];
-      new_element['hours'] = JSON.parse( element['hours'] );
 
     }
 
     // Sets state
-    this.setState({ element : new_element }, this.updateHours.bind(this));
+    this.setState({ element : new_element }, this.updateHours.bind(this, props));
 
   }
 

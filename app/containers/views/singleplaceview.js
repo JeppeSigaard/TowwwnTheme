@@ -129,6 +129,12 @@ class SinglePlaceView extends View {
               </div>
             }
 
+            { this.state.element['description'] == null &&
+              <div className="singleplace-body">
+                <p>Dette sted har ingen beskrivelse.</p>
+              </div>
+            }
+
             {/* Footer */}
             <SingleFooter element={ this.state.element } elementType="place"
               store={ this.props.store } />
