@@ -17,8 +17,8 @@ $view-trans: cubic-bezier(.6,0,.4,1);
   overflow-y: scroll;
 
   &.trans{
-    transition: left 500ms $view-trans,
-      background-color 400ms $view-trans;
+    transition: left 380ms $view-trans,
+      background-color 300ms $view-trans;
   }
 
   // View Inner
@@ -44,7 +44,7 @@ $view-trans: cubic-bezier(.6,0,.4,1);
       text-transform: uppercase;
       line-height: $view-head-height;
 
-      transition: background-color 400ms $view-trans;
+      transition: background-color 300ms $view-trans;
       padding-left: 16px;
 
       z-index: 9;

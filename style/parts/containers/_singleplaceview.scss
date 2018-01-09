@@ -44,14 +44,23 @@
         left: 124px; top: calc(100% + 12px);
 
         text-transform: uppercase;
-        line-height: 1.65;
+        line-height: 1.9;
 
         // Title
         .title{
 
           color: $secondary-color;
           font-weight: 700;
-          font-size: 15px;
+          font-size: 14px;
+
+          overflow: hidden;
+          white-space: nowrap;
+          height: auto;
+          width: calc( 50vw - 48px - 124px );
+
+          @media screen and ( max-width: $mobile-width ) {
+            width: calc( 100vw - 48px - 124px - 16px );
+          }
 
         }
 

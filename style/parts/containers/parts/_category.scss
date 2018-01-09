@@ -55,6 +55,15 @@ $category-height: 48px;
     transform: translateY(-50%);
     text-transform: uppercase;
 
+    overflow: hidden;
+    white-space: nowrap;
+    height: auto;
+    width: calc( 50vw - 48px - 24px - 60px - 72px );
+
+    @media screen and ( max-width: $mobile-width ) {
+      width: calc( 100vw - 48px - 24px - 60px - 92px );
+    }
+
   }
 
   .category-subs{

@@ -10,16 +10,10 @@ import { setViewFocus } from '../actions/ui.js';
 // View HOC
 class View extends React.Component {
 
-    // Constructor
-    constructor( props ) {
-      super( props );
-      this.hooks = new HookController();
-    }
-
     // Render
-    generateRender(children) {
+    render() {
       return (
-        <div className={"view"} id={this.state.id}
+        <div className="view" id={this.props.id}
           onScroll={ this.processScroll.bind(this) } >
 
           <div className="view-inner">
@@ -27,18 +21,18 @@ class View extends React.Component {
             {/* Head */}
             <header className="view-head">
 
-              { this.state.icon != null &&
-                <svg className="icon" viewBox={this.state.viewBox}>
-                  <use xlinkHref={this.state.icon}></use>
+              { this.props.icon != null &&
+                <svg className="icon" viewBox={this.props.viewBox}>
+                  <use xlinkHref={this.props.icon}></use>
                 </svg>
               }
 
               <div className="title">
-                { this.state.title != null &&
-                  this.state.title }
+                { this.props.title != null &&
+                  this.props.title }
               </div>
 
-              { this.state.closeProps != null &&
+              { this.props.closeProps != null &&
                 <div className="close" onClick={ this.processClose.bind(this) } >
                 </div>
               }
@@ -47,7 +41,7 @@ class View extends React.Component {
 
             {/* Body */}
             <div className="view-body">
-              { children != null && children }
+              { this.props.children != null && this.props.children }
             </div>
 
           </div>
@@ -59,18 +53,21 @@ class View extends React.Component {
     // On Scroll
     processScroll() {
 
+      // Error handling
+      if ( this.props.id == null ) { return; }
+
       // Extracts for view & inner view
-      let view = document.getElementById(this.state.id);
+      let view = document.getElementById(this.props.id);
       let innerview = document.querySelectorAll
-        ('#'+this.state.id+' .view-inner')[0];
+        ('#'+this.props.id+' .view-inner')[0];
 
       // Gets internal scroll top value
       let scrollY = document.getElementById
-        (this.state.id).scrollTop;
+        (this.props.id).scrollTop;
 
       // Error handling
       if (innerview == null){
-        throw "Inner view wasn't found for view: "+this.state.id;
+        throw "Inner view wasn't found for view: "+this.props.id;
         return false;
       }
 
@@ -81,23 +78,25 @@ class View extends React.Component {
         scrollY,
       };
 
-      // Triggers event
-      this.hooks.trigger('scroll',payload);
+      // Calls on scroll function
+      if ( this.props.onScroll != null ) {
+        this.props.onScroll(payload);
+      }
 
     }
 
     // Process Close
     processClose() {
-      if ( this.state.closeProps != null &&
+      if ( this.props.closeProps != null &&
            this.props.store != null ) {
 
         // Call child close function
-        if ( this.onClose != null ) {
-          this.onClose(); }
+        if ( this.props.onClose != null ) {
+          this.props.onClose(); }
 
         // Dispatches view change action
         this.props.store.dispatch(setViewFocus
-          (...this.state.closeProps));
+          (...this.props.closeProps));
 
       }
     }

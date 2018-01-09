@@ -14,7 +14,6 @@ $event-mobile-footer-height: 50px;
 
   position: relative;
   min-width: 185px;
-  max-width: 360px;
   height: $event-height;
 
   background-color: darken($primary-color,0%);
@@ -108,7 +107,6 @@ $event-mobile-footer-height: 50px;
   @media screen and ( max-width: $mobile-width ) {
 
     min-width: 150px;
-    max-width: 335px;
     height: $event-mobile-height;
 
     .event-head{

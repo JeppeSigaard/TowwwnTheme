@@ -2,7 +2,7 @@
 
 // Imports
 import React from 'react';
-import View from '../../hoc/view.js';
+import View from '../view.js';
 import Category from '../parts/category.js';
 
 // Actions
@@ -16,24 +16,24 @@ class CategoryView extends View {
   constructor( props ) {
     super(props);
     this.state = {
-
       ids : [ ],
       place_count : 0,
-
-      id : 'category-view',
       title : 'Lokale steder',
-      icon : '#icon-location',
-      viewBox : '0 0 32 32'
-
     };
   }
 
   // Render
   render() {
-    return this.generateRender(
-      <div className="place-categories" key={ 'category-view' }>
-        { this.state.ids.map(this.renderElement.bind(this)) }
-      </div>
+    return (
+      <View id="category-view" title={this.state.title}
+        icon="#icon-location" viewBox="0 0 32 32"
+        store={ this.props.store }>
+
+        <div className="place-categories" key={ 'category-view' }>
+          { this.state.ids.map(this.renderElement.bind(this)) }
+        </div>
+
+      </View>
     );
   }
 

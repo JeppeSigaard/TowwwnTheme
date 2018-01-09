@@ -4,7 +4,7 @@
 import React from 'react';
 
 // Components
-import View from '../../hoc/view.js';
+import View from '../view.js';
 import Event from '../parts/event.js';
 import SingleFooter from '../parts/singlefooter.js';
 import CTAIcons from '../../presentationals/parts/ctaicons.js';
@@ -27,52 +27,56 @@ class EventView extends View {
       hours : null,
 
       ctaelems : [ ],
-
-      id : 'event-view',
+      id : "event-view",
       title : 'Begivenhed',
-      icon : '#icon-event',
-      viewBox : '0 0 32 32',
-      closeProps : ['welcome-view','calendar-view','calendar-view', 'left', true],
 
     };
   }
 
   // Render
   render() {
-    return this.generateRender(
-      <div className="single-event">
-        { this.state.event != null && <div className="single-event-inner">
+    return (
+      <View id={this.state.id} title={this.state.title}
+        icon="#icon-event" viewBox="0 0 32 32"
+        onClose={ this.onClose.bind(this) }
+        closeProps={[ 'welcome-view','calendar-view','calendar-view', 'left', true ]}
+        store={ this.props.store }>
 
-          {/* Image */}
-          <div className="single-event-image"
-            style={{ backgroundImage : 'url('+this.state.imgUrl+')' }}>
+        <div className="single-event">
+          { this.state.event != null && <div className="single-event-inner">
 
-            <CTAIcons elements={this.state.ctaelems} />
+            {/* Image */}
+            <div className="single-event-image"
+              style={{ backgroundImage : 'url('+this.state.imgUrl+')' }}>
 
-          </div>
+              <CTAIcons elements={this.state.ctaelems} />
 
-          {/* Top */}
-          <div className="single-event-top">
-            <div className="parent">{ this.state.event['parentname'] }</div>
-            <div className="title">{ this.state.event['title'] }</div>
-            <div className="time">
-              { formatDate(new Date(this.state.event['start_time']), true) }
             </div>
-          </div>
 
-          {/* Desc */}
-          { this.state.event['description'] != null &&
-            <div className="single-event-desc">
-              { nl2p(this.state.event['description']) }
+            {/* Top */}
+            <div className="single-event-top">
+              <div className="parent">{ this.state.event['parentname'] }</div>
+              <div className="title">{ this.state.event['title'] }</div>
+              <div className="time">
+                { formatDate(new Date(this.state.event['start_time']), true) }
+              </div>
             </div>
-          }
 
-          {/* Footer */}
-          <SingleFooter element={ this.state.event } elementType="event"
-            store={this.props.store} />
+            {/* Desc */}
+            { this.state.event['description'] != null &&
+              <div className="single-event-desc">
+                { nl2p(this.state.event['description']) }
+              </div>
+            }
 
-        </div> }
-      </div>
+            {/* Footer */}
+            <SingleFooter element={ this.state.event } elementType="event"
+              store={this.props.store} />
+
+          </div> }
+        </div>
+
+      </View>
     );
   }
 
@@ -126,7 +130,7 @@ class EventView extends View {
     // Share dialog
     FB.ui({
       method: 'share',
-      href: 'fb.com/'+this.state.event['fbid'],
+      href: ('https://facebook.com/'+this.state.event['fbid']),
     }, ((response) => {}));
 
   }

@@ -68,6 +68,15 @@ $place-height: 96px;
       margin-bottom: 4px;
       padding-right: 16px;
 
+      overflow: hidden;
+      white-space: nowrap;
+      height: auto;
+      width: calc( 50vw - 48px - 96px );
+
+      @media screen and ( max-width: $mobile-width ) {
+        width: calc( 100vw - 48px - 96px - 16px );
+      }
+
     }
 
   }

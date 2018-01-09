@@ -2,9 +2,9 @@
 
 // Imports
 import React from 'react';
-import View from '../../hoc/view.js';
+import View from '../view.js';
 import SingleFooter from '../parts/singlefooter.js';
-import { nl2p } from '../../tools/formatters.js';
+import { nl2p, renderDynamicOpenTimes } from '../../tools/formatters.js';
 
 // Single place view component
 class SinglePlaceView extends View {
@@ -13,136 +13,146 @@ class SinglePlaceView extends View {
   constructor(props) {
     super(props);
     this.state = {
-
       element : null,
-
-      id : 'single-place-view',
       title : 'Sted',
-      icon : '#icon-location',
-      viewBox : '0 0 32 32',
-      closeProps : [
-        'category-view','place-list-view','place-list-view',
-        'left', true
-      ],
-
     };
   }
 
   // Render
   render() {
-    return this.generateRender(
-      <div className="singleplace" key={'single-place-view'} >
-        { this.state.element != null && <div className="singleplace-inner">
+    return (
+      <View id="single-place-view" title={this.state.title}
+      icon="#icon-location" viewBox="0 0 32 32"
+      closeProps={[ 'category-view','place-list-view','place-list-view', 'left', true ]}
+      store={ this.props.store }>
 
-          {/* Header */}
-          <header className="singleplace-header">
-            <div className="coverimage" style={{
-              backgroundImage : 'url('+this.state.element['coverphoto']+')' }} >
+        <div className="singleplace" key={'single-place-view'} >
+          { this.state.element != null && <div className="singleplace-inner">
 
-              <div className="logo" style={{
-                backgroundImage : 'url('+this.state.element['picture']+')' }} >
+            {/* Header */}
+            <header className="singleplace-header">
+              <div className="coverimage" style={{
+                backgroundImage : 'url('+this.state.element['coverphoto']+')' }} >
+
+                <div className="logo" style={{
+                  backgroundImage : 'url('+this.state.element['picture']+')' }} >
+                </div>
+
+                <div className="text">
+                  <div className="title">{ this.state.element['name'] }</div>
+                  <div className="open">
+                    { renderDynamicOpenTimes(this.state.element['hours']) }
+                  </div>
+                </div>
+
+              </div>
+            </header>
+
+            {/* Call to action icons */}
+            <div className="singleplace-cta">
+              <div className="leftside singleplace-cta-row">
+
+                {/* Call button */}
+                { this.state.element['phone'] != null &&
+                  <a className="cta-btn"
+                    href={'tel://'+this.state.element['phone']}>
+
+                    <svg viewBox="0 0 32 32">
+                      <use xlinkHref="#icon-phone">
+                      </use>
+                    </svg>
+
+                  </a>
+                }
+
+                {/* Go to website button */}
+                { this.state.element['website'] != null &&
+                  <a className="cta-btn" target="_blank"
+                    href={ this.state.element['website'] } >
+
+                    <svg viewBox="0 0 32 32">
+                      <use xlinkHref="#icon-web">
+                      </use>
+                    </svg>
+
+                  </a>
+                }
+
+                {/* View adress button */}
+                { this.state.element['adress'] != null &&
+                  <a className="cta-btn" target="_blank"
+                    href={'https://www.google.dk/maps/place/'+
+                    this.state.element['adress']}>
+
+                    <svg viewBox="0 0 32 32">
+                      <use xlinkHref="#icon-address">
+                      </use>
+                    </svg>
+
+                  </a>
+                }
+
+                {/* Facebook button */}
+                <a className="cta-btn" target="_blank"
+                  href={'https://fb.com/'+this.state.element['fbid']}>
+
+                  <svg viewBox="0 0 32 32">
+                    <use xlinkHref="#icon-facebook">
+                    </use>
+                  </svg>
+
+                </a>
+
               </div>
 
-              <div className="text">
-                <div className="title">{ this.state.element['name'] }</div>
-                <div className="open">{ 'LUKKET' }</div>
+              <div className="rightside singleplace-cta-row">
+
+                {/* Share button */}
+                <a className="cta-btn"target="_blank"
+                  href={'https://fb.com/'+this.state.element['fbid']}
+                  onClick={this.share.bind(this)}>
+
+                  <svg viewBox="0 0 32 32">
+                    <use xlinkHref="#icon-share">
+                    </use>
+                  </svg>
+
+                </a>
+
               </div>
-
-            </div>
-          </header>
-
-          {/* Call to action icons */}
-          <div className="singleplace-cta">
-            <div className="leftside singleplace-cta-row">
-
-              {/* Call button */}
-              { this.state.element['phone'] != null &&
-                <a className="cta-btn"
-                  href={'tel://'+this.state.element['phone']}>
-
-                  <svg viewBox="0 0 32 32">
-                    <use xlinkHref="#icon-phone">
-                    </use>
-                  </svg>
-
-                </a>
-              }
-
-              {/* Go to website button */}
-              { this.state.element['website'] != null &&
-                <a className="cta-btn" target="_blank"
-                  href={ this.state.element['website'] } >
-
-                  <svg viewBox="0 0 32 32">
-                    <use xlinkHref="#icon-web">
-                    </use>
-                  </svg>
-
-                </a>
-              }
-
-              {/* View adress button */}
-              { this.state.element['adress'] != null &&
-                <a className="cta-btn" target="_blank"
-                  href={'https://www.google.dk/maps/place/'+
-                  this.state.element['adress']}>
-
-                  <svg viewBox="0 0 32 32">
-                    <use xlinkHref="#icon-address">
-                    </use>
-                  </svg>
-
-                </a>
-              }
-
-              {/* Facebook button */}
-              <a className="cta-btn" target="_blank"
-                href={'https://fb.com/'+this.state.element['fbid']}>
-
-                <svg viewBox="0 0 32 32">
-                  <use xlinkHref="#icon-facebook">
-                  </use>
-                </svg>
-
-              </a>
-
             </div>
 
-            <div className="rightside singleplace-cta-row">
+            {/* Body */}
+            { this.state.element['description'] != null &&
+              <div className="singleplace-body">
+                { nl2p(this.state.element['description']) }
+              </div>
+            }
 
-              {/* Share button */}
-              <a className="cta-btn"target="_blank"
-                href={'https://fb.com/'+this.state.element['fbid']}
-                onClick={this.share.bind(this)}>
+            {/* Footer */}
+            <SingleFooter element={ this.state.element } elementType="place"
+              store={ this.props.store } />
 
-                <svg viewBox="0 0 32 32">
-                  <use xlinkHref="#icon-share">
-                  </use>
-                </svg>
+          </div> }
+        </div>
 
-              </a>
-
-            </div>
-          </div>
-
-          {/* Body */}
-          { this.state.element['description'] != null &&
-            <div className="singleplace-body">
-              { nl2p(this.state.element['description']) }
-            </div>
-          }
-
-          {/* Footer */}
-          <SingleFooter element={ this.state.element } elementType="place"
-            store={ this.props.store } />
-
-        </div> }
-      </div>
+      </View>
     );
   }
 
   // Share
-  share(e) { e.preventDefault(); }
+  share(e) {
+
+    // Prevents redirect
+    e.preventDefault();
+
+    // Share dialog
+    FB.ui({
+      method: 'share',
+      href: ('https://facebook.com/'+this.state.element['fbid']),
+    }, ((response) => {}));
+
+  }
 
   // On store change
   onStoreChange() {

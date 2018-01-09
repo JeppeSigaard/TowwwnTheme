@@ -2,7 +2,7 @@
 
 // Imports
 import React from 'react';
-import View from '../../hoc/view.js';
+import View from '..//view.js';
 
 // Components
 import Loader from '../../presentationals/parts/loader.js';
@@ -22,44 +22,47 @@ class CalendarView extends View {
 
       ids : [ ],
       adOffset : Math.floor(Math.random() * 99),
-
-      id : 'calendar-view',
       title : 'Begivenheder',
-      icon : '#icon-event',
-      viewBox : '0 0 32 32'
 
     };
   }
 
   // Render
   render() {
-    return this.generateRender(
+    return (
+      <View id="calendar-view" title={this.state.title}
+        icon="#icon-event" viewBox="0 0 32 32"
+        onScroll={ this.onScroll.bind(this) }
+        store={ this.props.store }>
+
         <div className="event-calendar" key={ 'event-calendar' } >
 
-        {/* Events */}
-        { this.state.ids.length>0 &&
-          (this.preprocess(this.state.ids))
-          .map( this.renderElement.bind(this) ) }
+          {/* Events */}
+          { this.state.ids.length>0 &&
+            (this.preprocess(this.state.ids))
+            .map( this.renderElement.bind(this) ) }
 
-        {/* Load more */}
-        { this.state.ids.length>0 && this.props.store!=null &&
-          !this.props.store.getState().events.all_future_fetched &&
-          <Loader relative={true} /> }
+          {/* Load more */}
+          { this.state.ids.length>0 && this.props.store!=null &&
+            !this.props.store.getState().events.all_future_fetched &&
+            <Loader relative={true} /> }
 
-        {/* All Loaded */}
-        { this.props.store != null &&
-          this.props.store.getState().events.all_future_fetched &&
-          <div className="all-fetched">
-            <div className="all-fetched-inner">
+          {/* All Loaded */}
+          { this.props.store != null &&
+            this.props.store.getState().events.all_future_fetched &&
+            <div className="all-fetched">
+              <div className="all-fetched-inner">
+              </div>
             </div>
-          </div>
-        }
+          }
 
-        {/* Loader */}
-        { this.state.ids.length<=0 &&
-          <Loader /> }
+          {/* Loader */}
+          { this.state.ids.length<=0 &&
+            <Loader /> }
 
-      </div>
+        </div>
+
+      </View>
     );
   }
 
@@ -246,14 +249,6 @@ class CalendarView extends View {
     // Initial load
     this.initLoad();
 
-    // Subscribes to the scroll event
-    this.hooks.on('scroll', this.onScroll.bind(this));
-
-  }
-
-  // Component will unmount
-  componentWillUnmount() {
-    this.hooks.off('scroll', this.onScroll.bind(this));
   }
 
 }

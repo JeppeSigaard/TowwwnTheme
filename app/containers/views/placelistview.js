@@ -2,7 +2,7 @@
 
 // Import
 import React from 'react';
-import View from '../../hoc/view.js';
+import View from '../view.js';
 
 import Place from '../parts/place.js';
 import Loader from '../../presentationals/parts/loader.js';
@@ -12,40 +12,36 @@ class PlaceListView extends View {
 
   // Constructor
   constructor(props) {
-
     super(props);
     this.state = {
-
       ids : [ ],
-      id : 'place-list-view',
       title : 'Steder',
-      icon : '#icon-location',
-      viewBox : '0 0 32 32',
-      closeProps : [
-        'welcome-view','category-view','category-view',
-        'left', true
-      ],
-
     };
-
   }
 
   // Render
   render() {
-    return this.generateRender(
-      <div className="place-list" key={ 'places' } >
+    return (
+      <View id="place-list-view" title={this.state.title}
+        icon="#icon-location" viewBox="0 0 32 32"
+        closeProps={[ 'welcome-view','category-view','category-view', 'left', true ]}
+        store={ this.props.store }>
 
-        { this.state.ids != null && this.state.ids.length>0 &&
-          !this.props.store.getState().places.fetching &&
-          this.state.ids.map(this.renderElement.bind(this))
-        }
+        <div className="place-list" key={ 'places' } >
 
-        { ( this.state.ids == null || this.state.ids.length<1 ||
-            this.props.store.getState().places.fetching ) &&
-          <Loader />
-        }
+          { this.state.ids != null && this.state.ids.length>0 &&
+            !this.props.store.getState().places.fetching &&
+            this.state.ids.map(this.renderElement.bind(this))
+          }
 
-      </div>
+          { ( this.state.ids == null || this.state.ids.length<1 ||
+              this.props.store.getState().places.fetching ) &&
+            <Loader />
+          }
+
+        </div>
+
+      </View>
     );
   }
 
