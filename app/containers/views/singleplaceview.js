@@ -14,6 +14,7 @@ class SinglePlaceView extends View {
     super(props);
     this.state = {
       element : null,
+      id : 'single-place-view',
       title : 'Sted',
     };
   }
@@ -21,8 +22,8 @@ class SinglePlaceView extends View {
   // Render
   render() {
     return (
-      <View id="single-place-view" title={this.state.title}
-      icon="#icon-location" viewBox="0 0 32 32"
+      <View id={this.state.id} title={this.state.title}
+      icon="#icon-location" viewBox="0 0 32 32" onClose={ this.onClose.bind(this) }
       closeProps={[ 'category-view','place-list-view','place-list-view', 'left', true ]}
       store={ this.props.store }>
 
@@ -160,6 +161,19 @@ class SinglePlaceView extends View {
 
   }
 
+  // Reset scroll
+  resetScroll( withTrans ) {
+
+    // Gets view, its transition time and scroll down.
+    let view  = document.getElementById(this.state.id);
+    let trans = parseFloat(window.getComputedStyle(view).transitionDuration) * 1000;
+    setTimeout(() => { view.scrollTo( 0, 0 ); }, withTrans?trans:0 );
+
+  }
+
+  // On close
+  onClose() { this.resetScroll( true ); }
+
   // On store change
   onStoreChange() {
 
@@ -168,6 +182,9 @@ class SinglePlaceView extends View {
     let state = this.props.store.getState();
     let shown_place = state.ui.shown_single_place;
     let element = state.places.elements[String(shown_place)];
+
+    // Resets scroll
+    if ( element !== this.state.element ) { this.resetScroll( false ); }
 
     // Error handling
     if ( element == null ) { return; }

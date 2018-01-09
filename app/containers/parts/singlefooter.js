@@ -189,8 +189,6 @@ class SingleFooter extends React.Component {
       hours = JSON.parse( element['hours'] );
     }
 
-    console.log( hours );
-
     // Sets state
     this.setState({ hours });
 
