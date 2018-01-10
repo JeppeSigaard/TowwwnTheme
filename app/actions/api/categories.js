@@ -1,5 +1,8 @@
 
 
+// Imports
+import { store } from '../../store.js';
+
 // Categories API actions
 const getCategories = (( amount, orderby, order ) => (( dispatch ) => {
 
@@ -7,6 +10,7 @@ const getCategories = (( amount, orderby, order ) => (( dispatch ) => {
   dispatch({ type : "CATEGORIES_FETCHING" });
 
   // Extracts data
+  let city = store.getState().config.city;
   amount  = ( amount == null  ) ? 9999   : amount;
   orderby = ( orderby == null ) ? 'name' : orderby;
   order   = ( order == null   ) ? 'ASC'  : order;
@@ -24,7 +28,7 @@ const getCategories = (( amount, orderby, order ) => (( dispatch ) => {
 
   // Opens and sends request
   request.open( 'GET', app_data.rest_api+'/categories?per_page='+
-    amount+'&orderby='+orderby+'&order='+order );
+    amount+'&orderby='+orderby+'&order='+order+'&city='+city );
 
   request.send();
 

@@ -18,6 +18,7 @@ import SinglePlaceView from './views/singleplaceview.js';
 
 // Actions
 import { getDefaultData } from '../actions/api/defaultdata.js';
+import { getCities } from '../actions/api/cities.js';
 import { getAdvertisements } from '../actions/api/advertisements.js';
 
 // Styling
@@ -52,11 +53,16 @@ class AppInstance extends React.Component {
   }
 
   // Fetch default data
-  fetchDefaultData( props ) {
+  fetchData( props ) {
 
     // Dispatches an action that fetches default data and
     // an action that fetches all commercials.
     if ( props.store != null ) {
+
+      // Fetches cities
+      if ( !props.store.getState().cities.fetched ) {
+        props.store.dispatch(getCities());
+      }
 
       // Fetches default data
       if ( !props.store.getState().defaultdata.fetched ) {
@@ -64,7 +70,7 @@ class AppInstance extends React.Component {
       }
 
       // Fetches commercials
-      if ( true ) {
+      if ( !props.store.getState().advertisements.fetched ) {
         props.store.dispatch(getAdvertisements());
       }
 
@@ -87,8 +93,8 @@ class AppInstance extends React.Component {
   }
 
   // Component will mount & component will receive props
-  componentWillMount() { this.fetchDefaultData(this.props); }
-  componentWillReceiveProps(props) { this.fetchDefaultData(props); }
+  componentWillMount() { this.fetchData(this.props); }
+  componentWillReceiveProps(props) { this.fetchData(props); }
 
 }
 

@@ -3,7 +3,7 @@
 // Init state
 const initState = {
   fetching : false,
-  fecthed  : false,
+  fetched  : false,
   elements : [ ],
 };
 

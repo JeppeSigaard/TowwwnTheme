@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 // Reducers
 import ui from './reducers/ui.js';
 import config from './reducers/config.js';
+import cities from './reducers/data/cities.js';
 import defaultdata from './reducers/data/defaultdata.js';
 
 import events from './reducers/data/events.js';
@@ -23,7 +24,7 @@ const rootReducer = (( state, action ) => {
 
   // Returns reducers
   return combineReducers({
-    config, ui, defaultdata,
+    ui, config, cities, defaultdata,
     events, categories, places,
     advertisements
   })( state, action );
