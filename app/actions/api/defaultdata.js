@@ -9,7 +9,7 @@ const getDefaultData = (() => ( dispatch ) => {
   // Creates new request
   let request = new XMLHttpRequest();
   request.onload = (( response ) => {
-    
+
     // Dispatches fetched action
     dispatch({
       type : 'DEFAULT_DATA_FETCHED',

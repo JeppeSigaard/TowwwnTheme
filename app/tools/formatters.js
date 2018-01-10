@@ -70,6 +70,11 @@ const renderDynamicOpenTimes = (( val ) => {
   comparisonDate_to.setHours(to_hours);
   comparisonDate_to.setMinutes(to_hours);
 
+  // Edge case, to is next morning.
+  if ( comparisonDate_from.getTime() > comparisonDate_to.getTime() ) {
+    comparisonDate_to.setTime( comparisonDate_to.getTime() + ( 1000*60*60*24 ) );
+  }
+
   // Gets time
   let now  = date.getTime();
   let from = comparisonDate_from.getTime();
