@@ -15,13 +15,17 @@ const getPlaces = (( amount, cat, page ) => (( dispatch ) => {
   cat = cat == null ? '' : cat;
   page = page == null ? 1 : page;
 
+  // Error handling
+  if ( city == null ) { return; }
+
   // Creates new request
   let request = new XMLHttpRequest();
   request.onload = (( response ) => {
 
     // Dispatches places fetched action
     dispatch({ type : "PLACES_FETCHED", payload: {
-      elements : JSON.parse( response.target.response )
+      elements : JSON.parse( response.target.response ),
+      city
     }});
 
     // Returns promise.resolve

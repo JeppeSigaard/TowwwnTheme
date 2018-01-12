@@ -204,7 +204,9 @@ class EventView extends View {
     if ( state.ui.shown_single_event != null ) {
 
       // Gets event
-      let event = state.events.elements[String(state.ui.shown_single_event)];
+      let event = state.events.data[state.config.city].
+        elements[String(state.ui.shown_single_event)];
+
       if ( event !== this.state.event ) { this.resetScroll(false); }
 
       // Gets smallest event image above 400px

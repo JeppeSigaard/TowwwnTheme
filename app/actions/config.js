@@ -7,7 +7,7 @@ const setCity = (( id ) => ( dispatch ) => {
   if ( typeof id !== 'number' ) { return; }
 
   // Resets state and sets city
-  dispatch({ type : 'RESET_STATE' });
+  // dispatch({ type : 'RESET_STATE' });
   dispatch({ type : "CONFIG_SET_CITY", payload : { id } });
 
 });

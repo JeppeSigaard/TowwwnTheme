@@ -73,7 +73,8 @@ class CalendarView extends View {
     if ( 'object' !== typeof val ) {
 
       // Extracts data
-      let event = this.props.store.getState().events.elements[String( val )];
+      let state = this.props.store.getState()
+      let event = state.events.data[state.config.city].elements[String( val )];
       if ( event == null ) { return (<div>An error occured</div>); }
 
       // Returns jsx event
@@ -123,7 +124,8 @@ class CalendarView extends View {
     if ( this.props.store != null ) {
 
       // State events
-      const events = this.props.store.getState().events.elements;
+      const state = this.props.store.getState();
+      const events = state.events.data[state.config.city].elements;
 
       // Filters away old events
       let resp = ids.filter(( val ) => { val = String(val);
@@ -203,8 +205,11 @@ class CalendarView extends View {
 
 
     // Gets all loaded events ids
-    let ids = Object.keys( state.events.elements )
-      .map(( val ) => { return Number(val); });
+    let ids = [ ];
+    if ( state.events.data[state.config.city] != null ) {
+      ids = Object.keys( state.events.data[state.config.city].elements )
+        .map(( val ) => { return Number(val); });
+    }
 
     // Sets state (ids) to ALL event ids in the store
     this.setState({ ids, title });

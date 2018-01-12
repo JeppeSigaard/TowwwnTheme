@@ -3,11 +3,11 @@
 // Imports
 import { store } from '../../store.js';
 
-// Current future page, per 24.
-let curPage = 0;
+// Pages
+let pages = { };
 
 // Events API action creators
-const getFutureEvents = (( amount, page, city ) => (( dispatch ) => {
+const getFutureEvents = (( amount, page ) => (( dispatch ) => {
 
   // Events fetching action dispatch
   dispatch({ type : 'EVENTS_FETCHING' });
@@ -15,7 +15,14 @@ const getFutureEvents = (( amount, page, city ) => (( dispatch ) => {
   // Extracts data
   let city = store.getState().config.city;
   amount = (amount == null) ? 24 : amount;
-  page   = (page   == null) ? curPage : page;
+
+  // Error handling
+  if ( city == null ) { return; }
+
+  // Pages handling
+  if ( pages[city] == null ) { pages[city] = 0; }
+  page = page == null ? pages[city] : page;
+  pages[city] ++;
 
   // Creates a new request
   let request = new XMLHttpRequest();
@@ -24,12 +31,9 @@ const getFutureEvents = (( amount, page, city ) => (( dispatch ) => {
     // Elements
     let elements = JSON.parse( response.target.response );
 
-    // Updates page counter
-    if(elements!=null){curPage++;}
-
     // Events fetched action dispatch
     dispatch({ type : 'EVENTS_FETCHED', payload : {
-      elements,
+      elements, city,
       accuracy : elements.length/amount,
       future : true,
     }});

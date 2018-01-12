@@ -12,13 +12,16 @@ const getDefaultData = (() => ( dispatch ) => {
   // Extracts data
   let city = store.getState().config.city;
 
+  // Error handling
+  if ( city == null ) { return; }
+
   // Creates new request
   let request = new XMLHttpRequest();
   request.onload = (( response ) => {
 
     // Dispatches fetched action
     dispatch({
-      type : 'DEFAULT_DATA_FETCHED',
+      type : 'DEFAULT_DATA_FETCHED', city,
       payload : { data : JSON.parse( response.target.response ) }
     });
 

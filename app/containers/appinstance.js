@@ -52,26 +52,35 @@ class AppInstance extends React.Component {
     );
   }
 
-  // Fetch default data
-  fetchData( props ) {
-
-    // Dispatches an action that fetches default data and
-    // an action that fetches all commercials.
-    if ( props.store != null ) {
+  // Initial one time load
+  initialOneTimeLoad() {
 
       // Fetches cities
-      if ( !props.store.getState().cities.fetched ) {
-        props.store.dispatch(getCities());
+      if ( !this.props.store.getState().cities.fetched &&
+           !this.props.store.getState().cities.fetching ) {
+
+        this.props.store.dispatch(getCities());
+
       }
 
+  }
+
+  // Fetch default data
+  onStoreChange( ) {
+
+    // If city is set, load data.
+    if ( this.props.store.getState().config.city != null ) {
+
       // Fetches default data
-      if ( !props.store.getState().defaultdata.fetched ) {
-        props.store.dispatch(getDefaultData());
+      if ( !this.props.store.getState().defaultdata.fetched &&
+           !this.props.store.getState().defaultdata.fetching  ) {
+        this.props.store.dispatch(getDefaultData());
       }
 
       // Fetches commercials
-      if ( !props.store.getState().advertisements.fetched ) {
-        props.store.dispatch(getAdvertisements());
+      if ( !this.props.store.getState().advertisements.fetched &&
+           !this.props.store.getState().advertisements.fetching  ) {
+        this.props.store.dispatch(getAdvertisements());
       }
 
     }
@@ -80,6 +89,11 @@ class AppInstance extends React.Component {
 
   // Component did mount
   componentDidMount() {
+
+    // Initial one time load
+    if ( this.props.store != null ) {
+      this.initialOneTimeLoad( );
+    }
 
     // Removes load state
     let body = document.getElementsByTagName('body');
@@ -93,8 +107,11 @@ class AppInstance extends React.Component {
   }
 
   // Component will mount & component will receive props
-  componentWillMount() { this.fetchData(this.props); }
-  componentWillReceiveProps(props) { this.fetchData(props); }
+  componentWillMount() {
+    if ( this.props.store != null ) {
+      this.props.store.subscribe(this.onStoreChange.bind(this));
+    }
+  }
 
 }
 

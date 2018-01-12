@@ -2,7 +2,7 @@
 
 // Init state
 const initState = {
-  city : 2,
+  city : 4,
 };
 
 // Config reducer
@@ -12,7 +12,7 @@ const configReducer = (( state=initState, action ) => {
     /* ---- Set city --- */
     case "CONFIG_SET_CITY": {
       return Object.assign({}, state, {
-        id : action.payload.id,
+        city : action.payload.id,
       });
     }
 

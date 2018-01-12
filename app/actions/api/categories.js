@@ -15,6 +15,9 @@ const getCategories = (( amount, orderby, order ) => (( dispatch ) => {
   orderby = ( orderby == null ) ? 'name' : orderby;
   order   = ( order == null   ) ? 'ASC'  : order;
 
+  // Error handling
+  if ( city == null ) { return; }
+
   // Creates new request
   let request = new XMLHttpRequest();
   request.onload = (( response ) => {

@@ -18,10 +18,6 @@ import advertisements from './reducers/data/advertisements.js';
 // Creates root reducer
 const rootReducer = (( state, action ) => {
 
-  // Reset state action
-  if ( action.type === "RESET_STATE" ) {
-    state = undefined; }
-
   // Returns reducers
   return combineReducers({
     ui, config, cities, defaultdata,

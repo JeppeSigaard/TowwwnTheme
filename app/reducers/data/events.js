@@ -4,10 +4,11 @@
 const initState = {
   fetching : false,
   fetched  : false,
-  elements : { },
+  data : { }, // data: { svendborg(2): { elements: { 2: {...}, 4: {...} } } }
 
   future_count : 0,
   all_future_fetched : false,
+
 };
 
 // Events reducer
@@ -24,16 +25,21 @@ const EventsReducer = (( state=initState, action ) => {
     /* ---- Events fetched ---- */
     case "EVENTS_FETCHED": {
 
+      // Extracts data
+      let ap_city = action.payload.city;
+      let ap_elements = action.payload.elements;
+
       // Error handling
-      if ( action.payload.elements == null ||
-           action.payload.elements.length <= 0 ) { return state; }
+      if ( ap_elements == null || ap_elements.length <= 0 || ap_city == null ) {
+        return state; }
+
 
       // Formats data
       let formatteddata = { };
-      for ( let n = 0; n < action.payload.elements.length; n++ ) {
+      for ( let n = 0; n < ap_elements.length; n++ ) {
 
-        formatteddata[action.payload.elements[n].id] = action.payload.elements[n];
-        let elem = formatteddata[action.payload.elements[n].id];
+        formatteddata[ap_elements[n].id] = ap_elements[n];
+        let elem = formatteddata[ap_elements[n].id];
 
         // Removes not functional part of time strings,
         // for start time
@@ -48,14 +54,20 @@ const EventsReducer = (( state=initState, action ) => {
 
       }
 
-      // Combines the formatted data with previous state
-      let resp = Object.assign( state.elements, formatteddata );
 
-      // Gets future count
+      // Combines the formatted data with previous state,
+      // if previous state is found
+      let resp = { };
+      if ( state.data[city] != null ) {
+        resp = Object.assign( {}, state.data[city].elements, formatteddata );
+      } else { resp = formatteddata; }
+
+
+      // Gets future count for new 'resp' field
       let future_count = ( Object.keys(resp).filter(( id ) => {
 
         // Extracts data
-        let event = state.elements[id],
+        let event = resp[id],
           event_time = event.end_time!=null?event.end_time:event.start_time,
           event_date = new Date(event_time);
 
@@ -64,11 +76,30 @@ const EventsReducer = (( state=initState, action ) => {
 
       })).length;
 
+
+      // Formats data based on city
+      // New city if none is found
+      let city = { };
+      if ( state.data[ap_city] == null ) {
+        city = { elements : resp };
+      }
+
+      // Creates city data if found
+      else {
+        let elements = Object.assign({}, state.data[ap_city].elements, resp);
+        city = Object.assign({}, state.data[ap_city], { elements });
+      }
+
+      // Sets data
+      let new_data = { }; new_data[ap_city] = city;
+      let data = Object.assign({}, state.data, new_data);
+
+
       // New State
       let new_state = (Object.assign({}, state, {
         fetching : false,
         fetched  : true,
-        elements : resp,
+        data,
         future_count,
       }));
 

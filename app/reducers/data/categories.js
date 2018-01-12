@@ -38,7 +38,7 @@ const CategoriesReducer = (( state=initState, action ) => {
             subcat_counter ++;
           }
         }
-        
+
         // Inserts sub category count data
         action.payload.elements[n].subcategory_count = subcat_counter;
 
