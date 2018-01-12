@@ -24,7 +24,6 @@ class EventView extends View {
 
       event  : null,
       imgUrl : null,
-      hours : null,
 
       ctaelems : [ ],
       id : "event-view",
@@ -220,27 +219,11 @@ class EventView extends View {
           [Object.keys(event.images).length-1]];
       }
 
-      // If parent not loaded,
-      // well, fetch it!:))
-      let parent = state.places.elements[event['parentid']];
-      if ( parent == null && !state.places.fetching ) {
-        this.props.store.dispatch(getSinglePlace(event['parentid']));
-      }
-
-      // Else? set hours.
-      let hours = null;
-      if ( parent != null ) {
-        let tmphours = JSON.parse( parent['hours'] );
-        if ( tmphours != null && Object.keys(tmphours).length>=1 ) {
-          hours = tmphours;
-        }
-      }
-
       // Sets new state
       // Callback included
       // to get siblings
       this.setState({
-        event, imgUrl, hours,
+        event, imgUrl,
         title : event['title']
       }, () => {
 

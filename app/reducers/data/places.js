@@ -4,7 +4,7 @@
 const initState = {
   fetching : false,
   fetched  : false,
-  elements : { }
+  data : { }, // data: { svendborg(2): { 2:{...}, 4:{...} } }
 };
 
 // Places Reducer
@@ -21,24 +21,45 @@ const PlacesReducer = (( state=initState, action ) => {
     /* ---- Places fetched ---- */
     case "PLACES_FETCHED": {
 
+      // Extracts data
+      let ap_city = action.payload.city;
+      let ap_elements = action.payload.elements;
+
       // Error handling
-      if ( action.payload.elements == null ||
-           action.payload.elements.length <= 0 ) { return state; }
+      if ( ap_elements == null || ap_elements <= 0 ) {
+        return state; }
+
 
       // Formats data
       let formatteddata = { };
-      for ( let n = 0; n < action.payload.elements.length; n++ ) {
-        formatteddata[action.payload.elements[n].id] = action.payload.elements[n];
+      for ( let n = 0; n < ap_elements.length; n++ ) {
+        formatteddata[ap_elements[n].id] = ap_elements[n];
       }
 
-      // Combines the formatted data with previous state
-      let resp = Object.assign( state.elements, formatteddata );
+
+      // Sets city part of data
+      let city = { };
+      let new_data = { };
+
+      if ( state.data[ap_city] == null ) {
+        city = { elements : formatteddata };
+        new_data[ap_city] = city;
+      }
+
+      else {
+        city = Object.assign({}, state.data[ap_city].elements, formatteddata);
+        new_data[ap_city] = Object.assign(new_data[ap_city], city);
+      }
+
+      // Sets data part of.. data?
+      let data = Object.assign({}, state.data, new_data);
+
 
       // Returns
       return Object.assign({}, state, {
         fetching : false,
         fetched  : true,
-        elements : resp,
+        data,
       });
 
     }

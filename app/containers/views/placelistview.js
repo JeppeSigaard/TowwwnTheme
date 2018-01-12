@@ -49,17 +49,25 @@ class PlaceListView extends View {
   renderElement( val ) {
     if ( this.props.store != null ) {
 
-      // Extracts data
+      // Gets state
       let state = this.props.store.getState();
-      let place = state.places.elements[String(val)];
 
-      // Returns
-      return <Place
-        element={place}
-        store={this.props.store}
-        key={'place#'+place.id} />;
+      // Checks if data is loaded
+      if ( state.places.data[state.config.city] != null ) {
+
+        // Extracts data
+        let place = state.places.data[state.config.city].elements[String(val)];
+
+        // Returns
+        return <Place
+          element={place}
+          store={this.props.store}
+          key={'place#'+place.id} />;
+
+      } else { return <div>An error occured</div>; }
 
     }
+
   }
 
   // On store change
@@ -71,31 +79,35 @@ class PlaceListView extends View {
     let response = { };
 
     // Generates response
-    response['ids'] = Object.keys(state.places.elements).filter(( val ) => {
+    if ( state.places.data[state.config.city] != null ) {
+      console.log( state.places.data[state.config.city] );
+      response['ids'] = Object.keys(state.places.data[state.config.city].elements)
+        .filter(( val ) => {
 
-      // Checks if place has category, returns.
-      let cats = state.places.elements[val].categories;
-      if ( cats == null ) { return false; }
+          // Checks if place has category, returns.
+          let cats = state.places.data[state.config.city].elements[val].categories;
+          if ( cats == null ) { return false; }
 
-      for ( let n = 0; n < cats.length; n++ ) {
-        if ( String(cats[n]['category_id']) == String(shown_cat) ) {
-          return true;
-        }
+          for ( let n = 0; n < cats.length; n++ ) {
+            if ( String(cats[n]['category_id']) == String(shown_cat) ) {
+              return true;
+            }
+          }
+
+          // If not, return false.
+          return false;
+
+        });
+
+        // Category name found, view title set.
+        let cat = state.categories.elements[shown_cat];
+        if ( cat != null ) { response['title'] = cat.category_name; }
+
+        // Sets state
+        this.setState(response);
+
       }
-
-      // If not, return false.
-      return false;
-
-    });
-
-    // Category name found, view title set.
-    let cat = state.categories.elements[shown_cat];
-    if ( cat != null ) { response['title'] = cat.category_name; }
-
-    // Sets state
-    this.setState(response);
-
-  }
+    }
 
   // Component did mount
   componentDidMount() {

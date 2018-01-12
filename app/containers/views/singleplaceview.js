@@ -179,25 +179,32 @@ class SinglePlaceView extends View {
   // On store change
   onStoreChange() {
 
-    // Sets title
-    // Extracts data
+    // Gets state
     let state = this.props.store.getState();
-    let shown_place = state.ui.shown_single_place;
-    let element = state.places.elements[String(shown_place)];
-
-    // Resets scroll
-    if ( element !== this.state.element ) { this.resetScroll( false ); }
 
     // Error handling
-    if ( element == null ) { return; }
+    if ( state.places.data[state.config.city] != null ) {
 
-    // Response
-    let response = { };
-    response['title'] = element.name;
-    response['element'] = element;
+      // Sets title
+      // Extracts data
+      let shown_place = state.ui.shown_single_place;
+      let element = state.places.data[state.config.city].elements[String(shown_place)];
 
-    // Sets state
-    this.setState(response);
+      // Resets scroll
+      if ( element !== this.state.element ) { this.resetScroll( false ); }
+
+      // Error handling
+      if ( element == null ) { return; }
+
+      // Response
+      let response = { };
+      response['title'] = element.name;
+      response['element'] = element;
+
+      // Sets state
+      this.setState(response);
+
+    }
 
   }
 
