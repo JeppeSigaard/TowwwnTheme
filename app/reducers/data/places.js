@@ -11,6 +11,13 @@ const initState = {
 const PlacesReducer = (( state=initState, action ) => {
   switch ( action.type ) {
 
+    /* ---- Set city ---- */
+    case "CONFIG_SET_CITY": {
+      return Object.assign({}, state, {
+        fetched : false,
+      });
+    }
+
     /* ---- Places fetching ---- */
     case "PLACES_FETCHING": {
       return Object.assign({}, state, {
@@ -41,14 +48,16 @@ const PlacesReducer = (( state=initState, action ) => {
       let city = { };
       let new_data = { };
 
+      // If city doesn't already exists
       if ( state.data[ap_city] == null ) {
         city = { elements : formatteddata };
         new_data[ap_city] = city;
       }
 
+      // If city already exists
       else {
         city = Object.assign({}, state.data[ap_city].elements, formatteddata);
-        new_data[ap_city] = Object.assign(new_data[ap_city], city);
+        new_data[ap_city] = Object.assign({}, state.data[ap_city], {elements:city});
       }
 
       // Sets data part of.. data?

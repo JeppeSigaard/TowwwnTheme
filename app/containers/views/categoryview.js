@@ -55,6 +55,12 @@ class CategoryView extends View {
     let state = this.props.store.getState();
     let response = { };
 
+    // Checks if city has changes
+    if ( state.config.city != this.cCity ) {
+      this.cCity = state.config.city;
+      this.props.store.dispatch(getCategories());
+    }
+
     // Extracts data
     // Places count
     if ( state.defaultdata.data.place_count != null ) {

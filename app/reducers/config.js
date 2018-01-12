@@ -2,7 +2,7 @@
 
 // Init state
 const initState = {
-  city : 2,
+  city : null,
 };
 
 // Config reducer

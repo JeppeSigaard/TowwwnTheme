@@ -80,7 +80,6 @@ class PlaceListView extends View {
 
     // Generates response
     if ( state.places.data[state.config.city] != null ) {
-      console.log( state.places.data[state.config.city] );
       response['ids'] = Object.keys(state.places.data[state.config.city].elements)
         .filter(( val ) => {
 

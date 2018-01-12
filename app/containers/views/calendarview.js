@@ -69,11 +69,13 @@ class CalendarView extends View {
   // Render Element
   renderElement( val ) {
 
+    // State
+    let state = this.props.store.getState();
+
     // Event section
     if ( 'object' !== typeof val ) {
 
       // Extracts data
-      let state = this.props.store.getState()
       let event = state.events.data[state.config.city].elements[String( val )];
       if ( event == null ) { return (<div>An error occured</div>); }
 
@@ -117,14 +119,16 @@ class CalendarView extends View {
   // Important: This needs to be a pure function, and use immutable data
   preprocess( ids ) {
 
+    // State
+    let state = this.props.store.getState();
+
     // Remove advertisements
     this.removeAdvertisements(ids);
 
     // Is the store defined?
-    if ( this.props.store != null ) {
+    if ( this.props.store != null && state.events.data[state.config.city] != null ) {
 
       // State events
-      const state = this.props.store.getState();
       const events = state.events.data[state.config.city].elements;
 
       // Filters away old events
@@ -196,23 +200,34 @@ class CalendarView extends View {
     let state = this.props.store.getState();
     let title = 'Begivenheder';
 
-    // If default data has been fetched
-    // Set title using the number of future events
-    if ( state.defaultdata.fetched ) {
-      let event_count = state.defaultdata.data.future_event_count;
-      title = String(event_count)+' begivenheder i Svendborg';
+    // If city changed, do the initial load
+    if ( state.config.city != this.cCity ) {
+      this.cCity = state.config.city;
+      this.initLoad();
     }
 
+    // Else do std stuff
+    else {
 
-    // Gets all loaded events ids
-    let ids = [ ];
-    if ( state.events.data[state.config.city] != null ) {
-      ids = Object.keys( state.events.data[state.config.city].elements )
-        .map(( val ) => { return Number(val); });
+      // If default data has been fetched
+      // Set title using the number of future events
+      if ( state.defaultdata.fetched ) {
+        let event_count = state.defaultdata.data.future_event_count;
+        title = String(event_count)+' begivenheder i Svendborg';
+      }
+
+
+      // Gets all loaded events ids
+      let ids = [ ];
+      if ( state.events.data[state.config.city] != null ) {
+        ids = Object.keys( state.events.data[state.config.city].elements )
+          .map(( val ) => { return Number(val); });
+      }
+
+      // Sets state (ids) to ALL event ids in the store
+      this.setState({ ids, title });
+
     }
-
-    // Sets state (ids) to ALL event ids in the store
-    this.setState({ ids, title });
 
     // Fixes some problems that occur with:
     // multiple events with same id, etc.
@@ -250,9 +265,6 @@ class CalendarView extends View {
         this.onStoreChange.bind( this )
       );
     }
-
-    // Initial load
-    this.initLoad();
 
   }
 

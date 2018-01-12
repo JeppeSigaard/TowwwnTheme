@@ -167,14 +167,21 @@ class SingleFooter extends React.Component {
       // Extracts data
       let state = this.props.store.getState();
 
+      // Gets parent city (For places)
+      let city = state.places.data[state.config.city], parent;
+
       // If parent not loaded,
       // well, fetch it!:))
-      let city = state.places.data[state.config.city], parent;
       if ( city != null ) {
         parent = city.elements[this.props.element['parentid']];
         if ( parent == null && !state.places.fetching ) {
           this.props.store.dispatch(getSinglePlace(this.props.element['parentid']));
         }
+      }
+
+      // If the city (In places) isn't event found, load parent.
+      else if ( !state.places.fetching ) {
+        this.props.store.dispatch(getSinglePlace(this.props.element['parentid']));
       }
 
       // Else? set hours.

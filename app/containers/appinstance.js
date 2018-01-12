@@ -16,6 +16,9 @@ import CategoryView from './views/categoryview.js';
 import PlaceListView from './views/placelistview.js';
 import SinglePlaceView from './views/singleplaceview.js';
 
+import ModalBox from '../presentationals/modalbox.js';
+import Cities from './parts/cities.js';
+
 // Actions
 import { getDefaultData } from '../actions/api/defaultdata.js';
 import { getCities } from '../actions/api/cities.js';
@@ -48,6 +51,10 @@ class AppInstance extends React.Component {
           <SinglePlaceView store={ this.props.store } />
 
         </div>
+
+        <ModalBox title="Hvor befinder du dig?" closeable={false} borderless={false} >
+          <Cities store={ this.props.store } />
+        </ModalBox>
       </div>
     );
   }

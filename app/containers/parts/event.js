@@ -79,44 +79,49 @@ class Event extends React.Component {
   extractData( props ) {
     if ( props == null ) { props = this.props; }
 
-    // Optimization:
-    // Gets smallest image above 200px width
-    let orgUrl = props.element.images, imgUrl = null;
-    for ( let key of Object.keys( orgUrl ) ) {
-      if ( Number(key) !== NaN && Number(key) >= 200 ) {
-        imgUrl = orgUrl[key];
+    // If elements is set
+    if ( props.element != null ) {
+
+      // Optimization:
+      // Gets smallest image above 200px width
+      let orgUrl = props.element.images, imgUrl = null;
+      for ( let key of Object.keys( orgUrl ) ) {
+        if ( Number(key) !== NaN && Number(key) >= 200 ) {
+          imgUrl = orgUrl[key];
+        }
       }
+
+      // No images above 200px?
+      // Take the smallest
+      if ( imgUrl == null && Object.keys(orgUrl).length > 0 ) {
+        imgUrl = orgUrl[Object.keys(orgUrl)[0]];
+      }
+
+      // Still no?
+      // Well, then just dont take any
+      if ( imgUrl == null ) { imgUrl = ''; }
+
+      // Sets the time string state day...
+      // Omg, hade this piece, its messy as fuck..
+      // Just overlook it.. Seriously.. :))
+      let end = props.element.end_time != null ?
+            new Date(props.element.end_time) : null,
+          sta = new Date(props.element.start_time),
+          now = new Date(),
+          timStr = '';
+
+      // On going event
+      if ( end != null && now.getTime() < end.getTime() && now.getTime > end.getTime() ) {
+
+        timStr += 'Nu';
+
+      // Future event
+      } else { timStr = formatDate(sta, false); }
+
+      // Sets state
+      this.setState({ imgUrl, timStr, bookmarked : this.bookmarked() });
+
     }
-
-    // No images above 200px?
-    // Take the smallest
-    if ( imgUrl == null && Object.keys(orgUrl).length > 0 ) {
-      imgUrl = orgUrl[Object.keys(orgUrl)[0]];
-    }
-
-    // Still no?
-    // Well, then just dont take any
-    if ( imgUrl == null ) { imgUrl = ''; }
-
-    // Sets the time string state day...
-    // Omg, hade this piece, its messy as fuck..
-    // Just overlook it.. Seriously.. :))
-    let end = props.element.end_time != null ?
-          new Date(props.element.end_time) : null,
-        sta = new Date(props.element.start_time),
-        now = new Date(),
-        timStr = '';
-
-    // On going event
-    if ( end != null && now.getTime() < end.getTime() && now.getTime > end.getTime() ) {
-
-      timStr += 'Nu';
-
-    // Future event
-    } else { timStr = formatDate(sta, false); }
-
-    // Sets state
-    this.setState({ imgUrl, timStr, bookmarked : this.bookmarked() });
 
   }
 
@@ -140,14 +145,9 @@ class Event extends React.Component {
     } else { return false; }
   }
 
-  // Life cycle events
-  componentWillReceiveProps(nextProps) { this.extractData(nextProps); }
-  componentWillMount() {
+  // Component will mount
+  componentDidMount() {
     this.extractData(this.props);
-
-    if ( this.props.store != null ) {
-      this.props.store.subscribe(this.extractData.bind(this, this.props));
-    }
   }
 
 }

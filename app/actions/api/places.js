@@ -47,6 +47,9 @@ const getSinglePlace = (( id ) => ( dispatch ) => {
   // Error handling
   if(id==null){return false;}
 
+  // Extracts data
+  let city = store.getState().config.city;
+
   // Dispatches places fetching action
   dispatch({ type : "PLACES_FETCHING" });
 
@@ -56,7 +59,8 @@ const getSinglePlace = (( id ) => ( dispatch ) => {
 
     // Dispatches places fetched
     dispatch({ type : "PLACES_FETCHED", payload : {
-      elements : JSON.parse( response.target.response )
+      elements : JSON.parse( response.target.response ),
+      city
     }});
 
   });
