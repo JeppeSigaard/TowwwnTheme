@@ -35,6 +35,7 @@ class Place extends React.Component {
           <div className="title">{ this.props.element.name }</div>
 
           { this.props.element.hours != null &&
+
             <div className="open-hours">
               { renderDynamicOpenTimes(this.props.element.hours) }
             </div>
@@ -47,12 +48,15 @@ class Place extends React.Component {
         <div className="small-cta-icons">
 
           { this.props.element.hours != null &&
+            Object.keys(JSON.parse(this.props.element.hours)).length>0 &&
+
             <div className="phone small-cta-icon">
               <svg viewBox="0 0 32 32">
                 <use xlinkHref="#icon-watch">
                 </use>
               </svg>
             </div>
+
           }
 
           { this.props.element.phone != null &&

@@ -86,7 +86,7 @@ class SinglePlaceView extends View {
                     this.state.element['adress']}>
 
                     <svg viewBox="0 0 32 32">
-                      <use xlinkHref="#icon-address">
+                      <use xlinkHref="#icon-location">
                       </use>
                     </svg>
 
@@ -125,15 +125,29 @@ class SinglePlaceView extends View {
 
             {/* Body */}
             { this.state.element['description'] != null &&
+
               <div className="singleplace-body">
                 { nl2p(this.state.element['description']) }
               </div>
+
             }
 
             { this.state.element['description'] == null &&
+              this.state.element['about'] != null &&
+
+              <div className="singleplace-body">
+                { nl2p(this.state.element['about']) }
+              </div>
+
+            }
+
+            { this.state.element['description'] == null &&
+              this.state.element['about'] == null &&
+
               <div className="singleplace-body">
                 <p>Dette sted har ingen beskrivelse.</p>
               </div>
+
             }
 
             {/* Footer */}
