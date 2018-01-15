@@ -2,12 +2,14 @@
 
 // Preloaded state
 const initState = {
+
   fetching : false,
   fetched  : false,
   elements : { },
 
   future_count : 0,
   all_future_fetched : false,
+
 };
 
 // Events reducer
