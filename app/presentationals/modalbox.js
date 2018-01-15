@@ -16,7 +16,7 @@ class ModalBox extends React.Component {
         </div>
 
         {/* Inner */}
-        <div className="modal-box-inner">
+        <div className={"modal-box-inner "+(this.props.headless?'headless':'')}>
 
           {/* Header */}
           { this.props.headless !== true &&
@@ -27,7 +27,7 @@ class ModalBox extends React.Component {
               </div>
 
               { this.props.closeable !== false &&
-                <div className="close" onClick={ this.props.close } >
+                <div className="close" onClick={ this.props.onClose } >
                 </div>
               }
 

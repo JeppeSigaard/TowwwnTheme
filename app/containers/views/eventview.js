@@ -197,7 +197,7 @@ class EventView extends View {
   onStoreChange() {
 
     // Gets state
-    const state = (this.props.store.getState());
+    let state = (this.props.store.getState());
 
     // Sets event
     if ( state.ui.shown_single_event != null ) {
@@ -206,31 +206,34 @@ class EventView extends View {
       let event = state.events.data[state.config.city].
         elements[String(state.ui.shown_single_event)];
 
-      if ( event !== this.state.event ) { this.resetScroll(false); }
+      if ( event != null ) {
+        if ( event !== this.state.event ) { this.resetScroll(false); }
 
-      // Gets smallest event image above 400px
-      let imgUrl = event.images[(Object.keys(event.images).filter(( size ) => {
-        return parseInt(size) > 600;
-      }))[0]];
+        // Gets smallest event image above 400px
+        let imgUrl = event.images[(Object.keys(event.images).filter(( size ) => {
+          return parseInt(size) > 600;
+        }))[0]];
 
-      // If no image above 400px found, take largest there is
-      if ( imgUrl == null ) {
-        imgUrl = event.images[Object.keys(event.images)
-          [Object.keys(event.images).length-1]];
+        // If no image above 400px found, take largest there is
+        if ( imgUrl == null ) {
+          imgUrl = event.images[Object.keys(event.images)
+            [Object.keys(event.images).length-1]];
+        }
+
+        // Sets new state
+        // Callback included
+        // to get siblings
+        this.setState({
+          event, imgUrl,
+          title : event['title']
+        }, () => {
+
+          // Updates call to action elements
+          this.updateCallToActionElements();
+
+        });
+
       }
-
-      // Sets new state
-      // Callback included
-      // to get siblings
-      this.setState({
-        event, imgUrl,
-        title : event['title']
-      }, () => {
-
-        // Updates call to action elements
-        this.updateCallToActionElements();
-
-      });
 
     }
 

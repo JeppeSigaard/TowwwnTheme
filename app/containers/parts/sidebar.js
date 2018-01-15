@@ -2,9 +2,11 @@
 
 // Imports
 import React from 'react';
+import Cities from './cities.js';
 
 // Actions
-import { setViewFocus } from '../../actions/ui.js';
+import { setViewFocus, enableModalBox, disableModalBox }
+  from '../../actions/ui.js';
 
 
 // Side bar component
@@ -17,6 +19,9 @@ class SideBar extends React.Component {
 
       open : false,
       active_type : 'events',
+
+      cur_city : null,
+      cities : null,
 
       future_event_count : 0,
       place_count : 0,
@@ -41,7 +46,15 @@ class SideBar extends React.Component {
           </div>
 
           <div className="text">
-            Svendborg
+            { this.state.cur_city != null &&
+              this.state.cur_city.name }
+          </div>
+
+          <div className="change-city"
+            onClick={this.enableCitiesModalBox.bind(this)}>
+
+            Skift by
+
           </div>
 
         </header>
@@ -98,9 +111,9 @@ class SideBar extends React.Component {
 
     // If type is null or we are in mobile view
     // just open the sidebar
-    if ( (type == null || ( this.props.store != null &&
-      this.props.store.getState().ui.viewrelated.mobile )) &&
-      !this.state.open ) {
+    if ( this.props.store != null &&
+         this.props.store.getState().ui.viewrelated.mobile &&
+         !this.state.open ) {
 
       this.setState({ open : true });
       return;
@@ -117,9 +130,6 @@ class SideBar extends React.Component {
         'right', false
       ));
 
-      // Sets state
-      this.setState({ active_type : 'events' });
-
     }
 
     // Or places?
@@ -131,11 +141,21 @@ class SideBar extends React.Component {
         'right', false
       ));
 
-      // Sets state
-      this.setState({ active_type : 'places' });
-
     }
 
+  }
+
+  // Enable cities modal box
+  enableCitiesModalBox() {
+    this.props.store.dispatch(enableModalBox(
+      <Cities onClick={this.disableCitiesModalBox.bind(this)} store={this.props.store} />,
+      'Skift By', false, false, true, this.disableCitiesModalBox.bind(this)
+    ));
+  }
+
+  // Disable cities modal box
+  disableCitiesModalBox() {
+    this.props.store.dispatch(disableModalBox());
   }
 
   // On store change
@@ -146,15 +166,57 @@ class SideBar extends React.Component {
     let response = { };
 
     // Extracts data
+    // Gets citites and does stuff
+    let cities = state.cities.data.elements;
+    if ( cities != null ) {
+
+      // Sets response['cities']
+      response['cities'] = Object.keys( cities ).map(( val ) => {
+        return cities[val];
+      });
+
+      // Gets current city n' sets response
+      let cur_city = cities[state.config.city];
+      if ( cur_city != null ) {
+        response['cur_city'] = cur_city;
+      }
+
+    }
+
+
     // Future event count
     if ( state.defaultdata.data.future_event_count != null ) {
       response.future_event_count = state.defaultdata.data.future_event_count;
     }
 
-    // Place cpunt
+    // Place count
     if ( state.defaultdata.data.place_count != null ) {
       response.place_count = state.defaultdata.data.place_count;
     }
+
+
+    // Changes section color
+    // Extracts data
+    let active_type = 'events';
+    let views = [
+      state.ui.viewrelated.leftview,
+      state.ui.viewrelated.rightview
+    ];
+
+    let place_related_views = [
+      'welcome-view', 'category-view',
+      'place-list-view', 'single-place-view'
+    ];
+
+    // Sets open type
+    if ( place_related_views.includes(views[0]) &&
+         place_related_views.includes(views[1])) {
+      active_type = 'places';
+    }
+
+    // Sets response
+    response['active_type'] = active_type;
+
 
     // Sets state
     this.setState(response);
@@ -164,7 +226,15 @@ class SideBar extends React.Component {
   // Component will mount
   componentDidMount() {
     if ( this.props.store != null ) {
-      this.props.store.subscribe(this.onStoreChange.bind(this));
+      this.unsubscribe = this.props.store.subscribe(
+        this.onStoreChange.bind(this));
+    }
+  }
+
+  // Component will unmount
+  componentWillUnmount() {
+    if ( this.unsubscribe != null ) {
+      this.unsubscribe();
     }
   }
 

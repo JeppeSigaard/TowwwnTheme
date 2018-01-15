@@ -5,21 +5,19 @@ import React from 'react';
 import ViewHandler from '../tools/viewhandler.js';
 
 import SideBar from './parts/sidebar.js';
+import ModalBox from '../presentationals/modalbox.js';
+import Cities from './parts/cities.js';
 
 // Views
 import WelcomeView from './views/welcomeview.js';
-
 import CalendarView from './views/calendarview.js';
 import EventView from './views/eventview.js';
-
 import CategoryView from './views/categoryview.js';
 import PlaceListView from './views/placelistview.js';
 import SinglePlaceView from './views/singleplaceview.js';
 
-import ModalBox from '../presentationals/modalbox.js';
-import Cities from './parts/cities.js';
-
 // Actions
+import { enableModalBox, disableModalBox } from '../actions/ui.js';
 import { getDefaultData } from '../actions/api/defaultdata.js';
 import { getCities } from '../actions/api/cities.js';
 import { getAdvertisements } from '../actions/api/advertisements.js';
@@ -29,6 +27,14 @@ import Styling from '../../style/base.scss';
 
 // App Instance component
 class AppInstance extends React.Component {
+
+  // Constructor
+  constructor() {
+    super();
+    this.state = {
+      modalbox : null,
+    };
+  }
 
   // Render
   render() {
@@ -52,11 +58,23 @@ class AppInstance extends React.Component {
 
         </div>
 
-        <ModalBox title="Hvor befinder du dig?" closeable={false} borderless={false} >
-          <Cities store={ this.props.store } />
-        </ModalBox>
+        { this.state.modalbox != null && this.state.modalbox }
+
       </div>
     );
+  }
+
+  // Enable cities modal box
+  enableCitiesModalBox() {
+    this.props.store.dispatch(enableModalBox(
+      <Cities onClick={this.disableCitiesModalBox.bind(this)} store={this.props.store} />,
+      '', true, false, false, null
+    ));
+  }
+
+  // Disable citites modal box
+  disableCitiesModalBox() {
+    this.props.store.dispatch(disableModalBox());
   }
 
   // Initial one time load
@@ -75,20 +93,47 @@ class AppInstance extends React.Component {
   // Fetch default data
   onStoreChange( ) {
 
+    // Gets state
+    let state = this.props.store.getState();
+
     // If city is set, load data.
-    if ( this.props.store.getState().config.city != null ) {
+    if ( state.config.city != null ) {
 
       // Fetches default data
-      if ( !this.props.store.getState().defaultdata.fetched &&
-           !this.props.store.getState().defaultdata.fetching  ) {
+      if ( !state.defaultdata.fetched &&
+           !state.defaultdata.fetching  ) {
         this.props.store.dispatch(getDefaultData());
       }
 
       // Fetches commercials
-      if ( !this.props.store.getState().advertisements.fetched &&
-           !this.props.store.getState().advertisements.fetching  ) {
+      if ( !state.advertisements.fetched &&
+           !state.advertisements.fetching  ) {
         this.props.store.dispatch(getAdvertisements());
       }
+
+    }
+
+    // Sets modal box
+    if ( state.ui.modalbox.active ) {
+
+      this.setState({ modalbox :
+
+        <ModalBox title={state.ui.modalbox.title}
+          headless={state.ui.modalbox.headless}
+          borderless={state.ui.modalbox.borderless}
+          closeable={state.ui.modalbox.closeable}
+          onClose={state.ui.modalbox.onClose} >
+
+          { state.ui.modalbox.content != null &&
+            state.ui.modalbox.content }
+
+        </ModalBox>
+
+      });
+
+    } else {
+
+      this.setState({ modalbox : null });
 
     }
 
@@ -110,6 +155,9 @@ class AppInstance extends React.Component {
 
     // Sets fields
     this.viewHandler = new ViewHandler( this.props.store );
+
+    // Enables modal box
+    this.enableCitiesModalBox();
 
   }
 

@@ -2,6 +2,10 @@
 
 // Imports
 import React from 'react';
+import Loader from '../../presentationals/parts/loader.js';
+
+// Actions
+import { setCity } from '../../actions/config.js';
 
 // Cities component
 class Cities extends React.Component {
@@ -20,14 +24,14 @@ class Cities extends React.Component {
       <div className="cities">
 
         <div className="text">
-          <div className="title">
-            <div className="logo">
-              <svg viewBox="0 0 32 32">
-                <use xlinkHref="#towwwn-logo-17">
-                </use>
-              </svg>
-            </div>
+          <div className="logo">
+            <svg viewBox="0 0 32 32">
+              <use xlinkHref="#towwwn-logo-17">
+              </use>
+            </svg>
+          </div>
 
+          <div className="title">
             Velkommen til Towwn
           </div>
 
@@ -37,8 +41,18 @@ class Cities extends React.Component {
         </div>
 
         <div className="cities">
+
           { this.state.ids != null &&
             this.state.ids.map(this.renderElement.bind(this)) }
+
+        </div>
+
+
+        { this.state.ids == null &&
+          <div className="loading"><Loader /></div> }
+
+        <div className="info">
+          Dette kan altid ændres i sidemenuen.
         </div>
 
       </div>
@@ -74,6 +88,16 @@ class Cities extends React.Component {
   // On Click
   onClick( id ) {
 
+    // Activates on click prop
+    if ( this.props.onClick != null ) {
+      this.props.onClick();
+    }
+
+    // Sets city
+    if ( this.props.store != null ) {
+      this.props.store.dispatch(setCity(parseInt(id)));
+    }
+
   }
 
   // On store change
@@ -85,8 +109,15 @@ class Cities extends React.Component {
     // If cities are loaded
     if ( state.cities.data.elements != null ) {
 
-      // Extracts data
-      let ids = Object.keys( state.cities.data.elements );
+      // Gets the elements and sorts em alphabetically
+      let elements = state.cities.data.elements;
+      let ids = Object.keys( elements ).sort(( a, b ) => {
+
+        if ( elements[a].name > elements[b].name ) { return 1; }
+        if ( elements[b].name < elements[b].name ) { return -1; }
+        return 0;
+
+      });
 
       // Sets state
       this.setState({ ids });
@@ -98,8 +129,14 @@ class Cities extends React.Component {
   // Component will mount
   componentWillMount() {
     if ( this.props.store != null ) {
+
+      // Runs on store change to avoid weird errors
+      this.onStoreChange();
+
+      // Subscribes
       this.unsubscribe = this.props.store.subscribe(
         this.onStoreChange.bind(this));
+
     }
   }
 

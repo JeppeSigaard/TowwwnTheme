@@ -19,6 +19,17 @@ const initState = {
 
   },
 
+  modalbox : {
+
+    active : true,
+    content : null,
+    title : null,
+    headless : true,
+    closeable : false,
+    borderless : false,
+
+  },
+
   shown_single_event : null,
   shown_category : null,
   shown_single_place : null,
@@ -28,6 +39,15 @@ const initState = {
 // Reducer
 const UIReducer = (( state=initState, action ) => {
   switch ( action.type ) {
+
+    /* ---- Set city ---- */
+    case "CONFIG_SET_CITY": {
+      return Object.assign({}, state, {
+        shown_single_event : null,
+        shown_category : null,
+        shown_single_place : null,
+      });
+    }
 
     /* ---- Change View Focus ---- */
     case "CHANGE_VIEW_FOCUS" : {
@@ -56,6 +76,27 @@ const UIReducer = (( state=initState, action ) => {
 
       // Returns
       return Object.assign({}, state, {viewrelated});
+
+    }
+
+    /* ---- Enable modalbox ---- */
+    case "ENABLE_MODALBOX": {
+
+      // Sets active to true, and sets modalbox setting
+      action.payload.active = true;
+      let modalbox = Object.assign({}, state.modalbox, action.payload);
+
+      // Returns
+      return Object.assign({}, state, { modalbox });
+
+    }
+
+    /* ---- Diable modalbox  ---- */
+    case "DISABLE_MODALBOX": {
+
+      // Sets modalbox to inactive and returns
+      let modalbox = Object.assign({}, state.modalbox, { active : false });
+      return Object.assign({}, state, { modalbox });
 
     }
 

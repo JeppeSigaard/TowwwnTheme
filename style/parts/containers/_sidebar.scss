@@ -56,9 +56,37 @@ $sidebar-trans: cubic-bezier(.6,0,.4,1);
       font-size: 11px;
       font-weight: 500;
       text-transform: uppercase;
-      line-height: $sidebar-town-height;
+      line-height: calc(#{$sidebar-town-height} + 5px);
 
       color: darken( $primary-color, 10% );
+
+    }
+
+    .change-city{
+
+      position: absolute;
+      top: 0; right: 0;
+      width: 96px; height: $sidebar-town-height;
+
+      opacity: 0;
+
+      color: darken( $primary-color, 20% );
+      border-left: 1px solid darken( $primary-color, 20% );
+      transition: border-color 20ms, background-color 20ms, opacity 200ms;
+
+      line-height: $sidebar-town-height;
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 300;
+
+      &:hover{
+
+        background-color: lighten($secondary-color,2%);
+        border-color: $primary-color;
+        color: $primary-color;
+
+      }
 
     }
 
@@ -171,10 +199,16 @@ $sidebar-trans: cubic-bezier(.6,0,.4,1);
 
         }
 
-        .town .text{
+        .town{
 
-          opacity: 1;
-          left: 48px;
+          .text{
+            opacity: 1;
+            left: 48px;
+          }
+
+          .change-city{
+            opacity: 1;
+          }
 
         }
 
@@ -202,10 +236,16 @@ $sidebar-trans: cubic-bezier(.6,0,.4,1);
 
       }
 
-      .town .text{
+      .town{
 
-        opacity: 1;
-        left: 48px;
+        .text{
+          opacity: 1;
+          left: 48px;
+        }
+
+        .change-city{
+          opacity: 1;
+        }
 
       }
 

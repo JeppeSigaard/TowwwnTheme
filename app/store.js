@@ -20,9 +20,10 @@ const rootReducer = (( state, action ) => {
 
   // Returns reducers
   return combineReducers({
-    ui, config, cities, defaultdata,
+    ui, cities, defaultdata,
     events, categories, places,
-    advertisements
+    advertisements,
+    config
   })( state, action );
 
 });

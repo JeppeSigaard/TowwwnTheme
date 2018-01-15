@@ -19,16 +19,19 @@ class CalendarView extends View {
   constructor( props ) {
     super( props );
     this.state = {
-
-      ids : [ ],
-      adOffset : Math.floor(Math.random() * 99),
+      ids : null,
       title : 'Begivenheder',
-
     };
   }
 
+
   // Render
   render() {
+
+    // Extracts data
+    let state = this.props.store.getState();
+
+    // Returns
     return (
       <View id="calendar-view" title={this.state.title}
         icon="#icon-event" viewBox="0 0 32 32"
@@ -38,80 +41,84 @@ class CalendarView extends View {
         <div className="event-calendar" key={ 'event-calendar' } >
 
           {/* Events */}
-          { this.state.ids.length>0 &&
-            (this.preprocess(this.state.ids))
-            .map( this.renderElement.bind(this) ) }
+          { this.state.ids != null &&
+
+            this.preprocess( this.state.ids )
+              .map( this.renderElement.bind( this ) )
+
+          }
 
           {/* Load more */}
-          { this.state.ids.length>0 && this.props.store!=null &&
-            !this.props.store.getState().events.all_future_fetched &&
-            <Loader relative={true} /> }
+          { this.state.ids != null &&
+            this.state.ids.length>0 && this.props.store!=null &&
+            state.events.data[state.config.city] != null &&
+            !state.events.data[state.config.city].all_future_fetched &&
+
+            <Loader relative={true} />
+
+          }
 
           {/* All Loaded */}
           { this.props.store != null &&
-            this.props.store.getState().events.all_future_fetched &&
+            state.events.data[state.config.city] != null &&
+            state.events.data[state.config.city].all_future_fetched &&
+
             <div className="all-fetched">
               <div className="all-fetched-inner">
               </div>
             </div>
+
           }
 
-          {/* Loader */}
-          { this.state.ids.length<=0 &&
-            <Loader /> }
+          {/* No Events */}
+          { this.state.ids == null || this.state.ids.length<=0 &&
+
+            <div className="no-events"></div>
+
+          }
 
         </div>
 
       </View>
     );
+
   }
 
   // Render Element
   renderElement( val ) {
 
-    // State
+    // Extracts data
     let state = this.props.store.getState();
+    let city_events = state.events.data[state.config.city];
 
-    // Event section
-    if ( 'object' !== typeof val ) {
-
-      // Extracts data
-      let event = state.events.data[state.config.city].elements[String( val )];
-      if ( event == null ) { return (<div>An error occured</div>); }
-
-      // Returns jsx event
-      return (
-        <Event element={event}
-          store={this.props.store}
-          key={ 'calendar-event#'+val }
-        />
-      );
-
-    // Advertisement section
-    } else if ( 'ad' === val.type ) {
-
-      if ( this.props.store.getState().advertisements.elements != null ) {
-
-        // Gets id, using the random offset to ensure that all ads
-        // gets their place in the spotlight.
-        let id = (val.id + this.state.adOffset) % this.props.store.getState()
-          .advertisements.elements.length;
-
-        // Gets an advertisement
-        let ad = this.props.store.getState().advertisements.elements[id];
-        if ( ad == null || val.id == null ) { return (<div>An error occured</div>) }
-
-        // Returns jsx ad
-        return (
-          <Advertisement
-            element={ ad }
-            key={ 'ad#'+val.id }
-            inline={ true } />
-        );
-
-      }
-
+    // If city is equal to null... Return nothing
+    if ( city_events == null ) {
+      return <p>An error occured</p>;
     }
+
+    // Extracts more data
+    let event = city_events.elements[val];
+    if ( event == null ) { console.log('Cal, event is null.'); }
+
+    // Checks if the event is bookmarked
+    let bookmarked = false;
+    let shown_single_event = state.ui.shown_single_event;
+    let views = [ state.ui.viewrelated.leftview, state.ui.viewrelated.rightview ];
+
+    // Does the actual checking
+    if ( String(event['id']) === String(shown_single_event) &&
+       ( views[0] === 'event-view' || views[1] === 'event-view' )) {
+      bookmarked = true;
+    }
+
+    // Returns
+    return (
+      <Event element={ event }
+        store={ this.props.store }
+        key={ 'calendar-event#'+val }
+        bookmarked={ bookmarked }
+      />
+    );
 
   }
 
@@ -119,115 +126,102 @@ class CalendarView extends View {
   // Important: This needs to be a pure function, and use immutable data
   preprocess( ids ) {
 
-    // State
+    // Extracts data
     let state = this.props.store.getState();
+    let city_events = state.events.data[state.config.city];
 
-    // Remove advertisements
-    this.removeAdvertisements(ids);
+    // If no city events are found, well fetch em, else actually set events
+    if ( city_events == null ) { return [ ]; }
+    let events = city_events.elements;
 
-    // Is the store defined?
-    if ( this.props.store != null && state.events.data[state.config.city] != null ) {
+    // Filters away old event
+    let response = ids.filter(( val ) => {
 
-      // State events
-      const events = state.events.data[state.config.city].elements;
+        // Event and now
+        let event = events[val];
+        let now = (new Date()).getTime();
 
-      // Filters away old events
-      let resp = ids.filter(( val ) => { val = String(val);
+        // Error handling
+        if ( event == null ) { return false; }
 
-        if ( events[val].end_time!=null ) {
-          return ((new Date(events[val].end_time)).getTime()
-            > (new Date()).getTime());
-        } else if ( events[val].start_time!=null ) {
-          return ((new Date(events[val].start_time)).getTime()
-            > (new Date()).getTime());
-        }
+        // Start and end times in milliseconds
+        let end_time = (event.end_time != null) ? (new Date(event.end_time)).getTime() : null;
+        let start_time = (event.start_time != null) ? (new Date(event.start_time)).getTime() : null;
 
+        // Returns
+        if ( end_time != null ) { return now < end_time; }
+        if ( start_time != null ) { return now < start_time; }
         return false;
 
-      });
-
-      // Sorts event based on time
-      resp.sort(( a, b ) => { a = String(a); b = String(b);
-        if (events[a].start_time > events[b].start_time) { return 1; }
-        if (events[a].start_time < events[b].start_time) { return -1; }
-        return 0;
-      });
-
-      // Insert advertisements
-      // this.insertAdvertisements(resp); <- TMP: Commented
-
-      // Returns response
-      return resp;
-
-    }
-
-    // Default response
-    return ids;
-
-  }
-
-  // Insert advertisements
-  insertAdvertisements( arr ) {
-    let len = arr.length;
-    for ( let n = 0; n < len; n += 25 ) {
-      if ( n+24 <= arr.length ) {
-        arr.splice( n+24, 0, { type: 'ad', id: Math.floor(n / 24) } );
-      }
-    }
-  }
-
-  // Remove advertisements
-  removeAdvertisements( arr ) {
-    arr.filter(( val ) => {
-      return val !== 'ad';
     });
+
+    // Sorts event based on time
+    response.sort(( a, b ) => {
+
+      // Retirns
+      if (events[a].start_time > events[b].start_time) { return 1; }
+      if (events[a].start_time < events[b].start_time) { return -1; }
+      return 0;
+
+    });
+
+    // Returns response
+    return response;
+
   }
 
-  // Init load
-  initLoad() {
 
-    // Checks if some events has been fetched,
-    // if not, dispatch an actions that fetched the first 24
-    if ( this.props.store.getState().events.fetched ) { this.onStoreChange(); }
-    else { this.props.store.dispatch(getFutureEvents(24)); }
+  // Load events
+  loadEvents() {
+
+    // Extracts data
+    let state = this.props.store.getState();
+    let fetching = state.events.fetching;
+
+    // Fetches the next 24 events
+    if ( !fetching ) { this.props.store.dispatch(getFutureEvents(24)); }
 
   }
+
+
+  // Sets ids
+  setIDs() {
+
+    // Extracts data
+    let state = this.props.store.getState();
+    let city  = state.config.city;
+
+    // Error handling
+    if ( city == null ) { return; }
+
+    // Sets title
+    let city_data     = state.cities.data.elements[city];
+    let title_prefix  = state.defaultdata.fetched ? state.defaultdata.data.future_event_count+' ' : '';
+    let title_postfix = city != null ? ' i '+city_data.name : '';
+    let title         = title_prefix + 'begivenheder' + title_postfix;
+
+    // Sets ids
+    let city_events = state.events.data[city];
+    let ids = city_events != null ? Object.keys(city_events.elements) : [ ];
+
+    // Sets state
+    this.setState({ ids, title });
+
+  }
+
 
   // On Store Change
   onStoreChange() {
 
-    // State
+    // State n' sets ids
     let state = this.props.store.getState();
-    let title = 'Begivenheder';
 
-    // If city changed, do the initial load
-    if ( state.config.city != this.cCity ) {
-      this.cCity = state.config.city;
-      this.initLoad();
-    }
+    // Gets city events
+    let city_events = state.events.data[state.config.city];
+    if ( city_events == null || city_events.length <= 0 ) { this.loadEvents(); }
 
-    // Else do std stuff
-    else {
-
-      // If default data has been fetched
-      // Set title using the number of future events
-      if ( state.defaultdata.fetched ) {
-        let event_count = state.defaultdata.data.future_event_count;
-        title = String(event_count)+' begivenheder i Svendborg';
-      }
-
-
-      // Gets all loaded events ids
-      let ids = [ ];
-      if ( state.events.data[state.config.city] != null ) {
-        ids = Object.keys( state.events.data[state.config.city].elements )
-          .map(( val ) => { return Number(val); });
-      }
-
-      // Sets state (ids) to ALL event ids in the store
-      this.setState({ ids, title });
-
-    }
+    // Sets ids
+    this.setIDs();
 
     // Fixes some problems that occur with:
     // multiple events with same id, etc.
@@ -240,7 +234,7 @@ class CalendarView extends View {
   onScroll(payload) {
 
     // If not already fetching, check if more fetching is needed
-    if (!this.props.store.getState().events.fetching&&
+    if (!this.props.store.getState().events.fetching &&
         !this.props.store.getState().events.all_future_fetched) {
 
       // Extracts data
@@ -249,23 +243,28 @@ class CalendarView extends View {
 
       // Checks if load more is needed (24 future events)
       if (fromBottom<=600) {
-        this.props.store.dispatch(getFutureEvents( 24 ));
+        this.loadEvents();
       }
 
     }
 
   }
 
+
   // Component did mount
   componentDidMount() {
-
-    // Subscribes to store
     if ( this.props.store != null ) {
-      this.props.store.subscribe(
+      this.unsubscribe = this.props.store.subscribe(
         this.onStoreChange.bind( this )
       );
     }
+  }
 
+  // Component will unmount
+  componentWillUnmount() {
+    if ( this.unsubscribe != null ) {
+      this.unsubscribe();
+    }
   }
 
 }

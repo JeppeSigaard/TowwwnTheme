@@ -23,7 +23,7 @@ class Event extends React.Component {
   render() {
     return (
       <div className={"event"+( this.props.large?' large':'' )
-          +(this.state.bookmarked ? ' bookmark-mode':'')}
+          +(this.props.bookmarked ? ' bookmark-mode':'')}
         onClick={ this.onClick.bind(this) } >
 
         {/* Head */}
@@ -119,30 +119,9 @@ class Event extends React.Component {
       } else { timStr = formatDate(sta, false); }
 
       // Sets state
-      this.setState({ imgUrl, timStr, bookmarked : this.bookmarked() });
+      this.setState({ imgUrl, timStr });
 
     }
-
-  }
-
-  // Checks if bookmarked
-  bookmarked() {
-    if ( this.props.store != null ) {
-
-      // Fields
-      let state = this.props.store.getState(),
-        shown_event = String(state.ui.shown_single_event),
-        views = [state.ui.viewrelated.leftview, state.ui.viewrelated.rightview];
-
-      // Checks
-      if ( shown_event == String(this.props.element['id'])
-        && ( views[0] === 'event-view' || views[1] === 'event-view' )) {
-        return true;
-      } else {
-        return false;
-      }
-
-    } else { return false; }
   }
 
   // Component will mount

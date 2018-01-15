@@ -16,12 +16,9 @@ const getFutureEvents = (( amount, page ) => (( dispatch ) => {
   let city = store.getState().config.city;
   amount = (amount == null) ? 24 : amount;
 
-  // Error handling
-  if ( city == null ) { return; }
-
   // Pages handling
   if ( pages[city] == null ) { pages[city] = 0; }
-  page = page == null ? pages[city] : page;
+  page = ( page == null) ? pages[city] : page;
   pages[city] ++;
 
   // Creates a new request
@@ -30,12 +27,11 @@ const getFutureEvents = (( amount, page ) => (( dispatch ) => {
 
     // Elements
     let elements = JSON.parse( response.target.response );
+    let accuracy = elements.length / amount;
 
     // Events fetched action dispatch
     dispatch({ type : 'EVENTS_FETCHED', payload : {
-      elements, city,
-      accuracy : elements.length/amount,
-      future : true,
+      elements, city, accuracy
     }});
 
   });

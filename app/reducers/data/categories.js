@@ -11,13 +11,6 @@ const initState = {
 const CategoriesReducer = (( state=initState, action ) => {
   switch ( action.type ) {
 
-    /* ---- Set city ---- */
-    case "CONFIG_SET_CITY": {
-      return Object.assign({}, state, {
-        fetched : false,
-      });
-    }
-
     /* ---- Categories fetching ---- */
     case "CATEGORIES_FETCHING": {
       return Object.assign({}, state, {

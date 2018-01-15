@@ -7,6 +7,10 @@ import View from '../view.js';
 import Place from '../parts/place.js';
 import Loader from '../../presentationals/parts/loader.js';
 
+// Actions
+import { getPlaces } from '../../actions/api/places.js';
+
+
 // Place list view
 class PlaceListView extends View {
 
@@ -74,39 +78,45 @@ class PlaceListView extends View {
   onStoreChange() {
 
     // Extracts data
-    let state = this.props.store.getState();
-    let shown_cat = state.ui.shown_category;
-    let response = { };
+    let state       = this.props.store.getState();
+    let shown_cat   = state.ui.shown_category;
+    let city_places = state.places.data[state.config.city];
+    let new_state   = { ids : [ ] };
 
-    // Generates response
-    if ( state.places.data[state.config.city] != null ) {
-      response['ids'] = Object.keys(state.places.data[state.config.city].elements)
-        .filter(( val ) => {
+    // Generates response if places exits else, fetch em.
+    if ( city_places != null ) {
 
-          // Checks if place has category, returns.
-          let cats = state.places.data[state.config.city].elements[val].categories;
-          if ( cats == null ) { return false; }
+        // Generates array of ids
+        new_state['ids'] = Object.keys( city_places.elements ).filter(( val ) => {
 
-          for ( let n = 0; n < cats.length; n++ ) {
-            if ( String(cats[n]['category_id']) == String(shown_cat) ) {
-              return true;
+            // Extracts data
+            let cats = city_places.elements[val].categories;
+            if ( cats == null ) { return false; }
+
+            // Checks if it has the shown category
+            for ( let n = 0; n < cats.length; n++ ) {
+              if ( String(cats[n]['category_id']) === String(shown_cat) ) {
+                return true;
+              }
             }
-          }
 
-          // If not, return false.
-          return false;
+            // If not, return false;
+            return false;
 
         });
 
-        // Category name found, view title set.
-        let cat = state.categories.elements[shown_cat];
-        if ( cat != null ) { response['title'] = cat.category_name; }
+    } else if ( shown_cat != null && !state.places.fetching ) {
 
-        // Sets state
-        this.setState(response);
+      // Dispatches an acion that gets places
+      this.props.store.dispatch( getPlaces(
+        null, parseInt(shown_cat) ) );
 
-      }
     }
+
+    // Sets state
+    this.setState( new_state );
+
+  }
 
   // Component did mount
   componentDidMount() {
