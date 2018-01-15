@@ -19,6 +19,17 @@ const initState = {
 
   },
 
+  modalbox : {
+
+    active : false,
+    content : null,
+    headless : false,
+    borderless : false,
+    closeable : true,
+    onClose : null,
+
+  },
+
   shown_single_event : null,
   shown_category : null,
   shown_single_place : null,
@@ -116,6 +127,32 @@ const UIReducer = (( state=initState, action ) => {
       // Returns
       return Object.assign({}, state, {viewrelated});
 
+    }
+
+    /* ---- Enable modal box ---- */
+    case "ENABLE_MODALBOX": {
+
+      // Extracts data and returns
+      let ap = action.payload;
+      return Object.assign({}, state, { modalbox : {
+
+        active     : true,
+        content    : ap.content,
+        title      : ap.title,
+        headless   : ap.headless,
+        borderless : ap.borderless,
+        closeable  : ap.closeable,
+        onClose    : ap.onClose
+
+      }});
+
+    }
+
+    /* ---- Disable modal box ---- */
+    case "DISABLE_MODALBOX": {
+      return Object.assign({}, state, { modalbox : {
+        active : false,
+      }});
     }
 
     /* ---- Default ---- */

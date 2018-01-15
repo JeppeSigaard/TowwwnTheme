@@ -10,6 +10,24 @@ const setViewFocus = (( leftview, rightview, mview, from, transition ) => {
   };
 });
 
+// Enable modal box
+const enableModalBox = (( content, title, headless, borderless, closeable, onClose ) => {
+  return {
+    type : "ENABLE_MODALBOX",
+    payload : {
+      content, title, headless,
+      borderless, closeable, onClose
+    }
+  };
+});
+
+// Disable modal box
+const disableModalBox = (() => {
+  return {
+    type : "DISABLE_MODALBOX",
+  };
+});
+
 // Set single event
 const setShownSingleEvent = (( id ) => {
 
@@ -83,6 +101,8 @@ const setMobileMode = ((mobile) => {
 // Exports
 export {
   setViewFocus,
+  enableModalBox,
+  disableModalBox,
   setShownSingleEvent,
   setShownCategory,
   setShownSinglePlace,
