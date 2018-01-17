@@ -27,15 +27,12 @@ class Railbar extends React.Component {
   render() {
     return (
       <div className="railbar" ref="railbar" >
-
-        {/* Inner */}
         <div className="railbar-inner" ref="railbar-inner"
           style={{ 'left': - this.state.offset + 'px' }} >
 
           { this.state.items.map(this.renderElement.bind(this)) }
 
         </div>
-
       </div>
     );
   }

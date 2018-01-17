@@ -46,7 +46,7 @@ $railbar-height: 32px;
       font-weight: 500;
       flex: 1;
 
-      *{ pointer-events: none; }
+      *{ pointer-events: none!important; }
 
       &:before{
 
