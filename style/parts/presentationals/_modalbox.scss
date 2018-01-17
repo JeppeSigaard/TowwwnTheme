@@ -1,0 +1,147 @@
+
+
+// Local fields
+$modal-box-head-height: 48px;
+
+// Modal box
+.modal-box{
+
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  z-index: 999999;
+
+  .overlay{
+
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+
+    background-color: rgba($secondary-color, .75);
+
+  }
+
+  .modal-box-inner{
+
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: auto; height: auto;
+    box-shadow: 0px 2px 1px rgba(0,0,0,.14);
+
+    &:not(.headless) {
+      padding-top: $modal-box-head-height;
+    }
+
+    .modal-box-head{
+
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: $modal-box-head-height;
+
+      background-color: $primary-color;
+      color: $secondary-color;
+      box-shadow: 0px 0px 3px rgba(0, 0, 0, .1);
+      z-index: 99999999;
+
+      .title{
+
+        position: absolute;
+        top: 50%; left: 32px;
+        transform: translateY(-50%);
+
+        width: calc( 100% - 32px - 64px );
+        height: auto;
+        white-space: nowrap;
+        overflow: hidden;
+
+        text-transform: uppercase;
+        font-size: 14px;
+        font-weight: 700;
+
+      }
+
+      .close{
+
+        position: absolute;
+        top: 0; right: 0;
+        width: calc(#{$modal-box-head-height} + 5px);
+        height: $modal-box-head-height;
+
+        border-left: 1px solid lighten( $secondary-color, 25% );
+        cursor: pointer;
+
+        &:before{
+
+          content: '\00d7';
+          position: absolute;
+          top: 50%; left: 49%;
+          transform: translate(-50%,-50%);
+
+          color: lighten( $secondary-color, 25% );
+          font-size: 20px;
+          font-weight: 300;
+
+        }
+
+        &:hover{
+          border-color: $secondary-color;
+          &:before{ color: $secondary-color; }
+        }
+
+      }
+
+    }
+
+    .modal-box-body{
+
+      position: relative;
+      width: auto; height: auto;
+
+      max-width: calc( 100vw - 64px );
+      max-height: calc( 100vh - 128px );
+      min-width: 256px;
+      min-height: 128px;
+
+      background-color: darken( $primary-color, 10% );
+      color: $secondary-color;
+      font-size: 12px;
+      font-weight: 300;
+
+      overflow-y: scroll;
+
+      &:not(.borderless) {
+        padding: 24px 32px;
+      }
+
+    }
+
+  }
+
+  // mobile
+  @media screen and ( max-width: $mobile-width ) {
+    .modal-box-inner{
+
+      width: 100vw;
+      height: 100vh;
+      padding: 16px;
+
+      .modal-box-head{
+
+        width: calc( 100% - 16px * 2 );
+        top: 16px; left: 16px;
+
+      }
+
+      .modal-box-body{
+
+        min-width: 100%;
+        min-height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+
+      }
+    }
+  }
+
+}

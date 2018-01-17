@@ -1,0 +1,81 @@
+
+
+// Local fields
+$railbar-height: 32px;
+
+// Rail bar
+.railbar{
+
+  position: sticky;
+  top: 0; left: 0;
+  width: 100%;
+  height: $railbar-height;
+
+  background-color: darken($secondary-color, 20%);
+  box-shadow: 0px 0px 3px rgba(0,0,0,.1);
+  overflow: hidden;
+
+  cursor: grab;
+  &:active{ cursor: grabbing; }
+
+  .railbar-inner{
+
+    position: absolute;
+    top: 0px; left: 0px;
+    width: auto; height: 100%;
+    color: $primary-color;
+    transition: 150ms cubic-bezier(0,.5,.5,1);
+
+    font-size: 0;
+    white-space: nowrap;
+
+    &.notrans{
+      transition: 0ms;
+    }
+
+    .railbar-item{
+
+      display: inline-block;
+      position: relative;
+      line-height: $railbar-height;
+      transition: 120ms cubic-bezier(.6,0,.4,1);
+
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 10px;
+      font-weight: 500;
+      flex: 1;
+
+      *{ pointer-events: none; }
+
+      &:before{
+
+        content: '';
+        position: absolute;
+        bottom: 0; left: 50%;
+        transform: translateX(-50%);
+
+        width: 0; height: 2px;
+        background-color: darken($accent-color, 15%);
+        transition: 120ms cubic-bezier(.6,0,.4,1);
+
+      }
+
+      &:hover{
+
+        background-color: darken( $secondary-color, 13% );
+
+      }
+
+      &.active{
+
+        background-color: darken($secondary-color,10%);
+        &:before{ width: 100%; }
+
+      }
+
+    }
+
+  }
+
+}

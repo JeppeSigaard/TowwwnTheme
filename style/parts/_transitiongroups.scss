@@ -1,0 +1,30 @@
+
+
+// Popup
+.popup-enter {
+
+  opacity: 0.01;
+  // top: 32px;
+
+}
+
+.popup-enter.popup-enter-active {
+
+  opacity: 1; // top: 0px;
+  transition: opacity 120ms ease-in, top 120ms ease-in;
+
+}
+
+.popup-leave {
+
+  opacity: 1;
+  top: 0;
+
+}
+
+.popup-leave.popup-leave-active {
+
+  opacity: 0.01; top: 32px;
+  transition: opacity 120ms ease-in, top 120ms ease-in;
+
+}

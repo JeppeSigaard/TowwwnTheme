@@ -2,17 +2,18 @@
 
 // Imports
 import React from 'react';
-import ViewHandler from '../tools/viewhandler.js';
+import { CSSTransitionGroup } from 'react-transition-group';
+import { cookies } from '../tools/cookies.js';
 
+import ViewHandler from '../tools/viewhandler.js';
 import SideBar from './parts/sidebar.js';
 import ModalBox from '../presentationals/modalbox.js';
+import Cookies from '../presentationals/parts/cookies.js';
 
 // Views
 import WelcomeView from './views/welcomeview.js';
-
 import CalendarView from './views/calendarview.js';
 import EventView from './views/eventview.js';
-
 import CategoryView from './views/categoryview.js';
 import PlaceListView from './views/placelistview.js';
 import SinglePlaceView from './views/singleplaceview.js';
@@ -28,11 +29,18 @@ import Styling from '../../style/base.scss';
 // App Instance component
 class AppInstance extends React.Component {
 
+  // Constructor
+  constructor() {
+    super();
+    this.state = {
+      modalbox : {
+        active : false,
+      }
+    };
+  }
+
   // Render
   render() {
-
-    // Extracts data
-    let state = this.props.store.getState();
 
     // Returns
     return (
@@ -59,20 +67,29 @@ class AppInstance extends React.Component {
         </div>
 
         {/* Modal Box */}
-        { state.ui.modalbox.active &&
+        <CSSTransitionGroup
 
-          <ModalBox title={ state.ui.modalbox.title }
-            headless={ state.ui.modalbox.headless }
-            borderless={ state.ui.modalbox.borderless }
-            closeable={ state.ui.modalbox.closeable }
-            onClose={ state.ui.modalbox.onClose } >
+          transitionName="popup"
+          transitionEnterTimeout={120}
+          transitionLeaveTimeout={120} >
 
-            { state.ui.modalbox.content != null &&
-              state.ui.modalbox.content }
+          { this.state.modalbox.active &&
 
-          </ModalBox>
+            <ModalBox key="modalbox"
+              title={ this.state.modalbox.title }
+              headless={ this.state.modalbox.headless }
+              borderless={ this.state.modalbox.borderless }
+              closeable={ this.state.modalbox.closeable }
+              onClose={ this.state.modalbox.onClose } >
 
-        }
+              { this.state.modalbox.content != null &&
+                this.state.modalbox.content }
+
+            </ModalBox>
+
+          }
+
+        </CSSTransitionGroup >
 
       </div>
     );
@@ -100,8 +117,45 @@ class AppInstance extends React.Component {
 
   }
 
+  // Enable cookies modal box
+  enableCookiesModalBox() {
+
+    // If cookies haven't already been accepted
+    if ( cookies.getItem('cookies_accepted') !== 'true' ) {
+
+      // Weeeelll... Make them!
+      this.props.store.dispatch(enableModalBox(
+        <Cookies onClick={this.disableCookiesModalBox.bind(this)} />,
+        'Cookies', true, false, false,
+        this.disableCookiesModalBox.bind(this)
+      ));
+
+    }
+
+  }
+
+  // Disable cookies modal box
+  disableCookiesModalBox() {
+    this.props.store.dispatch(disableModalBox());
+  }
+
+  // On store change
+  onStoreChange() {
+    this.setState({
+      modalbox : this.props.store.getState().ui.modalbox
+    });
+  }
+
   // Component did mount
   componentDidMount() {
+
+    // Subscribes to store
+    if ( this.props.store != null ) {
+      this.props.store.subscribe(this.onStoreChange.bind(this));
+    }
+
+    // Enables cookies modal box
+    this.enableCookiesModalBox();
 
     // Removes load state
     let body = document.getElementsByTagName('body');
