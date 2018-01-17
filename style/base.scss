@@ -24,6 +24,7 @@ body{
   margin: 0;
 
   *{ box-sizing: border-box; }
+  &.preventUserSelect{ user-select: none; }
 
 }
 
@@ -52,6 +53,7 @@ body{
 
 // Imports
 @import './parts/view';
+@import './parts/transitiongroups';
 
 @import './parts/containers/sidebar';
 @import './parts/containers/welcomeview';
@@ -64,7 +66,10 @@ body{
 @import './parts/containers/parts/category';
 @import './parts/containers/parts/place';
 @import './parts/containers/parts/singlefooter';
+@import './parts/containers/parts/railbar';
 
-@import './parts/presentationals/loader';
+@import './parts/presentationals/modalbox';
 @import './parts/presentationals/advertisement';
-@import './parts/presentationals/ctaicons';
+@import './parts/presentationals/parts/loader';
+@import './parts/presentationals/parts/ctaicons';
+@import './parts/presentationals/parts/cookies';

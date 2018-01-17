@@ -39,6 +39,13 @@ class View extends React.Component {
 
             </header>
 
+            {/* Top bar */}
+            { this.props.topbar != null &&
+              <div className="topbar">
+                { this.props.topbar }
+              </div>
+            }
+
             {/* Body */}
             <div className="view-body">
               { this.props.children != null && this.props.children }

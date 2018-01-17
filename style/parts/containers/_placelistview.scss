@@ -7,3 +7,59 @@
   min-height: calc(100vh - 48px);
 
 }
+
+.place-list-topbar{
+
+  position: relative;
+  width: 100%; height: 32px;
+
+  .sub-category{
+    padding: 0px 32px;
+  }
+
+  .sort-btns{
+
+    position: absolute;
+    top: 0; left: 0;
+    width: 96px;
+    height: 100%;
+
+    background-color: darken( $accent-color, 15% );
+
+    .sort-btn{
+
+      position: absolute;
+      transform: translateY(-50%);
+      top: 54%;
+
+      cursor: pointer;
+      svg{ fill: $primary-color; }
+
+      &.sort-rnd{
+
+        left: 20px;
+        svg{ height: 14px; }
+
+      }
+
+      &.sort-alp{
+
+        top: 56%;
+        right: 20px;
+        svg{ height: 22px; }
+
+      }
+
+    }
+
+  }
+
+  .railbar{
+
+    position: absolute;
+    right: 0; left: auto;
+    width: calc( 100% - 96px );
+
+  }
+
+}
