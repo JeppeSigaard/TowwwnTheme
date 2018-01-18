@@ -1,0 +1,61 @@
+
+
+// Error Boundary
+.error{
+
+  position: absolute;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: $secondary-color;
+
+  .error-inner{
+
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+
+    background-color: $primary-color;
+    color: $secondary-color;
+    box-shadow: 0px 2px 1px rgba(0,0,0,.15);
+    padding: 32px;
+
+    .logo{
+
+      position: absolute;
+      top: 16px; left: -80px;
+      width: 48px; height: 48px;
+      fill: $primary-color;
+
+    }
+
+    .error-title{
+
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 8px;
+
+    }
+
+    .error-type, .componentstack {
+
+      text-transform: uppercase;
+      font-weight: 500;
+      font-size: 16px;
+      margin-top: 8px;
+
+      .info{
+
+        margin: 16px 8px;
+        text-transform: none;
+        font-size: 14px;
+        font-weight: 300;
+
+      }
+
+    }
+
+  }
+
+
+}

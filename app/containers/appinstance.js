@@ -5,6 +5,8 @@ import React from 'react';
 import { CSSTransitionGroup } from 'react-transition-group';
 import { cookies } from '../tools/cookies.js';
 
+import ErrorBoundary from './devtools/errorboundary.js';
+
 import ViewHandler from '../tools/viewhandler.js';
 import SideBar from './parts/sidebar.js';
 import ModalBox from '../presentationals/modalbox.js';
@@ -44,54 +46,56 @@ class AppInstance extends React.Component {
 
     // Returns
     return (
-      <div className="app">
+      <ErrorBoundary>
+        <div className="app">
 
-        {/* Sidebar */}
-        <SideBar store={ this.props.store } />
+          {/* Sidebar */}
+          <SideBar store={ this.props.store } />
 
-        {/* Inner */}
-        <div className="app-inner">
+          {/* Inner */}
+          <div className="app-inner">
 
-          {/* Welcome view */}
-          <WelcomeView store={ this.props.store } />
+            {/* Welcome view */}
+            <WelcomeView store={ this.props.store } />
 
-          {/* Event related */}
-          <CalendarView store={ this.props.store } />
-          <EventView store={ this.props.store } />
+            {/* Event related */}
+            <CalendarView store={ this.props.store } />
+            <EventView store={ this.props.store } />
 
-          {/* Place related */}
-          <CategoryView store={ this.props.store } />
-          <PlaceListView store={ this.props.store } />
-          <SinglePlaceView store={ this.props.store } />
+            {/* Place related */}
+            <CategoryView store={ this.props.store } />
+            <PlaceListView store={ this.props.store } />
+            <SinglePlaceView store={ this.props.store } />
+
+          </div>
+
+          {/* Modal Box */}
+          <CSSTransitionGroup
+
+            transitionName="popup"
+            transitionEnterTimeout={120}
+            transitionLeaveTimeout={120} >
+
+            { this.state.modalbox.active &&
+
+              <ModalBox key="modalbox"
+                title={ this.state.modalbox.title }
+                headless={ this.state.modalbox.headless }
+                borderless={ this.state.modalbox.borderless }
+                closeable={ this.state.modalbox.closeable }
+                onClose={ this.state.modalbox.onClose } >
+
+                { this.state.modalbox.content != null &&
+                  this.state.modalbox.content }
+
+              </ModalBox>
+
+            }
+
+          </CSSTransitionGroup >
 
         </div>
-
-        {/* Modal Box */}
-        <CSSTransitionGroup
-
-          transitionName="popup"
-          transitionEnterTimeout={120}
-          transitionLeaveTimeout={120} >
-
-          { this.state.modalbox.active &&
-
-            <ModalBox key="modalbox"
-              title={ this.state.modalbox.title }
-              headless={ this.state.modalbox.headless }
-              borderless={ this.state.modalbox.borderless }
-              closeable={ this.state.modalbox.closeable }
-              onClose={ this.state.modalbox.onClose } >
-
-              { this.state.modalbox.content != null &&
-                this.state.modalbox.content }
-
-            </ModalBox>
-
-          }
-
-        </CSSTransitionGroup >
-
-      </div>
+      </ErrorBoundary>
     );
 
   }

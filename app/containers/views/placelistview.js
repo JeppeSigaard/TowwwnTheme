@@ -3,7 +3,7 @@
 // Import
 import React from 'react';
 import View from '../view.js';
-import Railbar from '../parts/railbar.js';
+import Railbar from '../../presentationals/railbar.js';
 
 import Place from '../parts/place.js';
 import Loader from '../../presentationals/parts/loader.js';
@@ -65,9 +65,10 @@ class PlaceListView extends View {
 
             </div>
 
-            <Railbar identificationKey={ this.state.identification_key }>
-              {[ (this.state.sub_category_ids.map(this.renderSubCat.bind(this))) ]}
-            </Railbar>
+            <Railbar identificationKey={ this.state.identification_key } elements={
+              (this.state.sub_category_ids.map(this.renderSubCat.bind(this)))
+            } colorScheme={'secondary'} />
+
           </div>
         }>
 

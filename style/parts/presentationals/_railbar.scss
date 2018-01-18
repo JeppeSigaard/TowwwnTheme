@@ -78,4 +78,26 @@ $railbar-height: 32px;
 
   }
 
+  &.colorscheme-accent{
+
+    background-color: $accent-color;
+
+    .railbar-item{
+
+      &:before{
+        background-color: lighten( $secondary-color, 4% );
+      }
+
+      &:hover{
+        background-color: darken( $accent-color, 3% );
+      }
+
+      &.active{
+        background-color: darken( $accent-color, 6% );
+      }
+
+    }
+
+  }
+
 }

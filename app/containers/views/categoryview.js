@@ -24,6 +24,7 @@ class CategoryView extends View {
 
   // Render
   render() {
+
     return (
       <View id="category-view" title={this.state.title}
         icon="#icon-location" viewBox="0 0 32 32"

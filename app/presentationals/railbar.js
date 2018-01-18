@@ -26,13 +26,16 @@ class Railbar extends React.Component {
   // Render
   render() {
     return (
-      <div className="railbar" ref="railbar" >
+      <div className={"railbar colorscheme-"+( this.props.colorScheme )}
+        ref="railbar" >
+
         <div className="railbar-inner" ref="railbar-inner"
           style={{ 'left': - this.state.offset + 'px' }} >
 
           { this.state.items.map(this.renderElement.bind(this)) }
 
         </div>
+
       </div>
     );
   }
@@ -288,11 +291,9 @@ class Railbar extends React.Component {
     let items  = [ ];
 
     // If children is an array
-    if ( nextProps.children != null  ) {
-      for ( let n = 0; n < nextProps.children.length; n++ ) {
-        if ( nextProps.children[n].constructor.name === 'Array' ) {
-          items = nextProps.children[n]; break;
-        }
+    if ( nextProps.elements != null  ) {
+      if ( nextProps.elements.constructor.name === 'Array' ) {
+        items = nextProps.elements;
       }
     }
 

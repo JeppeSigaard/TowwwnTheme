@@ -35,6 +35,7 @@ class EventView extends View {
 
   // Render
   render() {
+
     return (
       <View id={this.state.id} title={this.state.title}
         icon="#icon-event" viewBox="0 0 32 32"

@@ -1,0 +1,85 @@
+
+
+// Imports
+import React from 'react';
+
+// Slider Component
+class Fader extends React.Component {
+
+  // Constructor
+  constructor( ) {
+    super();
+    this.state = {
+      items : [ ],
+      index : 0,
+      innerHeight : 'auto',
+    };
+  }
+
+  // Render
+  render() {
+    return (
+      <div className="fader" ref="slider" >
+        <div className="fader-inner" style={{ height: this.state.innerHeight }}>
+          { this.state.items.map(this.renderComponent.bind(this)) }
+        </div>
+      </div>
+    );
+  }
+
+  // Render component
+  renderComponent(val) {
+
+    // Extracts data
+    let index  = this.state.items.indexOf(val);
+    let active = index === this.state.index ? true : false;
+
+    // Returns
+    return (
+      <div className={"fader-item"+(active?' active':'')}
+        ref={ 'fader-item#'+index } >
+        { val }
+      </div>
+    );
+
+  }
+
+  // Set index
+  setIndex( index ) {
+
+    // Makes sure index is within bounds
+    index = index % this.state.items.length;
+
+    // Checks that the item has been mounted
+    if ( this.refs['fader-item#'+index] != null ) {
+
+      // Extracts data
+      let faderItem = this.refs['fader-item#'+index];
+      let innerHeight = faderItem.clientHeight+'px';
+
+      // Sets state
+      this.setState({
+        index, innerHeight
+      });
+
+    }
+
+  }
+
+  // Component will receive props
+  componentWillReceiveProps( nextProps ) {
+    this.setState({ items : nextProps.elements, index : nextProps.index }, () => {
+      this.setIndex(this.state.index);
+    });
+  }
+
+  // Component will mount
+  componentWillMount() {
+    window.addEventListener('resize', this.setIndex.bind(this,this.state.index));
+    window.faderSetIndex = this.setIndex.bind(this);
+  }
+
+}
+
+// Exports
+export default Fader;

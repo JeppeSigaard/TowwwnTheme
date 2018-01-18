@@ -55,6 +55,7 @@ body{
 @import './parts/view';
 @import './parts/transitiongroups';
 
+@import './parts/containers/devtools/errorboundary';
 @import './parts/containers/sidebar';
 @import './parts/containers/welcomeview';
 @import './parts/containers/calendarview';
@@ -66,8 +67,9 @@ body{
 @import './parts/containers/parts/category';
 @import './parts/containers/parts/place';
 @import './parts/containers/parts/singlefooter';
-@import './parts/containers/parts/railbar';
 
+@import './parts/presentationals/railbar';
+@import './parts/presentationals/fader';
 @import './parts/presentationals/modalbox';
 @import './parts/presentationals/advertisement';
 @import './parts/presentationals/parts/loader';
