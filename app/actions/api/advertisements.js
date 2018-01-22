@@ -18,8 +18,8 @@ const getAdvertisements = (( ) => (( dispatch ) => {
 
   });
 
-  // Opens and sends request
-  request.open( 'GET', app_data.rest_api+'/commercials' );
+  // Opens and sends request (Localhost, tmp.)
+  request.open( 'GET', 'http://localhost/towwwn/api/v1/commercials' );
   request.send();
 
 }));

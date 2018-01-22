@@ -44,45 +44,28 @@ class Advertisement extends React.Component {
 
       // Creates response field
       let ctaelems = [ ];
+      let buttons = props.element.buttons;
 
-      // Sets facebook link
-      if ( props.element.fburl != null &&
-        props.element.fburl !== '' ) {
+      // Loops through buttons and pushes cat elems
+      if ( buttons != null ) {
+        for ( let n = 0; n < buttons.length; n++ ) {
 
-        ctaelems.push({
-          href : props.element.fburl,
-          className : 'fb',
-          viewBox : '0 0 32 32',
-          xlinkHref : '#icon-facebook',
-          text : 'facebook'
-        });
+          // Extracts data
+          let href = buttons[n].button_url;
+          let type = buttons[n].button_icon[0];
+          let text = buttons[n].button_text;
 
-      }
+          let viewBox = (type === 'ig') ? '0 0 20 20' : '0 0 32 32';
+          let xlinkHref = (type === 'fb' ? '#icon-facebook' :
+            ( type === 'ig' ? '#icon-instagram' : '#icon-web' ));
 
-      // Sets instagram link
-      if ( props.element.insta != null &&
-        props.element.insta !== '' ) {
+          // Pushes cta elem
+          ctaelems.push({
+            href, viewBox,
+            xlinkHref, text
+          });
 
-        ctaelems.push({
-          href : props.element.insta,
-          viewBox : '0 0 20 20',
-          xlinkHref : '#icon-instagram',
-          text : 'instagram',
-        });
-
-      }
-
-      // Sets website link
-      if ( props.element.link != null &&
-        props.element.link !== '' ) {
-
-        ctaelems.push({
-          href : this.props.element.link,
-          viewBox : '0 0 32 32',
-          xlinkHref : '#icon-web',
-          text : 'website',
-        });
-
+        }
       }
 
       // Sets state
