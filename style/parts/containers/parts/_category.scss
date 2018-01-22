@@ -58,10 +58,10 @@ $category-height: 48px;
     overflow: hidden;
     white-space: nowrap;
     height: auto;
-    width: calc( 50vw - 48px - 24px - 60px - 72px );
+    width: calc( 50vw - 48px - 24px - 60px - 104px );
 
     @media screen and ( max-width: $mobile-width ) {
-      width: calc( 100vw - 48px - 24px - 60px - 92px );
+      width: calc( 100vw - 48px - 24px - 60px - 128px );
     }
 
   }

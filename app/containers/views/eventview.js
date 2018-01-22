@@ -9,9 +9,11 @@ import Event from '../parts/event.js';
 import SingleFooter from '../parts/singlefooter.js';
 import CTAIcons from '../../presentationals/parts/ctaicons.js';
 
+import Linkify from 'react-linkify';
+
 // Actions & tools
 import { getSinglePlace } from '../../actions/api/places.js';
-import { formatDate, nl2p } from '../../tools/formatters.js';
+import { formatDate, decodeEntities, nl2p } from '../../tools/formatters.js';
 
 
 // Event view component
@@ -57,7 +59,7 @@ class EventView extends View {
             {/* Top */}
             <div className="single-event-top">
               <div className="parent">{ this.state.event['parentname'] }</div>
-              <div className="title">{ this.state.event['title'] }</div>
+              <div className="title">{ decodeEntities(this.state.event['title']) }</div>
               <div className="time">
                 { formatDate(new Date(this.state.event['start_time']), true) }
               </div>
@@ -66,7 +68,9 @@ class EventView extends View {
             {/* Desc */}
             { this.state.event['description'] != null &&
               <div className="single-event-desc">
-                { nl2p(this.state.event['description']) }
+                <Linkify>
+                  { nl2p(decodeEntities(this.state.event['description'])) }
+                </Linkify>
               </div>
             }
 

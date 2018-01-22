@@ -21,6 +21,7 @@ class Place extends React.Component {
 
   // Render
   render() {
+
     return (
       <div className={"place "+(this.state.bookmarked?'bookmark-mode':'')}
         onClick={ this.onClick.bind(this) } >
@@ -34,14 +35,20 @@ class Place extends React.Component {
         <div className="place-leftsided-text">
           <div className="title">{ this.props.element.name }</div>
 
-          { this.props.element.hours != null &&
+          <div className="adress">
 
-            <div className="open-hours">
-              { renderDynamicOpenTimes(this.props.element.hours) }
-            </div>
-          }
+            { this.props.element.adress != null &&
+              this.props.element.adress }
 
-          <div className="adress">{ this.props.element.adress }</div>
+            { this.props.element.adress == null &&
+              'Ingen adresse fundet' }
+
+          </div>
+
+          <div className="open-hours">
+            { renderDynamicOpenTimes(this.props.element.hours) }
+          </div>
+
         </div>
 
         {/* Call to action icons */}

@@ -2,8 +2,14 @@
 
 // Imports
 import React from 'react';
+
+// Components
 import View from '../view.js';
 import SingleFooter from '../parts/singlefooter.js';
+
+import Linkify from 'react-linkify';
+
+// Tools
 import { nl2p, renderDynamicOpenTimes } from '../../tools/formatters.js';
 
 // Single place view component
@@ -127,7 +133,9 @@ class SinglePlaceView extends View {
             { this.state.element['description'] != null &&
 
               <div className="singleplace-body">
-                { nl2p(this.state.element['description']) }
+                <Linkify>
+                  { nl2p(this.state.element['description']) }
+                </Linkify>
               </div>
 
             }
@@ -136,7 +144,9 @@ class SinglePlaceView extends View {
               this.state.element['about'] != null &&
 
               <div className="singleplace-body">
-                { nl2p(this.state.element['about']) }
+                <Linkify>
+                  { nl2p(this.state.element['about']) }
+                </Linkify>
               </div>
 
             }
