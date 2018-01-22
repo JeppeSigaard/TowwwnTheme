@@ -35,12 +35,6 @@ class Place extends React.Component {
         <div className="place-leftsided-text">
           <div className="title">{ this.props.element.name }</div>
 
-          { this.props.element.hours != null &&
-
-            <div className="open-hours">
-              { renderDynamicOpenTimes(this.props.element.hours) }
-            </div>
-          }
 
           <div className="adress">
 
@@ -51,6 +45,11 @@ class Place extends React.Component {
               'Ingen adresse fundet' }
 
           </div>
+
+          <div className="open-hours">
+            { renderDynamicOpenTimes(this.props.element.hours) }
+          </div>
+
         </div>
 
         {/* Call to action icons */}
