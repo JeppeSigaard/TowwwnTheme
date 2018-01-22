@@ -30,16 +30,6 @@ Kirki::add_field( 'smamo_kirki_config', array(
 	'priority'    => 10,
 ));
 
-// Adds desc field
-Kirki::add_field( 'smamo_kirki_config', array(
-	'type'        => 'textarea',
-	'settings'    => 'description',
-	'label'       => __( 'Beskrivelse' ),
-	'section'     => 'information',
-	'default'     => '',
-	'priority'    => 10,
-));
-
 // Adds city field
 Kirki::add_field( 'smamo_kirki_config', array(
 	'type'        => 'text',

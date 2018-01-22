@@ -50,7 +50,7 @@
 
           }
 
-          .text{
+          .fb-text{
 
             position: absolute;
             top: 50%; right: 0;
@@ -71,7 +71,7 @@
 
         &:hover{ .fb-icon {
           svg{ right: 70px; }
-          .text{ width: 70px; }
+          .fb-text{ width: 70px; }
         }}
 
       }
@@ -121,9 +121,9 @@
   }
 
   // Railbar stuff
-  .railbar-inner{
+  .railbar{
 
-    padding: 0px 32px;
+    margin: 0px 32px;
 
     .text-section-btn{
       margin: 0px 32px;
@@ -131,8 +131,8 @@
 
   }
 
-  // Desc
-  .desc{
+  // Texts
+  .text{
 
     position: relative;
     width: 100%; height: auto;
@@ -161,7 +161,23 @@
     color: $primary-color;
 
     box-shadow: 0px 2px 1px rgba(0,0,0,.075);
-    // margin: 0px 12px;
+    margin: 0px 32px 32px 32px;
+
+  }
+
+  // Advertisements
+  .advertisements{
+
+    margin: 0px 32px 32px 32px;
+    padding: 0;
+    overflow: hidden;
+
+    .advertisement{
+
+      margin: 0px 0px 48px 0px;
+      box-shadow: 0px 2px 1px rgba(0,0,0,.075);
+
+    }
 
   }
 

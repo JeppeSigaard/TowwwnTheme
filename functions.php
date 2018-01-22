@@ -13,6 +13,7 @@ get_functions_part(array(
 if ( class_exists( "Kirki" ) ) {
     get_functions_part(array(
         'config',
+        'frontpage_sections',
         'information',
         'social_media',
         'commercial',

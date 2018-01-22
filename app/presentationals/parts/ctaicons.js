@@ -38,7 +38,7 @@ class CTAIcons extends React.Component {
             </use>
           </svg>
 
-          <div className="text">
+          <div className="cta-icon-text">
             { val['text'] != null ? val['text'] : '' }
           </div>
         </div>

@@ -66,17 +66,30 @@ class Fader extends React.Component {
 
   }
 
+  // Force update
+  forceUpdate( props, cb ) {
+    if ( props.elements != null && props.index != null ) {
+
+      this.setState({ items : props.elements, index : props.index }, () => {
+        this.setIndex(this.state.index);
+        if ( cb != null ) { cb(); }
+      });
+
+    }
+  }
+
   // Component will receive props
   componentWillReceiveProps( nextProps ) {
-    this.setState({ items : nextProps.elements, index : nextProps.index }, () => {
-      this.setIndex(this.state.index);
-    });
+    this.forceUpdate( nextProps );
   }
 
   // Component will mount
   componentWillMount() {
-    window.addEventListener('resize', this.setIndex.bind(this,this.state.index));
-    window.faderSetIndex = this.setIndex.bind(this);
+    this.forceUpdate( this.props, () => {
+      window.addEventListener( 'resize', (() => {
+        this.setIndex( this.state.index );
+      }).bind(this));
+    });
   }
 
 }

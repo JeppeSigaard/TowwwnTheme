@@ -19,6 +19,7 @@ class WelcomeView extends View {
     super();
     this.state = {
       faderIndex : 0,
+      posts : app_data.text_sections,
     };
   }
 
@@ -46,7 +47,7 @@ class WelcomeView extends View {
                     </use>
                   </svg>
 
-                  <div className="text">facebook</div>
+                  <div className="fb-text">facebook</div>
                 </div>
 
               </a>
@@ -62,38 +63,17 @@ class WelcomeView extends View {
 
           </div>
 
-          <Railbar identificationKey="welcome-view-railbar" elements={[
+          {/* Text railbar */}
+          <Railbar identificationKey="welcome-view-railbar" elements={
+            this.state.posts.map(this.renderRailbarPost.bind(this))
+          } colorScheme="accent" />
 
-            <div className="text-section-btn" onClick={(() => { this.setState({ index : 0 }) }).bind(this)}>
-              Hi
-            </div>,
-
-            <div className="text-section-btn" onClick={(() => { this.setState({ index : 1 }) }).bind(this)}>
-              Hey
-            </div>,
-
-            <div className="text-section-btn" onClick={(() => { this.setState({ index : 2 }) }).bind(this)}>
-              Ho
-            </div>
-
-          ]} colorScheme="accent" />
-
-          {/* Desc */}
-          { app_data.desc != null &&
-            <div className="desc">
-              <Fader index={ this.state.index } elements={[
-
-                <p>I modsætning til hvad mange tror, er Lorem Ipsum ikke bare tilfældig tekst. Det stammer fra et stykke litteratur på latin fra år 45 f.kr., hvilket gør teksten over 2000 år gammel. Richard McClintock, professor i latin fra Hampden-Sydney universitet i Virginia, undersøgte et af de mindst kendte ord "consectetur" fra en del af Lorem Ipsum, og fandt frem til dets oprindelse ved at studere brugen gennem klassisk litteratur. Lorem Ipsum stammer fra afsnittene 1.10.32 og 1.10.33 fra "de Finibus Bonorum et Malorum" (Det gode og ondes ekstremer), som er skrevet af Cicero i år 45 f.kr. Bogen, som var meget populær i renæssancen, er en afhandling om etik. Den første linie af Lorem Ipsum "Lorem ipsum dolor sit amet..." kommer fra en linje i afsnit 1.10.32.</p>,
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras posuere lobortis commodo. Phasellus rhoncus cursus libero, eget sagittis odio ultricies ut. Cras eget ante et odio accumsan luctus. Donec feugiat mauris nibh, ac iaculis nibh gravida ac. Nulla quis aliquet turpis. Aliquam non ullamcorper libero. Vivamus eget rhoncus quam. Nulla odio massa, facilisis nec imperdiet et, pretium non tortor. Nunc sagittis sem in ante fermentum, ac sodales metus rhoncus. Maecenas venenatis nunc sit amet tortor tempor sodales. Donec porttitor consectetur sollicitudin. Sed nibh quam, commodo id varius et, tincidunt at elit.
-
-  Nam non nulla placerat, aliquet urna nec, laoreet augue. Nullam viverra, tortor at dictum semper, dolor felis eleifend est, vitae auctor tellus massa vitae justo. Vestibulum luctus bibendum diam, quis malesuada orci luctus vel. Donec convallis libero quis sapien lacinia, sit amet aliquet lacus elementum. Phasellus eleifend dictum iaculis. Ut vulputate tortor sed felis pellentesque commodo fermentum vel leo. Fusce nibh purus, ullamcorper nec ante ac, posuere aliquam enim.</p>,
-
-                <p>En søgning på Lorem Ipsum afslører mange websider, som stadig er på udviklingsstadiet. Der har været et utal af variationer, som er opstået enten på grund af fejl og andre gange med vilje (som blandt andet et resultat af humor). En søgning på Lorem Ipsum afslører mange websider, som stadig er på udviklingsstadiet. Der har været et utal af variationer, som er opstået enten på grund af fejl og andre gange med vilje (som blandt andet et resultat af humor).En søgning på Lorem Ipsum afslører mange websider, som stadig er på udviklingsstadiet. Der har været et utal af variationer, som er opstået enten på grund af fejl og andre gange med vilje (som blandt andet et resultat af humor).</p>
-
-              ]} />
-            </div>
-          }
+          {/* Fader */}
+          <div className="text">
+            <Fader index={ this.state.faderIndex } elements={
+              this.state.posts.map(this.renderFaderPost.bind(this))
+            } />
+          </div>
 
           {/* Start off */}
           <div className="startoff">
@@ -101,12 +81,53 @@ class WelcomeView extends View {
           </div>
 
           {/* Advertisements */}
-          {/*<Advertisements store={this.props.store} />*/}
+          <Advertisements store={this.props.store} />
 
         </div>
 
       </View>
     );
+  }
+
+  // Render railbar post
+  renderRailbarPost( val ) {
+
+    // Extracts data
+    let index = this.state.posts.indexOf(val);
+    let title = val.title;
+
+    // Set index function
+    let setIndex = (( ) => {
+      this.setState({ faderIndex : index });
+    }).bind(this);
+
+    // Returns
+    return (
+      <div className="text-section-btn"
+        key={ 'textsection-head#'+index }
+        onClick={ setIndex } >
+
+        { title }
+
+      </div>
+    );
+
+  }
+
+  // Render fader post
+  renderFaderPost( val ) {
+
+    // Extracts data
+    let index = this.state.posts.indexOf(val);
+    let text  = val.text;
+
+    // Returns
+    return (
+      <div className="text-section" key={ 'textsection-body#'+index }>
+        { nl2p(text) }
+      </div>
+    );
+
   }
 
 }

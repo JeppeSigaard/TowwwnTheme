@@ -29,9 +29,8 @@ add_action('wp_head',function(){
 
             'logo' => get_theme_mod('logo'),
             'coverimage' => get_theme_mod('cover-image'),
-            'desc' => get_theme_mod('description'),
-
             'fbid' => get_theme_mod('facebook_id'),
+            'text_sections' => get_theme_mod('text_sections'),
 
             'ajax_url' => admin_url( 'admin-ajax.php' ),
             'tools_api' => get_theme_mod('tools_api_url'),

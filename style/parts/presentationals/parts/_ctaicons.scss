@@ -11,18 +11,6 @@
     flex: 1;
     position: relative;
 
-    &:hover{
-      .cta-icon-inner{
-        max-width: 100px!important;
-        left: 50%;
-
-        .text{
-          width: auto;
-          opacity: 1;
-        }
-      }
-    }
-
     .cta-icon-inner{
 
       position: absolute;
@@ -44,7 +32,7 @@
 
       }
 
-      .text{
+      .cta-icon-text{
 
         position: relative;
         width: calc(100% - 17px); height: 17px;
@@ -62,6 +50,18 @@
 
       }
 
+    }
+
+    &:hover{
+      .cta-icon-inner{
+        max-width: 100px;
+        left: 50%;
+
+        .cta-icon-text{
+          width: auto;
+          opacity: 1;
+        }
+      }
     }
 
   }
