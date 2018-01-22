@@ -39,21 +39,37 @@ class WelcomeView extends View {
             <div className="coverimage"
               style={{ backgroundImage : 'url('+app_data.coverimage+')' }} >
 
-              <a className="fb" target="_blank"
-                href={ 'http://fb.com/'+app_data.fbid } >
+              <div className="coverimage-row">
+                <div className="welcome-cta-icons">
 
-                <div className="fb-icon">
-                  <svg viewBox="0 0 32 33">
-                    <use xlinkHref="#icon-facebook">
-                    </use>
-                  </svg>
+                  <a className="welcome-cta-icon" target="_blank"
+                    href={ 'https://fb.com/'+app_data.fbid } >
 
-                  <div className="fb-text">facebook</div>
+                    <div className="icon fb-icon">
+                      <svg viewBox="0 0 32 33">
+                        <use xlinkHref="#icon-facebook">
+                        </use>
+                      </svg>
+                    </div>
+
+                  </a>
+
+                  <a className="welcome-cta-icon" target="_blank"
+                    href={ 'https://instagram.com/'+app_data.instagram } >
+
+                    <div className="icon ig-icon">
+                      <svg viewBox="0 0 20 20">
+                        <use xlinkHref="#icon-instagram">
+                        </use>
+                      </svg>
+                    </div>
+
+                  </a>
+
                 </div>
+              </div>
 
-              </a>
-
-              <div className="icon"
+              <div className="logo"
                 style={{ backgroundImage : 'url('+app_data.logo+')' }} >
               </div>
 

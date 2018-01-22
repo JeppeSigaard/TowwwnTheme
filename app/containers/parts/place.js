@@ -38,6 +38,11 @@ class Place extends React.Component {
 
           <div className="adress">
 
+            <svg viewBox="0 0 32 32">
+              <use xlinkHref="#icon-location">
+              </use>
+            </svg>
+
             { this.props.element.adress != null &&
               this.props.element.adress }
 
@@ -47,7 +52,14 @@ class Place extends React.Component {
           </div>
 
           <div className="open-hours">
+
+            <svg viewBox="0 0 32 32">
+              <use xlinkHref="#icon-watch">
+              </use>
+            </svg>
+
             { renderDynamicOpenTimes(this.props.element.hours) }
+
           </div>
 
         </div>

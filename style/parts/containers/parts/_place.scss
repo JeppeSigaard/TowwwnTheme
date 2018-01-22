@@ -79,6 +79,32 @@ $place-height: 96px;
 
     }
 
+    .adress, .open-hours{
+
+      position: relative;
+      margin-left: 24px;
+
+      svg{
+
+        position: absolute;
+        top: 50%; left: -20px;
+        transform: translateY(-50%);
+
+        width: 11px; height: 11px;
+        fill: lighten($secondary-color, 30%);
+
+      }
+
+      &.open-hours svg{
+
+        width: 10px;
+        height: auto;
+        left: -19px;
+
+      }
+
+    }
+
   }
 
   .small-cta-icons{

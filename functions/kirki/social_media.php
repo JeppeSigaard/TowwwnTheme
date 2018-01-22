@@ -39,3 +39,13 @@ Kirki::add_field( 'smamo_kirki_config', array(
 	'default'     => '',
 	'priority'    => 10,
 ));
+
+// FB
+Kirki::add_field( 'smamo_kirki_config', array(
+	'type'        => 'text',
+	'settings'    => 'instagram',
+	'label'       => __( 'Instragram' ),
+	'section'     => 'socialmedia',
+	'default'     => '',
+	'priority'    => 10,
+));
