@@ -282,7 +282,8 @@ class PlaceListView extends View {
       // Sets title and sub cats
       response['title'] = cat.category_name;
       response['sub_category_ids'] = Object.keys( cats ).filter(( val ) => {
-        return ((String(cats[val].category_parent) === String(cat.category_id)));
+        return ((String(cats[val].category_parent) === String(cat.category_id))) &&
+          ( cats[val].location_count > 0 );
       });
 
       // Adds the all tab at position zero

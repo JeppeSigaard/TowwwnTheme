@@ -21,6 +21,7 @@ class Place extends React.Component {
 
   // Render
   render() {
+
     return (
       <div className={"place "+(this.state.bookmarked?'bookmark-mode':'')}
         onClick={ this.onClick.bind(this) } >
@@ -41,7 +42,15 @@ class Place extends React.Component {
             </div>
           }
 
-          <div className="adress">{ this.props.element.adress }</div>
+          <div className="adress">
+
+            { this.props.element.adress != null &&
+              this.props.element.adress }
+
+            { this.props.element.adress == null &&
+              'Ingen adresse fundet' }
+
+          </div>
         </div>
 
         {/* Call to action icons */}

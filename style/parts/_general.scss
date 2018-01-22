@@ -1,0 +1,32 @@
+
+
+// A (Links)
+p a{
+
+  position: relative;
+  text-decoration: none;
+  color: $accent-color;
+  transition: 120ms;
+
+  &:before{
+
+    content: '';
+
+    position: absolute;
+    bottom: -1px; left: 50%;
+    transform: translateX(-50%);
+
+    width: 0; height: 1px;
+    background-color: rgba($accent-color, .6);
+    transition: 120ms;
+
+  }
+
+  &:hover{
+
+    color: darken( $accent-color, 8% );
+    &:before{ width: 100%; }
+
+  }
+
+}

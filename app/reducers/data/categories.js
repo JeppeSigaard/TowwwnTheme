@@ -35,7 +35,8 @@ const CategoriesReducer = (( state=initState, action ) => {
         let subcat_counter = 0;
         for ( let i = 0; i < action.payload.elements.length; i++ ) {
           let sub_elem = action.payload.elements[i];
-          if ( elem.category_id === sub_elem.category_parent ) {
+          if ( elem.category_id === sub_elem.category_parent &&
+               sub_elem.location_count > 0 ) {
             subcat_counter ++;
           }
         }

@@ -2,6 +2,7 @@
 
 // Imports
 import React from 'react';
+import { XmlEntities } from 'html-entities';
 
 // Format date
 const formatDate = (( date, year ) => {
@@ -18,6 +19,11 @@ const formatDate = (( date, year ) => {
   // Returns
   return resp;
 
+});
+
+// Decode Entities
+const decodeEntities = (( text ) => {
+  return text = (new XmlEntities()).decode(text);
 });
 
 // NL2P
@@ -88,4 +94,4 @@ const renderDynamicOpenTimes = (( val ) => {
 });
 
 // Exports
-export { formatDate, nl2p, renderDynamicOpenTimes };
+export { formatDate, decodeEntities, nl2p, renderDynamicOpenTimes };

@@ -4,7 +4,7 @@
 import React from 'react';
 
 import { setViewFocus, setShownSingleEvent } from '../../actions/ui.js';
-import { formatDate } from '../../tools/formatters.js';
+import { formatDate, decodeEntities } from '../../tools/formatters.js';
 
 // Event component
 class Event extends React.Component {
@@ -37,7 +37,7 @@ class Event extends React.Component {
         <div className="event-body">
           <div className="title">
             { this.props.element['title'] != null &&
-              this.props.element['title'] }
+              decodeEntities(this.props.element['title']) }
           </div>
 
           <div className="time">
@@ -49,7 +49,7 @@ class Event extends React.Component {
         <footer className="event-footer">
           <div className="event-place">
             { this.props.element['parentname'] != null &&
-              this.props.element['parentname'] }
+              decodeEntities(this.props.element['parentname']) }
           </div>
         </footer>
 

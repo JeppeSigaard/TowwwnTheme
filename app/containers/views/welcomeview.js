@@ -19,7 +19,8 @@ class WelcomeView extends View {
     super();
     this.state = {
       faderIndex : 0,
-      posts : app_data.text_sections,
+      posts : typeof app_data.text_sections === 'object' ?
+        app_data.text_sections : [ ],
     };
   }
 

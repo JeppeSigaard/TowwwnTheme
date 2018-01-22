@@ -20,10 +20,13 @@
       width: 100%; height: auto;
       opacity: 0;
       transition: 200ms ease-in-out;
+      user-select: none;
 
       &.active{
 
         opacity: 1;
+        user-select: auto;
+        z-index: 9;
 
       }
 

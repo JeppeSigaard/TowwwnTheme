@@ -37,7 +37,8 @@ class Fader extends React.Component {
     // Returns
     return (
       <div className={"fader-item"+(active?' active':'')}
-        ref={ 'fader-item#'+index } >
+        ref={ 'fader-item#'+index }
+        key={ 'fader-item#'+index } >
         { val }
       </div>
     );

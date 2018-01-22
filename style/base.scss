@@ -48,10 +48,11 @@ body{
 
 // Normalization
 ::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 // Imports
+@import './parts/general';
 @import './parts/view';
 @import './parts/transitiongroups';
 
