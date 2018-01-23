@@ -34,15 +34,13 @@ add_action('wp_head',function(){
             'fbid' => get_theme_mod('facebook_id'),
             'instagram' => get_theme_mod('instagram'),
 
-            'ajax_url' => admin_url( 'admin-ajax.php' ),
-            'tools_api' => get_theme_mod('tools_api_url'),
             'rest_api' => get_theme_mod('rest_api_url'),
+            'internal_rest_api' => get_theme_mod('internal_rest_api_url'),
+
+            'ajax_url' => admin_url( 'admin-ajax.php' ),
             'main_path' => site_url(),
             'city' => get_theme_mod('city'),
             'template_uri' => get_template_directory_uri(),
-
-            'commercial_image_url' => get_theme_mod('commercial'),
-            'commercial_link' => get_theme_mod('commercial_link'),
 
             'type' => $app_type,
             'id' => $app_id,

@@ -16,7 +16,8 @@ class View extends React.Component {
         <div className="view" id={this.props.id}
           onScroll={ this.processScroll.bind(this) } >
 
-          <div className="view-inner">
+          <div className={ "view-inner" + ( this.props.topbar != null ?
+            ' has-topbar' : '' ) }>
 
             {/* Head */}
             <header className="view-head">

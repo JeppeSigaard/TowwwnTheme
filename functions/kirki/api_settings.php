@@ -11,7 +11,7 @@ Kirki::add_section( 'api_settings', array(
     'theme_supports' => '',
 ));
 
-// Adds logo field
+// Adds rest api field
 Kirki::add_field( 'smamo_kirki_config', array(
 	'type'        => 'text',
 	'settings'    => 'rest_api_url',
@@ -21,11 +21,11 @@ Kirki::add_field( 'smamo_kirki_config', array(
 	'priority'    => 10,
 ));
 
-// Adds logo field
+// Adds internal rest api field
 Kirki::add_field( 'smamo_kirki_config', array(
 	'type'        => 'text',
-	'settings'    => 'tools_api_url',
-	'label'       => __( 'Tools API URL' ),
+	'settings'    => 'internal_rest_api_url',
+	'label'       => __( 'Internt rest API URL (Dev. feature)' ),
 	'section'     => 'api_settings',
 	'default'     => '',
 	'priority'    => 10,

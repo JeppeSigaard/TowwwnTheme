@@ -47,7 +47,7 @@ $view-trans: cubic-bezier(.6,0,.4,1);
       transition: background-color 300ms $view-trans;
       padding-left: 16px;
 
-      z-index: 9;
+      z-index: 10;
 
       *{
 
@@ -129,6 +129,15 @@ $view-trans: cubic-bezier(.6,0,.4,1);
       position: relative;
       width: 100%; height: auto;
 
+      & > * {
+        min-height: calc(100vh - 48px);
+      }
+
+    }
+
+    // If top bar is assigned
+    &.has-topbar .view-body > * {
+      min-height: calc(100vh - 48px - 32px);
     }
 
   }

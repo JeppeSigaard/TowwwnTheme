@@ -24,6 +24,7 @@ class PlaceListView extends View {
 
       identification_key : null,
       title : 'Steder',
+      id : 'place-list-view',
 
       sort : 'alp',
       sub_cat_filter : null,
@@ -34,7 +35,7 @@ class PlaceListView extends View {
   // Render
   render() {
     return (
-      <View id="place-list-view" title={this.state.title}
+      <View id={this.state.id} title={this.state.title}
         icon="#icon-location" viewBox="0 0 32 32"
         closeProps={[ 'welcome-view','category-view','category-view', 'left', true ]}
         store={ this.props.store }
@@ -131,7 +132,7 @@ class PlaceListView extends View {
     return (
       <div className="sub-category" key={this.state.identification_key+'#sub-cat#'+val}
         onClick={ this.onSubCatClick.bind(this, cats[val]) }
-        onTouchEnd={ this.onSubCatClick.bind(this, cats[val]) } >
+        onTouchEnda={ this.onSubCatClick.bind(this, cats[val]) } >
 
         { cats[val].category_name }
 

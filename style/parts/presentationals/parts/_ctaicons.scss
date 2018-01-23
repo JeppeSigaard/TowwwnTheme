@@ -52,14 +52,16 @@
 
     }
 
-    &:hover{
-      .cta-icon-inner{
-        max-width: 100px;
-        left: 50%;
+    @media screen and (min-width: $mobile-width) {
+      &:hover{
+        .cta-icon-inner{
+          max-width: 100px;
+          left: 50%;
 
-        .cta-icon-text{
-          width: auto;
-          opacity: 1;
+          .cta-icon-text{
+            width: auto;
+            opacity: 1;
+          }
         }
       }
     }
