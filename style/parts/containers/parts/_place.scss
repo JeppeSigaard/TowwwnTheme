@@ -11,26 +11,26 @@ $place-height: 96px;
   cursor: pointer;
 
   &:nth-child(2n+0) {
-    background-color: rgba($secondary-color, .05);
+    background-color: rgba($secondary-color, .03);
 
     &:hover:not(.bookmark-mode){
-      background-color: rgba($secondary-color, .03);
+      background-color: rgba($secondary-color, .02);
     }
   }
 
   &:nth-child(2n+1) {
-    background-color: rgba($secondary-color, .10);
+    background-color: rgba($secondary-color, .08);
 
     &:hover:not(.bookmark-mode){
-      background-color: rgba($secondary-color, .08);
+      background-color: rgba($secondary-color, .06);
     }
   }
 
   &.bookmark-mode{
-    background-color: lighten($accent-color, 38%);
+    background-color: lighten($accent-color, 34%);
 
     &:nth-child(2n+1) {
-      background-color: lighten($accent-color, 32%);
+      background-color: lighten($accent-color, 28%);
     }
   }
 

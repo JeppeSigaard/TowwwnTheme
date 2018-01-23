@@ -13,7 +13,7 @@ class ViewHandler {
     if (store==null) {return false;}
 
     // Runs init positioning
-    if ( window.innerWidth > 640 ) { this.updateViewPositioningLargeScreen(store); }
+    if ( window.innerWidth > 800 ) { this.updateViewPositioningLargeScreen(store); }
     else { this.updateViewPositioningSmallScreen(store); }
 
     // Store subscription
@@ -30,13 +30,13 @@ class ViewHandler {
 
   // On resize
   onResize( store ) {
-    if ( window.innerWidth >= 770 &&
+    if ( window.innerWidth >= 800 &&
       store.getState().ui.viewrelated.mobile ) {
 
       // Not mobile.. Any more
       store.dispatch(setMobileMode(false));
 
-    } else if ( window.innerWidth < 770 &&
+    } else if ( window.innerWidth < 800 &&
       !store.getState().ui.viewrelated.mobile ) {
 
       // Mobile now!

@@ -105,22 +105,26 @@
       .title {
 
         position: absolute;
-        left: 140px; bottom: -40px;
+        left: 140px; bottom: -36px;
 
         color: $secondary-color;
         text-transform: uppercase;
         font-weight: 700;
-        font-size: 18px;
+        font-size: 16px;
+
+        white-space: nowrap;
+        overflow: hidden;
+
+        max-width: calc((100vw - 48px) / 2 - 140px - 32px);
 
       }
 
       .subtitle{
 
         position: absolute;
-        left: 140px; bottom: -60px;
+        left: 140px; bottom: -56px;
 
         color: $accent-color;
-        // text-transform: uppercase;
         font-weight: 300;
         font-size: 15px;
 
