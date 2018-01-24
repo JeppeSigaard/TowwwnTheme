@@ -132,7 +132,7 @@ class PlaceListView extends View {
     return (
       <div className="sub-category" key={this.state.identification_key+'#sub-cat#'+val}
         onClick={ this.onSubCatClick.bind(this, cats[val]) }
-        onTouchEnda={ this.onSubCatClick.bind(this, cats[val]) } >
+        onTouchEnd={ this.onSubCatClick.bind(this, cats[val]) } >
 
         { cats[val].category_name }
 

@@ -28,7 +28,7 @@ $sidebar-trans: cubic-bezier(.6,0,.4,1);
       background-color 0ms ease-out;
   }
 
-  .town{
+  .topbar{
 
     position: relative;
     width: 100%; height: $sidebar-town-height;
@@ -45,10 +45,10 @@ $sidebar-trans: cubic-bezier(.6,0,.4,1);
 
     }
 
-    .text{
+    .town{
 
       position: absolute;
-      top: 46%; left: 40px;
+      top: 48%; left: 40px;
       transform: translateY(-50%);
 
       opacity: 0;
@@ -59,6 +59,48 @@ $sidebar-trans: cubic-bezier(.6,0,.4,1);
       line-height: $sidebar-town-height;
 
       color: darken( $primary-color, 10% );
+
+    }
+
+    .buttons{
+
+      position: absolute;
+      top: 0; right: 0;
+      opacity: 0;
+
+      width: auto;
+      height: $sidebar-town-height;
+
+      white-space: nowrap;
+
+      .button{
+
+        display: inline-block;
+        position: relative;
+        width: auto;
+        height: $sidebar-town-height;
+
+        padding: 0 24px;
+        border-left: 1px solid rgba($primary-color, .7);
+        color: rgba($primary-color, .7);
+        line-height: $sidebar-town-height;
+
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 300;
+
+        transition: 0ms;
+
+        &:hover{
+
+          background-color: rgba($primary-color, .02);
+          border-color: $primary-color;
+          color: $primary-color;
+
+        }
+
+      }
 
     }
 
@@ -171,10 +213,16 @@ $sidebar-trans: cubic-bezier(.6,0,.4,1);
 
         }
 
-        .town .text{
+        .topbar{
 
-          opacity: 1;
-          left: 48px;
+          .town{
+            opacity: 1;
+            left: 48px;
+          }
+
+          .buttons{
+            opacity: 1;
+          }
 
         }
 
@@ -202,10 +250,16 @@ $sidebar-trans: cubic-bezier(.6,0,.4,1);
 
       }
 
-      .town .text{
+      .topbar{
 
-        opacity: 1;
-        left: 48px;
+        .town{
+          opacity: 1;
+          left: 48px;
+        }
+
+        .buttons{
+          opacity: 1;
+        }
 
       }
 

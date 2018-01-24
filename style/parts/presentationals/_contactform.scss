@@ -1,0 +1,173 @@
+
+
+// Contact form
+.contact-form{
+
+  position: relative;
+  margin: 0px auto;
+  max-width: 344px;
+  padding: 32px;
+
+  .contact-form-text{
+
+    color: $secondary-color;
+
+    .logo{
+
+      position: relative;
+      width: 100%; height: 64px;
+
+      svg{
+
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%,-50%);
+
+        width: 64px; height: 64px;
+        fill: $secondary-color;
+
+      }
+
+    }
+
+    .title, .text{
+
+      position: relative;
+      width: 100%; height: auto;
+
+    }
+
+    .title{
+
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 16px;
+      font-weight: 700;
+      margin-top: 16px;
+
+    }
+
+    .text{
+
+      text-align: justify;
+      font-size: 14px;
+      font-weight: 300;
+      margin-top: 8px;
+      margin-bottom: 16px;
+
+    }
+
+  }
+
+  .contact-form-body{
+
+    position: relative;
+    width: 100%; height: auto;
+    margin-bottom: 64px;
+
+    .contact-form-field{
+
+      position: relative;
+      width: 100%; height: 48px;
+
+      label{
+
+        bottom: 8px;
+        left: 8px;
+        transition: 120ms;
+
+      }
+
+      input{
+
+        bottom: 0; left: 0;
+        width: 100%; height: 32px;
+        outline: none;
+
+        padding: 0 8px;
+        background-color: rgba(0,0,0,0);
+
+        border: none;
+        border-bottom: 1px solid $accent-color;
+
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus,
+        &:-webkit-autofill:active {
+          transition: background-color 99999s ease-in-out 0s;
+        }
+
+      }
+
+      label, input{
+
+        position: absolute;
+        font-size: 12px;
+        font-weight: 300;
+        font-family: $fontstack;
+        color: darken( $accent-color, 10% );
+
+      }
+
+      input.active + label, input:focus + label {
+
+        bottom: 28px;
+        left: 4px;
+        font-size: 8px;
+
+      }
+
+    }
+
+    input[type="submit"] {
+
+      position: absolute;
+      bottom: -64px; right: 0;
+      width: 96px; height: 40px;
+
+      outline: none;
+      border: none;
+
+      background-color: rgba(0,0,0,0);
+      box-shadow: 0px 2px 1px rgba(0,0,0,.06);
+
+      text-transform: uppercase;
+      font-weight: 300;
+      font-family: $fontstack;
+      font-size: 10px;
+      color: $accent-color;
+
+      transition: 120ms;
+      cursor: pointer;
+
+      border: 1px dashed $accent-color;
+
+      &:hover{
+
+        color: $primary-color;
+        background-color: $accent-color;
+
+      }
+
+    }
+
+    .submit-sending {
+
+      position: absolute;
+      bottom: -64px; right: 0;
+      width: 96px; height: 40px;
+      line-height: 40px;
+
+      background-color: $accent-color;
+      text-transform: uppercase;
+      text-align: center;
+      font-weight: 300;
+      font-family: $fontstack;
+      font-size: 10px;
+      color: $primary-color;
+
+    }
+
+  }
+
+}

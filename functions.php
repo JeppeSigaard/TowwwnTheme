@@ -7,6 +7,7 @@ get_functions_part(array(
     'menu',
     'location-list',
     'og-meta',
+    'mailing',
 ));
 
 // Kirki

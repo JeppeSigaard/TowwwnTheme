@@ -2,9 +2,11 @@
 
 // Imports
 import React from 'react';
+import ContactForm from '../../presentationals/contactform.js';
 
 // Actions
-import { setViewFocus } from '../../actions/ui.js';
+import { setViewFocus, enableModalBox, disableModalBox }
+  from '../../actions/ui.js';
 
 
 // Side bar component
@@ -31,7 +33,7 @@ class SideBar extends React.Component {
         onClick={ this.onClick.bind(this, null) } >
 
         {/* Header */}
-        <header className="town">
+        <header className="topbar">
 
           <div className="icon">
             <svg viewBox="0 0 32 32">
@@ -40,8 +42,15 @@ class SideBar extends React.Component {
             </svg>
           </div>
 
-          <div className="text">
-            Svendborg
+          <div className="town">
+            {"Svendborg"}
+          </div>
+
+          <div className="buttons">
+            <div className="button contact"
+              onClick={ this.onContactClick.bind(this) }>
+              {"Kontakt os"}
+            </div>
           </div>
 
         </header>
@@ -61,7 +70,7 @@ class SideBar extends React.Component {
             { this.state.future_event_count }
 
             <div className="subtext">
-              Begivenheder
+              {"Begivenheder"}
             </div>
           </div>
 
@@ -82,7 +91,7 @@ class SideBar extends React.Component {
             { this.state.place_count }
 
             <div className="subtext">
-              Lokale Steder
+              {"Lokale Steder"}
             </div>
           </div>
 
@@ -136,6 +145,28 @@ class SideBar extends React.Component {
 
     }
 
+  }
+
+  // On contact click
+  onContactClick() {
+    if ( this.props.store != null ) {
+      this.props.store.dispatch(enableModalBox(
+
+        <ContactForm mail={'aske@smartmonkey.dk'}
+          onSend={ this.offContactClick.bind(this) } />,
+
+        'Kontakt os', false, false, true,
+        this.offContactClick.bind(this)
+
+      ));
+    }
+  }
+
+  // Off contact click
+  offContactClick() {
+    if ( this.props.store != null ) {
+      this.props.store.dispatch(disableModalBox());
+    }
   }
 
   // On store change
