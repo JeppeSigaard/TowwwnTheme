@@ -50,11 +50,11 @@ const renderDynamicOpenTimes = (( val ) => {
 
   // No hours found at all, they're closed.
   if ( json.constructor.name === 'Array' &&
-       json.length == 0 ) { return 'Ingen åbningstider fundet'; }
+       json.length == 0 ) { return '-'; }
 
   // Gets todays data
   let todaysdata = json[days[date.getDay()]];
-  if ( todaysdata == null ) { return 'Lukket for idag'; }
+  if ( todaysdata == null ) { return <span className="red">{'Lukket for idag'}</span>; }
 
   // Gets from and to
   let from_text = json[days[date.getDay()]][0];
@@ -87,9 +87,9 @@ const renderDynamicOpenTimes = (( val ) => {
   let to   = comparisonDate_to.getTime();
 
   // Returns
-  if ( now >= to ) { return 'Lukket for idag'; }
-  else if ( now < from ) { return 'Åbent senere ' + from_text + ' - ' + to_text; }
-  else { return 'Åbent ' + from_text + ' - ' + to_text; }
+  if ( now >= to ) { return <span className="red">{'Lukket for idag'}</span>; }
+  else if ( now < from ) { return <span className="red">{'Åbent senere ' + from_text + ' - ' + to_text}</span>; }
+  else { return <span className="green">{'Åbent ' + from_text + ' - ' + to_text}</span>; }
 
 });
 

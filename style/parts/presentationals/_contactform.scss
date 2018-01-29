@@ -8,6 +8,11 @@
   max-width: 344px;
   padding: 32px;
 
+  @media screen and ( max-width: $mobile-width ) {
+    max-width: 100%;
+    padding: 16px 0px;
+  }
+
   .contact-form-text{
 
     color: $secondary-color;
@@ -45,6 +50,10 @@
       font-weight: 700;
       margin-top: 16px;
 
+      @media screen and ( max-width: $mobile-width ) {
+        font-size: 13px;
+      }
+
     }
 
     .text{
@@ -54,6 +63,10 @@
       font-weight: 300;
       margin-top: 8px;
       margin-bottom: 16px;
+
+      @media screen and ( max-width: $mobile-width ) {
+        font-size: 12px;
+      }
 
     }
 
@@ -89,6 +102,7 @@
 
         border: none;
         border-bottom: 1px solid $accent-color;
+        border-radius: 0px;
 
         &:-webkit-autofill,
         &:-webkit-autofill:hover,
@@ -141,6 +155,7 @@
       cursor: pointer;
 
       border: 1px dashed $accent-color;
+      border-radius: 0px;
 
       &:hover{
 

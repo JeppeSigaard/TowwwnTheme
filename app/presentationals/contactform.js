@@ -84,6 +84,7 @@ class ContactForm extends React.Component {
 
         <input type={ val.type } id={ 'contact-form-field#'+val.name }
           onChange={ this.onFieldChange.bind(this, val.name) }
+          onBlur={ this.onFieldChange.bind(this, val.name) }
           ref={ 'contact-form-field#'+val.name } required />
 
         <label htmlFor={ 'contact-form-field#'+val.name }>{ val.label }</label>

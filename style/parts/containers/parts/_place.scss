@@ -65,8 +65,8 @@ $place-height: 96px;
 
       font-size: 12px;
       font-weight: 500;
-      margin-bottom: 4px;
       padding-right: 16px;
+      margin-bottom: 4px;
 
       overflow: hidden;
       text-overflow: ellipsis;
@@ -83,7 +83,15 @@ $place-height: 96px;
     .adress, .open-hours{
 
       position: relative;
-      margin-left: 24px;
+      margin-left: 20px;
+
+      .green{
+        color: $accent-color;
+      }
+
+      .red{
+        color: #cc0000;
+      }
 
       svg{
 

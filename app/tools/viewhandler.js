@@ -125,7 +125,6 @@ class ViewHandler {
       // Extracts data
       let computedStyle = window.getComputedStyle( mview );
       let transitionDuration = parseFloat( computedStyle.transitionDuration ) * 1000;
-      console.log( transitionDuration );
 
       // Sets timeout
       setTimeout((( ) => {
@@ -226,6 +225,7 @@ class ViewHandler {
 
       // Adds view position classes
       leftview.classList.add('leftview');
+      rightview.classList.add('rightview');
 
       // Returns
       return;

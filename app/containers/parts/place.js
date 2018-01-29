@@ -49,7 +49,7 @@ class Place extends React.Component {
                 this.props.element.adress }
 
               { this.props.element.adress == null &&
-                'Ingen adresse fundet' }
+                '-' }
 
             </div>
 
