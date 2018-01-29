@@ -28,9 +28,12 @@ class View extends React.Component {
                 </svg>
               }
 
-              <div className="title">
+              <div className={"title"+(
+                this.props.closeProps!=null?' canClose':'')} >
+
                 { this.props.title != null &&
                   this.props.title }
+
               </div>
 
               { this.props.closeProps != null &&

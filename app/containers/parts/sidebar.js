@@ -48,7 +48,7 @@ class SideBar extends React.Component {
 
           <div className="buttons">
             <div className="button contact"
-              onClick={ this.onContactClick.bind(this) }>
+              onClick={ this.onClick.bind(this, 'contact') }>
               {"Kontakt os"}
             </div>
           </div>
@@ -145,21 +145,24 @@ class SideBar extends React.Component {
 
     }
 
+    // Or perhaps contact=
+    if ( 'contact' === type ) {
+      this.onContactClick();
+    }
+
   }
 
   // On contact click
   onContactClick() {
-    if ( this.props.store != null ) {
-      this.props.store.dispatch(enableModalBox(
+    this.props.store.dispatch(enableModalBox(
 
-        <ContactForm mail={'aske@smartmonkey.dk'}
-          onSend={ this.offContactClick.bind(this) } />,
+      <ContactForm mail={'aske@smartmonkey.dk'}
+        onSend={ this.offContactClick.bind(this) } />,
 
-        'Kontakt os', false, false, true,
-        this.offContactClick.bind(this)
+      'Kontakt os', false, false, true,
+      this.offContactClick.bind(this)
 
-      ));
-    }
+    ));
   }
 
   // Off contact click

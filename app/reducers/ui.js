@@ -11,7 +11,7 @@ const initState = {
 
     leftview : 'welcome-view',
     rightview : 'calendar-view',
-    mview : 'welcome-view',
+    mview : 'calendar-view',
 
     transition : false,
     from : 'right',

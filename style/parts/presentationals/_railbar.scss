@@ -8,11 +8,13 @@ $railbar-height: 32px;
 
   position: sticky;
   top: 0; left: 0;
-  height: $railbar-height;
+  height: auto;
 
   background-color: darken($secondary-color, 20%);
   box-shadow: 0px 0px 3px rgba(0,0,0,.1);
   overflow: hidden;
+
+  transition: height 400ms ease-out;
 
   cursor: grab;
   &:active{ cursor: grabbing; }
@@ -21,7 +23,7 @@ $railbar-height: 32px;
 
     position: absolute;
     top: 0px; left: 0px;
-    width: auto; height: 100%;
+    width: auto; height: auto;
     color: $primary-color;
     transition: 150ms cubic-bezier(0,.5,.5,1);
 
@@ -36,6 +38,7 @@ $railbar-height: 32px;
 
       display: inline-block;
       position: relative;
+      height: auto;
       line-height: $railbar-height;
       transition: 120ms cubic-bezier(.6,0,.4,1);
 
@@ -93,6 +96,31 @@ $railbar-height: 32px;
 
       &.active{
         background-color: darken( $accent-color, 6% );
+      }
+
+    }
+
+  }
+
+  &.colorscheme-transparent{
+
+    background-color: transparent;
+    box-shadow: none;
+
+    .railbar-item{
+
+      color: $accent-color;
+
+      &:before{
+        background-color: $accent-color;
+      }
+
+      &:hover{
+        background-color: transparent;
+      }
+
+      &.active{
+        background-color: transparent;
       }
 
     }

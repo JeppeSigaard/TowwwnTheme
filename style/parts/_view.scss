@@ -15,6 +15,7 @@ $view-trans: cubic-bezier(.6,0,.4,1);
 
   overflow-x: hidden;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 
   &.trans{
     transition: left 380ms $view-trans,
@@ -60,10 +61,15 @@ $view-trans: cubic-bezier(.6,0,.4,1);
       .title{
 
         line-height: 19px;
-        width: calc( 100% - (16px + 12px + 16px * 2) - 56px );
+        width: calc( 100% - (16px + 12px + 16px * 2) );
         height: 20px;
         white-space: nowrap;
         overflow: hidden;
+        text-overflow: ellipsis;
+
+        &.canClose {
+            width: calc( 100% - (16px + 12px + 16px * 2) - 56px );
+        }
 
       }
 

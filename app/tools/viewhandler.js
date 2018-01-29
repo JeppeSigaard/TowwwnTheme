@@ -54,7 +54,10 @@ class ViewHandler {
       if ( store.getState().ui != null && store.getState().ui.viewrelated.mobile ) {
 
         // Mobile
-        this.updateViewPositioningSmallScreen(store);
+        if ( !this.ongoing ) {
+          this.ongoing = true;
+          this.updateViewPositioningSmallScreen(store);
+        }
 
       } else {
 
@@ -116,10 +119,28 @@ class ViewHandler {
 
     mview['style'].left = '0%';
 
+    // Handles throttling when transition
+    if ( transition ) {
+
+      // Extracts data
+      let computedStyle = window.getComputedStyle( mview );
+      let transitionDuration = parseFloat( computedStyle.transitionDuration ) * 1000;
+      console.log( transitionDuration );
+
+      // Sets timeout
+      setTimeout((( ) => {
+        this.ongoing = false;
+      }).bind(this), transitionDuration);
+
+    }
+
     // Forces css queue to execute
     this.removePositioningClasses();
     mview.classList.add('leftview');
     this.forceQueueExecution(views)
+
+    // Handles throttling when !transition
+    if ( !transition ) { this.ongoing = false; }
 
   }
 
@@ -203,9 +224,10 @@ class ViewHandler {
       leftview['style'].left = "0%";
       rightview['style'].left = "50%";
 
-      // Adds view position classes and returns
+      // Adds view position classes
       leftview.classList.add('leftview');
-      rightview.classList.add('rightview');
+
+      // Returns
       return;
 
     }

@@ -51,6 +51,21 @@ const getSinglePlace = (( id ) => ( dispatch ) => {
       elements : JSON.parse( response.target.response )
     }});
 
+    // Creates new request to get children (events)
+    let child_request = new XMLHttpRequest();
+    child_request.onload = (( response ) => {
+
+      // // Dispatches places fetched
+      // dispatch({ type : "PLACE_CHILDS_FETCHED", payload : {
+      //   elements : JSON.parse( response.target.response )
+      // }});
+
+    });
+
+    // Opens and sends request
+    // request.open( 'GET', app_data.rest_api+'/events?parent='+String(id) );
+    // request.send();
+
   });
 
   // Opens and sends the request

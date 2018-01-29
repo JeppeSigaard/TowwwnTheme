@@ -54,9 +54,10 @@
           font-size: 16px;
 
           overflow: hidden;
+          text-overflow: ellipsis;
           white-space: nowrap;
           height: auto;
-          width: calc( 50vw - 48px - 124px );
+          width: calc( ( 100vw - 48px ) / 2 - 124px - 16px );
 
           @media screen and ( max-width: $mobile-width ) {
             width: calc( 100vw - 48px - 124px - 16px );
@@ -70,6 +71,16 @@
           color: $accent-color;
           font-weight: 300;
           font-size: 12px;
+
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          height: auto;
+          width: calc( ( 100vw - 48px ) / 2 - 124px - 16px );
+
+          @media screen and ( max-width: $mobile-width ) {
+            width: calc( 100vw - 48px - 124px - 16px );
+          }
 
         }
 

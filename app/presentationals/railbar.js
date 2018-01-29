@@ -14,6 +14,7 @@ class Railbar extends React.Component {
       items  : [ ],
       index  : 0,
       offset : 0,
+      height : 0,
 
       cursor_pressed        : false,
       cursor_pressed_time   : null,
@@ -27,7 +28,7 @@ class Railbar extends React.Component {
   render() {
     return (
       <div className={"railbar colorscheme-"+( this.props.colorScheme )}
-        ref="railbar" >
+        ref="railbar" style={{ 'height' : this.state.height+'px' }} >
 
         <div className="railbar-inner" ref="railbar-inner"
           style={{ 'left': - this.state.offset + 'px' }} >
@@ -215,6 +216,19 @@ class Railbar extends React.Component {
 
   }
 
+  // Update height
+  updateHeight( ) {
+
+    // Extracts data
+    let inner  = this.refs['railbar-inner'];
+    let style  = window.getComputedStyle( inner );
+    let height = parseInt( style['height'] );
+
+    // Sets state
+    this.setState({ height });
+
+  }
+
   // Add trans
   addTransition() {
 
@@ -309,9 +323,10 @@ class Railbar extends React.Component {
       items,
       offset,
     }, () => {
-      if ( reset ) {
-        this.setIndex(0);
-      }
+
+      this.updateHeight();
+      if ( reset ) { this.setIndex(0); }
+
     });
 
   }

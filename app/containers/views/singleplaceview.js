@@ -196,7 +196,9 @@ class SinglePlaceView extends View {
   }
 
   // On close
-  onClose() { this.resetScroll( true ); }
+  onClose() {
+    this.resetScroll( true );
+   }
 
   // On store change
   onStoreChange() {
@@ -208,7 +210,9 @@ class SinglePlaceView extends View {
     let element = state.places.elements[String(shown_place)];
 
     // Resets scroll
-    if ( element !== this.state.element ) { this.resetScroll( false ); }
+    if ( element !== this.state.element ) {
+      this.resetScroll( false );
+    }
 
     // Error handling
     if ( element == null ) { return; }

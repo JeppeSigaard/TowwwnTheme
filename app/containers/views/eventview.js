@@ -5,30 +5,24 @@ import React from 'react';
 
 // Components
 import View from '../view.js';
-import Event from '../parts/event.js';
-import SingleFooter from '../parts/singlefooter.js';
-import CTAIcons from '../../presentationals/parts/ctaicons.js';
-
-import Linkify from 'react-linkify';
+import FullSizeEvent from '../parts/fullsizeevent.js';
 
 // Actions & tools
 import { getSinglePlace } from '../../actions/api/places.js';
-import { formatDate, decodeEntities, nl2p } from '../../tools/formatters.js';
-
+import { decodeEntities } from '../../tools/formatters.js';
 
 // Event view component
 class EventView extends View {
 
   // Constructor
-  constructor( props ) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
 
       event  : null,
       imgUrl : null,
-      hours : null,
+      hours  : null,
 
-      ctaelems : [ ],
       id : "event-view",
       title : 'Begivenhed',
 
@@ -39,151 +33,22 @@ class EventView extends View {
   render() {
 
     return (
-      <View id={this.state.id} title={this.state.title}
+      <View id={ this.state.id } title={ decodeEntities(this.state.title) }
         icon="#icon-event" viewBox="0 0 32 32"
         onClose={ this.onClose.bind(this) }
         closeProps={[ 'welcome-view','calendar-view','calendar-view', 'left', true ]}
         store={ this.props.store }>
 
-        <div className="single-event">
-          { this.state.event != null && <div className="single-event-inner">
-
-            {/* Image */}
-            <div className="single-event-image"
-              style={{ backgroundImage : 'url('+this.state.imgUrl+')' }}>
-
-              <CTAIcons elements={this.state.ctaelems} />
-
-            </div>
-
-            {/* Top */}
-            <div className="single-event-top">
-              <div className="parent">{ this.state.event['parentname'] }</div>
-              <div className="title">{ decodeEntities(this.state.event['title']) }</div>
-              <div className="time">
-                { formatDate(new Date(this.state.event['start_time']), true) }
-              </div>
-            </div>
-
-            {/* Desc */}
-            { this.state.event['description'] != null &&
-              <div className="single-event-desc">
-                <Linkify>
-                  { nl2p(decodeEntities(this.state.event['description'])) }
-                </Linkify>
-              </div>
-            }
-
-            {/* Footer */}
-            <SingleFooter element={ this.state.event } elementType="event"
-              store={this.props.store} />
-
-          </div> }
-        </div>
+        <FullSizeEvent
+          onEventChange={this.resetScroll.bind(this, true)}
+          store={ this.props.store }
+          event={ this.state.event }
+          imgUrl={ this.state.imgUrl }
+          hours={ this.state.hours }
+        />
 
       </View>
     );
-  }
-
-  // Render siblings
-  renderSiblings( id ) {
-
-    // Gets element & checks if it exists
-    let element = this.props.store.getState().events.elements[id];
-    if (element==null){return <div>Error fetching event</div>;}
-
-    // Creates props & returns event
-    let props = { element, large : true, key : 'eventview-sibling#'+id };
-    return (<Event {...props} />);
-
-  }
-
-  // Render hours
-  renderHours( day ) {
-
-    // Preset fields
-    let days = {
-      'mon' : 'Mandag',
-      'tue' : 'Tirsdag',
-      'wed' : 'Onsdag',
-      'thu' : 'Torsdag',
-      'fri' : 'Fredag',
-      'sat' : 'Lørdag',
-      'sun' : 'Søndag',
-    };
-
-    // Returns
-    return (
-      <div className="hours-row" key={"single-event-hours-day#"+day}>
-        { days[day] + ':' }
-
-        <div className="time">
-          { this.state.hours[day][0] + ' - ' +
-            this.state.hours[day][1] }
-        </div>
-      </div>
-    );
-
-  }
-
-  // Share
-  share(e) {
-
-    // Prevents redirect
-    e.preventDefault();
-
-    // Share dialog
-    FB.ui({
-      method: 'share',
-      href: ('https://facebook.com/'+this.state.event['fbid']),
-    }, ((response) => {}));
-
-  }
-
-  // Update call to action elements
-  updateCallToActionElements( props ) {
-    if ( this.state.event != null ) {
-
-      // Creates response field
-      let ctaelems = [ ];
-
-      // Facebook sjiz
-      if ( this.state.event['fbid'] != null ) {
-
-        // Facebook link
-        ctaelems.push({
-          href : 'http://fb.com/'+this.state.event['fbid'],
-          className : 'fb',
-          viewBox : '0 0 32 32',
-          xlinkHref : '#icon-facebook',
-          text : 'facebook',
-        });
-
-        // Facebook share
-        ctaelems.push({
-          href : 'http://fb.com/'+this.state.event['fbid'],
-          onClick : this.share.bind(this),
-          viewBox : '0 0 32 32',
-          xlinkHref : '#icon-share',
-          text : 'del nu',
-        });
-
-      }
-
-      // Ticket link
-      if ( this.state.event['ticket_uri'] != null ) {
-        ctaelems.push({
-          href : this.state.event['ticket_uri'],
-          viewBox : '0 0 32 32',
-          xlinkHref : '#icon-ticket',
-          text : 'billet'
-        });
-      }
-
-      // Sets state
-      this.setState({ ctaelems });
-
-    }
   }
 
   // Reset scroll
@@ -197,7 +62,9 @@ class EventView extends View {
   }
 
   // On close
-  onClose() { this.resetScroll(true); }
+  onClose() {
+    this.resetScroll(true);
+  }
 
   // On store change
   onStoreChange() {
@@ -210,7 +77,9 @@ class EventView extends View {
 
       // Gets event
       let event = state.events.elements[String(state.ui.shown_single_event)];
-      if ( event !== this.state.event ) { this.resetScroll(false); }
+      if ( event !== this.state.event && this.props.onEventChange != null ) {
+        this.props.onEventChange(false);
+      }
 
       // Gets smallest event image above 400px
       let imgUrl = event.images[(Object.keys(event.images).filter(( size ) => {
@@ -245,15 +114,9 @@ class EventView extends View {
       this.setState({
         event, imgUrl, hours,
         title : event['title']
-      }, () => {
-
-        // Updates call to action elements
-        this.updateCallToActionElements();
-
       });
 
     }
-
   }
 
   // Component will mount

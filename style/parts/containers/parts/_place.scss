@@ -69,6 +69,7 @@ $place-height: 96px;
       padding-right: 16px;
 
       overflow: hidden;
+      text-overflow: ellipsis;
       white-space: nowrap;
       height: auto;
       width: calc( 50vw - 48px - 96px );
@@ -100,6 +101,19 @@ $place-height: 96px;
         width: 10px;
         height: auto;
         left: -19px;
+
+      }
+
+      .text {
+
+        width: calc( ( 100vw - 48px ) / 2 - 96px - 24px - 16px );
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        @media screen and ( max-width: $mobile-width ) {
+          width: calc( 100vw - 48px - 96px - 24px - 16px );
+        }
 
       }
 
@@ -139,12 +153,3 @@ $place-height: 96px;
   }
 
 }
-
-
-
-
-
-
-
-
-*{}

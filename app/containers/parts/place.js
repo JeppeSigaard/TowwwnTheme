@@ -43,11 +43,15 @@ class Place extends React.Component {
               </use>
             </svg>
 
-            { this.props.element.adress != null &&
-              this.props.element.adress }
+            <div className="text">
 
-            { this.props.element.adress == null &&
-              'Ingen adresse fundet' }
+              { this.props.element.adress != null &&
+                this.props.element.adress }
+
+              { this.props.element.adress == null &&
+                'Ingen adresse fundet' }
+
+            </div>
 
           </div>
 
@@ -58,7 +62,9 @@ class Place extends React.Component {
               </use>
             </svg>
 
-            { renderDynamicOpenTimes(this.props.element.hours) }
+            <div className="text">
+              { renderDynamicOpenTimes(this.props.element.hours) }
+            </div>
 
           </div>
 
