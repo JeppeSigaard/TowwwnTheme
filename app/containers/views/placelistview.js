@@ -9,6 +9,7 @@ import Place from '../parts/place.js';
 import Loader from '../../presentationals/parts/loader.js';
 
 import { shuffle } from '../../tools/array.js';
+import { cookies } from '../../tools/cookies.js';
 
 // Place list view
 class PlaceListView extends View {
@@ -26,7 +27,7 @@ class PlaceListView extends View {
       title : 'Steder',
       id : 'place-list-view',
 
-      sort : 'alp',
+      sort : 'rnd',
       sub_cat_filter : null,
 
     };
@@ -150,6 +151,9 @@ class PlaceListView extends View {
 
       // Checks sort type
       if ( sort_type == null ) { sort_type = this.state.sort; }
+
+      // Controls cookies
+      cookies.setItem( 'sort_method', sort_type, Infinity, '/' );
 
       // Extracts data
       let state   = store.getState();
@@ -303,9 +307,17 @@ class PlaceListView extends View {
 
   // Component did mount
   componentDidMount() {
+
+    // Subscribess to store
     if ( this.props.store != null ) {
       this.props.store.subscribe(this.onStoreChange.bind(this));
     }
+
+    // Gets cookies sorting methods
+    let sortingMethod = cookies.getItem('sort_method');
+    if ( sortingMethod == null ) { sortingMethod = 'rnd'; }
+    this.setState({ sort : sortingMethod });
+
   }
 
 }

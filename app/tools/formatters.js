@@ -88,7 +88,7 @@ const renderDynamicOpenTimes = (( val ) => {
 
   // Returns
   if ( now >= to ) { return <span className="red">{'Lukket for idag'}</span>; }
-  else if ( now < from ) { return <span className="red">{'Åbent senere ' + from_text + ' - ' + to_text}</span>; }
+  else if ( now < from ) { return 'Åbent senere ' + from_text + ' - ' + to_text; }
   else { return <span className="green">{'Åbent ' + from_text + ' - ' + to_text}</span>; }
 
 });

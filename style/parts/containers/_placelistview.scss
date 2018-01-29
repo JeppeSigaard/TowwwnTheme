@@ -26,24 +26,39 @@
     .sort-btn{
 
       position: absolute;
-      transform: translateY(-50%);
-      top: 54%;
+      top: 0; left: auto;
+      width: 50%; height: 100%;
 
       cursor: pointer;
-      svg{ fill: $primary-color; }
 
-      &.sort-rnd{
+      svg{
 
-        left: 20px;
-        svg{ height: 14px; }
+        fill: $primary-color;
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%,-50%);
 
       }
 
-      &.sort-alp{
+      &.sort-rnd {
 
-        top: 56%;
-        right: 20px;
+        background-color: rgba($secondary-color, .18);
+        svg{ height: 14px; }
+
+        &:hover{
+          background-color: rgba($primary-color, .08);
+        }
+
+      }
+
+      &.sort-alp {
+
+        left: 50%;
         svg{ height: 22px; }
+
+        &:hover{
+          background-color: rgba($primary-color, .08);
+        }
 
       }
 

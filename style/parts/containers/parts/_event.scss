@@ -64,6 +64,7 @@ $event-mobile-footer-height: 50px;
 
     position: relative;
     overflow: hidden;
+    text-overflow: ellipsis;
     width: 100%; height: calc( #{$event-height} -
       #{$event-head-height} -
       #{$event-footer-height} );
@@ -73,7 +74,11 @@ $event-mobile-footer-height: 50px;
     text-transform: uppercase;
 
     .title{
+
       font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
     }
 
     .time{
