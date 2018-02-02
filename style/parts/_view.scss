@@ -28,6 +28,10 @@ $view-trans: cubic-bezier(.6,0,.4,1);
     position: relative;
     width: 100%; height: auto;
 
+    @media screen and ( max-width: $mobile-width ) {
+      padding-bottom: 32px;
+    }
+
     // Head
     .view-head{
 
