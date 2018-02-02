@@ -17,14 +17,16 @@ class ContactForm extends React.Component {
 
       // Fields
       fields : [
-        { name : 'name', label : 'Navn', type : 'text' },
-        { name : 'mail', label : 'Email', type : 'email' },
+        { name : 'name', label : 'Navn *', type : 'text' },
+        { name : 'mail', label : 'Email *', type : 'email' },
+        { name : 'msg', label : 'Besked', type : 'textarea' }
       ],
 
       // Field Values
       fieldValues : {
         'name' : '',
         'mail' : '',
+        'msg'  : '',
       }
 
     };
@@ -68,8 +70,12 @@ class ContactForm extends React.Component {
           }
 
           { this.state.sending &&
-            <div class="submit-sending">Sender...</div>
+            <div className="submit-sending">Sender...</div>
           }
+
+          <div className="required">
+            * Påkrævet
+          </div>
 
         </form>
 
@@ -79,18 +85,35 @@ class ContactForm extends React.Component {
 
   // Render field
   renderField( val ) {
-    return (
-      <div className="contact-form-field" key={ 'contact-form-field#'+val.name } >
+    if ( val.type !== 'textarea' ) {
+      return (
+        <div className="contact-form-field" key={ 'contact-form-field#'+val.name } >
 
-        <input type={ val.type } id={ 'contact-form-field#'+val.name }
-          onChange={ this.onFieldChange.bind(this, val.name) }
-          onBlur={ this.onFieldChange.bind(this, val.name) }
-          ref={ 'contact-form-field#'+val.name } required />
+          <input type={ val.type } id={ 'contact-form-field#'+val.name }
+            onChange={ this.onFieldChange.bind(this, val.name) }
+            onBlur={ this.onFieldChange.bind(this, val.name) }
+            ref={ 'contact-form-field#'+val.name } required />
 
-        <label htmlFor={ 'contact-form-field#'+val.name }>{ val.label }</label>
+          <label htmlFor={ 'contact-form-field#'+val.name }>{ val.label }</label>
 
-      </div>
-    );
+        </div>
+      );
+    } else {
+      return (
+        <div className="contact-form-field largefield" key={ 'contact-form-field#'+val.name } >
+
+          <textarea id={ 'contact-form-field#'+val.name }
+            onChange={ this.onFieldChange.bind(this, val.name) }
+            onBlur={ this.onFieldChange.bind(this, val.name) }
+            ref={ 'contact-form-field#'+val.name } required >
+
+          </textarea>
+
+          <label htmlFor={ 'contact-form-field#'+val.name }>{ val.label }</label>
+
+        </div>
+      );
+    }
   }
 
   // On field change
@@ -121,12 +144,14 @@ class ContactForm extends React.Component {
     // Extracts data
     let name = this.state.fieldValues.name;
     let mail = this.state.fieldValues.mail;
+    let uMsg = this.state.fieldValues.msg;
 
     // Formats data to towwwn
     let to  = 'aske@towwwn.com';
     let sub = 'Towwwn - Contact';
     let msg = 'A user, by the name '+name+', is trying to reach you through Towwwn.\n'+
-              'You can reach '+name+' on the mail: '+mail;
+              'You can reach '+name+' on the mail: '+mail+'\n\n'+
+              'Oh, and he/her sent a msg along too:\n'+uMsg;
 
     // Sends email to towwwn staff
     this.sendMail( to, sub, msg )
@@ -137,11 +162,11 @@ class ContactForm extends React.Component {
 
     // Formats data to user
     to  = mail;
-    sub = 'Towwwn - Informations received';
+    sub = 'Towwwn - Message received';
     msg = 'Hi '+name+', thanks for contacting us.\n\n'+
           'Were currently proccesing your request, and will be in touch soon.\n'+
           'Looking forward to talking to you.\n\n'+
-          '// The Towwwn Team';
+          'With <3 from the Towwwn team.';
 
     // Sends mail to user
     this.sendMail( to, sub, msg )

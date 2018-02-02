@@ -135,7 +135,7 @@ class PlaceListView extends View {
         onClick={ this.onSubCatClick.bind(this, cats[val]) }
         onTouchEnd={ this.onSubCatClick.bind(this, cats[val]) } >
 
-        { cats[val].category_name }
+        { cats[val].category_name + ' ('+cats[val].location_count+')' }
 
       </div>
     );
