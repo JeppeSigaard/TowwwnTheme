@@ -1,5 +1,5 @@
 {
-  "name": "TowwwnTheme",
+  "name": "towwwntheme",
   "version": "1.0.0",
   "description": "",
   "main": "./app/app.js",
@@ -42,6 +42,7 @@
     "redux-thunk": "^2.2.0",
     "sass-loader": "^6.0.3",
     "sticky-position": "^1.0.1",
+    "stickyfilljs": "^2.0.3",
     "style-loader": "^0.13.2",
     "sugarss": "^1.0.1",
     "url-loader": "^0.5.8",

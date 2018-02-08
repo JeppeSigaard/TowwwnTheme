@@ -189,9 +189,9 @@ class SinglePlaceView extends View {
   resetScroll( withTrans ) {
 
     // Gets view, its transition time and scroll down.
-    let view  = document.getElementById(this.state.id);
-    let trans = parseFloat(window.getComputedStyle(view).transitionDuration) * 1000;
-    setTimeout(() => { view.scrollTo( 0, 0 ); }, withTrans?trans:0 );
+    let scroller = document.querySelectorAll( '#'+this.state.id+' .scroller' )[0];
+    let trans = parseFloat(window.getComputedStyle(scroller).transitionDuration) * 1000;
+    setTimeout(() => { scroller.scrollTo( 0, 0 ); }, withTrans?trans:0 );
 
   }
 

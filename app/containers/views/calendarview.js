@@ -217,18 +217,18 @@ class CalendarView extends View {
   }
 
   // On Scroll
-  onScroll(payload) {
+  onScroll( payload ) {
 
     // If not already fetching, check if more fetching is needed
-    if (!this.props.store.getState().events.fetching&&
-        !this.props.store.getState().events.all_future_fetched) {
+    if ( !this.props.store.getState().events.fetching &&
+         !this.props.store.getState().events.all_future_fetched) {
 
       // Extracts data
-      let scrollBottom = Number(payload.scrollY) + parseInt(payload.viewCSSProps['height']),
-        fromBottom = parseInt(payload.innerViewCSSProps['height']) - scrollBottom;
+      let scrollBottom = Number( payload.scrollY ) + parseInt( payload.viewCSSProps['height'] ),
+        fromBottom = parseInt (payload.scrollerCSSProps['height']) - scrollBottom;
 
       // Checks if load more is needed (24 future events)
-      if (fromBottom<=600) {
+      if ( fromBottom <= 600 ) {
         this.props.store.dispatch(getFutureEvents( 24 ));
       }
 
