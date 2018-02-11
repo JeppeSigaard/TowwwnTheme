@@ -10,8 +10,9 @@ $sidebar-trans: cubic-bezier(.6,0,.4,1);
   position: absolute;
   top: 0; left: 0;
 
-  width: $sidebar-width;
+  width: calc( 50vw + #{$sidebar-width} / 2 ); // <- helps fix edge bug
   height: 100vh;
+  max-width: $sidebar-width; // <- helps fix edge bug
 
   background-color: darken($accent-color, 6%);
   overflow: hidden;
@@ -19,7 +20,7 @@ $sidebar-trans: cubic-bezier(.6,0,.4,1);
   cursor: pointer;
   z-index: 99;
 
-  transition: width 180ms $sidebar-trans;
+  transition: 180ms $sidebar-trans;
 
   *{
     transition: 180ms $sidebar-trans,
@@ -232,8 +233,8 @@ $sidebar-trans: cubic-bezier(.6,0,.4,1);
   // !Mobile
   @media screen and ( min-width: $mobile-width ) {
     &:hover {
-
-      width: calc( 50vw + #{$sidebar-town-height} / 2 );
+      
+      max-width: 53vw; // <- helps fix edge bug
 
       section .icon{
 

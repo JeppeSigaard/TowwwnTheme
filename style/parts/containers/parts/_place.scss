@@ -144,15 +144,14 @@ $place-height: 96px;
 
     .small-cta-icon{
 
-      width: 12px;
-      height: 14px;
       flex: 1;
-
       margin-left: 8px;
 
       svg{
 
         fill: lighten( $secondary-color, 20% );
+        width: 12px;
+        height: 14px;
 
       }
 

@@ -28,7 +28,7 @@ const postAjax = (( action, data ) => {
     // Sends request
     request.send( params );
 
-  });
+  }); 
 
 });
 

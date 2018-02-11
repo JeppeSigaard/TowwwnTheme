@@ -44,18 +44,15 @@
           bottom: 0; right: 32px;
           width: auto; height: 48px;
           border-right: 1px solid rgba($primary-color, .4);
-
-          display: flex;
-          flex-wrap: nowrap;
+          white-space: nowrap;
+          font-size: 0;
 
           .welcome-cta-icon{
 
             position: relative;
-            display: block;
+            display: inline-block;
             width: 58px; height: 48px;
-
             border-left: 1px solid rgba($primary-color, .4);
-            flex: 1;
 
             .icon{
 
@@ -64,7 +61,7 @@
               transform: translate(-50%,-50%);
               height: 16px; width: 16px;
 
-              &.ig-icon{
+              &.ig-icon {
 
                 width: 18px;
                 height: 18px;
