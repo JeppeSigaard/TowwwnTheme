@@ -195,9 +195,12 @@ $sidebar-trans: cubic-bezier(.6,0,.4,1);
   // Open state
   // Mobile
   @media screen and ( max-width: $mobile-width ) {
+
+    width: 100vw;
+
     &.forceopen {
 
-        width: 100vw;
+        max-width: 100vw;
 
         section .icon{
 
