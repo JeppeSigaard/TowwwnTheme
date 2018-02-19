@@ -188,7 +188,7 @@ class SideBar extends React.Component {
       response.future_event_count = state.defaultdata.data.future_event_count;
     }
 
-    // Place cpunt
+    // Place count
     if ( state.defaultdata.data.place_count != null ) {
       response.place_count = state.defaultdata.data.place_count;
     }
@@ -203,6 +203,9 @@ class SideBar extends React.Component {
     if ( this.props.store != null ) {
       this.props.store.subscribe(this.onStoreChange.bind(this));
       this.props.store.dispatch( addNotification( 'Use the menu to the left' ) );
+
+      let mobile = this.props.store.getState().mobile.isMobile;
+      if ( window.innerWidth < 960 ) { this.setState({ open: true }); }
     }
   }
 

@@ -99,6 +99,7 @@ class FullSizeEvent extends React.Component {
     e.preventDefault();
 
     // Share dialog
+    /*global FB:true*/
     FB.ui({
       method: 'share',
       href: ('https://facebook.com/'+this.props.event['fbid']),

@@ -9,22 +9,23 @@ const initState = {
 const mobileReducer = (( state=initState, action ) => {
   switch ( action.type ) {
 
-    /* ---- Set mobile mode ---- */
-    case "SET_MOBILE_MODE" : {
+  /* ---- Set mobile mode ---- */
+  case 'SET_MOBILE_MODE' : {
 
-      // Error handling
-      if (action.payload.mobile==null)
-        { return state; }
-
-      // View related
-      return Object.assign({}, state, {
-        isMobile : action.payload.mobile,
-      });
-
+    // Error handling
+    if ( action.payload.mobile == null ) { 
+      return state; 
     }
 
-    // Default case
-    default: { return state; }
+    // View related
+    return Object.assign({}, state, {
+      isMobile : action.payload.mobile,
+    });
+
+  }
+
+  // Default case
+  default: { return state; }
 
   }
 });

@@ -170,10 +170,10 @@ class ContactForm extends React.Component {
 
     // Sends mail to user
     this.sendMail( to, sub, msg )
-      .then(( r ) => { this.setState({ sending : false }) })
+      .then(( r ) => { this.setState({ sending : false }); })
       .then(( ) => { if ( this.props.onSend != null ) {
         this.props.onSend(); }
-      });;
+      });
 
   }
 

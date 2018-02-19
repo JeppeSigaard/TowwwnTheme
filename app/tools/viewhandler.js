@@ -31,13 +31,13 @@ class ViewHandler {
   // On resize
   onResize( store ) {
     if ( window.innerWidth >= 800 &&
-      store.getState().views.mobile ) {
+      store.getState().mobile.isMobile ) {
 
       // Not mobile.. Any more
       store.dispatch(setMobileMode(false));
 
     } else if ( window.innerWidth < 800 &&
-      !store.getState().views.mobile ) {
+      !store.getState().mobile.isMobile ) {
 
       // Mobile now!
       store.dispatch(setMobileMode(true));
@@ -49,8 +49,7 @@ class ViewHandler {
   processStoreChange( store ) {
 
     // if last view related is not equal to current
-    if ( this.l_viewrelated != store.getState().views ) {
-
+    if ( this.l_viewrelated != store.getState().views.l_viewrelated ) {
       if ( store.getState().mobile.isMobile ) {
 
         // Mobile

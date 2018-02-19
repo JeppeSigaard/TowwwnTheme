@@ -1,9 +1,9 @@
 
 
 // Set mobile
-const setMobileMode = ((mobile) => {
+const setMobileMode = (( mobile ) => {
   return {
-    type : "SET_MOBILE_MODE",
+    type : 'SET_MOBILE_MODE',
     payload : { mobile }
   };
 });
