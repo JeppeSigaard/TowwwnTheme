@@ -9,6 +9,7 @@ import ErrorBoundary from './devtools/errorboundary.js';
 
 import ViewHandler from '../tools/viewhandler.js';
 import SideBar from './parts/sidebar.js';
+import Notifications from './parts/notifications.js';
 import ModalBox from '../presentationals/modalbox.js';
 import Cookies from '../presentationals/parts/cookies.js';
 
@@ -23,7 +24,7 @@ import SinglePlaceView from './views/singleplaceview.js';
 // Actions
 import { getDefaultData } from '../actions/api/defaultdata.js';
 import { getAdvertisements } from '../actions/api/advertisements.js';
-import { enableModalBox, disableModalBox } from '../actions/ui.js';
+import { enableModalBox, disableModalBox, addNotification } from '../actions/ui.js';
 
 // Styling
 import Styling from '../../style/base.scss';
@@ -94,6 +95,9 @@ class AppInstance extends React.Component {
 
           </CSSTransitionGroup >
 
+          {/* Notification */}
+          <Notifications store={ this.props.store } />
+
         </div>
       </ErrorBoundary>
     );
@@ -155,7 +159,7 @@ class AppInstance extends React.Component {
 
     // Subscribes to store
     if ( this.props.store != null ) {
-      this.props.store.subscribe(this.onStoreChange.bind(this));
+      this.props.store.subscribe( this.onStoreChange.bind(this) );
     }
 
     // Enables cookies modal box

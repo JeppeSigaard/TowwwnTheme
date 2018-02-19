@@ -1,0 +1,71 @@
+
+
+// Notifications
+.notifications {
+
+  position: fixed;
+  bottom: 8px;
+  right: 16px;
+
+  width: auto;
+  height: auto;
+
+  z-index: 999;
+  
+  .notification {
+
+    position: relative;
+    margin: 8px 0;
+    margin-bottom: -6px;
+    padding: 0 16px;
+    height: 32px;
+
+    opacity: 0;
+
+    line-height: 32px;
+    font-size: 12px;
+    font-weight: 300;
+
+    background-color: $secondary-color;
+    color: $primary-color;
+
+    box-shadow: 0px 2px 4px rgba(0,0,0,.1);
+    transition: 120ms ease-out;
+
+    &.hasMounted{
+
+      margin-bottom: 8px;
+      opacity: 1;
+
+    }
+
+    .text,
+    .icon {
+      
+      display: inline-block;
+      vertical-align: top;
+
+    }
+
+    .icon {
+
+      position: relative;
+      margin-right: 8px;
+      width: 16px; height: 100%;
+
+      svg {
+        
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate( -50%, -50% );
+
+        width: 16px; height: 16px;
+        fill: rgba($primary-color, .8);
+
+      }
+
+    }
+
+  }
+
+}

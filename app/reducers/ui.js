@@ -30,6 +30,10 @@ const initState = {
 
   },
 
+  notifications : [
+    
+  ],
+
   shown_single_event : null,
   shown_category : null,
   shown_single_place : null,
@@ -153,6 +157,23 @@ const UIReducer = (( state=initState, action ) => {
       return Object.assign({}, state, { modalbox : {
         active : false,
       }});
+    }
+
+    /* ---- Add Notification ---- */
+    case "ADD_NOTIFICATION": {
+      
+      // Creates notifications array
+      let notifications = state.notifications.concat([{
+        id : state.notifications.length,
+        timeCreated : (new Date()).getTime(),
+        text : action.payload.text,
+      }]);
+
+      // Returns
+      return Object.assign ({}, state, {
+        notifications
+      });
+
     }
 
     /* ---- Default ---- */

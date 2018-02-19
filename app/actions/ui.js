@@ -28,6 +28,14 @@ const disableModalBox = (() => {
   };
 });
 
+// Add Notification
+const addNotification = (( text ) => {
+  return {
+    type : "ADD_NOTIFICATION",
+    payload : { text }
+  };
+});
+
 // Set single event
 const setShownSingleEvent = (( id ) => {
 
@@ -103,6 +111,7 @@ export {
   setViewFocus,
   enableModalBox,
   disableModalBox,
+  addNotification,
   setShownSingleEvent,
   setShownCategory,
   setShownSinglePlace,

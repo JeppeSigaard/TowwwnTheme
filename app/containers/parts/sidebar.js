@@ -5,7 +5,7 @@ import React from 'react';
 import ContactForm from '../../presentationals/contactform.js';
 
 // Actions
-import { setViewFocus, enableModalBox, disableModalBox }
+import { setViewFocus, enableModalBox, disableModalBox, addNotification }
   from '../../actions/ui.js';
 
 
@@ -199,6 +199,7 @@ class SideBar extends React.Component {
   componentDidMount() {
     if ( this.props.store != null ) {
       this.props.store.subscribe(this.onStoreChange.bind(this));
+      this.props.store.dispatch( addNotification( 'Use the menu to the left' ) );
     }
   }
 

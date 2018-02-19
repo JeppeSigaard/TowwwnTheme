@@ -141,6 +141,8 @@
 
       textarea{
 
+        -webkit-appearance: none;
+
         position: relative;
         width: 100%;
         height: calc(100% - 32px);
