@@ -5,8 +5,13 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
 // Reducers
-import ui from './reducers/ui.js';
 import defaultdata from './reducers/data/defaultdata.js';
+
+import mobile from './reducers/ui/mobile.js';
+import modalbox from './reducers/ui/modalbox.js';
+import notifications from './reducers/ui/notifications.js';
+import shownelements from './reducers/ui/shownelements.js';
+import views from './reducers/ui/views.js';
 
 import events from './reducers/data/events.js';
 import categories from './reducers/data/categories.js';
@@ -15,9 +20,10 @@ import advertisements from './reducers/data/advertisements.js';
 
 // Creates root reducer
 const rootReducer = combineReducers({
-  ui, defaultdata,
-  events, categories, places,
-  advertisements
+  defaultdata, mobile, modalbox,
+  notifications, shownelements,
+  views, events, categories, 
+  places, advertisements
 });
 
 // Compose enhancer & middleware... Used to activate redux dev tools

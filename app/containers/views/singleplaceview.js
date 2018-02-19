@@ -206,7 +206,7 @@ class SinglePlaceView extends View {
     // Sets title
     // Extracts data
     let state = this.props.store.getState();
-    let shown_place = state.ui.shown_single_place;
+    let shown_place = state.shownelements.shown_single_place;
     let element = state.places.elements[String(shown_place)];
 
     // Resets scroll

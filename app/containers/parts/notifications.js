@@ -2,7 +2,6 @@
 
 // Imports
 import React from 'react';
-import { CSSTransitionGroup } from 'react-transition-group';
 
 // Notifications component
 class Notifications extends React.Component {
@@ -29,7 +28,7 @@ class Notifications extends React.Component {
 
     // Extracts data
     let state = this.props.store.getState ( );
-    let oldNotifications = state.ui.notifications;
+    let oldNotifications = state.notifications.elements;
 
     // Formats data
     let newNotifications = { };
@@ -64,7 +63,7 @@ class Notifications extends React.Component {
     
     // Extracts data
     let state = this.props.store.getState ( );
-    let oldNotifications = state.ui.notifications;
+    let oldNotifications = state.notifications.elements;
 
     // Formats data
     let newNotifications = { };
@@ -109,7 +108,7 @@ class Notifications extends React.Component {
 
     // Extracts data
     let state = this.props.store.getState();
-    let ids = state.ui.notifications.map (( val ) => {
+    let ids = state.notifications.elements.map (( val ) => {
       return val.id;
     });
 

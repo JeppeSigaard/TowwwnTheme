@@ -3,7 +3,8 @@
 // Imports
 import React from 'react';
 
-import { setViewFocus, setShownSingleEvent } from '../../actions/ui.js';
+import { setViewFocus } from '../../actions/ui/views.js';
+import { setShownSingleEvent } from '../../actions/ui/shownelements.js';
 import { formatDate, decodeEntities } from '../../tools/formatters.js';
 
 // Event component
@@ -22,9 +23,9 @@ class Event extends React.Component {
   // Render
   render() {
     return (
-      <div className={"event"+( this.props.large?' large':'' )
-          +(this.state.bookmarked ? ' bookmark-mode':'')}
-        onClick={ this.onClick.bind(this) } >
+      <div className={ 'event' + ( this.props.large?' large':'' ) + 
+        ( this.state.bookmarked ? ' bookmark-mode' :' ' ) }
+      onClick={ this.onClick.bind(this) } >
 
         {/* Head */}
         <header className="event-head">
@@ -64,8 +65,7 @@ class Event extends React.Component {
     if ( this.props.store != null ) {
 
       // Sets shown event
-      this.props.store.dispatch(setShownSingleEvent
-        (this.props.element['id']));
+      this.props.store.dispatch(setShownSingleEvent(this.props.element['id']));
 
       // Sets view focus
       this.props.store.dispatch(setViewFocus(
@@ -83,7 +83,7 @@ class Event extends React.Component {
     // Gets smallest image above 200px width
     let orgUrl = props.element.images, imgUrl = null;
     for ( let key of Object.keys( orgUrl ) ) {
-      if ( Number(key) !== NaN && Number(key) >= 200 ) {
+      if ( !isNaN( key ) && Number(key) >= 200 ) {
         imgUrl = orgUrl[key];
       }
     }
@@ -102,10 +102,10 @@ class Event extends React.Component {
     // Omg, hade this piece, its messy as fuck..
     // Just overlook it.. Seriously.. :))
     let end = props.element.end_time != null ?
-          new Date(props.element.end_time) : null,
-        sta = new Date(props.element.start_time),
-        now = new Date(),
-        timStr = '';
+        new Date(props.element.end_time) : null,
+      sta = new Date(props.element.start_time),
+      now = new Date(),
+      timStr = '';
 
     // On going event
     if ( end != null && now.getTime() < end.getTime() && now.getTime > end.getTime() ) {
@@ -126,8 +126,8 @@ class Event extends React.Component {
 
       // Fields
       let state = this.props.store.getState(),
-        shown_event = String(state.ui.shown_single_event),
-        views = [state.ui.viewrelated.leftview, state.ui.viewrelated.rightview];
+        shown_event = String(state.shownelements.shown_single_event),
+        views = [state.views.leftview, state.views.rightview];
 
       // Checks
       if ( shown_event == String(this.props.element['id'])

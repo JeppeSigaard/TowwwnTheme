@@ -141,7 +141,7 @@ class SingleFooter extends React.Component {
 
     // Returns
     return (
-      <div className="hours-row" key={"single-event-hours-day#"+day}>
+      <div className="hours-row" key={'single-event-hours-day#'+day}>
         { days[day] + ':' }
 
         <div className="time">

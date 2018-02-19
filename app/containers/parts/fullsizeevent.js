@@ -20,7 +20,7 @@ class FullSizeEvent extends React.Component {
     super();
     this.state = {
       ctaelems : [ ],
-    }
+    };
   }
 
   // Render
@@ -61,7 +61,7 @@ class FullSizeEvent extends React.Component {
 
         </div> }
       </div>
-    )
+    );
   }
 
   // Render hours
@@ -80,7 +80,7 @@ class FullSizeEvent extends React.Component {
 
     // Returns
     return (
-      <div className="hours-row" key={"single-event-hours-day#"+day}>
+      <div className="hours-row" key={'single-event-hours-day#'+day}>
         { days[day] + ':' }
 
         <div className="time">
@@ -102,7 +102,7 @@ class FullSizeEvent extends React.Component {
     FB.ui({
       method: 'share',
       href: ('https://facebook.com/'+this.props.event['fbid']),
-    }, ((response) => {}));
+    }, (( ) => {  }));
 
   }
 

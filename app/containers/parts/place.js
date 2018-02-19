@@ -5,7 +5,8 @@ import React from 'react';
 import { renderDynamicOpenTimes } from '../../tools/formatters.js';
 
 // Action
-import { setViewFocus, setShownSinglePlace } from '../../actions/ui.js';
+import { setViewFocus } from '../../actions/ui/views.js';
+import { setShownSinglePlace } from '../../actions/ui/shownelements.js';
 
 
 // Place component
@@ -23,7 +24,7 @@ class Place extends React.Component {
   render() {
 
     return (
-      <div className={"place "+(this.state.bookmarked?'bookmark-mode':'')}
+      <div className={'place '+(this.state.bookmarked?'bookmark-mode':'')}
         onClick={ this.onClick.bind(this) } >
 
         {/* Icon */}
@@ -148,13 +149,13 @@ class Place extends React.Component {
 
     // Fields
     let state = this.props.store.getState();
-    let shown_place = String(state.ui.shown_single_place);
-    let views = [state.ui.viewrelated.leftview, state.ui.viewrelated.rightview];
+    let shown_place = String( state.shownelements.shown_single_place );
+    let views = [state.views.leftview, state.views.rightview];
 
     // Sets bookmarked part of state
     if ( shown_place == String(this.props.element['id']) &&
       ( views[0] === 'single-place-view' || views[1] === 'single-place-view' )) {
-        this.setState({ bookmarked : true });
+      this.setState({ bookmarked : true });
     } else { this.setState({ bookmarked : false }); }
 
   }

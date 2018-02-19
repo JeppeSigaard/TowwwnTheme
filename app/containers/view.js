@@ -5,7 +5,7 @@ import React from 'react';
 import HookController from '../tools/hookcontroller.js';
 
 // Actions
-import { setViewFocus } from '../actions/ui.js';
+import { setViewFocus } from '../actions/ui/views.js';
 
 // View HOC
 class View extends React.Component {

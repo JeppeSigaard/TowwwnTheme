@@ -4,7 +4,8 @@
 import React from 'react';
 
 // Actions
-import { setShownCategory, setViewFocus } from '../../actions/ui.js';
+import { setShownCategory } from '../../actions/ui/shownelements.js';
+import { setViewFocus } from '../../actions/ui/views.js';
 import { getPlaces } from '../../actions/api/places.js';
 
 
@@ -75,8 +76,8 @@ class Category extends React.Component {
     let state = this.props.store.getState();
     let new_state = { };
 
-    let shown_cat = String(state.ui.shown_category);
-    let views = [state.ui.viewrelated.leftview, state.ui.viewrelated.rightview];
+    let shown_cat = String(state.shownelements.shown_category);
+    let views = [state.views.leftview, state.views.rightview];
 
     // Sets bookmarked part of state
     if ( shown_cat == String(this.props.element['category_id']) &&

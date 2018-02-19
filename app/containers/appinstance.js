@@ -24,7 +24,7 @@ import SinglePlaceView from './views/singleplaceview.js';
 // Actions
 import { getDefaultData } from '../actions/api/defaultdata.js';
 import { getAdvertisements } from '../actions/api/advertisements.js';
-import { enableModalBox, disableModalBox, addNotification } from '../actions/ui.js';
+import { enableModalBox, disableModalBox } from '../actions/ui/modalbox.js';
 
 // Styling
 import Styling from '../../style/base.scss';
@@ -150,7 +150,7 @@ class AppInstance extends React.Component {
   // On store change
   onStoreChange() {
     this.setState({
-      modalbox : this.props.store.getState().ui.modalbox
+      modalbox : this.props.store.getState().modalbox
     });
   }
 

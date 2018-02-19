@@ -33,4 +33,4 @@ const postAjax = (( action, data ) => {
 });
 
 // Exports
-export { postAjax }
+export { postAjax };

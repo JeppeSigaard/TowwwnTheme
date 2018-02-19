@@ -2,11 +2,14 @@
 
 // Imports
 import React from 'react';
+
+// Components
 import ContactForm from '../../presentationals/contactform.js';
 
 // Actions
-import { setViewFocus, enableModalBox, disableModalBox, addNotification }
-  from '../../actions/ui.js';
+import { setViewFocus } from '../../actions/ui/views.js';
+import { enableModalBox, disableModalBox } from '../../actions/ui/modalbox.js';
+import { addNotification } from '../../actions/ui/notifications.js';
 
 
 // Side bar component
@@ -29,7 +32,7 @@ class SideBar extends React.Component {
   // Render
   render() {
     return (
-      <div className={ "sidebar " + (this.state.open ? "forceopen" : "") }
+      <div className={ 'sidebar ' + (this.state.open ? 'forceopen' : '') }
         onClick={ this.onClick.bind(this, null) } >
 
         {/* Header */}
@@ -43,20 +46,20 @@ class SideBar extends React.Component {
           </div>
 
           <div className="town">
-            {"Svendborg"}
+            {'Svendborg'}
           </div>
 
           <div className="buttons">
             <div className="button contact"
               onClick={ this.onClick.bind(this, 'contact') }>
-              {"Kontakt os"}
+              {'Kontakt os'}
             </div>
           </div>
 
         </header>
 
         {/* Events */}
-        <section className={"sidebar-events "+(this.state.active_type==='events'?'active':'')}
+        <section className={'sidebar-events '+(this.state.active_type==='events'?'active':'')}
           onClick={ this.onClick.bind(this, 'events') } >
 
           <div className="icon">
@@ -70,14 +73,14 @@ class SideBar extends React.Component {
             { this.state.future_event_count }
 
             <div className="subtext">
-              {"Begivenheder"}
+              {'Begivenheder'}
             </div>
           </div>
 
         </section>
 
         {/* Places */}
-        <section className={"sidebar-places "+(this.state.active_type==='places'?'active':'')}
+        <section className={'sidebar-places '+(this.state.active_type==='places'?'active':'')}
           onClick={ this.onClick.bind(this, 'places') } >
 
           <div className="icon">
@@ -91,7 +94,7 @@ class SideBar extends React.Component {
             { this.state.place_count }
 
             <div className="subtext">
-              {"Lokale Steder"}
+              {'Lokale Steder'}
             </div>
           </div>
 
@@ -108,7 +111,7 @@ class SideBar extends React.Component {
     // If type is null or we are in mobile view
     // just open the sidebar
     if ( (type == null || ( this.props.store != null &&
-      this.props.store.getState().ui.viewrelated.mobile )) &&
+      this.props.store.getState().mobile.isMobile )) &&
       !this.state.open ) {
 
       this.setState({ open : true });

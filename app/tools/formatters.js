@@ -23,7 +23,7 @@ const formatDate = (( date, year ) => {
 
 // Decode Entities
 const decodeEntities = (( text ) => {
-  return text = (new XmlEntities()).decode(text);
+  return (new XmlEntities()).decode( text );
 });
 
 // NL2P

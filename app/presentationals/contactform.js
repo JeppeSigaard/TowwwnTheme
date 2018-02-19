@@ -164,8 +164,8 @@ class ContactForm extends React.Component {
     to  = mail;
     sub = 'Towwwn - Message received';
     msg = 'Hi '+name+', thanks for contacting us.\n\n'+
-          'Were currently proccesing your request, and will be in touch soon.\n'+
-          'Looking forward to talking to you.\n\n'+
+          'We\'re currently proccesing your request, and will be in touch soon.\n'+
+          'Looking forward to chatting with you.\n\n'+
           'With <3 from the Towwwn team.';
 
     // Sends mail to user

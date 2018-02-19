@@ -242,7 +242,7 @@ class PlaceListView extends View {
 
     // Extracts data
     let state = this.props.store.getState();
-    let shown_cat = state.ui.shown_category;
+    let shown_cat = state.shownelements.shown_category;
     let response = { identification_key : shown_cat };
 
     // Checks if new category has been, yea, set
@@ -251,14 +251,14 @@ class PlaceListView extends View {
     }
 
     // Generates response
-    let ids = Object.keys(state.places.elements).filter(( val ) => {
+    let ids = Object.keys( state.places.elements ).filter(( val ) => {
 
       // Checks if place has category, returns.
       let cats = state.places.elements[val].categories;
       if ( cats == null ) { return false; }
 
       for ( let n = 0; n < cats.length; n++ ) {
-        if ( String(cats[n]['category_id']) == String(shown_cat) ) {
+        if ( String(cats[n].category_id) == String(shown_cat) ) {
           return true;
         }
       }
@@ -271,22 +271,22 @@ class PlaceListView extends View {
     // Sets ids and original ids, if changed (Concat makes sure they aren't references)
     let should_sort = false;
     if ( JSON.stringify(ids) !== JSON.stringify(this.state.org_ids) ) {
-      response['ids'] = ids.concat([]);
-      response['org_ids'] = ids.concat([]);
-      response['sub_cat_filter'] = null;
+      response.ids = ids.concat([]);
+      response.org_ids = ids.concat([]);
+      response.sub_cat_filter = null;
       should_sort = true;
     }
 
     // Extracts data
     let cats = state.categories.elements;
-    let cat  = cats[shown_cat];
+    let cat  = cats[ shown_cat ];
 
     // Sets title and sub cats
     if ( cat != null ) {
 
       // Sets title and sub cats
-      response['title'] = cat.category_name;
-      response['sub_category_ids'] = Object.keys( cats ).filter(( val ) => {
+      response.title = cat.category_name;
+      response.sub_category_ids = Object.keys( cats ).filter(( val ) => {
         return ((String(cats[val].category_parent) === String(cat.category_id))) &&
           ( cats[val].location_count > 0 );
       });

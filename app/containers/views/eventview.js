@@ -23,7 +23,7 @@ class EventView extends View {
       imgUrl : null,
       hours  : null,
 
-      id : "event-view",
+      id : 'event-view',
       title : 'Begivenhed',
 
     };
@@ -73,10 +73,11 @@ class EventView extends View {
     const state = (this.props.store.getState());
 
     // Sets event
-    if ( state.ui.shown_single_event != null ) {
+    let shownevent = state.shownelements.shown_single_event;
+    if ( shownevent != null ) {
 
       // Gets event
-      let event = state.events.elements[String(state.ui.shown_single_event)];
+      let event = state.events.elements[String(shownevent)];
       if ( event !== this.state.event ) {
         this.resetScroll();
 
@@ -92,8 +93,7 @@ class EventView extends View {
 
       // If no image above 400px found, take largest there is
       if ( imgUrl == null ) {
-        imgUrl = event.images[Object.keys(event.images)
-          [Object.keys(event.images).length-1]];
+        imgUrl = event.images[Object.keys(event.images)[Object.keys(event.images).length-1]];
       }
 
       // If parent not loaded,
