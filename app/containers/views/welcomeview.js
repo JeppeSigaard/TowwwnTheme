@@ -28,8 +28,8 @@ class WelcomeView extends View {
   render() {
     return (
       <View id="welcome-view" title="Velkommen til Towwwn"
-      icon="#towwwn-logo-17" viewBox="0 0 32 32"
-      store={ this.props.store }>
+        icon="#towwwn-logo-17" viewBox="0 0 32 32"
+        store={ this.props.store }>
 
         <div className="welcome-message">
 

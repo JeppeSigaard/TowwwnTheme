@@ -21,13 +21,13 @@ class SideBar extends React.Component {
     super();
     this.state = {
 
-      open : false,
+      open : true,
       inline : false,
       inlinetrans : false,
       active_type : 'events',
 
-      future_event_count : 0,
-      place_count : 0,
+      future_event_count : false,
+      place_count : false,
 
     };
   }
@@ -39,7 +39,8 @@ class SideBar extends React.Component {
     let className = 'sidebar' + 
       ( this.state.open ? ' forceopen' : '' ) +
       ( this.state.inline ? ' inline' : '' ) +
-      ( this.state.inlinetrans ? ' inline-trans' : '' );
+      ( this.state.inlinetrans ? ' inline-trans' : '' ) +
+      ( this.state.notrans ? ' notrans' : '' );
 
     // Returns
     return (
@@ -60,9 +61,11 @@ class SideBar extends React.Component {
           </div>
 
           <div className="buttons">
-            <div className="button contact"
-              onClick={ this.onClick.bind(this, 'docs') }>
-              {'Docs'}
+            <div className="button info" onClick={ this.onClick.bind(this, 'docs') }>
+              <svg viewBox="0 0 16 32">
+                <use xlinkHref="#icon-info">
+                </use>
+              </svg>
             </div>
           </div>
 
@@ -80,7 +83,14 @@ class SideBar extends React.Component {
           </div>
 
           <div className="text">
-            { this.state.future_event_count }
+
+            { this.state.future_event_count !== false &&
+              this.state.future_event_count
+            }
+
+            { this.state.future_event_count === false &&
+              '. . .'
+            }
 
             <div className="subtext">
               {'Begivenheder'}
@@ -101,7 +111,14 @@ class SideBar extends React.Component {
           </div>
 
           <div className="text">
-            { this.state.place_count }
+
+            { this.state.place_count !== false &&
+              this.state.place_count
+            }
+
+            { this.state.place_count === false &&
+              '. . .'
+            }
 
             <div className="subtext">
               {'Lokale Steder'}
@@ -238,10 +255,15 @@ class SideBar extends React.Component {
 
   // Component will mount
   componentDidMount() {
+
+    this.setState({ notrans : true }, () => {
+      this.setState({ notrans : false });
+    });
+
     if ( this.props.store != null ) {
       this.props.store.subscribe(this.onStoreChange.bind(this));
-      this.props.store.dispatch( addNotification( 'Use the menu to the left' ) );
     }
+
   }
 
 }

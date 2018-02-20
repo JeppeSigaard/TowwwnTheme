@@ -93,11 +93,37 @@ $inline-trans: 380ms cubic-bezier(.6,0,.4,1);
 
         transition: 0ms;
 
+        &.button{
+          
+          position: relative;
+          padding: 0;
+          width: 52px;
+
+          svg { 
+
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate( -50%, -50% );
+
+            width: 8px; 
+            fill: rgba($primary-color, .7);
+            transition: 0ms;
+
+          }
+
+        }
+
         &:hover{
 
           background-color: rgba($primary-color, .02);
           border-color: $primary-color;
           color: $primary-color;
+
+          svg {
+
+            fill: $primary-color;
+
+          }
 
         }
 
@@ -208,7 +234,7 @@ $inline-trans: 380ms cubic-bezier(.6,0,.4,1);
 
         section .text{
 
-          left: 44%;
+          left: 52%;
           opacity: 1;
           font-size: 48px;
 
@@ -280,6 +306,13 @@ $inline-trans: 380ms cubic-bezier(.6,0,.4,1);
         background-color 0ms ease-out;
 
     }
+
+  }
+
+  &.notrans {
+
+    transition: 0ms;
+    *{ transition: 0ms; }
 
   }
 
