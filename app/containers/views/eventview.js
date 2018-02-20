@@ -36,7 +36,7 @@ class EventView extends View {
       <View id={ this.state.id } title={ decodeEntities(this.state.title) }
         icon="#icon-event" viewBox="0 0 32 32"
         onClose={ this.onClose.bind(this) }
-        closeProps={[ 'welcome-view','calendar-view','calendar-view', 'left', true ]}
+        closeProps={[ 'sidebar','calendar-view','calendar-view', 'left', true ]}
         store={ this.props.store }>
 
         <FullSizeEvent

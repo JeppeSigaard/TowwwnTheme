@@ -38,7 +38,7 @@ class PlaceListView extends View {
     return (
       <View id={this.state.id} title={this.state.title}
         icon="#icon-location" viewBox="0 0 32 32"
-        closeProps={[ 'welcome-view','category-view','category-view', 'left', true ]}
+        closeProps={[ 'sidebar','category-view','category-view', 'left', true ]}
         store={ this.props.store }
 
         topbar={

@@ -7,428 +7,363 @@ import { setMobileMode } from '../actions/ui/mobile.js';
 class ViewHandler {
 
   // Constructor
-  constructor( store ) {
-
-    // Error handling
-    if (store==null) {return false;}
-
-    // Runs init positioning
-    if ( window.innerWidth > 800 ) { this.updateViewPositioningLargeScreen(store); }
-    else { this.updateViewPositioningSmallScreen(store); }
-
-    // Store subscription
-    store.subscribe(( ) => { this.processStoreChange(store); });
-
-    // Resize event
-    window.addEventListener('resize',this.onResize.bind(this, store));
-    this.onResize( store );
-
-    // Creates copy of viewrelated state
-    this.l_viewrelated = store.getState().views;
-
-  }
-
-  // On resize
-  onResize( store ) {
-    if ( window.innerWidth >= 800 &&
-      store.getState().mobile.isMobile ) {
-
-      // Not mobile.. Any more
-      store.dispatch(setMobileMode(false));
-
-    } else if ( window.innerWidth < 800 &&
-      !store.getState().mobile.isMobile ) {
-
-      // Mobile now!
-      store.dispatch(setMobileMode(true));
-
-    }
-  }
-
-  // Process store change
-  processStoreChange( store ) {
-
-    // if last view related is not equal to current
-    if ( this.l_viewrelated != store.getState().views.l_viewrelated ) {
-      if ( store.getState().mobile.isMobile ) {
-
-        // Mobile
-        if ( !this.ongoing ) {
-          this.ongoing = true;
-          this.updateViewPositioningSmallScreen(store);
-        }
-
-      } else {
-
-        // !Mobile
-        this.updateViewPositioningLargeScreen(store);
-
-      }
-    }
-
-    // Changes last viewrelated
-    this.l_viewrelated = store.getState().views;
-
-  }
-
-  // Update view positioning small screen
-  updateViewPositioningSmallScreen( store ) {
+  constructor ( store ) {
 
     // Extracts data
-    let state = store.getState(),
-      transition = state.views.transition,
-      mview_id  = state.views.mview,
-      x_mview_id  = state.views.x_mview,
-      from = state.views.from;
+    let state = store.getState ( );
+    let viewdata = null;
+    let ismobile = null;
 
-    // Not mobile last
-    if ( this.l_viewrelated != null && !this.l_viewrelated.mobile ) {
+    // Sets own state
+    this.state = {
+      viewdata,
+      ismobile,
+    };
 
-      // Sets transition to false
-      transition = false;
+    // Subscribes to store
+    store.subscribe ( this.onStoreChange.bind ( this, store ) );
 
-      // Gets all views and positions them
-      let views = document.getElementsByClassName('view');
-      for ( let n = 0; n < views.length; n++ ) {
-        views[n].style.left = '-100%';
-      }
+    // Add resize listener n' dispatches it
+    window.addEventListener ( 'resize', this.onResize.bind ( this, store ) );
+    this.onResize ( store );
 
-    }
+  }
 
-    // Get elements
-    let mview = document.getElementById( mview_id ),
-      x_mview = document.getElementById( x_mview_id );
 
-    // Sets views (plural)
-    let views = [mview];
-    if ( x_mview != null ) { views.push( x_mview ); }
+  // Updates
+  // Std. update (Large devices)
+  update ( viewdata ) {
 
-    // Pre positions view
-    this.prePositionSmallScreen( mview, x_mview, from );
+    // Pre positions views n' extracts some dats
+    let processeddata = this.preposition ( viewdata );
+    let from = processeddata.from;
+    let views = processeddata.views;
+    let halfed = processeddata.halfed;
 
-    // Add trans classes
-    if ( transition ) { this.addTransClass(views); }
-    if ( !transition ) { this.rmTransClass(views); }
+    // Adds or removes transition classes, n' forces queue execution
+    if ( viewdata.transition ) { this.addTransClasses ( views ); }
+    else { this.removeTransClasses ( views ); }
+    this.forceQueueExecution ( views );
+
+    // Removes position classes
+    this.removePositionClasses ( );
 
     // Positions views
-    if ( x_mview != null ) {
-      if ( 'left' === from ) { x_mview.style.left = '100%'; }
-      if ( 'right' === from ) { x_mview.style.left = '-100%'; }
-    }
-
-    mview.style.left = '0%';
-
-    // Handles throttling when transition
-    if ( transition ) {
-
-      // Extracts data
-      let computedStyle = window.getComputedStyle( mview );
-      let transitionDuration = parseFloat( computedStyle.transitionDuration ) * 1000;
-
-      // Sets timeout
-      setTimeout((( ) => {
-        this.ongoing = false;
-      }).bind(this), transitionDuration);
+    // Halfed: Only one view, other than
+    // new ones that need positioning
+    if ( halfed ) {
+      
+      if ( 'left' === from && views[3] != null ) { views[3].style.left = '100%'; }
+      else if ( 'right' === from && views[2] != null ) { views[2].style.left = '-50%'; }
 
     }
 
-    // Forces css queue to execute
-    this.removePositioningClasses ( );
-    mview.classList.add( 'leftview' );
-    this.forceQueueExecution( views );
+    // Not halfed: All views needs positionings
+    if ( !halfed ) {
+      if ( 'left' === from ) {
 
-    // Handles throttling when !transition
-    if ( !transition ) { this.ongoing = false; }
+        if ( views[2] != null ) { views[2].style.left = '100%'; }
+        if ( views[3] != null ) { views[3].style.left = '150%'; }
+
+      } else if ( 'right' === from ) {
+
+        if ( views[2] != null ) { views[2].style.left = '-50%'; }
+        if ( views[3] != null ) { views[3].style.left = '-100%'; }
+
+      }
+    }
+    
+    // New ones
+    if ( views[0] != null ) { views[0].style.left = '0%'; }
+    if ( views[1] != null ) { views[1].style.left = '50%'; }
+
+    // Adds position classes
+    this.addPositionClasses ( ...(views.slice ( 0, 2 )) );
+    this.forceQueueExecution ( views );
 
   }
 
-  // Update view positioning large screen
-  updateViewPositioningLargeScreen( store ) {
+  // Update mobile (Small devices)
+  updateMobile ( viewdata ) {
+
+    // Prepositions views
+    let processeddata = this.prepositionMobile ( viewdata );
+    let views = processeddata.views;
+    let from = viewdata.from != null ? viewdata.from : 'left';
+    let transition = viewdata.transition;
+
+    // Class control (Transition classes)
+    if ( transition ) { this.addTransClasses ( views ); }
+    else { this.removeTransClasses ( views ); }
+    this.forceQueueExecution ( views );
+
+    // Removes position classes
+    this.removePositionClasses ( );
+
+    // Positions views
+    if ( views[0] != null ) { 
+      views[0].style.left = '0%'; 
+    }
+    
+    if ( views[1] != null && views[1] != views[0] ) {
+      if ( from === 'left' ) { views[1].style.left = '100%'; }
+      if ( from === 'right' ) { views[1].style.left = '-100%'; }
+    }
+
+    // Force queue execution n' adds position classes
+    this.forceQueueExecution ( views );
+    this.addPositionClasses ( ...views );
+
+  }
+
+
+  // Pre positions
+  // Std. preposition (Large devices)
+  preposition ( viewdata ) {
 
     // Extracts data
-    let state = store.getState(),
-      transition = state.views.transition,
-      leftview_id  = state.views.leftview,
-      rightview_id = state.views.rightview,
-      x_leftview_id  = state.views.x_leftview,
-      x_rightview_id = state.views.x_rightview,
-      from = state.views.from;
+    // Gets views
+    let lv = viewdata.leftview;
+    let rv = viewdata.rightview;
+    let xlv = null;
+    let xrv = null;
 
-    // Mobile last
-    if ( this.l_viewrelated != null && this.l_viewrelated.mobile ) {
-
-      // Sets transition
-      transition = false;
-
-      // Gets all views and positions them
-      let views = document.getElementsByClassName('view');
-      for ( let n = 0; n < views.length; n++ ) {
-        views[n].style.left = '-50%';
-      }
-
+    if ( this.state.viewdata != null ) {
+      xlv = this.state.viewdata.leftview;
+      xrv = this.state.viewdata.rightview;
     }
 
+    // Gets direction
+    let from = viewdata.from, halfed = false;
+    if ( lv === xrv ) { from = 'right'; halfed = true; }
+    if ( rv === xlv ) { from = 'left';  halfed = true; }
 
-    // Check
-    if ( this.lastViews != null &&
-      this.lastViews[0] === leftview_id &&
-      this.lastViews[1] === rightview_id ) {
-      transition = false;
-    }
 
-    // Last views
-    this.lastViews = [ leftview_id, rightview_id ];
+    // Converts views from string format
+    let views = this.prepareViewList ([ lv, rv, xlv, xrv ]);
 
-    // Elements
-    let leftview = document.getElementById(leftview_id),
-      rightview = document.getElementById(rightview_id),
-      x_leftview = document.getElementById(x_leftview_id),
-      x_rightview = document.getElementById(x_rightview_id);
+    // Class control ( Removes transitions )
+    let newviews = [ views[0], views[1] ];
+    this.removeTransClasses ( newviews );
+    this.forceQueueExecution ( newviews );
 
-    // Lists
-    let views = [leftview, rightview, x_leftview, x_rightview];
 
-    // Error handling
-    if ( leftview == null || rightview == null ||
-       ( leftview_id === rightview_id )) {
-
-      // Returns
-      return false;
-
-    }
-
-    // If transition is false?, do this:
-    if ( !transition ) {
-
-      // Removes transition classes,
-      // removes positioning classes and
-      // forces css queue execution
-      this.rmTransClass(views);
-      this.removePositioningClasses();
-      this.forceQueueExecution(views);
-
-      // Positions old views
-      if ( x_leftview != null ) {
-        x_leftview.style.left = '-50%';
-      }
-
-      if ( x_rightview != null ) {
-        x_rightview.style.left = '-50%';
-      }
-
-      // Positions new views
-      leftview.style.left = '0%';
-      rightview.style.left = '50%';
-
-      // Adds view position classes
-      leftview.classList.add('leftview');
-      rightview.classList.add('rightview');
-
-      // Returns
-      return;
-
-    }
-
-    // Preposition & removes positioning classes
-    this.prePosition(...views, from);
-    this.removePositioningClasses();
-
-    // Adds | removes transition classes
-    this.addTransClass(views);
-
-    // Initial
-    if ( x_leftview_id == null || x_rightview_id == null ) {
-      leftview.style.left  = '0%';
-      rightview.style.left = '50%';
-    }
-
-    // From left when some in view
-    if ( rightview_id === x_leftview_id  ) {
-      leftview.style.left  = '0%';
-      rightview.style.left = '50%';
-
-      if ( x_rightview != null ) {
-        x_rightview.style.left = '100%';
+    // Does the actual prepositioning
+    // Small pre: Only one views needs prepositioning
+    if ( halfed ) {
+      if ( 'left' === from && views[0] != null ) { 
+        views[0].style.left = '-50%'; 
+      } else if ( 'right' === from && views[1] != null ) { 
+        views[1].style.left = '100%'; 
       }
     }
 
-    // From right when some in view
-    if ( leftview_id === x_rightview_id ) {
-      leftview.style.left  = '0%';
-      rightview.style.left = '50%';
+    // Large pre: Two views needs prepositioning
+    if ( !halfed ) {
+      if ( 'left' === from ) {
 
-      if ( x_leftview != null ) {
-        x_leftview.style.left = '-50%';
-      }
-    }
+        if ( views[0] != null ) { views[0].style.left = '-100%'; }
+        if ( views[1] != null ) { views[1].style.left = '-50%'; }
 
-    // From left when none is in view
-    if ( 'left' === from &&
-        ( rightview_id !== x_leftview_id ) &&
-        ( leftview_id !== x_rightview_id ) ) {
+      } else if ( 'right' === from ) {
 
-      if ( x_leftview != null ) {
-        x_leftview.style.left = '100%';
-      }
+        if ( views[0] != null ) { views[0].style.left = '100%'; }
+        if ( views[1] != null ) { views[1].style.left = '150%'; }
 
-      if ( x_rightview != null ) {
-        x_rightview.style.left = '150%';
-      }
-
-      leftview.style.left  = '0%';
-      rightview.style.left = '50%';
-
-    }
-
-    // From right when none is in view
-    if ( 'right' === from &&
-        ( rightview_id !== x_leftview_id ) &&
-        ( leftview_id !== x_rightview_id ) ) {
-
-      if ( x_leftview != null ) {
-        x_leftview.style.left = '-50%';
-      }
-
-      if ( x_rightview != null ) {
-        x_rightview.style.left = '-100%';
-      }
-
-      leftview.style.left  = '0%';
-      rightview.style.left = '50%';
-
-    }
-
-    // Add positioning classes
-    leftview.classList.add( 'leftview' );
-    rightview.classList.add( 'rightview' );
-
-    // Returns
-    return true;
-
-  }
-
-  // Pre position (All args are the ids)
-  prePosition( leftview, rightview, x_leftview, x_rightview, from ) {
-
-    // Views (plural)
-    let views = [leftview, rightview];
-
-    // Removes transition classes
-    // and forces CSS queue to execute
-    this.rmTransClass(views);
-    this.forceQueueExecution(views);
-
-    // Left view equals old right
-    if ( leftview === x_rightview ) {
-      rightview.style.left = '100%';
-    }
-
-    // Right view equals old left
-    else if ( rightview === x_leftview ) {
-      leftview.style.left = '-50%';
-    }
-
-    // Else if direction equals left
-    else if ( 'left' === from ) {
-      leftview.style.left = '-100%';
-      rightview.style.left = '-50%';
-    }
-
-    // Else if direction equals right
-    else if ( 'right' === from ) {
-      leftview.style.left = '100%';
-      rightview.style.left = '150%';
-    }
-
-    // Force queue execution
-    this.forceQueueExecution(views);
-
-  }
-
-  // Pre position small screen
-  prePositionSmallScreen( mview, x_mview, from ) {
-
-    // Views (plural)
-    let views = [ mview ];
-    if ( x_mview != null ) { views.push( x_mview ); }
-
-    // Removes transition class
-    // And forces css queue to execute
-    this.rmTransClass( views );
-    this.forceQueueExecution( views );
-
-    // Pre positioning
-    if ( x_mview != null ) { x_mview.style.left = '0%'; }
-    if ( 'left' === from ) { mview.style.left = '-100%'; }
-    if ( 'right' === from ) { mview.style.left = '100%'; }
-
-    // Force queue execution
-    this.forceQueueExecution( views );
-
-  }
-
-  // Add trans class
-  addTransClass( views ) {
-
-    // Adds the trans class
-    // to all elems in array
-    for ( let n = 0; n < views.length; n++ ) {
-      if ( views[n] != null ) {
-        views[n].classList.add( 'trans' );
       }
     }
 
     // Forces queue execution
-    this.forceQueueExecution(views);
+    this.forceQueueExecution ( newviews );
+
+    // Returns some data
+    return {
+      from,
+      views,
+      halfed
+    };
 
   }
 
-  // Remove trans class
-  rmTransClass( views ) {
+  // Preposition mobile (Small devices)
+  prepositionMobile ( viewdata ) {
 
-    // Removes the trans class
-    // from all elems in array
-    for ( let n = 0; n < views.length; n++ ) {
-      if ( views[n] != null ) {
-        views[n].classList.remove('trans');
+    // Extracts data
+    let mv = viewdata.mview;
+    let from = viewdata.from;
+
+    let xmv = null;
+    if ( this.state.viewdata != null ) { xmv = this.state.viewdata.mview; }
+    let views = this.prepareViewList ([ mv, xmv ]);
+
+    // Remove transition classes
+    this.removeTransClasses ( views );
+    this.forceQueueExecution ( views );
+
+    // Does the actual prepositioning
+    if ( views[0] != null ) {
+      if ( 'left' === from ) { views[0].style.left = '-100%'; } 
+      else { views[0].style.left = '100%'; }
+    }
+
+    // Force queue execution n' returns
+    this.forceQueueExecution ( views );
+    return { views };
+
+  }
+
+
+  // Events
+  // On Resize (Controls mobile switch)
+  onResize ( store ) {
+
+    // Switch to large device mode
+    if ( window.innerWidth < 800 && !this.state.ismobile ) {
+      store.dispatch ( setMobileMode ( true ) );
+    }
+
+    // Switch to small device mode
+    if ( window.innerWidth >= 800 && this.state.ismobile ) {
+      store.dispatch ( setMobileMode ( false ) );
+    }
+
+  }
+
+  // On Store Change
+  onStoreChange ( store ) {
+    
+    // Extracts data
+    let state = store.getState ( );
+    let viewdata = state.views;
+    let ismobile = state.mobile.isMobile;
+
+    // Update?
+    if ( !ismobile && (
+      this.state.viewdata == null ||
+      viewdata.leftview !== this.state.viewdata.leftview ||
+      viewdata.rightview !== this.state.viewdata.rightview )) {
+      
+      this.update ( viewdata );
+
+    }
+
+    // Update mobile?
+    if ( ismobile && (
+      this.state.viewdata == null || 
+      viewdata.mview !== this.state.viewdata.mview )) {
+      
+      this.updateMobile ( viewdata );
+
+    }
+
+    // Update on resize?
+    if ( !ismobile && ismobile !== this.state.ismobile ) {
+      this.update ( Object.assign( viewdata, { transition : false }));
+    }
+
+    // Update mobile on resize
+    if ( ismobile && ismobile !== this.state.ismobile ) {
+      this.updateMobile ( Object.assign( viewdata, { transition : false }));
+    }
+
+    // Sets state
+    this.state = Object.assign({}, this.state, {
+      viewdata, ismobile
+    });
+
+  }
+
+
+  // Class Related
+  // Add trans classes
+  addTransClasses ( views ) {
+    if ( views instanceof Array ) {
+      views.forEach(( val ) => {
+        if ( val != null ) {
+          val.classList.add ( 'trans' ); 
+        }
+      });
+    }
+  }
+
+  // Remove trans classes
+  removeTransClasses ( views ) {
+    if ( views instanceof Array ) {
+      views.forEach(( val ) => {
+        if ( val != null ) {
+          val.classList.remove ( 'trans' );
+        }
+      });
+    }
+  }
+
+  // Add position classes
+  addPositionClasses ( leftview, rightview ) {
+
+    // Left view
+    if ( leftview != null ) {
+      if ( typeof leftview === 'string' ) {
+        leftview = document.getElementById ( leftview );
+      } 
+      
+      if ( leftview != null ) {
+        leftview.classList.add ( 'leftview' );
       }
     }
 
-    // Force queue execution
-    this.forceQueueExecution(views);
-
-  }
-
-  // Force queue
-  forceQueueExecution( views ) {
-
-    // Forces CSS queue to run
-    // on all elems in array
-    for ( let n = 0; n < views.length; n++ ) {
-      if ( views[n] != null ) {
-        views[n].offsetHeight;
+    // Right view
+    if ( rightview != null ) {
+      if ( typeof rightview === 'string' ) {
+        rightview = document.getElementsByClassName ( rightview );
+      } 
+      
+      if ( rightview != null ) {
+        rightview.classList.add ( 'rightview' );
       }
     }
 
   }
 
-  // Remove positioning classes
-  removePositioningClasses() {
+  // Remove position classes
+  removePositionClasses ( ) {
 
     // Gets elements
-    let leftviews  = document.getElementsByClassName('leftview');
-    let rightviews = document.getElementsByClassName('rightview');
+    let leftviews = document.getElementsByClassName ( 'leftview' );
+    let rightviews = document.getElementsByClassName ( 'rightview' );
 
-    // Removes left view classes
+    // Remove classes
+    // Left views
     for ( let n = 0; n < leftviews.length; n++ ) {
-      leftviews[n].classList.remove('leftview');
+      leftviews[n].classList.remove ( 'leftview' );
     }
 
-    // Removes right view classes
+    // Right views
     for ( let n = 0; n < rightviews.length; n++ ) {
-      rightviews[n].classList.remove('rightview');
+      rightviews[n].classList.remove ( 'rightview' );
     }
 
+  }
+
+
+  // Prepare view list
+  prepareViewList ( views ) {
+    return views.map(( val ) => {
+      if ( typeof val === 'string' && val != null ) {
+        val = document.getElementById ( val );
+      } return val;
+    });
+  }
+
+
+  // Force css queue execution
+  forceQueueExecution ( elements ) {
+    if ( elements instanceof Array ) {
+      elements.forEach (( val ) => {
+        if ( val != null ) {
+          val.clientHeight;
+        }
+      });
+    }
   }
 
 }

@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 // Reducers
 import defaultdata from './reducers/data/defaultdata.js';
 
+import docsui from './reducers/ui/docsui.js';
 import mobile from './reducers/ui/mobile.js';
 import modalbox from './reducers/ui/modalbox.js';
 import notifications from './reducers/ui/notifications.js';
@@ -20,7 +21,7 @@ import advertisements from './reducers/data/advertisements.js';
 
 // Creates root reducer
 const rootReducer = combineReducers({
-  defaultdata, mobile, modalbox,
+  defaultdata, docsui, mobile, modalbox,
   notifications, shownelements,
   views, events, categories, 
   places, advertisements

@@ -21,6 +21,8 @@ import CategoryView from './views/categoryview.js';
 import PlaceListView from './views/placelistview.js';
 import SinglePlaceView from './views/singleplaceview.js';
 
+import Docs from './views/docs.js';
+
 // Actions
 import { getDefaultData } from '../actions/api/defaultdata.js';
 import { getAdvertisements } from '../actions/api/advertisements.js';
@@ -57,7 +59,7 @@ class AppInstance extends React.Component {
           <div className="app-inner">
 
             {/* Welcome view */}
-            <WelcomeView store={ this.props.store } />
+            {/*<WelcomeView store={ this.props.store } />*/}
 
             {/* Event related */}
             <CalendarView store={ this.props.store } />
@@ -69,6 +71,9 @@ class AppInstance extends React.Component {
             <SinglePlaceView store={ this.props.store } />
 
           </div>
+
+          {/* Docs */}
+          <Docs store={ this.props.store } />
 
           {/* Modal Box */}
           <CSSTransitionGroup
@@ -117,9 +122,7 @@ class AppInstance extends React.Component {
       }
 
       // Fetches commercials
-      if ( true ) {
-        props.store.dispatch(getAdvertisements());
-      }
+      props.store.dispatch(getAdvertisements());
 
     }
 

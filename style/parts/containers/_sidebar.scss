@@ -3,6 +3,7 @@
 // Local fields
 $sidebar-town-height: 48px;
 $sidebar-trans: cubic-bezier(.6,0,.4,1);
+$inline-trans: 380ms cubic-bezier(.6,0,.4,1);
 
 // Side bar
 .sidebar{
@@ -10,9 +11,8 @@ $sidebar-trans: cubic-bezier(.6,0,.4,1);
   position: absolute;
   top: 0; left: 0;
 
-  width: calc( 50vw + #{$sidebar-width} / 2 ); // <- helps fix edge bug
+  width: $sidebar-width;
   height: 100vh;
-  max-width: $sidebar-width; // <- helps fix edge bug
 
   background-color: darken($accent-color, 6%);
   overflow: hidden;
@@ -195,12 +195,9 @@ $sidebar-trans: cubic-bezier(.6,0,.4,1);
   // Open state
   // Mobile
   @media screen and ( max-width: $mobile-width ) {
-
-    width: 100vw;
-
     &.forceopen {
 
-        max-width: 100vw;
+        width: 100vw;
 
         section .icon{
 
@@ -235,9 +232,10 @@ $sidebar-trans: cubic-bezier(.6,0,.4,1);
 
   // !Mobile
   @media screen and ( min-width: $mobile-width ) {
-    &:hover {
+    &:hover, 
+    &.inline {
       
-      max-width: 53vw; // <- helps fix edge bug
+      width: calc( 50vw + #{$sidebar-width} / 2 );
 
       section .icon{
 
@@ -268,6 +266,21 @@ $sidebar-trans: cubic-bezier(.6,0,.4,1);
       }
 
     }
+  }
+
+  &.inline-trans {
+
+    transition: $inline-trans;
+    
+    * {
+
+      transition: $inline-trans,
+        top 0ms ease-out,
+        height 0ms ease-out,
+        background-color 0ms ease-out;
+
+    }
+
   }
 
 }

@@ -7,7 +7,7 @@ const initState = {
   x_rightview : null,
   x_mview : null,
 
-  leftview : 'welcome-view',
+  leftview : 'sidebar',
   rightview : 'calendar-view',
   mview : 'calendar-view',
 

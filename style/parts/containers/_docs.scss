@@ -1,0 +1,179 @@
+
+
+// Transition fields
+$docs-outer-trans: 300ms cubic-bezier(.07,.65,.42,1);
+$docs-inner-trans: 500ms cubic-bezier(.07,.65,.42,1); // cubic-bezier(.12,.47,.53,.94);
+$docs-body-trans: 1000ms cubic-bezier(.07,.65,.42,1);
+$docs-fx-rotation: 10deg;
+
+// Docs
+.docs {
+
+  position: fixed;
+  bottom: 0; left: 50%;
+  transform: translate( -50%, 0 );
+  width: 100vw; height: 0;
+  
+  background-color: rgba( darken( $primary-color, 5% ), .5 );
+  transition: height $docs-outer-trans;
+  overflow: hidden;
+
+  z-index: 999999999;
+
+  .docs-inner {
+
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translate( -50%, 0 );
+    width: 100%; height: 0;
+    
+    background-color: rgba( darken( $primary-color, 5% ), .95);
+    transition: height $docs-inner-trans;
+    overflow: hidden;
+
+    .docs-body {
+
+      position: absolute;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+
+      overflow-x: hidden;
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+
+      .docs-body-inner {
+
+        position: relative;
+        max-width: 1200px;
+        margin: 0 auto;
+        // margin-top: 256px;
+
+        opacity: 0;
+        transition: $docs-body-trans;
+
+        padding: 128px 128px 128px 274px;
+
+        .sidemenu {
+
+          position: absolute;
+          top: 128px; left: 128px;
+          width: 148px;
+          height: 100%;
+
+          .sidemenu-inner {
+
+            position: sticky;
+            top: 128px;
+
+            a {
+              
+              position: relative;
+              display: block;
+              margin-bottom: 16px;
+
+              color: $secondary-color;
+              font-size: 12px;
+              text-transform: uppercase;
+              text-decoration: none;
+              text-align: right;
+              margin-right: 64px;
+
+              transition: 120ms ease-out;
+
+              &.close {
+
+                margin-top: 24px;
+
+              }
+
+              &:before{
+
+                content: '';
+                position: absolute;
+                top: 50%; right: 0;
+                transform: translateY(-50%);
+
+                border-right: 4px solid $accent-color;
+                border-left: 4px solid transparent;
+                border-top: 4px solid transparent;
+                border-bottom: 4px solid transparent;
+
+                opacity: 0;
+                transition: 120ms ease-out;
+
+              }
+
+              &:hover {
+
+                padding-right: 4px;
+                color: darken( $accent-color, 10% );
+
+              }
+
+              &.active {
+
+                padding-right: 16px;
+                color: $accent-color;
+
+                &:before{
+
+                  opacity: 1;
+
+                }
+
+              }
+
+            }
+          
+          }
+
+        }
+
+        .article {
+
+          .title {
+            
+            text-transform: uppercase;
+            font-weight: 800;
+            font-size: 22px;
+            margin-bottom: 32px;
+
+          }
+
+          .text {
+
+            font-weight: 300;
+            font-size: 14px;
+            text-align: justify;
+            line-height: 1.5;
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+  &.visible {
+
+    height: 100vh;
+
+    .docs-inner {
+
+      height: 100vh;
+
+      .docs-body-inner {
+
+        opacity: 1;
+        margin-top: 0;
+
+      }
+
+    }
+
+  }
+
+}

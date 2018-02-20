@@ -7,6 +7,7 @@ import React from 'react';
 import ContactForm from '../../presentationals/contactform.js';
 
 // Actions
+import { open_docs } from '../../actions/ui/docsui.js';
 import { setViewFocus } from '../../actions/ui/views.js';
 import { enableModalBox, disableModalBox } from '../../actions/ui/modalbox.js';
 import { addNotification } from '../../actions/ui/notifications.js';
@@ -21,6 +22,8 @@ class SideBar extends React.Component {
     this.state = {
 
       open : false,
+      inline : false,
+      inlinetrans : false,
       active_type : 'events',
 
       future_event_count : 0,
@@ -31,9 +34,16 @@ class SideBar extends React.Component {
 
   // Render
   render() {
+
+    // Generates class list
+    let className = 'sidebar' + 
+      ( this.state.open ? ' forceopen' : '' ) +
+      ( this.state.inline ? ' inline' : '' ) +
+      ( this.state.inlinetrans ? ' inline-trans' : '' );
+
+    // Returns
     return (
-      <div className={ 'sidebar ' + (this.state.open ? 'forceopen' : '') }
-        onClick={ this.onClick.bind(this, null) } >
+      <div className={ className } onClick={ this.onClick.bind(this, null) } ref="outer" >
 
         {/* Header */}
         <header className="topbar">
@@ -51,8 +61,8 @@ class SideBar extends React.Component {
 
           <div className="buttons">
             <div className="button contact"
-              onClick={ this.onClick.bind(this, 'contact') }>
-              {'Kontakt os'}
+              onClick={ this.onClick.bind(this, 'docs') }>
+              {'Docs'}
             </div>
           </div>
 
@@ -102,6 +112,7 @@ class SideBar extends React.Component {
 
       </div>
     );
+
   }
 
   // On click
@@ -125,7 +136,7 @@ class SideBar extends React.Component {
 
       // Dispatches view focus action
       this.props.store.dispatch(setViewFocus(
-        'welcome-view', 'calendar-view', 'calendar-view',
+        'sidebar', 'calendar-view', 'calendar-view',
         'right', false
       ));
 
@@ -139,7 +150,7 @@ class SideBar extends React.Component {
 
       // Dispatches view focus action
       this.props.store.dispatch(setViewFocus(
-        'welcome-view', 'category-view', 'category-view',
+        'sidebar', 'category-view', 'category-view',
         'right', false
       ));
 
@@ -151,6 +162,11 @@ class SideBar extends React.Component {
     // Or perhaps contact=
     if ( 'contact' === type ) {
       this.onContactClick();
+    }
+
+    // Maybed event docs
+    if ( 'docs' === type ) {
+      this.props.store.dispatch ( open_docs() );
     }
 
   }
@@ -193,8 +209,30 @@ class SideBar extends React.Component {
       response.place_count = state.defaultdata.data.place_count;
     }
 
+    // Inline
+    if ( state.views.leftview === 'sidebar' ) { response.inline = true; } 
+    else { response.inline = false; }
+
+    // Sets transition time
+    if ( response.inline !== this.state.inline ) {
+
+      // Adds inline transition
+      let outer = this.refs.outer;
+      response.inlinetrans = true;
+
+      // Gets computed style (Which also forces css queue to execute)
+      let style = window.getComputedStyle ( outer );
+      let transition = parseFloat ( style.transitionDuration ) * 1000;
+
+      // Removes inline transition
+      this.inlinetimeout = setTimeout(( ) => {
+        this.setState({ inlinetrans : false });
+      }, transition + 10 );
+
+    }
+
     // Sets state
-    this.setState(response);
+    this.setState ( response );
 
   }
 
@@ -203,9 +241,6 @@ class SideBar extends React.Component {
     if ( this.props.store != null ) {
       this.props.store.subscribe(this.onStoreChange.bind(this));
       this.props.store.dispatch( addNotification( 'Use the menu to the left' ) );
-
-      let mobile = this.props.store.getState().mobile.isMobile;
-      if ( window.innerWidth < 960 ) { this.setState({ open: true }); }
     }
   }
 
