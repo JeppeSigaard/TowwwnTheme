@@ -157,6 +157,25 @@ class AppInstance extends React.Component {
     });
   }
 
+  // On Resize
+  onResize ( e ) {
+  
+    // Clears transition
+    clearTimeout ( this.resizeTimeout );
+
+    // Prevent css transitions on resize
+    if ( !document.body.classList.contains ( 'preventTransition' ) ) {
+      document.body.classList.add( 'preventTransition' );
+      document.body.offsetHeight;
+    }
+
+    // Removes the prevent
+    this.resizeTimeout = setTimeout(( ) => {
+      document.body.classList.remove( 'preventTransition' );
+    }, 100 );
+  
+  }
+
   // Component did mount
   componentDidMount() {
 
@@ -176,6 +195,9 @@ class AppInstance extends React.Component {
 
     // Sets fields
     this.viewHandler = new ViewHandler( this.props.store );
+
+    // Events Listeners
+    window.addEventListener ( 'resize', this.onResize.bind( this ) );
 
   }
 

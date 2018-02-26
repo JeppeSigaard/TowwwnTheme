@@ -23,8 +23,9 @@ body{
 
   margin: 0;
 
-  *{ box-sizing: border-box; }
-  &.preventUserSelect{ user-select: none; }
+  * { box-sizing: border-box; }
+  &.preventUserSelect { user-select: none; }
+  &.preventTransition * { transition: 0ms !important; }
 
 }
 

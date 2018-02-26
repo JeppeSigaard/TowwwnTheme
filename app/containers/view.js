@@ -24,7 +24,7 @@ class View extends React.Component {
             </svg>
           }
 
-          <div className={"title"+(
+          <div className={'title'+(
             this.props.closeProps!=null?' canClose':'')} >
 
             { this.props.title != null &&
@@ -40,7 +40,7 @@ class View extends React.Component {
         </header>
         
         <div className="scroller" ref="scroller" onScroll={ this.processScroll.bind(this) }>
-          <div className={ "view-inner" + ( this.props.topbar != null ?
+          <div className={ 'view-inner' + ( this.props.topbar != null ?
             ' has-topbar' : '' ) }>
 
             {/* Top bar */}
@@ -69,15 +69,14 @@ class View extends React.Component {
     if ( this.refs.outer == null ) { return; }
 
     // Extracts for view & inner view
-    let view = this.refs.outer
+    let view = this.refs.outer;
     let scroller = this.refs.scroller;
     let viewhead = this.refs.header;
     let scrollY = scroller.scrollTop;
 
     // Error handling
     if ( scroller == null ) {
-      throw "Inner view wasn't found for view: "+this.props.id;
-      return false;
+      throw 'Inner view wasn\'t found for view: '+this.props.id;
     }
 
     // Composes event payload
@@ -105,8 +104,8 @@ class View extends React.Component {
 
 
       // Dispatches view change action
-      this.props.store.dispatch(setViewFocus
-        (...this.props.closeProps));
+      this.props.store.dispatch( setViewFocus (
+        ...this.props.closeProps ));
 
     }
   }

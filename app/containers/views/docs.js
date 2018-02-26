@@ -17,6 +17,7 @@ class Docs extends React.Component {
     this.state = {
 
       visible : false,
+      shifted : false,
       
       currentelement : 0,
       elements : [
@@ -38,32 +39,45 @@ class Docs extends React.Component {
 
     // Extracts data
     let visible = this.state.visible;
+    let shifted = this.state.shifted;
     let elements = this.state.elements;
     let currentelement = this.state.currentelement;
 
     // Returns
     return (
       <div className={ 'docs' + ( visible ? ' visible' : '' ) }>
-        <div className="docs-inner">
+        <div className="docs-inner" ref="body">
 
-          <div className="docs-body" ref="body">
-            <div className="docs-body-inner">
+          <div className={ 'docs-body' + ( shifted ? ' shifted' : '' ) }>
+            <div className="sidemenu">
+            
+              <div className="sidemenu-inner">
 
-              <div className="sidemenu">
-                <div className="sidemenu-inner">
+                <div className="sidemenu-header">
+                  <svg viewBox="0 0 16 32">
+                    <use xlinkHref="#icon-info">
+                    </use>
+                  </svg>
+                </div>
+
+                <div className="sidemenu-elements">
                   { elements.map( this.renderMenuElement.bind( this ) ) }
-                  
-                  <a href="#" className="close" onClick={ this.close.bind( this ) } >
-                    Close
+                  <a href="#" className="sidemenu-close sidemenu-element" onClick={ this.close.bind( this ) } >
+                    <div className="text">
+                      Close
+                    </div>
                   </a>
                 </div>
-              </div>
 
+              </div>
+            </div>
+
+            <div className="content">
               <Fader index={ currentelement } elements={
                 elements.map( this.renderFaderElement.bind( this ) )
-              } />
-
+              }/>
             </div>
+            
           </div>
 
         </div>
@@ -78,13 +92,15 @@ class Docs extends React.Component {
     // Extracts data
     let title = val.title;
     let active = this.state.currentelement === this.state.elements.indexOf ( val );
-    let onClick = this.onClick.bind( this, this.state.elements.indexOf ( val ) );
+    let onClick = this.onClick.bind( this, 'forward', this.state.elements.indexOf ( val ) );
 
     // Returns
     return (
       <a href="#" className={ 'sidemenu-element' + (active ? ' active' : '') } 
         key={ 'sidemenu-element#'+val.title } onClick={ onClick } >
-        { val.title }
+        <div className="text">
+          { val.title }
+        </div>
       </a>
     );
 
@@ -95,8 +111,15 @@ class Docs extends React.Component {
     return ( 
 
       <div className="article">
-        <div className="title">
+        <div className="title" onClick={ this.onClick.bind( this, 'back' ) } >
           { val.title }
+
+          <div className="close">
+            <svg viewBox="0 0 24 24" onClick={ this.close.bind( this ) }>
+              <use xlinkHref="#icon-close">
+              </use>
+            </svg>
+          </div>
         </div>
 
         <div className="text">
@@ -108,10 +131,21 @@ class Docs extends React.Component {
   }
 
   // On Click
-  onClick ( index ) {
-    this.setState({
-      currentelement: index,
-    });
+  onClick ( action, index ) {
+    if ( 'forward' === action ) {
+      
+      this.setState({
+        currentelement : index,
+        shifted : true,
+      });
+
+    } else if ( 'back' === action ) {
+
+      this.setState({
+        shifted : false,
+      });
+
+    }
   }
 
   // Close

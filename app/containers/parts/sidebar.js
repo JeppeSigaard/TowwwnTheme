@@ -133,19 +133,23 @@ class SideBar extends React.Component {
   }
 
   // On click
-  onClick( type ) {
+  onClick( type, e ) {
+
+    e.stopPropagation(); // <- prevents multiple fires on click
     if ( this.props.store == null ) { return; }
 
     // If type is null or we are in mobile view
     // just open the sidebar
-    if ( (type == null || ( this.props.store != null &&
-      this.props.store.getState().mobile.isMobile )) &&
-      !this.state.open ) {
+    if ( 'docs' !== type ) {
+      if ( (type == null || ( this.props.store != null &&
+        this.props.store.getState().mobile.isMobile )) &&
+        !this.state.open ) {
 
-      this.setState({ open : true });
-      return;
+        this.setState({ open : true });
+        return;
 
-    } else { this.setState({ open : false }); }
+      } else { this.setState({ open : false }); }
+    }
 
     // Else actually open the things
     // Events?
@@ -176,38 +180,12 @@ class SideBar extends React.Component {
 
     }
 
-    // Or perhaps contact=
-    if ( 'contact' === type ) {
-      this.onContactClick();
-    }
-
     // Maybed event docs
     if ( 'docs' === type ) {
       this.props.store.dispatch ( open_docs() );
     }
 
   }
-
-  // On contact click
-  onContactClick() {
-    this.props.store.dispatch(enableModalBox(
-
-      <ContactForm mail={'aske@smartmonkey.dk'}
-        onSend={ this.offContactClick.bind(this) } />,
-
-      'Kontakt os', false, false, true,
-      this.offContactClick.bind(this)
-
-    ));
-  }
-
-  // Off contact click
-  offContactClick() {
-    if ( this.props.store != null ) {
-      this.props.store.dispatch(disableModalBox());
-    }
-  }
-
   // On store change
   onStoreChange() {
 
