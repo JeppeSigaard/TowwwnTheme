@@ -23,7 +23,7 @@ class Category extends React.Component {
   // Render
   render() {
     return (
-      <div className={ "category" + ( this.state.bookmarked ? ' bookmark-mode' : '' ) }
+      <div className={ 'category' + ( this.state.bookmarked ? ' bookmark-mode' : '' ) }
         onClick={ this.onClick.bind(this) } >
 
         <div className="category-place-count">
@@ -82,7 +82,7 @@ class Category extends React.Component {
     // Sets bookmarked part of state
     if ( shown_cat == String(this.props.element['category_id']) &&
       ( views[0] === 'place-list-view' || views[1] === 'place-list-view' )) {
-        new_state['bookmarked'] = true;
+      new_state['bookmarked'] = true;
     } else { new_state['bookmarked'] = false; }
 
     // Sets state

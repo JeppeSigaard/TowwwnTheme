@@ -1,10 +1,12 @@
 
+// ESLint, disable features
+/*global app_data:true*/
 
 // Places API actions
 const getPlaces = (( amount, cat, page ) => (( dispatch ) => {
 
   // Dispatches places fetching action
-  dispatch({ type : "PLACES_FETCHING" });
+  dispatch({ type : 'PLACES_FETCHING' });
 
   // Extracts data
   amount = amount == null ? 999999 : amount;
@@ -16,7 +18,7 @@ const getPlaces = (( amount, cat, page ) => (( dispatch ) => {
   request.onload = (( response ) => {
 
     // Dispatches places fetched action
-    dispatch({ type : "PLACES_FETCHED", payload: {
+    dispatch({ type : 'PLACES_FETCHED', payload: {
       elements : JSON.parse( response.target.response )
     }});
 
@@ -40,14 +42,14 @@ const getSinglePlace = (( id ) => ( dispatch ) => {
   if(id==null){return false;}
 
   // Dispatches places fetching action
-  dispatch({ type : "PLACES_FETCHING" });
+  dispatch({ type : 'PLACES_FETCHING' });
 
   // Creates new request
   let request = new XMLHttpRequest();
   request.onload = (( response ) => {
 
     // Dispatches places fetched
-    dispatch({ type : "PLACES_FETCHED", payload : {
+    dispatch({ type : 'PLACES_FETCHED', payload : {
       elements : JSON.parse( response.target.response )
     }});
 

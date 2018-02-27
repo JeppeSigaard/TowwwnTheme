@@ -1,4 +1,6 @@
 
+// ESLint, disable features
+/*global app_data:true*/
 
 // Default data
 const getDefaultData = (() => ( dispatch ) => {

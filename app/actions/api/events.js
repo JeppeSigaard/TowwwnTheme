@@ -1,4 +1,6 @@
 
+// ESLint, disable features
+/*global app_data:true*/
 
 // Current future page, per 24.
 let curPage = 1;

@@ -14,6 +14,7 @@ import notifications from './reducers/ui/notifications.js';
 import shownelements from './reducers/ui/shownelements.js';
 import views from './reducers/ui/views.js';
 
+import docs from './reducers/data/docs.js';
 import events from './reducers/data/events.js';
 import categories from './reducers/data/categories.js';
 import places from './reducers/data/places.js';
@@ -23,7 +24,7 @@ import advertisements from './reducers/data/advertisements.js';
 const rootReducer = combineReducers({
   defaultdata, docsui, mobile, modalbox,
   notifications, shownelements,
-  views, events, categories, 
+  views, docs, events, categories, 
   places, advertisements
 });
 

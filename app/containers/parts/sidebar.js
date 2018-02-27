@@ -22,7 +22,7 @@ class SideBar extends React.Component {
     this.state = {
 
       open : true,
-      inline : false,
+      inline : true,
       inlinetrans : false,
       active_type : 'events',
 
@@ -135,7 +135,7 @@ class SideBar extends React.Component {
   // On click
   onClick( type, e ) {
 
-    e.stopPropagation(); // <- prevents multiple fires on click
+    e.stopPropagation(); // <- prevents multiple fires on click (From bubbl.)
     if ( this.props.store == null ) { return; }
 
     // If type is null or we are in mobile view
@@ -149,6 +149,7 @@ class SideBar extends React.Component {
         return;
 
       } else { this.setState({ open : false }); }
+
     }
 
     // Else actually open the things
@@ -187,7 +188,7 @@ class SideBar extends React.Component {
 
   }
   // On store change
-  onStoreChange() {
+  async onStoreChange ( ) { // <- ignore eslint error
 
     // Gets state and creates response field
     let state = this.props.store.getState();
@@ -211,18 +212,36 @@ class SideBar extends React.Component {
     // Sets transition time
     if ( response.inline !== this.state.inline ) {
 
-      // Adds inline transition
+      // Extracts data
       let outer = this.refs.outer;
-      response.inlinetrans = true;
-
-      // Gets computed style (Which also forces css queue to execute)
       let style = window.getComputedStyle ( outer );
       let transition = parseFloat ( style.transitionDuration ) * 1000;
 
-      // Removes inline transition
-      this.inlinetimeout = setTimeout(( ) => {
-        this.setState({ inlinetrans : false });
-      }, transition + 10 );
+      if ( response.inline ) {
+        
+        outer.classList.add( 'inline' );
+        outer.classList.add( 'inline-trans' );
+        window.getComputedStyle( outer );
+
+      } else {
+        
+        outer.classList.remove( 'inline' );
+        outer.classList.add( 'inline-trans' );
+        window.getComputedStyle( outer );
+
+      }
+
+      // Removes inline transition 
+      // ( Await tmp. prevents set state, fixing safari bugg )
+      // But damn this code shouldn't be allowed to exits
+      await new Promise(( resolve, reject ) => {
+        this.inlinetimeout = setTimeout(( ) => {
+          
+          outer.classList.remove( 'inline-trans' );
+          resolve ( );
+
+        }, transition );
+      });
 
     }
 

@@ -1,10 +1,12 @@
 
+// ESLint, disable features
+/*global app_data:true*/
 
 // Categories API actions
 const getCategories = (( amount, orderby, order ) => (( dispatch ) => {
 
   // Dispatches categories fetching action
-  dispatch({ type : "CATEGORIES_FETCHING" });
+  dispatch({ type : 'CATEGORIES_FETCHING' });
 
   // Extracts data
   amount  = ( amount == null  ) ? 9999   : amount;
@@ -16,8 +18,8 @@ const getCategories = (( amount, orderby, order ) => (( dispatch ) => {
   request.onload = (( response ) => {
 
     // Dispatches categories fetched action
-    dispatch({ type : "CATEGORIES_FETCHED", payload : {
-        elements : JSON.parse( response.target.response ),
+    dispatch({ type : 'CATEGORIES_FETCHED', payload : {
+      elements : JSON.parse( response.target.response ),
     }});
 
   });

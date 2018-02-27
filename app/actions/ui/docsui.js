@@ -9,10 +9,10 @@ const close_docs = (() => {
 });
 
 // Open docs
-const open_docs = (() => {
+const open_docs = (( index ) => {
   return ({
     type : 'SET_DOCS_VISIBLE',
-    payload : { visible : true }
+    payload : { visible : true, index }
   });
 });
 

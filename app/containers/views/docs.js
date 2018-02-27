@@ -3,10 +3,12 @@
 // Imports
 import React from 'react';
 import Fader from '../../presentationals/fader.js';
+import { nl2p } from '../../tools/formatters.js';
 
 // Actions
 import { close_docs } from '../../actions/ui/docsui.js';
- 
+import { getDocs } from '../../actions/api/docs.js';
+
 
 // Docs Component
 class Docs extends React.Component {
@@ -20,16 +22,7 @@ class Docs extends React.Component {
       shifted : false,
       
       currentelement : 0,
-      elements : [
-        
-        { title : 'First text', text : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' },
-        { title : 'Second text', text : 'Second ipsum', },
-        { title : 'Third text', text : 'Third ipsum', },
-        { title : 'Fourth text', text : 'Fourth ipsum', },
-        { title : 'Fifth text', text : 'Fifth ipsum', },
-        { title : 'Sixth text', text : 'Sixth ipsum', },
-
-      ],
+      ids : [ ],
 
     };
   }
@@ -40,7 +33,7 @@ class Docs extends React.Component {
     // Extracts data
     let visible = this.state.visible;
     let shifted = this.state.shifted;
-    let elements = this.state.elements;
+    let ids = this.state.ids;
     let currentelement = this.state.currentelement;
 
     // Returns
@@ -61,11 +54,14 @@ class Docs extends React.Component {
                 </div>
 
                 <div className="sidemenu-elements">
-                  { elements.map( this.renderMenuElement.bind( this ) ) }
-                  <a href="#" className="sidemenu-close sidemenu-element" onClick={ this.close.bind( this ) } >
+                  { ids.map( this.renderMenuElement.bind( this ) ) }
+                  <a href="#" className="sidemenu-close sidemenu-element" 
+                    onClick={ this.close.bind( this ) } >
+                    
                     <div className="text">
                       Close
                     </div>
+
                   </a>
                 </div>
 
@@ -74,7 +70,7 @@ class Docs extends React.Component {
 
             <div className="content">
               <Fader index={ currentelement } elements={
-                elements.map( this.renderFaderElement.bind( this ) )
+                ids.map( this.renderFaderElement.bind( this ) )
               }/>
             </div>
             
@@ -90,16 +86,19 @@ class Docs extends React.Component {
   renderMenuElement ( val ) {
 
     // Extracts data
-    let title = val.title;
-    let active = this.state.currentelement === this.state.elements.indexOf ( val );
-    let onClick = this.onClick.bind( this, 'forward', this.state.elements.indexOf ( val ) );
+    let state = this.props.store.getState();
+    let elem = state.docs.elements[ val ];
+
+    let title = elem.title;
+    let active = this.state.currentelement === this.state.ids.indexOf ( val );
+    let onClick = this.onClick.bind( this, 'forward', this.state.ids.indexOf ( val ) );
 
     // Returns
     return (
       <a href="#" className={ 'sidemenu-element' + (active ? ' active' : '') } 
-        key={ 'sidemenu-element#'+val.title } onClick={ onClick } >
+        key={ 'sidemenu-element#'+title } onClick={ onClick } >
         <div className="text">
-          { val.title }
+          { title }
         </div>
       </a>
     );
@@ -108,11 +107,17 @@ class Docs extends React.Component {
 
   // Render Fader Element
   renderFaderElement ( val ) {
+
+    // Extracts data
+    let state = this.props.store.getState();
+    let elem = state.docs.elements[ val ];
+
+    // Returns
     return ( 
 
       <div className="article">
         <div className="title" onClick={ this.onClick.bind( this, 'back' ) } >
-          { val.title }
+          { elem.title }
 
           <div className="close">
             <svg viewBox="0 0 24 24" onClick={ this.close.bind( this ) }>
@@ -123,11 +128,12 @@ class Docs extends React.Component {
         </div>
 
         <div className="text">
-          { val.text }
+          { nl2p( elem.content ) }
         </div>
       </div>
       
     );
+
   }
 
   // On Click
@@ -162,11 +168,14 @@ class Docs extends React.Component {
     let state = this.props.store.getState ( );
     let visible = state.docsui.visible;
 
+    let docs = state.docs.elements;
+    let ids = Object.keys( docs );
+
     // Resets scroll
     if ( !visible ) { this.refs.body.scrollTo( 0, 0 ); }
 
     // Sets state
-    this.setState ({ visible });
+    this.setState ({ visible, ids });
 
   }
 
@@ -174,6 +183,7 @@ class Docs extends React.Component {
   componentDidMount ( ) {
     if ( this.props.store != null ) {
       this.props.store.subscribe ( this.onStoreChange.bind( this ) );
+      this.props.store.dispatch( getDocs() );
     }
   }
 

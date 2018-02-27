@@ -1,10 +1,12 @@
 
+// ESLint, disable features
+/*global app_data:true*/
 
 // Commercials API actions
 const getAdvertisements = (( ) => (( dispatch ) => {
 
   // Dispatches fetching action
-  dispatch({ type : "COMMERCIALS_FETCHING" });
+  dispatch({ type : 'COMMERCIALS_FETCHING' });
 
   // Creates new request
   let request = new XMLHttpRequest();
@@ -12,7 +14,7 @@ const getAdvertisements = (( ) => (( dispatch ) => {
 
     // Dispatches fetched action
     dispatch({
-      type : "COMMERCIALS_FETCHED",
+      type : 'COMMERCIALS_FETCHED',
       payload : { elements : JSON.parse( response.target.response ) }
     });
 

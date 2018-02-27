@@ -3,7 +3,7 @@
 // Add Notification
 const addNotification = (( text ) => {
   return {
-    type : "ADD_NOTIFICATION",
+    type : 'ADD_NOTIFICATION',
     payload : { text }
   };
 });

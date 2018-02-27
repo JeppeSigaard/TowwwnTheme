@@ -250,8 +250,8 @@ $docs-trans: cubic-bezier(0.77, 0, 0.175, 1); // cubic-bezier(.07,.65,.42,1);
     .sidemenu {
 
       position: absolute;
-      top: 5px; left: 72px;
-      width: calc( 320px - 144px );
+      top: 5px; left: 52px;
+      width: calc( 320px - 124px );
       height: 100%;
 
       .sidemenu-inner {
@@ -386,6 +386,15 @@ $docs-trans: cubic-bezier(0.77, 0, 0.175, 1); // cubic-bezier(.07,.65,.42,1);
           font-size: 14px;
           font-weight: 300;
           line-height: 1.7;
+
+          p { margin: 4px 0; }
+          
+          h1, h2, h3, h4, h5, h6 {
+            
+            text-transform: uppercase;
+            font-weight: 800;
+
+          }
 
         }
 

@@ -44,8 +44,8 @@ class CategoryView extends View {
     // Gets state and returns
     let state = this.props.store.getState();
     return <Category element={ state.categories.elements[String(val)] }
-        store={ this.props.store }
-        key={ 'plain-category#'+val } />
+      store={ this.props.store }
+      key={ 'plain-category#'+val } />;
 
   }
 

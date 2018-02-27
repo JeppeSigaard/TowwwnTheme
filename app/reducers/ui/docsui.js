@@ -11,9 +11,22 @@ const docsUiReducer = (( state=initState, action ) => {
 
   // Set docs visible
   case 'SET_DOCS_VISIBLE' : {
-    return Object.assign ({}, state, {
-      visible : Boolean ( action.payload.visible ),
-    });
+
+    // Response
+    let response = { };
+
+    // Extracts data
+    if ( action.payload.index != null ) {
+      response.index = action.payload.index;
+    }
+
+    if ( action.payload.visible != null ) {
+      response.visible = action.payload.visible;
+    }
+
+    // Returns
+    return Object.assign ( {}, state, response );
+
   }
 
   // Default case

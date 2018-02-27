@@ -3,7 +3,7 @@
 // Local fields
 $sidebar-town-height: 48px;
 $sidebar-trans: cubic-bezier(.6,0,.4,1);
-$inline-trans: 380ms cubic-bezier(.6,0,.4,1);
+$inline-trans: cubic-bezier(.6,0,.4,1);
 
 // Side bar
 .sidebar{
@@ -296,14 +296,12 @@ $inline-trans: 380ms cubic-bezier(.6,0,.4,1);
 
   &.inline-trans {
 
-    transition: $inline-trans;
+    transition: width 380ms $inline-trans;
     
     * {
 
-      transition: $inline-trans,
-        top 0ms ease-out,
-        height 0ms ease-out,
-        background-color 0ms ease-out;
+      transition: 380ms $inline-trans,
+        top, height, background-color 0ms ease-out,
 
     }
 
