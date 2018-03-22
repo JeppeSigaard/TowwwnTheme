@@ -178,6 +178,7 @@ class SinglePlaceView extends View {
     e.preventDefault();
 
     // Share dialog
+    /* global FB:true */
     FB.ui({
       method: 'share',
       href: ('https://facebook.com/'+this.state.element['fbid']),
@@ -191,14 +192,14 @@ class SinglePlaceView extends View {
     // Gets view, its transition time and scroll down.
     let scroller = document.querySelectorAll( '#'+this.state.id+' .scroller' )[0];
     let trans = parseFloat(window.getComputedStyle(scroller).transitionDuration) * 1000;
-    setTimeout(() => { scroller.scrollTo( 0, 0 ); }, withTrans?trans:0 );
+    setTimeout(() => { scroller.scrollTop = 0; }, withTrans?trans:0 );
 
   }
 
   // On close
   onClose() {
     this.resetScroll( true );
-   }
+  }
 
   // On store change
   onStoreChange() {

@@ -164,7 +164,6 @@ class SideBar extends React.Component {
 
       // Sets state
       this.setState({ active_type : 'events' });
-
     }
 
     // Or places?
@@ -187,8 +186,9 @@ class SideBar extends React.Component {
     }
 
   }
+  
   // On store change
-  async onStoreChange ( ) { // <- ignore eslint error
+  async onStoreChange ( ) {
 
     // Gets state and creates response field
     let state = this.props.store.getState();

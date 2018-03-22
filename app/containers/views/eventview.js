@@ -57,7 +57,7 @@ class EventView extends View {
     // Gets view, its transition time and scroll down.
     let scroller  = document.querySelectorAll('#'+this.state.id+' .scroller')[0];
     let trans = parseFloat(window.getComputedStyle(scroller).transitionDuration ) * 1000;
-    setTimeout(() => { scroller.scrollTo( 0, 0 ); }, withTrans ? trans:0 );
+    setTimeout(() => { scroller.scrollTop = 0; }, withTrans ? trans:0 );
 
   }
 

@@ -11,11 +11,19 @@ $mobile-width: 800px;
 $sidebar-width: 48px;
 
 // Normalization
+html {
+
+  height: 100vh;
+  overflow: hidden;
+
+}
+
 body{
 
   position: absolute;
-  width: calc(100vw - 1px); height: 100vh;
-  overflow: hidden;
+  width: 100vw;
+  width: calc(100vw - 1px); 
+  height: 100vh;
 
   font-family: $fontstack;
   font-weight: 400;

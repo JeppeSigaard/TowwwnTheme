@@ -38,10 +38,10 @@ class Cookies extends React.Component {
             Okay
           </a>
 
-          <a className="button" href="https://towwwn.dk/cookie-og-privatlivspolitik"
+          {/* <a className="button" href="https://towwwn.dk/cookie-og-privatlivspolitik"
             onClick={ this.onClick.bind(this, 'read-more') } >
             Læs mere
-          </a>
+          </a> */}
 
         </div>
 

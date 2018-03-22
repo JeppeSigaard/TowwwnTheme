@@ -39,7 +39,7 @@ class Docs extends React.Component {
     // Returns
     return (
       <div className={ 'docs' + ( visible ? ' visible' : '' ) }>
-        <div className="docs-inner" ref="body">
+        <div className="docs-inner" ref="docsbody">
 
           <div className={ 'docs-body' + ( shifted ? ' shifted' : '' ) }>
             <div className="sidemenu">
@@ -172,7 +172,9 @@ class Docs extends React.Component {
     let ids = Object.keys( docs );
 
     // Resets scroll
-    if ( !visible ) { this.refs.body.scrollTo( 0, 0 ); }
+    if ( !visible && this.refs.docsbody != null ) { 
+      this.refs.docsbody.scrollTop = 0; 
+    }
 
     // Sets state
     this.setState ({ visible, ids });

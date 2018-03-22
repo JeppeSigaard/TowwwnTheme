@@ -139,6 +139,7 @@ $inline-trans: cubic-bezier(.6,0,.4,1);
     left: 0;
 
     width: 100%;
+    height: 50vh;
     height: calc( ( 100vh - #{$sidebar-town-height} ) / 2 );
 
     .icon{
@@ -147,8 +148,12 @@ $inline-trans: cubic-bezier(.6,0,.4,1);
       top: 54%; left: 50%;
       transform: translate(-50%,-50%);
 
-      width: 16px;
-      svg{ fill: $primary-color; }
+      svg{ 
+        
+        fill: $primary-color; 
+        width: 16px;
+      
+      }
 
     }
 
@@ -228,7 +233,12 @@ $inline-trans: cubic-bezier(.6,0,.4,1);
         section .icon{
 
           left: 24%;
-          width: 48px;
+
+          svg {
+          
+            width: 48px;
+          
+          }
 
         }
 
@@ -261,12 +271,18 @@ $inline-trans: cubic-bezier(.6,0,.4,1);
     &:hover, 
     &.inline {
       
+      width: 50vw;
       width: calc( 50vw + #{$sidebar-width} / 2 );
 
       section .icon{
 
         left: 28%;
-        width: 36px;
+
+        svg {
+        
+          width: 36px;
+        
+        }
 
       }
 
